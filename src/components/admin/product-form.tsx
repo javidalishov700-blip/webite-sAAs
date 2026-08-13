@@ -14,7 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ImageUpload } from "@/components/admin/image-upload";
 import { AttributeEditor } from "@/components/admin/attribute-editor";
-import { itemSchema, type ItemInput } from "@/lib/validators/item";
+import { itemSchema, type AttributeInput, type ItemInput, type ItemFormValues } from "@/lib/validators/item";
 import { CURRENCIES } from "@/lib/constants";
 import type { Category, Industry, ItemWithAttributes } from "@/lib/data/types";
 
@@ -42,7 +42,7 @@ export function ProductForm({
   const t = useTranslations("admin.products.form");
   const tc = useTranslations("common");
   const [imageUrl, setImageUrl] = useState<string | null>(item?.images[0] ?? null);
-  const [attributes, setAttributes] = useState(
+  const [attributes, setAttributes] = useState<AttributeInput[]>(
     item?.attributes.map((a) => ({ key: a.key, value: a.value, type: a.type, unit: a.unit ?? "" })) ?? [],
   );
 
@@ -53,7 +53,7 @@ export function ProductForm({
     watch,
     setValue,
     formState: { errors },
-  } = useForm<ItemInput>({
+  } = useForm<ItemFormValues, unknown, ItemInput>({
     resolver: zodResolver(itemSchema),
     defaultValues: item
       ? {
@@ -87,8 +87,8 @@ export function ProductForm({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imageUrl]);
 
-  const isVisible = watch("isVisible");
-  const isFeatured = watch("isFeatured");
+  const isVisible = watch("isVisible") ?? true;
+  const isFeatured = watch("isFeatured") ?? false;
 
   function submit(values: ItemInput) {
     return onSubmit({ ...values, images: imageUrl ? [imageUrl] : [], attributes });

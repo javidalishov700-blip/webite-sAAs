@@ -7,10 +7,10 @@ import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
   { href: "/admin", icon: BarChart3, key: "overview", exact: true },
-  { href: "/admin/categories", icon: LayoutGrid, key: "categories" },
-  { href: "/admin/products", icon: Package, key: "products" },
-  { href: "/admin/qr-studio", icon: QrCode, key: "qrStudio" },
-  { href: "/admin/settings", icon: Settings, key: "settings" },
+  { href: "/admin/categories", icon: LayoutGrid, key: "categories", exact: false },
+  { href: "/admin/products", icon: Package, key: "products", exact: false },
+  { href: "/admin/qr-studio", icon: QrCode, key: "qrStudio", exact: false },
+  { href: "/admin/settings", icon: Settings, key: "settings", exact: false },
 ] as const;
 
 export function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {

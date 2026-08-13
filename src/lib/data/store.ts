@@ -29,7 +29,6 @@ const DATA_DIR = path.join(process.cwd(), ".data");
 const DB_FILE = path.join(DATA_DIR, "db.json");
 
 declare global {
-  // eslint-disable-next-line no-var
   var __qrUniverseDb: DbShape | undefined;
 }
 
