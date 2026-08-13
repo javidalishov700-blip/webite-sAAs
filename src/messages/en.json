@@ -1,0 +1,421 @@
+{
+  "meta": {
+    "appName": "QR-Universe",
+    "tagline": "Your business in a scan"
+  },
+  "common": {
+    "loading": "Loading",
+    "save": "Save changes",
+    "saving": "Saving…",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "create": "Create",
+    "remove": "Remove",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "done": "Done",
+    "search": "Search",
+    "viewAll": "View all",
+    "optional": "Optional",
+    "required": "Required",
+    "actions": "Actions",
+    "close": "Close",
+    "upload": "Upload image",
+    "uploading": "Uploading…",
+    "change": "Change",
+    "yes": "Yes",
+    "no": "No",
+    "continue": "Continue",
+    "getStarted": "Get started",
+    "learnMore": "Learn more",
+    "tryDemo": "Try live demo",
+    "signOut": "Sign out",
+    "visible": "Visible",
+    "hidden": "Hidden",
+    "status": "Status",
+    "language": "Language",
+    "currency": "Currency",
+    "copyLink": "Copy link",
+    "copied": "Copied!",
+    "empty": "Nothing here yet",
+    "error": "Something went wrong",
+    "retry": "Try again"
+  },
+  "landing": {
+    "header": {
+      "features": "Features",
+      "useCases": "Use cases",
+      "demo": "Live demo",
+      "pricing": "Pricing",
+      "login": "Log in",
+      "getStarted": "Get started free"
+    },
+    "hero": {
+      "eyebrow": "QR-native digital catalogs",
+      "titleLine1": "Your business,",
+      "titleHighlight": "in a scan.",
+      "subtitle": "QR-Universe turns any menu, catalog, or price list into a living, breathing mobile experience — for restaurants, retail, electronics and services. No app to install, no printing ever again.",
+      "ctaPrimary": "Start free — no card needed",
+      "ctaSecondary": "Watch it work",
+      "badgeScans": "scans this month",
+      "badgeLive": "Live",
+      "statScans": "12.4M+",
+      "statScansLabel": "monthly scans",
+      "statBusinesses": "8,300+",
+      "statBusinessesLabel": "businesses onboard",
+      "statCountries": "42",
+      "statCountriesLabel": "countries",
+      "scrollHint": "Scroll to explore"
+    },
+    "logos": {
+      "title": "Trusted by modern, fast-moving teams"
+    },
+    "features": {
+      "eyebrow": "Everything included",
+      "title": "One platform, every kind of catalog",
+      "subtitle": "Purpose-built modules for the way physical businesses actually sell.",
+      "items": {
+        "realtime": {
+          "title": "Real-time editing",
+          "description": "Update prices, photos or availability and every scanned QR reflects it instantly — no reprint, ever."
+        },
+        "multitenant": {
+          "title": "True multi-tenant isolation",
+          "description": "Every company gets its own fully isolated workspace, data, and public catalog URL."
+        },
+        "attributes": {
+          "title": "Dynamic attributes",
+          "description": "Calories and allergens for food, sizes and materials for fashion, RAM and warranty for tech — fully customizable per item."
+        },
+        "qr": {
+          "title": "Branded QR Studio",
+          "description": "Design QR codes with your colors, dot styles, and logo — export as crisp PNG or SVG."
+        },
+        "i18n": {
+          "title": "Built-in translations",
+          "description": "Serve tourists and locals alike with instant language switching across your entire catalog."
+        },
+        "analytics": {
+          "title": "Scan analytics",
+          "description": "Understand traffic patterns, popular items, and visitor locales at a glance."
+        }
+      }
+    },
+    "useCases": {
+      "eyebrow": "One engine, every vertical",
+      "title": "Built for how you actually sell",
+      "subtitle": "Switch industries below to see how QR-Universe adapts its fields, categories, and layout automatically.",
+      "tabs": {
+        "restaurant": {
+          "label": "Restaurant",
+          "title": "Menus that update themselves",
+          "description": "86 an item, launch a seasonal special, or update a price — it's live everywhere in seconds. Track allergens, calories, and vegan options per dish.",
+          "bullets": ["Live menu editing, zero reprints", "Allergens, calories & dietary tags", "Table-side QR ordering flow"]
+        },
+        "retail": {
+          "label": "Retail & Fashion",
+          "title": "A lookbook that never goes out of stock",
+          "description": "Show sizes, materials and colorways for every sneaker or garment, and hide items the moment they sell out.",
+          "bullets": ["Size & material attributes", "Instant sold-out hiding", "Seasonal collection drops"]
+        },
+        "electronics": {
+          "label": "Electronics",
+          "title": "Spec sheets customers can actually scan",
+          "description": "RAM, storage, warranty — lay out full technical specs beautifully, right on the showroom floor.",
+          "bullets": ["Rich technical spec fields", "Warranty & stock indicators", "Comparison-ready layout"]
+        }
+      }
+    },
+    "demo": {
+      "eyebrow": "See it live",
+      "title": "Scan. Browse. Order. In seconds.",
+      "subtitle": "This is the exact experience your customers get after scanning your QR code — try it right in the browser.",
+      "step1": "Customer scans your table, shelf, or window QR code",
+      "step2": "A native-feeling catalog opens instantly — no app install",
+      "step3": "They browse, filter, and view rich item details in their language",
+      "cta": "Open a real live demo catalog"
+    },
+    "pricing": {
+      "eyebrow": "Simple pricing",
+      "title": "Plans that grow with you",
+      "subtitle": "Start free. Upgrade when you need more menu items, QR codes, or team seats.",
+      "monthly": "Monthly",
+      "yearly": "Yearly",
+      "yearlyBadge": "2 months free",
+      "mostPopular": "Most popular",
+      "perMonth": "/month",
+      "custom": "Custom",
+      "plans": {
+        "free": {
+          "name": "Free",
+          "description": "For solo owners just getting started.",
+          "cta": "Start for free",
+          "features": ["1 catalog & 1 QR code", "Up to 20 items", "Basic QR styling", "Community support"]
+        },
+        "pro": {
+          "name": "Pro",
+          "description": "For growing businesses with multiple categories.",
+          "cta": "Start free trial",
+          "features": ["Unlimited items & categories", "Up to 10 branded QR codes", "Full QR Studio customization", "Scan analytics dashboard", "Priority support"]
+        },
+        "enterprise": {
+          "name": "Enterprise",
+          "description": "For multi-location brands & franchises.",
+          "cta": "Talk to sales",
+          "features": ["Unlimited locations", "Team roles & permissions", "Dedicated onboarding", "API access", "SLA & priority support"]
+        }
+      }
+    },
+    "cta": {
+      "title": "Turn your catalog into an experience.",
+      "subtitle": "Join thousands of restaurants, stores and studios already scanning their way into the future.",
+      "button": "Create your free catalog"
+    },
+    "footer": {
+      "description": "The multi-tenant platform for interactive, QR-native digital catalogs — built for restaurants, retail, electronics and services.",
+      "product": "Product",
+      "company": "Company",
+      "legal": "Legal",
+      "features": "Features",
+      "pricing": "Pricing",
+      "useCases": "Use cases",
+      "demo": "Live demo",
+      "about": "About",
+      "careers": "Careers",
+      "contact": "Contact",
+      "blog": "Blog",
+      "privacy": "Privacy policy",
+      "terms": "Terms of service",
+      "rights": "All rights reserved."
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Log in to manage your catalog.",
+      "email": "Email address",
+      "password": "Password",
+      "submit": "Log in",
+      "noAccount": "Don't have an account?",
+      "signupLink": "Create one for free",
+      "demoTitle": "Try a demo account",
+      "demoHint": "Click any card below to autofill the demo credentials.",
+      "invalid": "Invalid email or password."
+    },
+    "signup": {
+      "title": "Create your workspace",
+      "subtitle": "Launch your interactive catalog in under two minutes.",
+      "name": "Full name",
+      "email": "Email address",
+      "password": "Password",
+      "companyName": "Business name",
+      "industry": "Industry",
+      "submit": "Create account",
+      "haveAccount": "Already have an account?",
+      "loginLink": "Log in",
+      "emailTaken": "An account with this email already exists."
+    },
+    "onboarding": {
+      "step": "Step {current} of {total}",
+      "step1": {
+        "title": "Tell us about your business",
+        "subtitle": "This appears on your public catalog header.",
+        "nameLabel": "Company name",
+        "logoLabel": "Logo",
+        "accentLabel": "Accent color"
+      },
+      "step2": {
+        "title": "Choose your industry",
+        "subtitle": "We'll tailor categories, fields, and starter content for you."
+      },
+      "step3": {
+        "title": "Your first QR code is ready",
+        "subtitle": "Download it, print it, or share the link — your catalog is already live.",
+        "catalogLive": "Your public catalog is live at",
+        "goToDashboard": "Go to my dashboard"
+      }
+    }
+  },
+  "admin": {
+    "sidebar": {
+      "overview": "Overview",
+      "categories": "Categories",
+      "products": "Products",
+      "qrStudio": "QR Studio",
+      "settings": "Settings",
+      "viewCatalog": "View public catalog",
+      "backToSite": "Back to website"
+    },
+    "topbar": {
+      "search": "Quick search…"
+    },
+    "overview": {
+      "title": "Overview",
+      "subtitle": "Here's how {company} is performing.",
+      "totalScans": "Total scans",
+      "last7Days": "Last 7 days",
+      "totalItems": "Total items",
+      "visibleItems": "visible",
+      "totalCategories": "Categories",
+      "scansOverTime": "Scans over time",
+      "scansOverTimeSubtitle": "Last 30 days",
+      "topItems": "Most viewed items",
+      "localeBreakdown": "Visitor languages",
+      "currentPlan": "Current plan",
+      "upgrade": "Upgrade plan",
+      "quickActions": "Quick actions",
+      "addProduct": "Add a product",
+      "addCategory": "Add a category",
+      "openQrStudio": "Open QR Studio"
+    },
+    "categories": {
+      "title": "Categories",
+      "subtitle": "Organize your catalog and drag to reorder how customers see it.",
+      "add": "Add category",
+      "namePlaceholder": "e.g. Main Course",
+      "empty": "No categories yet — add your first one to get started.",
+      "itemsCount": "{count} items",
+      "dragHint": "Drag the handle to reorder",
+      "deleteConfirmTitle": "Delete category?",
+      "deleteConfirmDescription": "This will permanently delete \"{name}\" and all {count} items inside it.",
+      "created": "Category created",
+      "updated": "Category updated",
+      "deleted": "Category deleted",
+      "reordered": "Order saved"
+    },
+    "products": {
+      "title": "Products",
+      "subtitle": "Manage every item in your catalog.",
+      "add": "Add product",
+      "searchPlaceholder": "Search products…",
+      "allCategories": "All categories",
+      "allStatus": "All statuses",
+      "table": {
+        "item": "Item",
+        "category": "Category",
+        "price": "Price",
+        "status": "Status"
+      },
+      "empty": "No products match your filters.",
+      "emptyState": "Your catalog is empty — add your first product.",
+      "form": {
+        "titleNew": "New product",
+        "titleEdit": "Edit product",
+        "basics": "Basics",
+        "titleLabel": "Title",
+        "titlePlaceholder": "e.g. Classic Cheeseburger",
+        "descriptionLabel": "Description",
+        "descriptionPlaceholder": "Describe the item for your customers…",
+        "categoryLabel": "Category",
+        "pricing": "Pricing",
+        "priceLabel": "Price",
+        "compareAtPriceLabel": "Compare-at price",
+        "currencyLabel": "Currency",
+        "stockLabel": "Stock count",
+        "stockPlaceholder": "Leave empty for unlimited",
+        "media": "Media",
+        "visibility": "Visibility",
+        "visibleLabel": "Show in public catalog",
+        "featuredLabel": "Feature this item",
+        "attributes": "Dynamic attributes",
+        "attributesHint": "Add custom fields like calories, sizes, or warranty — tailored to your industry.",
+        "addAttribute": "Add attribute",
+        "presets": "Quick add for {industry}",
+        "attributeKey": "Name",
+        "attributeValue": "Value",
+        "attributeType": "Type",
+        "attributeUnit": "Unit",
+        "attributeListHint": "Separate multiple values with commas",
+        "attributeBooleanHint": "Shown as a toggle to customers",
+        "noAttributes": "No attributes yet.",
+        "submitCreate": "Create product",
+        "submitEdit": "Save product"
+      },
+      "created": "Product created",
+      "updated": "Product updated",
+      "deleted": "Product deleted",
+      "visibilityUpdated": "Visibility updated",
+      "deleteConfirmTitle": "Delete product?",
+      "deleteConfirmDescription": "This will permanently delete \"{name}\"."
+    },
+    "qr": {
+      "title": "QR Studio",
+      "subtitle": "Design branded QR codes that link straight to your live catalog.",
+      "yourCodes": "Your QR codes",
+      "newCode": "New QR code",
+      "nameLabel": "Internal name",
+      "namePlaceholder": "e.g. Table QR — Main Hall",
+      "urlLabel": "Destination URL",
+      "style": "Style",
+      "dotsColorLabel": "Dots color",
+      "backgroundColorLabel": "Background color",
+      "dotsStyleLabel": "Dot pattern",
+      "cornerStyleLabel": "Corner style",
+      "logo": "Center logo",
+      "useCompanyLogo": "Use company logo",
+      "removeLogo": "Remove logo",
+      "preview": "Live preview",
+      "downloadPng": "Download PNG",
+      "downloadSvg": "Download SVG",
+      "scans": "{count} scans",
+      "created": "QR code created",
+      "updated": "QR code saved",
+      "deleted": "QR code deleted",
+      "deleteConfirmTitle": "Delete this QR code?",
+      "dotStyles": {
+        "SQUARE": "Square",
+        "DOTS": "Dots",
+        "ROUNDED": "Rounded",
+        "CLASSY": "Classy",
+        "CLASSY_ROUNDED": "Classy rounded",
+        "EXTRA_ROUNDED": "Extra rounded"
+      }
+    },
+    "settings": {
+      "title": "Settings",
+      "subtitle": "Manage your company profile and catalog defaults.",
+      "profile": "Company profile",
+      "profileHint": "This information appears on your public catalog page.",
+      "nameLabel": "Company name",
+      "descriptionLabel": "Short description",
+      "logoLabel": "Logo",
+      "addressLabel": "Address",
+      "phoneLabel": "Phone",
+      "websiteLabel": "Website",
+      "localization": "Localization & currency",
+      "localizationHint": "Choose which languages your catalog supports and how prices are displayed.",
+      "defaultLocaleLabel": "Default language",
+      "supportedLocalesLabel": "Supported languages",
+      "currencyLabel": "Currency",
+      "accentColorLabel": "Accent color",
+      "planLabel": "Plan",
+      "publicUrlLabel": "Public catalog URL",
+      "saved": "Settings saved"
+    }
+  },
+  "catalog": {
+    "searchPlaceholder": "Search the menu…",
+    "noResults": "No items match \"{query}\"",
+    "emptyCategory": "Nothing in this category yet.",
+    "poweredBy": "Powered by",
+    "featured": "Featured",
+    "outOfStock": "Out of stock",
+    "onlyLeft": "Only {count} left",
+    "from": "from",
+    "close": "Close",
+    "share": "Share",
+    "linkCopied": "Catalog link copied",
+    "chooseLanguage": "Choose language",
+    "allCategories": "All",
+    "viewDetails": "View details",
+    "description": "Description",
+    "details": "Details",
+    "backToTop": "Back to top",
+    "addressLabel": "Address",
+    "phoneLabel": "Phone",
+    "websiteLabel": "Website"
+  }
+}

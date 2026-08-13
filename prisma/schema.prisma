@@ -1,0 +1,232 @@
+// QR-Universe — canonical data model definition.
+//
+// This schema documents the production data model for the platform and is the
+// source of truth for entity shapes, relations and constraints. In this
+// environment there is no provisioned Postgres/Supabase instance, so the app
+// runs against a well-abstracted in-memory + JSON-persisted mock service that
+// mirrors these exact models (see `src/lib/data`). Pointing `DATABASE_URL` at
+// a real Postgres instance and swapping the repository implementations in
+// `src/lib/data/repositories/*` for `@prisma/client` calls is the only work
+// required to go live.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Enums
+// ---------------------------------------------------------------------------
+
+enum Role {
+  OWNER
+  ADMIN
+  EDITOR
+}
+
+enum Industry {
+  RESTAURANT
+  RETAIL
+  ELECTRONICS
+  SERVICES
+  OTHER
+}
+
+enum Plan {
+  FREE
+  PRO
+  ENTERPRISE
+}
+
+enum AttributeType {
+  TEXT
+  NUMBER
+  BOOLEAN
+  LIST
+}
+
+enum QrDotStyle {
+  SQUARE
+  DOTS
+  ROUNDED
+  CLASSY
+  CLASSY_ROUNDED
+  EXTRA_ROUNDED
+}
+
+enum Locale {
+  en
+  ru
+  tr
+  az
+}
+
+// ---------------------------------------------------------------------------
+// Identity & tenancy
+// ---------------------------------------------------------------------------
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  avatarUrl    String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  memberships Membership[]
+
+  @@index([email])
+}
+
+/// Join table enabling multi-tenant, multi-user companies with per-user roles.
+/// Data isolation is enforced everywhere by scoping every query through
+/// `companyId`, never by a global table scan.
+model Membership {
+  id        String   @id @default(cuid())
+  role      Role     @default(OWNER)
+  createdAt DateTime @default(now())
+
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId String
+
+  @@unique([userId, companyId])
+  @@index([companyId])
+}
+
+model Company {
+  id               String   @id @default(cuid())
+  /// Public, unique, URL-safe identifier used for `/c/[slug]` catalog routing.
+  slug             String   @unique
+  name             String
+  description      String?
+  logoUrl          String?
+  coverUrl         String?
+  industry         Industry @default(OTHER)
+  plan             Plan     @default(FREE)
+  currency         String   @default("USD")
+  defaultLocale    Locale   @default(en)
+  supportedLocales Locale[] @default([en])
+  accentColor      String   @default("#7C5CFF")
+  address          String?
+  phone            String?
+  website          String?
+  isPublished      Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  memberships Membership[]
+  categories  Category[]
+  items       Item[]
+  qrCodes     QrCode[]
+  scanEvents  ScanEvent[]
+
+  @@index([slug])
+}
+
+// ---------------------------------------------------------------------------
+// Catalog
+// ---------------------------------------------------------------------------
+
+model Category {
+  id        String   @id @default(cuid())
+  name      String
+  icon      String?
+  position  Int      @default(0)
+  isVisible Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId String
+
+  items Item[]
+
+  @@index([companyId, position])
+}
+
+model Item {
+  id             String   @id @default(cuid())
+  title          String
+  description    String?
+  price          Decimal  @db.Decimal(12, 2)
+  compareAtPrice Decimal? @db.Decimal(12, 2)
+  currency       String   @default("USD")
+  images         String[] @default([])
+  isVisible      Boolean  @default(true)
+  isFeatured     Boolean  @default(false)
+  stockCount     Int?
+  position       Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  company    Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId  String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId String
+
+  attributes ItemAttribute[]
+
+  @@index([companyId, categoryId, position])
+}
+
+/// Dynamic, industry-agnostic key/value attributes attached to an item, e.g.
+/// { key: "Calories", type: NUMBER, value: "540" } or
+/// { key: "Sizes", type: LIST, value: "38,39,40,41,42" }.
+model ItemAttribute {
+  id       String        @id @default(cuid())
+  key      String
+  value    String
+  type     AttributeType @default(TEXT)
+  unit     String?
+  position Int           @default(0)
+
+  item   Item   @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  itemId String
+
+  @@index([itemId])
+}
+
+// ---------------------------------------------------------------------------
+// QR Studio
+// ---------------------------------------------------------------------------
+
+model QrCode {
+  id              String     @id @default(cuid())
+  name            String
+  targetUrl       String
+  dotsColor       String     @default("#7C5CFF")
+  backgroundColor String     @default("#0B0B14")
+  dotsStyle       QrDotStyle @default(ROUNDED)
+  cornerStyle     QrDotStyle @default(EXTRA_ROUNDED)
+  logoUrl         String?
+  scans           Int        @default(0)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  company    Company     @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId  String
+  scanEvents ScanEvent[]
+
+  @@index([companyId])
+}
+
+model ScanEvent {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  locale    Locale   @default(en)
+  device    String?
+
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId String
+  qrCode    QrCode? @relation(fields: [qrCodeId], references: [id], onDelete: SetNull)
+  qrCodeId  String?
+
+  @@index([companyId, createdAt])
+}

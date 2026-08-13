@@ -1,0 +1,42 @@
+"use client";
+
+import { useTranslations } from "next-intl";
+import { BarChart3, LayoutGrid, Package, QrCode, Settings } from "lucide-react";
+import { Link, usePathname } from "@/i18n/navigation";
+import { cn } from "@/lib/utils";
+
+const NAV_ITEMS = [
+  { href: "/admin", icon: BarChart3, key: "overview", exact: true },
+  { href: "/admin/categories", icon: LayoutGrid, key: "categories" },
+  { href: "/admin/products", icon: Package, key: "products" },
+  { href: "/admin/qr-studio", icon: QrCode, key: "qrStudio" },
+  { href: "/admin/settings", icon: Settings, key: "settings" },
+] as const;
+
+export function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
+  const t = useTranslations("admin.sidebar");
+  const pathname = usePathname();
+
+  return (
+    <nav className="flex flex-col gap-1">
+      {NAV_ITEMS.map((item) => {
+        const active = item.exact ? pathname === item.href : pathname.startsWith(item.href);
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            onClick={onNavigate}
+            className={cn(
+              "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
+              active ? "bg-primary/15 text-primary" : "text-muted-foreground hover:bg-white/5 hover:text-foreground",
+            )}
+          >
+            <item.icon className={cn("size-[18px] shrink-0", active && "text-primary")} />
+            {t(item.key)}
+            {active && <span className="ml-auto size-1.5 rounded-full bg-primary" />}
+          </Link>
+        );
+      })}
+    </nav>
+  );
+}

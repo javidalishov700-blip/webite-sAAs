@@ -1,0 +1,137 @@
+"use client";
+
+import { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
+import { motion } from "motion/react";
+import { AlertCircle, ArrowRight, Cpu, Salad, Shirt, Sparkles, UserPlus } from "lucide-react";
+import { useRouter, Link } from "@/i18n/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card } from "@/components/ui/card";
+import { signupSchema, type SignupInput } from "@/lib/validators/auth";
+import { api, ApiError } from "@/lib/api-client";
+import { cn } from "@/lib/utils";
+import type { Industry } from "@/lib/data/types";
+
+const INDUSTRY_OPTIONS: { value: Industry; icon: typeof Salad; labelKey: string }[] = [
+  { value: "RESTAURANT", icon: Salad, labelKey: "Restaurant" },
+  { value: "RETAIL", icon: Shirt, labelKey: "Retail & Fashion" },
+  { value: "ELECTRONICS", icon: Cpu, labelKey: "Electronics" },
+  { value: "SERVICES", icon: Sparkles, labelKey: "Services" },
+];
+
+export default function SignupPage() {
+  const t = useTranslations("auth.signup");
+  const router = useRouter();
+  const [serverError, setServerError] = useState<string | null>(null);
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors, isSubmitting },
+  } = useForm<SignupInput>({
+    resolver: zodResolver(signupSchema),
+    defaultValues: { industry: "RESTAURANT" },
+  });
+
+  async function onSubmit(values: SignupInput) {
+    setServerError(null);
+    try {
+      await api.post("/api/auth/signup", values);
+      router.push("/onboarding");
+      router.refresh();
+    } catch (err) {
+      setServerError(err instanceof ApiError && err.status === 409 ? t("emailTaken") : "Something went wrong");
+    }
+  }
+
+  return (
+    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="w-full max-w-lg">
+      <Card className="p-7 sm:p-9">
+        <div className="glow-ring mb-5 flex size-11 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 text-primary">
+          <UserPlus className="size-5" />
+        </div>
+        <h1 className="font-display text-2xl font-bold">{t("title")}</h1>
+        <p className="mt-1.5 text-sm text-muted-foreground">{t("subtitle")}</p>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-7 space-y-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="space-y-1.5">
+              <Label htmlFor="name">{t("name")}</Label>
+              <Input id="name" autoComplete="name" placeholder="Jane Doe" {...register("name")} />
+              {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="companyName">{t("companyName")}</Label>
+              <Input id="companyName" placeholder="Bella Foods" {...register("companyName")} />
+              {errors.companyName && <p className="text-xs text-destructive">{errors.companyName.message}</p>}
+            </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <Label htmlFor="email">{t("email")}</Label>
+            <Input id="email" type="email" autoComplete="email" placeholder="you@company.com" {...register("email")} />
+            {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
+          </div>
+
+          <div className="space-y-1.5">
+            <Label htmlFor="password">{t("password")}</Label>
+            <Input id="password" type="password" autoComplete="new-password" placeholder="••••••••" {...register("password")} />
+            {errors.password && <p className="text-xs text-destructive">{errors.password.message}</p>}
+          </div>
+
+          <div className="space-y-2">
+            <Label>{t("industry")}</Label>
+            <Controller
+              control={control}
+              name="industry"
+              render={({ field }) => (
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                  {INDUSTRY_OPTIONS.map((option) => (
+                    <button
+                      key={option.value}
+                      type="button"
+                      onClick={() => field.onChange(option.value)}
+                      className={cn(
+                        "flex flex-col items-center gap-1.5 rounded-xl border p-3 text-xs font-medium transition-colors",
+                        field.value === option.value
+                          ? "border-primary bg-primary/10 text-primary"
+                          : "border-border/70 bg-muted/20 text-muted-foreground hover:bg-muted/40",
+                      )}
+                    >
+                      <option.icon className="size-4.5" />
+                      {option.labelKey}
+                    </button>
+                  ))}
+                </div>
+              )}
+            />
+          </div>
+
+          {serverError && (
+            <div className="flex items-center gap-2 rounded-xl border border-destructive/30 bg-destructive/10 px-3 py-2.5 text-sm text-destructive">
+              <AlertCircle className="size-4 shrink-0" />
+              {serverError}
+            </div>
+          )}
+
+          <Button type="submit" variant="glow" size="lg" className="w-full" loading={isSubmitting}>
+            {t("submit")}
+            <ArrowRight className="size-4" />
+          </Button>
+        </form>
+
+        <p className="mt-6 text-center text-sm text-muted-foreground">
+          {t("haveAccount")}{" "}
+          <Link href="/login" className="font-medium text-primary hover:underline">
+            {t("loginLink")}
+          </Link>
+        </p>
+      </Card>
+    </motion.div>
+  );
+}

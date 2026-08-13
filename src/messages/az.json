@@ -1,0 +1,421 @@
+{
+  "meta": {
+    "appName": "QR-Universe",
+    "tagline": "Biznesiniz bir skanda"
+  },
+  "common": {
+    "loading": "Yüklənir",
+    "save": "Dəyişiklikləri saxla",
+    "saving": "Saxlanılır…",
+    "cancel": "Ləğv et",
+    "delete": "Sil",
+    "edit": "Redaktə et",
+    "add": "Əlavə et",
+    "create": "Yarat",
+    "remove": "Çıxar",
+    "confirm": "Təsdiqlə",
+    "back": "Geri",
+    "next": "İrəli",
+    "done": "Hazırdır",
+    "search": "Axtar",
+    "viewAll": "Hamısına bax",
+    "optional": "İstəyə bağlı",
+    "required": "Məcburi",
+    "actions": "Əməliyyatlar",
+    "close": "Bağla",
+    "upload": "Şəkil yüklə",
+    "uploading": "Yüklənir…",
+    "change": "Dəyiş",
+    "yes": "Bəli",
+    "no": "Xeyr",
+    "continue": "Davam et",
+    "getStarted": "Başla",
+    "learnMore": "Ətraflı öyrən",
+    "tryDemo": "Canlı demoya bax",
+    "signOut": "Çıxış",
+    "visible": "Görünür",
+    "hidden": "Gizli",
+    "status": "Status",
+    "language": "Dil",
+    "currency": "Valyuta",
+    "copyLink": "Linki kopyala",
+    "copied": "Kopyalandı!",
+    "empty": "Hələ heç nə yoxdur",
+    "error": "Nəsə səhv getdi",
+    "retry": "Yenidən cəhd et"
+  },
+  "landing": {
+    "header": {
+      "features": "Xüsusiyyətlər",
+      "useCases": "İstifadə ssenariləri",
+      "demo": "Canlı demo",
+      "pricing": "Qiymətlər",
+      "login": "Daxil ol",
+      "getStarted": "Pulsuz başla"
+    },
+    "hero": {
+      "eyebrow": "QR əsaslı rəqəmsal kataloqlar",
+      "titleLine1": "Biznesiniz,",
+      "titleHighlight": "bir skanda.",
+      "subtitle": "QR-Universe restoranlar, pərakəndə satış, elektronika və xidmət sahələri üçün istənilən menyunu, kataloqu və ya qiymət siyahısını canlı mobil təcrübəyə çevirir. Tətbiq quraşdırmağa, menyu çap etməyə ehtiyac yoxdur.",
+      "ctaPrimary": "Pulsuz başla — kart tələb olunmur",
+      "ctaSecondary": "Necə işlədiyinə baxın",
+      "badgeScans": "bu ay skan",
+      "badgeLive": "Canlı",
+      "statScans": "12.4M+",
+      "statScansLabel": "aylıq skan",
+      "statBusinesses": "8,300+",
+      "statBusinessesLabel": "qoşulmuş biznes",
+      "statCountries": "42",
+      "statCountriesLabel": "ölkə",
+      "scrollHint": "Kəşf etmək üçün aşağı sürüşdürün"
+    },
+    "logos": {
+      "title": "Sürətlə böyüyən müasir komandaların etibar etdiyi platforma"
+    },
+    "features": {
+      "eyebrow": "Hər şey daxildir",
+      "title": "Hər növ kataloq üçün tək platforma",
+      "subtitle": "Fiziki bizneslərin real satış tərzinə uyğun qurulmuş modullar.",
+      "items": {
+        "realtime": {
+          "title": "Real vaxtda redaktə",
+          "description": "Qiymətləri, şəkilləri və ya mövcudluğu yeniləyin — skan edilən hər QR kod bunu anında əks etdirir. Artıq heç vaxt yenidən çap lazım deyil."
+        },
+        "multitenant": {
+          "title": "Tam çox-kirayəçili təcrid",
+          "description": "Hər şirkət tamamilə təcrid olunmuş öz iş sahəsinə, məlumatlarına və açıq kataloq ünvanına sahib olur."
+        },
+        "attributes": {
+          "title": "Dinamik atributlar",
+          "description": "Qidalar üçün kalori və allergenlər, geyim üçün ölçü və material, texnika üçün RAM və zəmanət — məhsula görə tam fərdiləşdirilə bilər."
+        },
+        "qr": {
+          "title": "Brendli QR Studiyası",
+          "description": "Öz rənglərinizlə, nöqtə üslublarınızla və logonuzla QR kodlar hazırlayın — PNG və ya SVG formatında ixrac edin."
+        },
+        "i18n": {
+          "title": "Daxili tərcümələr",
+          "description": "Turistlərə və yerli müştərilərə eyni anda xidmət göstərin — bütün kataloqda anında dil dəyişikliyi."
+        },
+        "analytics": {
+          "title": "Skan analitikası",
+          "description": "Trafik nümunələrini, populyar məhsulları və ziyarətçi dillərini bir baxışda görün."
+        }
+      }
+    },
+    "useCases": {
+      "eyebrow": "Bir mühərrik, hər sahə",
+      "title": "Real satış tərzinizə uyğun qurulub",
+      "subtitle": "QR-Universe-in sahələri, kateqoriyaları və düzülüşü avtomatik necə uyğunlaşdırdığını görmək üçün aşağıda sahəni dəyişin.",
+      "tabs": {
+        "restaurant": {
+          "label": "Restoran",
+          "title": "Özü-özünü yeniləyən menyular",
+          "description": "Bir mövqeyi satışdan çıxarın, mövsümi təklif başladın və ya qiyməti dəyişin — saniyələr içində hər yerdə canlı olur. Hər yemək üçün allergenləri, kaloriləri və vegan seçimlərini izləyin.",
+          "bullets": ["Yenidən çapsız canlı menyu redaktəsi", "Allergen, kalori və pəhriz etiketləri", "Masabaşı QR sifariş axını"]
+        },
+        "retail": {
+          "label": "Pərakəndə və Moda",
+          "title": "Heç vaxt tükənməyən lookbook",
+          "description": "Hər bir idman ayaqqabısı və ya geyim üçün ölçü, material və rəngləri göstərin, satılan məhsulları dərhal gizlədin.",
+          "bullets": ["Ölçü və material atributları", "Anında \"satıldı\" gizlətmə", "Mövsümi kolleksiya təqdimatları"]
+        },
+        "electronics": {
+          "label": "Elektronika",
+          "title": "Müştərilərin rahatlıqla skan edə biləcəyi texniki vərəqlər",
+          "description": "RAM, yaddaş, zəmanət — mağazada tam texniki xüsusiyyətləri gözəl şəkildə təqdim edin.",
+          "bullets": ["Zəngin texniki xüsusiyyət sahələri", "Zəmanət və stok göstəriciləri", "Müqayisəyə hazır düzülüş"]
+        }
+      }
+    },
+    "demo": {
+      "eyebrow": "Canlı olaraq görün",
+      "title": "Skan et. Bax. Sifariş ver. Saniyələr içində.",
+      "subtitle": "Bu, QR kodunuzu skan etdikdən sonra müştərilərinizin əldə etdiyi məhz həmin təcrübədir — birbaşa brauzerdə sınayın.",
+      "step1": "Müştəri masanızdakı, rəfinizdəki və ya vitrininizdəki QR kodu skan edir",
+      "step2": "Kataloq tətbiq quraşdırmadan anında açılır",
+      "step3": "Öz dilində gəzir, filtrləyir və məhsul detallarına baxır",
+      "cta": "Real canlı demo kataloqunu aç"
+    },
+    "pricing": {
+      "eyebrow": "Sadə qiymətləndirmə",
+      "title": "Sizinlə birgə böyüyən planlar",
+      "subtitle": "Pulsuz başlayın. Daha çox məhsula, QR koda və ya komanda yerinə ehtiyacınız olanda yüksəldin.",
+      "monthly": "Aylıq",
+      "yearly": "İllik",
+      "yearlyBadge": "2 ay pulsuz",
+      "mostPopular": "Ən populyar",
+      "perMonth": "/ay",
+      "custom": "Fərdi",
+      "plans": {
+        "free": {
+          "name": "Pulsuz",
+          "description": "Yeni başlayan sahibkarlar üçün.",
+          "cta": "Pulsuz başla",
+          "features": ["1 kataloq və 1 QR kod", "20 məhsula qədər", "Sadə QR dizaynı", "İcma dəstəyi"]
+        },
+        "pro": {
+          "name": "Pro",
+          "description": "Bir neçə kateqoriyası olan böyüyən bizneslər üçün.",
+          "cta": "Pulsuz sınaq başlat",
+          "features": ["Limitsiz məhsul və kateqoriya", "10-a qədər brendli QR kod", "Tam QR Studiya fərdiləşdirməsi", "Skan analitikası paneli", "Prioritet dəstək"]
+        },
+        "enterprise": {
+          "name": "Korporativ",
+          "description": "Çox filiallı brendlər və franşizalar üçün.",
+          "cta": "Satış komandası ilə əlaqə",
+          "features": ["Limitsiz filial", "Komanda rolları və icazələr", "Xüsusi başlanğıc dəstəyi", "API girişi", "SLA və prioritet dəstək"]
+        }
+      }
+    },
+    "cta": {
+      "title": "Kataloqunuzu təcrübəyə çevirin.",
+      "subtitle": "Artıq gələcəyə doğru skan edən minlərlə restoran, mağaza və studiyaya qoşulun.",
+      "button": "Pulsuz kataloqunuzu yaradın"
+    },
+    "footer": {
+      "description": "Restoranlar, pərakəndə satış, elektronika və xidmətlər üçün interaktiv, QR əsaslı rəqəmsal kataloqlar platforması.",
+      "product": "Məhsul",
+      "company": "Şirkət",
+      "legal": "Hüquqi",
+      "features": "Xüsusiyyətlər",
+      "pricing": "Qiymətlər",
+      "useCases": "İstifadə ssenariləri",
+      "demo": "Canlı demo",
+      "about": "Haqqımızda",
+      "careers": "Karyera",
+      "contact": "Əlaqə",
+      "blog": "Bloq",
+      "privacy": "Məxfilik siyasəti",
+      "terms": "İstifadə şərtləri",
+      "rights": "Bütün hüquqlar qorunur."
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Yenidən xoş gəlmisiniz",
+      "subtitle": "Kataloqunuzu idarə etmək üçün daxil olun.",
+      "email": "E-poçt ünvanı",
+      "password": "Şifrə",
+      "submit": "Daxil ol",
+      "noAccount": "Hesabınız yoxdur?",
+      "signupLink": "Pulsuz yaradın",
+      "demoTitle": "Demo hesabı sınayın",
+      "demoHint": "Demo məlumatlarını doldurmaq üçün aşağıdakı kartlardan birinə klikləyin.",
+      "invalid": "E-poçt və ya şifrə yanlışdır."
+    },
+    "signup": {
+      "title": "İş sahənizi yaradın",
+      "subtitle": "İnteraktiv kataloqunuzu iki dəqiqədən az müddətə işə salın.",
+      "name": "Ad və soyad",
+      "email": "E-poçt ünvanı",
+      "password": "Şifrə",
+      "companyName": "Biznes adı",
+      "industry": "Sahə",
+      "submit": "Hesab yarat",
+      "haveAccount": "Artıq hesabınız var?",
+      "loginLink": "Daxil ol",
+      "emailTaken": "Bu e-poçtla hesab artıq mövcuddur."
+    },
+    "onboarding": {
+      "step": "Addım {current} / {total}",
+      "step1": {
+        "title": "Biznesiniz haqqında məlumat verin",
+        "subtitle": "Bu, açıq kataloqunuzun başlığında görünəcək.",
+        "nameLabel": "Şirkət adı",
+        "logoLabel": "Loqo",
+        "accentLabel": "Vurğu rəngi"
+      },
+      "step2": {
+        "title": "Sahənizi seçin",
+        "subtitle": "Kateqoriyaları, sahələri və başlanğıc məzmununu sizin üçün uyğunlaşdıracağıq."
+      },
+      "step3": {
+        "title": "İlk QR kodunuz hazırdır",
+        "subtitle": "Endirin, çap edin və ya linki paylaşın — kataloqunuz artıq canlıdır.",
+        "catalogLive": "Açıq kataloqunuz bu ünvanda canlıdır:",
+        "goToDashboard": "İdarə panelimə keç"
+      }
+    }
+  },
+  "admin": {
+    "sidebar": {
+      "overview": "Ümumi baxış",
+      "categories": "Kateqoriyalar",
+      "products": "Məhsullar",
+      "qrStudio": "QR Studiya",
+      "settings": "Ayarlar",
+      "viewCatalog": "Açıq kataloqa bax",
+      "backToSite": "Sayta qayıt"
+    },
+    "topbar": {
+      "search": "Tez axtarış…"
+    },
+    "overview": {
+      "title": "Ümumi baxış",
+      "subtitle": "{company} bu cür fəaliyyət göstərir.",
+      "totalScans": "Ümumi skanlar",
+      "last7Days": "Son 7 gün",
+      "totalItems": "Ümumi məhsullar",
+      "visibleItems": "görünən",
+      "totalCategories": "Kateqoriyalar",
+      "scansOverTime": "Zaman üzrə skanlar",
+      "scansOverTimeSubtitle": "Son 30 gün",
+      "topItems": "Ən çox baxılan məhsullar",
+      "localeBreakdown": "Ziyarətçi dilləri",
+      "currentPlan": "Cari plan",
+      "upgrade": "Planı yüksəlt",
+      "quickActions": "Tez əməliyyatlar",
+      "addProduct": "Məhsul əlavə et",
+      "addCategory": "Kateqoriya əlavə et",
+      "openQrStudio": "QR Studiyanı aç"
+    },
+    "categories": {
+      "title": "Kateqoriyalar",
+      "subtitle": "Kataloqunuzu təşkil edin və müştərilərin gördüyü ardıcıllığı dəyişmək üçün sürüşdürün.",
+      "add": "Kateqoriya əlavə et",
+      "namePlaceholder": "məs. Əsas Yeməklər",
+      "empty": "Hələ kateqoriya yoxdur — ilkini əlavə edərək başlayın.",
+      "itemsCount": "{count} məhsul",
+      "dragHint": "Ardıcıllığı dəyişmək üçün dəstəkdən tutub sürüşdürün",
+      "deleteConfirmTitle": "Kateqoriya silinsin?",
+      "deleteConfirmDescription": "\"{name}\" kateqoriyası və içindəki {count} məhsul həmişəlik silinəcək.",
+      "created": "Kateqoriya yaradıldı",
+      "updated": "Kateqoriya yeniləndi",
+      "deleted": "Kateqoriya silindi",
+      "reordered": "Ardıcıllıq saxlanıldı"
+    },
+    "products": {
+      "title": "Məhsullar",
+      "subtitle": "Kataloqunuzdakı hər məhsulu idarə edin.",
+      "add": "Məhsul əlavə et",
+      "searchPlaceholder": "Məhsul axtar…",
+      "allCategories": "Bütün kateqoriyalar",
+      "allStatus": "Bütün statuslar",
+      "table": {
+        "item": "Məhsul",
+        "category": "Kateqoriya",
+        "price": "Qiymət",
+        "status": "Status"
+      },
+      "empty": "Filtrlərinizə uyğun məhsul yoxdur.",
+      "emptyState": "Kataloqunuz boşdur — ilk məhsulunuzu əlavə edin.",
+      "form": {
+        "titleNew": "Yeni məhsul",
+        "titleEdit": "Məhsulu redaktə et",
+        "basics": "Əsas məlumatlar",
+        "titleLabel": "Başlıq",
+        "titlePlaceholder": "məs. Klassik Cheeseburger",
+        "descriptionLabel": "Təsvir",
+        "descriptionPlaceholder": "Məhsulu müştəriləriniz üçün təsvir edin…",
+        "categoryLabel": "Kateqoriya",
+        "pricing": "Qiymət",
+        "priceLabel": "Qiymət",
+        "compareAtPriceLabel": "Endirimdən əvvəlki qiymət",
+        "currencyLabel": "Valyuta",
+        "stockLabel": "Stok sayı",
+        "stockPlaceholder": "Limitsiz üçün boş buraxın",
+        "media": "Media",
+        "visibility": "Görünürlük",
+        "visibleLabel": "Açıq kataloqda göstər",
+        "featuredLabel": "Seçilmiş et",
+        "attributes": "Dinamik atributlar",
+        "attributesHint": "Kalori, ölçü və ya zəmanət kimi öz sahənizə uyğun xüsusi sahələr əlavə edin.",
+        "addAttribute": "Atribut əlavə et",
+        "presets": "{industry} üçün tez əlavə",
+        "attributeKey": "Ad",
+        "attributeValue": "Dəyər",
+        "attributeType": "Növ",
+        "attributeUnit": "Vahid",
+        "attributeListHint": "Birdən çox dəyəri vergüllə ayırın",
+        "attributeBooleanHint": "Müştərilərə keçid düyməsi kimi göstərilir",
+        "noAttributes": "Hələ atribut yoxdur.",
+        "submitCreate": "Məhsul yarat",
+        "submitEdit": "Məhsulu saxla"
+      },
+      "created": "Məhsul yaradıldı",
+      "updated": "Məhsul yeniləndi",
+      "deleted": "Məhsul silindi",
+      "visibilityUpdated": "Görünürlük yeniləndi",
+      "deleteConfirmTitle": "Məhsul silinsin?",
+      "deleteConfirmDescription": "\"{name}\" həmişəlik silinəcək."
+    },
+    "qr": {
+      "title": "QR Studiya",
+      "subtitle": "Birbaşa canlı kataloqunuza yönləndirən brendli QR kodlar hazırlayın.",
+      "yourCodes": "QR kodlarınız",
+      "newCode": "Yeni QR kod",
+      "nameLabel": "Daxili ad",
+      "namePlaceholder": "məs. Masa QR — Əsas Zal",
+      "urlLabel": "Təyinat linki",
+      "style": "Üslub",
+      "dotsColorLabel": "Nöqtə rəngi",
+      "backgroundColorLabel": "Fon rəngi",
+      "dotsStyleLabel": "Nöqtə naxışı",
+      "cornerStyleLabel": "Künc üslubu",
+      "logo": "Mərkəzi loqo",
+      "useCompanyLogo": "Şirkət loqosundan istifadə et",
+      "removeLogo": "Loqonu sil",
+      "preview": "Canlı önizləmə",
+      "downloadPng": "PNG endir",
+      "downloadSvg": "SVG endir",
+      "scans": "{count} skan",
+      "created": "QR kod yaradıldı",
+      "updated": "QR kod saxlanıldı",
+      "deleted": "QR kod silindi",
+      "deleteConfirmTitle": "Bu QR kod silinsin?",
+      "dotStyles": {
+        "SQUARE": "Kvadrat",
+        "DOTS": "Nöqtələr",
+        "ROUNDED": "Yumşaldılmış",
+        "CLASSY": "Zərif",
+        "CLASSY_ROUNDED": "Zərif yumşaldılmış",
+        "EXTRA_ROUNDED": "Maksimum yumşaldılmış"
+      }
+    },
+    "settings": {
+      "title": "Ayarlar",
+      "subtitle": "Şirkət profilinizi və kataloq standart ayarlarını idarə edin.",
+      "profile": "Şirkət profili",
+      "profileHint": "Bu məlumat açıq kataloq səhifənizdə göstərilir.",
+      "nameLabel": "Şirkət adı",
+      "descriptionLabel": "Qısa təsvir",
+      "logoLabel": "Loqo",
+      "addressLabel": "Ünvan",
+      "phoneLabel": "Telefon",
+      "websiteLabel": "Veb-sayt",
+      "localization": "Lokallaşdırma və valyuta",
+      "localizationHint": "Kataloqunuzun dəstəklədiyi dilləri və qiymətlərin necə göstəriləcəyini seçin.",
+      "defaultLocaleLabel": "Standart dil",
+      "supportedLocalesLabel": "Dəstəklənən dillər",
+      "currencyLabel": "Valyuta",
+      "accentColorLabel": "Vurğu rəngi",
+      "planLabel": "Plan",
+      "publicUrlLabel": "Açıq kataloq linki",
+      "saved": "Ayarlar saxlanıldı"
+    }
+  },
+  "catalog": {
+    "searchPlaceholder": "Menyuda axtar…",
+    "noResults": "\"{query}\" ilə uyğun məhsul tapılmadı",
+    "emptyCategory": "Bu kateqoriyada hələ heç nə yoxdur.",
+    "poweredBy": "Təminatçı",
+    "featured": "Seçilmiş",
+    "outOfStock": "Stokda yoxdur",
+    "onlyLeft": "Cəmi {count} ədəd qalıb",
+    "from": "başlayaraq",
+    "close": "Bağla",
+    "share": "Paylaş",
+    "linkCopied": "Kataloq linki kopyalandı",
+    "chooseLanguage": "Dil seçin",
+    "allCategories": "Hamısı",
+    "viewDetails": "Ətraflı bax",
+    "description": "Təsvir",
+    "details": "Detallar",
+    "backToTop": "Yuxarı qayıt",
+    "addressLabel": "Ünvan",
+    "phoneLabel": "Telefon",
+    "websiteLabel": "Veb-sayt"
+  }
+}
