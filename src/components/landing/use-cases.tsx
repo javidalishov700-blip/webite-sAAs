@@ -7,6 +7,8 @@ import { Check, Cpu, ShoppingBag, UtensilsCrossed } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { TiltCard } from "@/components/landing/tilt-card";
+import { Reveal } from "@/components/landing/reveal";
 import { cn } from "@/lib/utils";
 
 const TABS = [
@@ -55,13 +57,13 @@ export function UseCases() {
 
   return (
     <section id="use-cases" className="relative mx-auto max-w-6xl px-5 py-24 sm:px-6">
-      <div className="mx-auto max-w-2xl text-center">
+      <Reveal className="mx-auto max-w-2xl text-center">
         <p className="text-sm font-semibold tracking-wide text-accent uppercase">{t("eyebrow")}</p>
         <h2 className="mt-3 font-display text-3xl font-bold tracking-tight sm:text-4xl">{t("title")}</h2>
         <p className="mt-4 text-muted-foreground">{t("subtitle")}</p>
-      </div>
+      </Reveal>
 
-      <div className="mt-10 flex justify-center">
+      <Reveal delay={0.1} className="mt-10 flex justify-center">
         <Tabs value={active} onValueChange={(v) => setActive(v as typeof active)}>
           <TabsList className="h-auto flex-wrap p-1.5">
             {TABS.map((tab) => (
@@ -72,7 +74,7 @@ export function UseCases() {
             ))}
           </TabsList>
         </Tabs>
-      </div>
+      </Reveal>
 
       <div className="relative mt-10 grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-14">
         <AnimatePresence mode="wait">
@@ -109,46 +111,48 @@ export function UseCases() {
             exit={{ opacity: 0, y: -16, scale: 0.97 }}
             transition={{ duration: 0.35 }}
           >
-            <Card className="glow-border relative overflow-hidden p-5">
-              <div
-                className="absolute inset-x-0 top-0 h-1"
-                style={{ background: `linear-gradient(90deg, ${activeTab.accent}, transparent)` }}
-              />
-              <div className="mb-4 flex items-center justify-between">
-                <Badge variant="outline" className="text-xs">
-                  {activeTab.mock.category}
-                </Badge>
-                <span className="text-xs text-muted-foreground">Live preview</span>
-              </div>
-              <div className="space-y-3">
-                {activeTab.mock.items.map((item) => (
-                  <div key={item.title} className="flex items-center gap-3 rounded-xl border border-border/70 bg-muted/20 p-3">
-                    <div
-                      className="flex size-12 shrink-0 items-center justify-center rounded-lg text-white"
-                      style={{ background: `linear-gradient(135deg, ${activeTab.accent}, transparent)` }}
-                    >
-                      <activeTab.icon className="size-5" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center justify-between gap-2">
-                        <p className="truncate text-sm font-medium">{item.title}</p>
-                        <p className="shrink-0 font-display text-sm font-semibold">{item.price}</p>
+            <TiltCard maxTilt={9}>
+              <Card className="glow-border relative overflow-hidden p-5">
+                <div
+                  className="absolute inset-x-0 top-0 h-1"
+                  style={{ background: `linear-gradient(90deg, ${activeTab.accent}, transparent)` }}
+                />
+                <div className="mb-4 flex items-center justify-between">
+                  <Badge variant="outline" className="text-xs">
+                    {activeTab.mock.category}
+                  </Badge>
+                  <span className="text-xs text-muted-foreground">Live preview</span>
+                </div>
+                <div className="space-y-3">
+                  {activeTab.mock.items.map((item) => (
+                    <div key={item.title} className="flex items-center gap-3 rounded-xl border border-border/70 bg-muted/20 p-3">
+                      <div
+                        className="flex size-12 shrink-0 items-center justify-center rounded-lg text-white"
+                        style={{ background: `linear-gradient(135deg, ${activeTab.accent}, transparent)` }}
+                      >
+                        <activeTab.icon className="size-5" />
                       </div>
-                      <div className="mt-1.5 flex flex-wrap gap-1.5">
-                        {item.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className={cn("rounded-full px-2 py-0.5 text-[10px] font-medium text-muted-foreground", "bg-muted")}
-                          >
-                            {tag}
-                          </span>
-                        ))}
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center justify-between gap-2">
+                          <p className="truncate text-sm font-medium">{item.title}</p>
+                          <p className="shrink-0 font-display text-sm font-semibold">{item.price}</p>
+                        </div>
+                        <div className="mt-1.5 flex flex-wrap gap-1.5">
+                          {item.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className={cn("rounded-full px-2 py-0.5 text-[10px] font-medium text-muted-foreground", "bg-muted")}
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </Card>
+                  ))}
+                </div>
+              </Card>
+            </TiltCard>
           </motion.div>
         </AnimatePresence>
       </div>

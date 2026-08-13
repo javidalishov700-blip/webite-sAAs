@@ -1,9 +1,10 @@
 "use client";
 
 import { useMemo, useRef } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Float, RoundedBox } from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Environment, Float, Lightformer, RoundedBox, Sparkles } from "@react-three/drei";
 import * as THREE from "three";
+import { useWindowPointer } from "@/hooks/use-window-pointer";
 
 const GRID_SIZE = 11;
 const CELL = 0.34;
@@ -44,23 +45,13 @@ function buildPattern(): boolean[][] {
 function QrModules() {
   const groupRef = useRef<THREE.Group>(null);
   const pattern = useMemo(buildPattern, []);
-  const { viewport } = useThree();
-  const pointer = useRef({ x: 0, y: 0 });
+  const pointer = useWindowPointer();
 
-  useFrame((state) => {
-    pointer.current.x = state.pointer.x;
-    pointer.current.y = state.pointer.y;
+  useFrame(() => {
+    const { x, y } = pointer.current;
     if (groupRef.current) {
-      groupRef.current.rotation.y = THREE.MathUtils.lerp(
-        groupRef.current.rotation.y,
-        0.35 + pointer.current.x * 0.35,
-        0.04,
-      );
-      groupRef.current.rotation.x = THREE.MathUtils.lerp(
-        groupRef.current.rotation.x,
-        -0.15 + pointer.current.y * 0.2,
-        0.04,
-      );
+      groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, 0.35 + x * 0.45, 0.045);
+      groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, -0.15 + y * 0.28, 0.045);
     }
   });
 
@@ -85,12 +76,33 @@ function QrModules() {
     return out;
   }, [pattern]);
 
-  void viewport;
-
   return (
     <group ref={groupRef} rotation={[-0.15, 0.35, 0]}>
+      {/* Brushed-metal backplate, lit by the procedural environment below */}
       <RoundedBox args={[GRID_SIZE * CELL + 0.5, GRID_SIZE * CELL + 0.5, 0.12]} radius={0.35} smoothness={4} position={[0, 0, -0.3]}>
-        <meshStandardMaterial color="#0b0b18" metalness={0.4} roughness={0.5} />
+        <meshPhysicalMaterial
+          color="#0b0b18"
+          metalness={0.9}
+          roughness={0.28}
+          clearcoat={1}
+          clearcoatRoughness={0.2}
+          envMapIntensity={1.4}
+        />
+      </RoundedBox>
+      {/* Frosted glass cover pane, sitting just in front of the metal plate */}
+      <RoundedBox args={[GRID_SIZE * CELL + 0.62, GRID_SIZE * CELL + 0.62, 0.04]} radius={0.4} smoothness={4} position={[0, 0, -0.36]}>
+        <meshPhysicalMaterial
+          color="#8f79ff"
+          transparent
+          opacity={0.16}
+          roughness={0.05}
+          metalness={0}
+          clearcoat={1}
+          transmission={0.9}
+          thickness={0.4}
+          ior={1.2}
+          envMapIntensity={1.2}
+        />
       </RoundedBox>
       {cells.map((cell, i) => (
         <Float key={i} speed={2} floatIntensity={0.35} rotationIntensity={0.08} floatingRange={[-0.03, 0.03]}>
@@ -100,16 +112,20 @@ function QrModules() {
             smoothness={2}
             position={[cell.x, cell.y, cell.accent ? 0.05 : 0]}
           >
-            <meshStandardMaterial
+            <meshPhysicalMaterial
               color={cell.accent ? "#00e5ff" : "#8f79ff"}
               emissive={cell.accent ? "#00e5ff" : "#7c5cff"}
               emissiveIntensity={cell.accent ? 1.1 : 0.55}
-              metalness={0.3}
-              roughness={0.35}
+              metalness={0.4}
+              roughness={0.3}
+              clearcoat={0.6}
+              clearcoatRoughness={0.25}
+              envMapIntensity={1}
             />
           </RoundedBox>
         </Float>
       ))}
+      <Sparkles count={45} scale={[6, 6, 3]} size={1.8} speed={0.3} opacity={0.7} color="#c9bfff" noise={0.6} />
     </group>
   );
 }
@@ -125,6 +141,19 @@ function Lights() {
   );
 }
 
+/** Fully procedural (no external HDRI fetch) environment rig for realistic
+ *  metal/glass reflections, tinted to the brand's violet/cyan/magenta palette. */
+function BrandEnvironment() {
+  return (
+    <Environment resolution={128}>
+      <Lightformer intensity={3} color="#8f79ff" position={[0, 4, -4]} scale={[8, 4, 1]} />
+      <Lightformer intensity={2} color="#00e5ff" position={[-4, -2, 3]} scale={[5, 3, 1]} />
+      <Lightformer intensity={1.4} color="#ff3df2" position={[4, 1, 4]} scale={[4, 4, 1]} />
+      <Lightformer intensity={1} color="#ffffff" position={[0, -4, 4]} scale={[6, 2, 1]} />
+    </Environment>
+  );
+}
+
 export default function HeroScene() {
   return (
     <Canvas
@@ -134,6 +163,7 @@ export default function HeroScene() {
       className="!touch-none"
     >
       <Lights />
+      <BrandEnvironment />
       <Float speed={1.4} floatIntensity={0.6} rotationIntensity={0}>
         <QrModules />
       </Float>

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import { motion } from "motion/react";
 import { Menu, QrCode, X } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
@@ -29,11 +30,16 @@ export function SiteHeader() {
   }, []);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-40 flex justify-center px-3 pt-3 sm:px-6 sm:pt-4">
+    <motion.header
+      initial={{ y: -32, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className="fixed inset-x-0 top-0 z-40 flex justify-center px-3 pt-3 sm:px-6 sm:pt-4"
+    >
       <div
         className={cn(
-          "glass flex w-full max-w-6xl items-center justify-between gap-3 rounded-2xl px-4 py-2.5 transition-shadow duration-300",
-          scrolled && "shadow-lg shadow-black/20",
+          "glass relative flex w-full max-w-6xl items-center justify-between gap-3 rounded-2xl px-4 py-2.5 transition-[box-shadow,border-color] duration-300",
+          scrolled && "border-white/15 shadow-lg shadow-black/25",
         )}
       >
         <Link href="/" className="flex items-center gap-2 font-display text-lg font-semibold tracking-tight">
@@ -48,9 +54,10 @@ export function SiteHeader() {
             <a
               key={item.key}
               href={item.href}
-              className="rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground"
+              className="group relative rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               {t(item.key)}
+              <span className="absolute inset-x-3 -bottom-0.5 h-px origin-center scale-x-0 bg-gradient-to-r from-primary to-accent transition-transform duration-300 group-hover:scale-x-100" />
             </a>
           ))}
         </nav>
@@ -103,6 +110,6 @@ export function SiteHeader() {
           </div>
         </DrawerContent>
       </Drawer>
-    </header>
+    </motion.header>
   );
 }

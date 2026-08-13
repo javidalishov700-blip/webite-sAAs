@@ -22,6 +22,11 @@ export function Hero3D() {
       <ErrorBoundary fallback={<GlowFallback />}>
         <HeroScene />
       </ErrorBoundary>
+      {/* Holographic scanner sweep — pure CSS, no extra WebGL cost */}
+      <div
+        aria-hidden
+        className="animate-scan-line pointer-events-none absolute inset-x-6 top-0 h-24 bg-gradient-to-b from-transparent via-accent/25 to-transparent mix-blend-screen sm:inset-x-10"
+      />
     </div>
   );
 }

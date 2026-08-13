@@ -28,6 +28,8 @@
   --color-secondary-foreground: var(--secondary-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-accent-2: var(--accent-2);
+  --color-accent-2-foreground: var(--accent-2-foreground);
 
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
@@ -55,6 +57,8 @@
   --animate-marquee: marquee 32s linear infinite;
   --animate-spin-slow: spin 14s linear infinite;
   --animate-scan-line: scan-line 2.4s ease-in-out infinite;
+  --animate-shimmer: shimmer 2.8s linear infinite;
+  --animate-aurora: aurora 18s ease-in-out infinite;
 }
 
 :root {
@@ -80,6 +84,8 @@
   --secondary-foreground: #201256;
   --accent: #00c2d1;
   --accent-foreground: #04262a;
+  --accent-2: #e619c9;
+  --accent-2-foreground: #2a0324;
 
   --success: #12b981;
   --success-foreground: #ffffff;
@@ -116,6 +122,8 @@
   --secondary-foreground: #cabfff;
   --accent: #00e5ff;
   --accent-foreground: #04171a;
+  --accent-2: #ff3df2;
+  --accent-2-foreground: #2a0324;
 
   --success: #33d69f;
   --success-foreground: #04241a;
@@ -139,6 +147,10 @@
   html {
     color-scheme: dark;
     scroll-behavior: smooth;
+  }
+
+  section[id] {
+    scroll-margin-top: 6rem;
   }
 
   body {
@@ -177,26 +189,51 @@
 
 @layer components {
   .glass {
-    background: color-mix(in oklab, var(--surface) 55%, transparent);
-    backdrop-filter: blur(20px) saturate(160%);
-    -webkit-backdrop-filter: blur(20px) saturate(160%);
-    border: 1px solid color-mix(in oklab, var(--foreground) 8%, transparent);
+    background: color-mix(in oklab, var(--surface) 58%, transparent);
+    backdrop-filter: blur(22px) saturate(180%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    border: 1px solid color-mix(in oklab, var(--foreground) 10%, transparent);
+    box-shadow:
+      inset 0 1px 0 0 color-mix(in oklab, white 12%, transparent),
+      0 1px 2px 0 color-mix(in oklab, black 20%, transparent);
   }
 
   .glass-card {
     background: linear-gradient(
       160deg,
-      color-mix(in oklab, var(--foreground) 6%, transparent),
+      color-mix(in oklab, var(--foreground) 7%, transparent),
       color-mix(in oklab, var(--foreground) 2%, transparent)
     );
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border: 1px solid color-mix(in oklab, var(--foreground) 9%, transparent);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid color-mix(in oklab, var(--foreground) 10%, transparent);
+    box-shadow: inset 0 1px 0 0 color-mix(in oklab, white 8%, transparent);
   }
 
   .text-gradient {
     background: linear-gradient(90deg, var(--primary), var(--accent) 55%, var(--chart-5));
     background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-gradient-neon {
+    background: linear-gradient(90deg, var(--accent), var(--primary) 50%, var(--accent-2));
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .shimmer-text {
+    background: linear-gradient(
+      100deg,
+      color-mix(in oklab, var(--foreground) 55%, transparent) 40%,
+      var(--foreground) 50%,
+      color-mix(in oklab, var(--foreground) 55%, transparent) 60%
+    );
+    background-size: 220% auto;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -305,5 +342,61 @@
   100% {
     transform: translateY(100%);
     opacity: 0;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes aurora {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(4%, -6%) scale(1.08);
+  }
+  66% {
+    transform: translate(-5%, 4%) scale(0.96);
+  }
+}
+
+/* Lenis smooth-scroll integration (see src/components/landing/smooth-scroll.tsx).
+   Kept unlayered so it reliably wins over the layered `html { scroll-behavior }`
+   rule above without needing to fight Tailwind's cascade layers. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Respect the OS-level reduced-motion preference across the whole app: keep
+   state changes instant instead of disabling them outright, so toggles,
+   route changes, etc. still work correctly. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

@@ -6,18 +6,23 @@ import { LiveDemo } from "@/components/landing/live-demo";
 import { Pricing } from "@/components/landing/pricing";
 import { CtaBand } from "@/components/landing/cta-band";
 import { SiteFooter } from "@/components/landing/site-footer";
+import { SiteBackdrop } from "@/components/landing/site-backdrop";
+import { SmoothScroll } from "@/components/landing/smooth-scroll";
 
 export default function HomePage() {
   return (
-    <div className="relative min-h-screen overflow-x-clip">
-      <SiteHeader />
-      <Hero />
-      <Features />
-      <UseCases />
-      <LiveDemo />
-      <Pricing />
-      <CtaBand />
-      <SiteFooter />
-    </div>
+    <SmoothScroll>
+      <div className="relative isolate min-h-screen overflow-x-clip">
+        <SiteBackdrop />
+        <SiteHeader />
+        <Hero />
+        <Features />
+        <UseCases />
+        <LiveDemo />
+        <Pricing />
+        <CtaBand />
+        <SiteFooter />
+      </div>
+    </SmoothScroll>
   );
 }

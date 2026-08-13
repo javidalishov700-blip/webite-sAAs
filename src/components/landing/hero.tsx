@@ -6,14 +6,12 @@ import { ArrowRight, ChevronDown, PlayCircle, Radio } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Hero3D } from "@/components/landing/hero-3d";
-import { AmbientBackground } from "@/components/landing/ambient-background";
 
 export function Hero() {
   const t = useTranslations("landing.hero");
 
   return (
     <section className="relative flex min-h-[100svh] items-center overflow-hidden pt-28 pb-16 sm:pt-32">
-      <AmbientBackground />
       <div className="mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-10 px-5 sm:px-6 lg:grid-cols-2 lg:gap-6">
         <motion.div
           initial={{ opacity: 0, y: 24 }}

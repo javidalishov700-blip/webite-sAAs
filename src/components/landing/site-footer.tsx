@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import { QrCode, Github, Twitter, Linkedin } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import { Reveal, RevealGroup, RevealItem } from "@/components/landing/reveal";
 
 export function SiteFooter() {
   const t = useTranslations("landing.footer");
@@ -36,8 +37,8 @@ export function SiteFooter() {
   return (
     <footer className="relative border-t border-border/70">
       <div className="mx-auto max-w-6xl px-5 py-16 sm:px-6">
-        <div className="grid grid-cols-2 gap-10 sm:grid-cols-4">
-          <div className="col-span-2">
+        <RevealGroup className="grid grid-cols-2 gap-10 sm:grid-cols-4" stagger={0.08}>
+          <RevealItem className="col-span-2">
             <Link href="/" className="flex items-center gap-2 font-display text-lg font-semibold">
               <span className="flex size-8 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent text-white">
                 <QrCode className="size-4.5" />
@@ -56,10 +57,10 @@ export function SiteFooter() {
                 <Linkedin className="size-4.5" />
               </a>
             </div>
-          </div>
+          </RevealItem>
 
           {columns.map((col) => (
-            <div key={col.title}>
+            <RevealItem key={col.title}>
               <p className="text-sm font-semibold">{col.title}</p>
               <ul className="mt-4 space-y-2.5">
                 {col.links.map((link) => (
@@ -70,15 +71,15 @@ export function SiteFooter() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </RevealItem>
           ))}
-        </div>
+        </RevealGroup>
 
-        <div className="mt-14 flex flex-col items-center justify-between gap-3 border-t border-border/70 pt-6 text-xs text-muted-foreground sm:flex-row">
+        <Reveal className="mt-14 flex flex-col items-center justify-between gap-3 border-t border-border/70 pt-6 text-xs text-muted-foreground sm:flex-row">
           <p>
             © {new Date().getFullYear()} QR-Universe. {t("rights")}
           </p>
-        </div>
+        </Reveal>
       </div>
     </footer>
   );
