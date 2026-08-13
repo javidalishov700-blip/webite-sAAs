@@ -1,0 +1,15 @@
+{
+  "name": "webite-sAAs",
+  "install": "npm ci",
+  "terminals": [
+    {
+      "name": "dev",
+      "command": "npm run dev",
+      "description": "Runs the Vite web dev server (5173) and the Express API (3001) together via concurrently."
+    }
+  ],
+  "ports": [
+    { "name": "web", "port": 5173 },
+    { "name": "api", "port": 3001 }
+  ]
+}
