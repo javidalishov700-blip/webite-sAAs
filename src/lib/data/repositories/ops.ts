@@ -3,9 +3,9 @@ import { prisma } from "@/lib/prisma";
 import { PUBLIC_SHOWCASE_SLUG } from "@/lib/data/public-showcase";
 import { isPlatformOperator } from "@/lib/platform-admin";
 import type { Plan } from "@/lib/data/types";
-import type { OpsProtectedReason, OpsReport, OpsWorkspace } from "@/lib/ops-types";
+import type { OpsInspect, OpsProtectedReason, OpsReport, OpsWorkspace } from "@/lib/ops-types";
 
-export type { OpsProtectedReason, OpsReport, OpsWorkspace } from "@/lib/ops-types";
+export type { OpsInspect, OpsProtectedReason, OpsReport, OpsWorkspace } from "@/lib/ops-types";
 
 function toIso(value: Date): string {
   return value.toISOString();
@@ -123,6 +123,84 @@ export async function setWorkspacePublished(id: string, isPublished: boolean) {
     where: { id },
     data: { isPublished },
   });
+}
+
+export async function getOpsWorkspaceInspect(id: string): Promise<OpsInspect | null> {
+  const row = await prisma.company.findUnique({
+    where: { id },
+    include: {
+      memberships: {
+        where: { role: "OWNER" },
+        include: { user: { select: { name: true, email: true, emailVerifiedAt: true } } },
+      },
+      qrCodes: { orderBy: { createdAt: "desc" } },
+      categories: {
+        orderBy: { position: "asc" },
+        include: {
+          items: {
+            orderBy: { position: "asc" },
+            include: { attributes: { orderBy: { position: "asc" } } },
+          },
+        },
+      },
+    },
+  });
+  if (!row) return null;
+
+  return {
+    id: row.id,
+    name: row.name,
+    slug: row.slug,
+    plan: row.plan,
+    industry: row.industry,
+    description: row.description,
+    logoUrl: row.logoUrl,
+    coverUrl: row.coverUrl,
+    accentColor: row.accentColor,
+    currency: row.currency,
+    address: row.address,
+    phone: row.phone,
+    website: row.website,
+    isPublished: row.isPublished,
+    bannedAt: row.bannedAt ? toIso(row.bannedAt) : null,
+    bannedReason: row.bannedReason,
+    createdAt: toIso(row.createdAt),
+    owners: row.memberships.map((member) => ({
+      name: member.user.name,
+      email: member.user.email,
+      emailVerified: Boolean(member.user.emailVerifiedAt),
+    })),
+    qrCodes: row.qrCodes.map((qr) => ({
+      id: qr.id,
+      name: qr.name,
+      isActive: qr.isActive,
+      scans: qr.scans,
+      targetUrl: qr.targetUrl,
+    })),
+    categories: row.categories.map((category) => ({
+      id: category.id,
+      name: category.name,
+      icon: category.icon,
+      isVisible: category.isVisible,
+      items: category.items.map((item) => ({
+        id: item.id,
+        title: item.title,
+        description: item.description,
+        price: Number(item.price),
+        currency: item.currency,
+        images: item.images,
+        isVisible: item.isVisible,
+        isFeatured: item.isFeatured,
+        stockCount: item.stockCount,
+        attributes: item.attributes.map((attribute) => ({
+          key: attribute.key,
+          value: attribute.value,
+          type: attribute.type,
+          unit: attribute.unit,
+        })),
+      })),
+    })),
+  };
 }
 
 export async function listOpsReports(): Promise<OpsReport[]> {

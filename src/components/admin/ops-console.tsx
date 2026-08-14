@@ -8,7 +8,9 @@ import {
   Eye,
   EyeOff,
   Flag,
+  FolderSearch,
   Lock,
+  Mail,
   QrCode,
   Search,
   ShieldAlert,
@@ -43,8 +45,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useOpsReports, useOpsWorkspaceActions, useOpsWorkspaces } from "@/hooks/use-ops";
+import { useOpsMail, useOpsReports, useOpsWorkspaceActions, useOpsWorkspaces } from "@/hooks/use-ops";
 import { ApiError } from "@/lib/api-client";
+import { Link } from "@/i18n/navigation";
 import type { Plan } from "@/lib/data/types";
 import type { OpsWorkspace } from "@/lib/ops-types";
 
@@ -67,6 +70,7 @@ export function OpsConsole() {
 
   const workspaces = useOpsWorkspaces(query);
   const reports = useOpsReports();
+  const mail = useOpsMail();
   const { patch, remove } = useOpsWorkspaceActions();
 
   function fail(err: unknown) {
@@ -157,6 +161,47 @@ export function OpsConsole() {
     <div className="max-w-5xl">
       <PageHeader title={t("title")} subtitle={t("subtitle")} />
 
+      <Card className="mb-6">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Mail className="size-4" />
+            {t("mailTitle")}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3 text-sm">
+          <p>
+            {mail.status.data?.configured ? (
+              <Badge variant="success">{t("mailOn")}</Badge>
+            ) : (
+              <Badge variant="destructive">{t("mailOff")}</Badge>
+            )}
+            {mail.status.data?.from ? (
+              <span className="ml-2 font-mono text-xs text-muted-foreground">{mail.status.data.from}</span>
+            ) : null}
+          </p>
+          <ol className="list-decimal space-y-1.5 pl-4 text-muted-foreground">
+            {(t.raw("mailSteps") as string[]).map((step) => (
+              <li key={step.slice(0, 40)}>{step}</li>
+            ))}
+          </ol>
+          <Button
+            size="sm"
+            variant="outline"
+            loading={mail.test.isPending}
+            onClick={async () => {
+              try {
+                await mail.test.mutateAsync();
+                toast.success(t("mailTestOk"));
+              } catch (err) {
+                toast.error(err instanceof ApiError ? err.message : t("mailTestFail"));
+              }
+            }}
+          >
+            {t("mailTest")}
+          </Button>
+        </CardContent>
+      </Card>
+
       <div className="relative mb-5">
         <Search className="absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground" />
         <Input
@@ -233,6 +278,12 @@ export function OpsConsole() {
                         </SelectContent>
                       </Select>
                       <div className="flex flex-wrap gap-2 sm:justify-end">
+                        <Button size="sm" variant="glow" asChild>
+                          <Link href={`/admin/ops/${workspace.id}`}>
+                            <FolderSearch className="size-3.5" />
+                            {t("inspect")}
+                          </Link>
+                        </Button>
                         {workspace.bannedAt ? (
                           <Button
                             size="sm"

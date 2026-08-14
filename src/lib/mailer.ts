@@ -10,14 +10,23 @@ type MailPayload = {
 };
 
 function fromAddress(): string {
-  return process.env.EMAIL_FROM?.trim() || "QR-Universe <noreply@qr-universe.app>";
+  return process.env.EMAIL_FROM?.trim() || "QR-Universe <beth.t@example.com>";
 }
 
-export async function sendMail(payload: MailPayload): Promise<{ sent: boolean }> {
+export function mailerStatus(): { configured: boolean; from: string; usingOnboardingDomain: boolean } {
+  const from = fromAddress();
+  return {
+    configured: Boolean(process.env.RESEND_API_KEY?.trim()),
+    from,
+    usingOnboardingDomain: from.toLowerCase().includes("resend.dev"),
+  };
+}
+
+export async function sendMail(payload: MailPayload): Promise<{ sent: boolean; error?: string }> {
   const apiKey = process.env.RESEND_API_KEY?.trim();
   if (!apiKey) {
     console.info(`[mailer] RESEND_API_KEY missing — skip send to ${payload.to}: ${payload.subject}`);
-    return { sent: false };
+    return { sent: false, error: "missing_key" };
   }
 
   const response = await fetch("https://api.resend.com/emails", {
@@ -38,7 +47,7 @@ export async function sendMail(payload: MailPayload): Promise<{ sent: boolean }>
   if (!response.ok) {
     const body = await response.text().catch(() => "");
     console.error("[mailer] Resend failed", response.status, body.slice(0, 400));
-    return { sent: false };
+    return { sent: false, error: body.slice(0, 240) || `http_${response.status}` };
   }
   return { sent: true };
 }

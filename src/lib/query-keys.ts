@@ -7,4 +7,6 @@ export const queryKeys = {
   catalog: (slug: string) => ["catalog", slug] as const,
   opsWorkspaces: (q: string) => ["ops-workspaces", q] as const,
   opsReports: ["ops-reports"] as const,
+  opsInspect: (id: string) => ["ops-inspect", id] as const,
+  opsMail: ["ops-mail"] as const,
 };

@@ -4,6 +4,7 @@ import { opsWorkspacePatchSchema } from "@/lib/validators/ops";
 import {
   banWorkspace,
   getOpsWorkspaceGuard,
+  getOpsWorkspaceInspect,
   setWorkspacePlan,
   setWorkspacePublished,
   unbanWorkspace,
@@ -14,6 +15,16 @@ import { setAllQrActive, setQrActiveForCompany } from "@/lib/data/repositories/q
 
 interface Params {
   params: Promise<{ id: string }>;
+}
+
+export async function GET(_request: NextRequest, { params }: Params) {
+  const { user, response } = await requirePlatformAdmin();
+  if (!user) return response!;
+
+  const { id } = await params;
+  const inspect = await getOpsWorkspaceInspect(id);
+  if (!inspect) return NextResponse.json({ error: "not_found" }, { status: 404 });
+  return NextResponse.json({ workspace: inspect });
 }
 
 export async function PATCH(request: NextRequest, { params }: Params) {

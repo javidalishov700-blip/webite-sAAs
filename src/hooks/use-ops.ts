@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api-client";
 import { queryKeys } from "@/lib/query-keys";
 import type { Plan } from "@/lib/data/types";
-import type { OpsReport, OpsWorkspace } from "@/lib/ops-types";
+import type { OpsMailStatus, OpsReport, OpsWorkspace } from "@/lib/ops-types";
 
 export type OpsPatchInput =
   | { id: string; action: "ban"; reason?: string }
@@ -28,6 +28,19 @@ export function useOpsReports() {
     queryKey: queryKeys.opsReports,
     queryFn: () => api.get<{ reports: OpsReport[] }>("/api/ops/reports").then((r) => r.reports),
   });
+}
+
+export function useOpsMail() {
+  const queryClient = useQueryClient();
+  const status = useQuery({
+    queryKey: queryKeys.opsMail,
+    queryFn: () => api.get<{ mail: OpsMailStatus }>("/api/ops/mail").then((r) => r.mail),
+  });
+  const test = useMutation({
+    mutationFn: () => api.post("/api/ops/mail"),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: queryKeys.opsMail }),
+  });
+  return { status, test };
 }
 
 export function useOpsWorkspaceActions() {
