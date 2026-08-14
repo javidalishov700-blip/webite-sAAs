@@ -1,4 +1,4 @@
-import type { AppLocale, Plan } from "@/lib/data/types";
+import type { AppLocale } from "@/lib/data/types";
 
 export { ATTRIBUTE_PRESETS, INDUSTRY_VALUES } from "@/lib/industries";
 export type { AttributePreset } from "@/lib/industries";
@@ -22,15 +22,6 @@ export const CURRENCY_SYMBOL: Record<string, string> = {
   TRY: "₺",
   AZN: "₼",
   RUB: "₽",
-};
-
-export const PLAN_META: Record<
-  Plan,
-  { itemLimit: number | null; categoryLimit: number | null; qrLimit: number | null; teamSeats: number | null }
-> = {
-  FREE: { itemLimit: 100, categoryLimit: null, qrLimit: 3, teamSeats: 1 },
-  PRO: { itemLimit: null, categoryLimit: null, qrLimit: 10, teamSeats: 5 },
-  ENTERPRISE: { itemLimit: null, categoryLimit: null, qrLimit: null, teamSeats: null },
 };
 
 export const SESSION_COOKIE_NAME = "qru_session";

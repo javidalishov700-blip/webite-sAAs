@@ -232,7 +232,7 @@
     "pricing": {
       "eyebrow": "Sadə qiymətləndirmə",
       "title": "Sizinlə birgə böyüyən planlar",
-      "subtitle": "Pulsuz başlayın. Daha çox məhsula, QR koda və ya komanda yerinə ehtiyacınız olanda yüksəldin.",
+      "subtitle": "Kiçik kataloqla pulsuz başlayın. Pro-da limitsiz məhsul və kateqoriya.",
       "monthly": "Aylıq",
       "yearly": "İllik",
       "yearlyBadge": "2 ay pulsuz",
@@ -245,9 +245,9 @@
           "description": "Yeni başlayan sahibkarlar üçün.",
           "cta": "Pulsuz başla",
           "features": [
-            "1 kataloq və 3 QR kod",
-            "100 məhsula qədər, öz adınızla limitsiz kateqoriya",
-            "Sadə QR dizaynı",
+            "4 kateqoriya və 15 məhsul",
+            "2 QR kod",
+            "Qonaq telefonunda canlı kataloq",
             "İcma dəstəyi"
           ]
         },
@@ -257,7 +257,8 @@
           "cta": "Pulsuz sınaq başlat",
           "features": [
             "Limitsiz məhsul və kateqoriya",
-            "10-a qədər brendli QR kod",
+            "20-yə qədər brendli QR kod",
+            "Seçilmiş məhsul nişanı",
             "Tam QR Studiya fərdiləşdirməsi",
             "Skan analitikası paneli",
             "Prioritet dəstək"
@@ -545,6 +546,25 @@
       "openPreview": "Telefonda bax",
       "openQrStudio": "QR Studiyanı aç"
     },
+    "plan": {
+      "hit": {
+        "items": "Pulsuz planda {limit} məhsul var. Pro ilə daha çox əlavə edə bilərsiniz.",
+        "categories": "Pulsuz planda {limit} kateqoriya var. Pro ilə daha çox əlavə edə bilərsiniz.",
+        "qrCodes": "Pulsuz planda {limit} QR kod var. Pro ilə daha çox əlavə edə bilərsiniz.",
+        "featured": "Seçilmiş nişanı Pro-dadır. Məhsulu vurğulamaq üçün yüksəldin."
+      },
+      "hitHint": "Pro-da limitsiz məhsul və kateqoriya, daha çox QR və seçilmiş nişanı var.",
+      "upgradeCta": "Pro-ya bax",
+      "items": "Məhsullar",
+      "categories": "Kateqoriyalar",
+      "qrCodes": "QR kodlar",
+      "bannerFree": "Pulsuz plan · {items} məhsul · {categories} kateqoriya · {qr} QR",
+      "compareTitle": "Pulsuz və Pro",
+      "compareHint": "Pulsuz kiçik kataloq üçündür. Pro tam menyu üçündür.",
+      "freeName": "Pulsuz",
+      "proLine": "Pro: limitsiz məhsul və kateqoriya, 20 QR kod, seçilmiş nişan.",
+      "contactCta": "Pro istəyin"
+    },
     "categories": {
       "title": "Kateqoriyalar",
       "subtitle": "Kataloqunuzu təşkil edin və müştərilərin gördüyü ardıcıllığı dəyişmək üçün sürüşdürün.",
@@ -656,6 +676,7 @@
         "visibility": "Görünürlük",
         "visibleLabel": "Açıq kataloqda göstər",
         "featuredLabel": "Seçilmiş et",
+        "featuredProHint": "Seçilmiş nişanı Pro-dadır.",
         "attributes": "Dinamik atributlar",
         "attributesHint": "Sahələr kateqoriyaya görə gəlir — yeməkdə kalori, paltarda ölçü. Ölçüləri ayrı-ayrı yazmayın, üstünə basın.",
         "addAttribute": "Atribut əlavə et",

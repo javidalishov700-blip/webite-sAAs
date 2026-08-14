@@ -34,9 +34,12 @@ import {
 import { useCategories } from "@/hooks/use-categories";
 import { useCreateItem, useDeleteItem, useDuplicateItem, useItems, useUpdateItem } from "@/hooks/use-items";
 import { useCompany } from "@/hooks/use-company";
+import { usePlanUsage } from "@/hooks/use-plan-usage";
+import { usePlanLimitToast } from "@/hooks/use-plan-limit-toast";
+import { PlanUsageBanner } from "@/components/admin/plan-usage-banner";
 import { Link, useRouter } from "@/i18n/navigation";
 import { formatCurrency } from "@/lib/utils";
-import { ApiError } from "@/lib/api-client";
+import { ApiError, isPlanLimitError } from "@/lib/api-client";
 import type { ItemWithAttributes } from "@/lib/data/types";
 import type { ItemInput } from "@/lib/validators/item";
 
@@ -48,6 +51,8 @@ export default function ProductsPage() {
   const { data: company } = useCompany();
   const { data: categories, isLoading: categoriesLoading } = useCategories();
   const { data: items, isLoading: itemsLoading } = useItems();
+  const usage = usePlanUsage();
+  const planToast = usePlanLimitToast();
   const createItem = useCreateItem();
   const updateItem = useUpdateItem();
   const deleteItem = useDeleteItem();
@@ -88,6 +93,7 @@ export default function ProductsPage() {
       setFormOpen(false);
       setEditingItem(null);
     } catch (err) {
+      if (planToast.fromError(err)) return;
       toast.error(err instanceof ApiError ? err.message : tc("error"));
     }
   }
@@ -119,6 +125,10 @@ export default function ProductsPage() {
               variant="glow"
               disabled={hasNoCategoriesYet}
               onClick={() => {
+                if (!usage.items.canAdd) {
+                  planToast.show("items", usage.items.limit);
+                  return;
+                }
                 setEditingItem(null);
                 setFormOpen(true);
               }}
@@ -129,6 +139,8 @@ export default function ProductsPage() {
           </>
         }
       />
+
+      <PlanUsageBanner />
 
       {!isLoading && (items?.length ?? 0) > 0 && (
         <div className="mb-4 flex flex-col gap-2.5 sm:flex-row">
@@ -179,7 +191,13 @@ export default function ProductsPage() {
           icon={Package}
           title={t("emptyState")}
           action={
-            <Button variant="glow" onClick={() => setFormOpen(true)}>
+            <Button variant="glow" onClick={() => {
+              if (!usage.items.canAdd) {
+                planToast.show("items", usage.items.limit);
+                return;
+              }
+              setFormOpen(true);
+            }}>
               <Plus className="size-4" />
               {t("add")}
             </Button>
@@ -256,7 +274,17 @@ export default function ProductsPage() {
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onSelect={() => {
-                            duplicateItem.mutate(item.id, { onSuccess: () => toast.success(t("duplicated")) });
+                            if (!usage.items.canAdd) {
+                              planToast.show("items", usage.items.limit);
+                              return;
+                            }
+                            duplicateItem.mutate(item.id, {
+                              onSuccess: () => toast.success(t("duplicated")),
+                              onError: (err) => {
+                                if (!isPlanLimitError(err)) toast.error(tc("error"));
+                                else planToast.fromError(err);
+                              },
+                            });
                           }}
                         >
                           <Copy className="size-4" />
@@ -296,6 +324,8 @@ export default function ProductsPage() {
               item={editingItem}
               defaultCategoryId={categoryFilter !== "all" ? categoryFilter : undefined}
               defaultCurrency={company.currency}
+              featuredLocked={!usage.canFeature}
+              onFeaturedLocked={() => planToast.show("featured")}
               onSubmit={handleSubmit}
               onCancel={() => setFormOpen(false)}
               isSubmitting={createItem.isPending || updateItem.isPending}

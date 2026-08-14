@@ -3,6 +3,8 @@ import { requireSession } from "@/lib/auth/guard";
 import { itemSchema } from "@/lib/validators/item";
 import { createItem, listItemsByCompany } from "@/lib/data/repositories/items";
 import { getCategoryById } from "@/lib/data/repositories/categories";
+import { getCompanyById } from "@/lib/data/repositories/companies";
+import { assertFeaturedAllowed, assertPlanCapacity } from "@/lib/plan-guard";
 
 export async function GET() {
   const { user, response } = await requireSession();
@@ -19,6 +21,14 @@ export async function POST(request: NextRequest) {
   if (!parsed.success) {
     return NextResponse.json({ error: parsed.error.issues[0]?.message ?? "invalid" }, { status: 400 });
   }
+
+  const company = await getCompanyById(user.companyId);
+  if (!company) return NextResponse.json({ error: "not_found" }, { status: 404 });
+
+  const capacity = await assertPlanCapacity(user.companyId, company.plan, "items");
+  if (capacity) return capacity;
+  const featured = assertFeaturedAllowed(company.plan, parsed.data.isFeatured);
+  if (featured) return featured;
 
   const category = await getCategoryById(parsed.data.categoryId);
   if (!category || category.companyId !== user.companyId) {

@@ -29,9 +29,13 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useCreateQrCode, useDeleteQrCode, useQrCodes, useUpdateQrCode } from "@/hooks/use-qr-codes";
 import { useCompany } from "@/hooks/use-company";
+import { usePlanUsage } from "@/hooks/use-plan-usage";
+import { usePlanLimitToast } from "@/hooks/use-plan-limit-toast";
+import { PlanUsageBanner } from "@/components/admin/plan-usage-banner";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { catalogAbsoluteUrl, catalogPreviewPath, qrGoAbsoluteUrl } from "@/lib/catalog-url";
+import { ApiError } from "@/lib/api-client";
 import type { QrDotStyle } from "@/lib/data/types";
 
 const DOT_STYLES: QrDotStyle[] = ["SQUARE", "DOTS", "ROUNDED", "CLASSY", "CLASSY_ROUNDED", "EXTRA_ROUNDED"];
@@ -41,6 +45,8 @@ export default function QrStudioPage() {
   const tc = useTranslations("common");
   const { data: company } = useCompany();
   const { data: qrCodes, isLoading } = useQrCodes();
+  const usage = usePlanUsage();
+  const planToast = usePlanLimitToast();
   const createQr = useCreateQrCode();
   const updateQr = useUpdateQrCode();
   const deleteQr = useDeleteQrCode();
@@ -79,9 +85,18 @@ export default function QrStudioPage() {
   const qrPayload = selected ? qrGoAbsoluteUrl(origin, selected.id) : catalogUrl;
 
   async function handleCreate() {
-    const qr = await createQr.mutateAsync({ name: `QR code ${(qrCodes?.length ?? 0) + 1}` });
-    setSelectedId(qr.id);
-    toast.success(t("created"));
+    if (!usage.qrCodes.canAdd) {
+      planToast.show("qrCodes", usage.qrCodes.limit);
+      return;
+    }
+    try {
+      const qr = await createQr.mutateAsync({ name: `QR code ${(qrCodes?.length ?? 0) + 1}` });
+      setSelectedId(qr.id);
+      toast.success(t("created"));
+    } catch (err) {
+      if (planToast.fromError(err)) return;
+      toast.error(err instanceof ApiError ? err.message : tc("error"));
+    }
   }
 
   async function handleSave() {
@@ -119,6 +134,8 @@ export default function QrStudioPage() {
           </Button>
         }
       />
+
+      <PlanUsageBanner />
 
       {!qrCodes || qrCodes.length === 0 ? (
         <EmptyState

@@ -17,9 +17,11 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useCompany, useDeleteCompany, useUpdateCompany } from "@/hooks/use-company";
 import { Switch } from "@/components/ui/switch";
-import { useRouter } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { catalogAbsoluteUrl } from "@/lib/catalog-url";
 import { CURRENCIES, LOCALES, LOCALE_META } from "@/lib/constants";
+import { PLAN_LIMITS, formatPlanUsage, isPaidPlan } from "@/lib/plan";
+import { usePlanUsage } from "@/hooks/use-plan-usage";
 import { IndustryPicker } from "@/components/industry-picker";
 import { cn } from "@/lib/utils";
 import type { AppLocale, Industry } from "@/lib/data/types";
@@ -89,9 +91,11 @@ function PasswordCard() {
 
 export default function SettingsPage() {
   const t = useTranslations("admin.settings");
+  const tPlan = useTranslations("admin.plan");
   const tc = useTranslations("common");
   const locale = useLocale();
   const { data: company, isLoading } = useCompany();
+  const usage = usePlanUsage();
   const updateCompany = useUpdateCompany();
   const deleteCompany = useDeleteCompany();
   const router = useRouter();
@@ -296,30 +300,61 @@ export default function SettingsPage() {
         <Card>
           <CardHeader>
             <CardTitle>{t("planLabel")}</CardTitle>
+            <CardDescription>{tPlan("compareHint")}</CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-3">
-              <Badge variant="accent" className="py-1.5 text-sm">
-                {company.plan}
-              </Badge>
-              <div>
-                <p className="text-sm font-medium">{t("publicUrlLabel")}</p>
-                <a href={`/${locale}/c/${company.slug}`} target="_blank" rel="noreferrer" className="flex items-center gap-1 font-mono text-xs text-primary hover:underline">
-                  {publicUrl.replace(/^https?:\/\//, "")}
-                  <ExternalLink className="size-3" />
-                </a>
+          <CardContent className="space-y-4">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-center gap-3">
+                <Badge variant="accent" className="py-1.5 text-sm">
+                  {company.plan}
+                </Badge>
+                <div>
+                  <p className="text-sm font-medium">{t("publicUrlLabel")}</p>
+                  <a href={`/${locale}/c/${company.slug}`} target="_blank" rel="noreferrer" className="flex items-center gap-1 font-mono text-xs text-primary hover:underline">
+                    {publicUrl.replace(/^https?:\/\//, "")}
+                    <ExternalLink className="size-3" />
+                  </a>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <Label htmlFor="published">{t("publishedLabel")}</Label>
+                <Switch
+                  id="published"
+                  checked={company.isPublished}
+                  onCheckedChange={(checked) => {
+                    updateCompany.mutate({ isPublished: checked }, { onSuccess: () => toast.success(t("saved")) });
+                  }}
+                />
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <Label htmlFor="published">{t("publishedLabel")}</Label>
-              <Switch
-                id="published"
-                checked={company.isPublished}
-                onCheckedChange={(checked) => {
-                  updateCompany.mutate({ isPublished: checked }, { onSuccess: () => toast.success(t("saved")) });
-                }}
-              />
+
+            <div className="grid gap-2 rounded-xl border border-border/70 bg-muted/10 p-3 text-sm sm:grid-cols-3">
+              <p>
+                {tPlan("items")}: {formatPlanUsage(usage.items.used, usage.items.limit)}
+              </p>
+              <p>
+                {tPlan("categories")}: {formatPlanUsage(usage.categories.used, usage.categories.limit)}
+              </p>
+              <p>
+                {tPlan("qrCodes")}: {formatPlanUsage(usage.qrCodes.used, usage.qrCodes.limit)}
+              </p>
             </div>
+
+            {!isPaidPlan(company.plan) ? (
+              <div className="rounded-xl border border-primary/20 bg-primary/5 p-3.5 text-sm">
+                <p className="font-medium">{tPlan("compareTitle")}</p>
+                <ul className="mt-2 space-y-1 text-muted-foreground">
+                  <li>
+                    {tPlan("freeName")}: {PLAN_LIMITS.FREE.categories} {tPlan("categories").toLowerCase()}, {PLAN_LIMITS.FREE.items}{" "}
+                    {tPlan("items").toLowerCase()}, {PLAN_LIMITS.FREE.qrCodes} {tPlan("qrCodes")}
+                  </li>
+                  <li>{tPlan("proLine")}</li>
+                </ul>
+                <Button variant="glow" size="sm" className="mt-3" asChild>
+                  <Link href="/contact">{tPlan("contactCta")}</Link>
+                </Button>
+              </div>
+            ) : null}
           </CardContent>
         </Card>
 

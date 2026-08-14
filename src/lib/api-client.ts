@@ -2,10 +2,19 @@
 
 export class ApiError extends Error {
   status: number;
-  constructor(message: string, status: number) {
+  code?: string;
+  payload?: Record<string, unknown>;
+
+  constructor(message: string, status: number, payload?: Record<string, unknown>) {
     super(message);
     this.status = status;
+    this.payload = payload;
+    this.code = typeof payload?.code === "string" ? payload.code : undefined;
   }
+}
+
+export function isPlanLimitError(error: unknown): error is ApiError {
+  return error instanceof ApiError && error.code === "plan_limit";
 }
 
 export async function apiFetch<T>(url: string, options?: RequestInit): Promise<T> {
@@ -21,7 +30,8 @@ export async function apiFetch<T>(url: string, options?: RequestInit): Promise<T
   const data = contentType.includes("application/json") ? await res.json().catch(() => null) : null;
 
   if (!res.ok) {
-    throw new ApiError((data && (data.error as string)) ?? `Request failed (${res.status})`, res.status);
+    const payload = data && typeof data === "object" ? (data as Record<string, unknown>) : undefined;
+    throw new ApiError((payload?.error as string) ?? `Request failed (${res.status})`, res.status, payload);
   }
   return data as T;
 }

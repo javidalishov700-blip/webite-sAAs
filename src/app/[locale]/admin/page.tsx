@@ -10,6 +10,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { PlanUsageBanner } from "@/components/admin/plan-usage-banner";
+import { usePlanUsage } from "@/hooks/use-plan-usage";
 import { useAnalytics } from "@/hooks/use-analytics";
 import { useCompany } from "@/hooks/use-company";
 import { formatCompactNumber } from "@/lib/utils";
@@ -21,6 +23,7 @@ export default function AdminOverviewPage() {
   const locale = useLocale();
   const { data: company } = useCompany();
   const { data: summary, isLoading } = useAnalytics();
+  const usage = usePlanUsage();
 
   const localeTotal = summary?.localeBreakdown.reduce((sum, l) => sum + l.count, 0) ?? 0;
 
@@ -36,6 +39,8 @@ export default function AdminOverviewPage() {
           </Badge>
         }
       />
+
+      <PlanUsageBanner />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {isLoading || !summary ? (
@@ -53,11 +58,16 @@ export default function AdminOverviewPage() {
             <StatCard
               icon={Package}
               label={t("totalItems")}
-              value={String(summary.totalItems)}
+              value={usage.items.limit === null ? String(summary.totalItems) : `${summary.totalItems}/${usage.items.limit}`}
               hint={`${summary.visibleItems} ${t("visibleItems")}`}
               accent="var(--chart-3)"
             />
-            <StatCard icon={LayoutGrid} label={t("totalCategories")} value={String(summary.totalCategories)} accent="var(--chart-4)" />
+            <StatCard
+              icon={LayoutGrid}
+              label={t("totalCategories")}
+              value={usage.categories.limit === null ? String(summary.totalCategories) : `${summary.totalCategories}/${usage.categories.limit}`}
+              accent="var(--chart-4)"
+            />
             <StatCard icon={QrCodeIcon} label={t("currentPlan")} value={company?.plan ?? "—"} accent="var(--chart-2)" />
           </>
         )}

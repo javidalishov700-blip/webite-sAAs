@@ -4,6 +4,7 @@ import { qrSchema } from "@/lib/validators/qr";
 import { createQrCode, listQrCodesByCompany, updateQrCode } from "@/lib/data/repositories/qr";
 import { getCompanyById } from "@/lib/data/repositories/companies";
 import { qrGoPath } from "@/lib/catalog-url";
+import { assertPlanCapacity } from "@/lib/plan-guard";
 
 export async function GET() {
   const { user, response } = await requireSession();
@@ -22,6 +23,10 @@ export async function POST(request: NextRequest) {
   }
 
   const company = await getCompanyById(user.companyId);
+  if (!company) return NextResponse.json({ error: "not_found" }, { status: 404 });
+  const capacity = await assertPlanCapacity(user.companyId, company.plan, "qrCodes");
+  if (capacity) return capacity;
+
   const qr = await createQrCode({
     companyId: user.companyId,
     name: parsed.data.name ?? "New QR code",

@@ -40,7 +40,11 @@ import {
 } from "@/hooks/use-categories";
 import { useItems } from "@/hooks/use-items";
 import { useCompany } from "@/hooks/use-company";
+import { usePlanUsage } from "@/hooks/use-plan-usage";
+import { usePlanLimitToast } from "@/hooks/use-plan-limit-toast";
+import { PlanUsageBanner } from "@/components/admin/plan-usage-banner";
 import { Link } from "@/i18n/navigation";
+import { ApiError } from "@/lib/api-client";
 import type { Category } from "@/lib/data/types";
 
 export default function CategoriesPage() {
@@ -50,6 +54,8 @@ export default function CategoriesPage() {
   const { data: company } = useCompany();
   const { data: categories, isLoading } = useCategories();
   const { data: items } = useItems();
+  const usage = usePlanUsage();
+  const planToast = usePlanLimitToast();
   const createCategory = useCreateCategory();
   const updateCategory = useUpdateCategory();
   const deleteCategory = useDeleteCategory();
@@ -79,15 +85,20 @@ export default function CategoriesPage() {
   }
 
   async function handleSubmit(values: { name: string; icon: string }) {
-    if (editingCategory) {
-      await updateCategory.mutateAsync({ id: editingCategory.id, ...values });
-      toast.success(t("updated"));
-    } else {
-      await createCategory.mutateAsync(values);
-      toast.success(t("created"));
+    try {
+      if (editingCategory) {
+        await updateCategory.mutateAsync({ id: editingCategory.id, ...values });
+        toast.success(t("updated"));
+      } else {
+        await createCategory.mutateAsync(values);
+        toast.success(t("created"));
+      }
+      setFormOpen(false);
+      setEditingCategory(null);
+    } catch (err) {
+      if (planToast.fromError(err)) return;
+      toast.error(err instanceof ApiError ? err.message : tc("error"));
     }
-    setFormOpen(false);
-    setEditingCategory(null);
   }
 
   async function handleDelete() {
@@ -117,6 +128,10 @@ export default function CategoriesPage() {
             <Button
               variant="glow"
               onClick={() => {
+                if (!usage.categories.canAdd) {
+                  planToast.show("categories", usage.categories.limit);
+                  return;
+                }
                 setEditingCategory(null);
                 setFormOpen(true);
               }}
@@ -127,6 +142,8 @@ export default function CategoriesPage() {
           </>
         }
       />
+
+      <PlanUsageBanner />
 
       {isLoading ? (
         <div className="space-y-3">
@@ -140,7 +157,13 @@ export default function CategoriesPage() {
           title={t("empty")}
           description={t("emptyHint")}
           action={
-            <Button variant="glow" onClick={() => setFormOpen(true)}>
+            <Button variant="glow" onClick={() => {
+              if (!usage.categories.canAdd) {
+                planToast.show("categories", usage.categories.limit);
+                return;
+              }
+              setFormOpen(true);
+            }}>
               <Plus className="size-4" />
               {t("add")}
             </Button>

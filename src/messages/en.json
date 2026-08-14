@@ -232,7 +232,7 @@
     "pricing": {
       "eyebrow": "Simple pricing",
       "title": "Plans that grow with you",
-      "subtitle": "Start free. Upgrade when you need more menu items, QR codes, or team seats.",
+      "subtitle": "Start free with a small catalog. Upgrade to Pro for unlimited products and categories.",
       "monthly": "Monthly",
       "yearly": "Yearly",
       "yearlyBadge": "2 months free",
@@ -245,9 +245,9 @@
           "description": "For solo owners just getting started.",
           "cta": "Start for free",
           "features": [
-            "1 catalog & 3 QR codes",
-            "Up to 100 items, unlimited categories you name",
-            "Basic QR styling",
+            "4 categories and 15 products",
+            "2 QR codes",
+            "Live catalog on guest phones",
             "Community support"
           ]
         },
@@ -256,8 +256,9 @@
           "description": "For growing businesses with multiple categories.",
           "cta": "Start free trial",
           "features": [
-            "Unlimited items & categories",
-            "Up to 10 branded QR codes",
+            "Unlimited products and categories",
+            "Up to 20 branded QR codes",
+            "Featured items on the catalog",
             "Full QR Studio customization",
             "Scan analytics dashboard",
             "Priority support"
@@ -545,6 +546,25 @@
       "openPreview": "See it on a phone",
       "openQrStudio": "Open QR Studio"
     },
+    "plan": {
+      "hit": {
+        "items": "Free includes {limit} products. Upgrade to Pro to add more.",
+        "categories": "Free includes {limit} categories. Upgrade to Pro to add more.",
+        "qrCodes": "Free includes {limit} QR codes. Upgrade to Pro to add more.",
+        "featured": "The Featured badge is a Pro extra. Upgrade to highlight products."
+      },
+      "hitHint": "Pro unlocks unlimited products and categories, more QR codes, and featured items.",
+      "upgradeCta": "See Pro",
+      "items": "Products",
+      "categories": "Categories",
+      "qrCodes": "QR codes",
+      "bannerFree": "Free plan · {items} products · {categories} categories · {qr} QR codes",
+      "compareTitle": "Free vs Pro",
+      "compareHint": "Free is for a small catalog. Pro is for a full menu.",
+      "freeName": "Free",
+      "proLine": "Pro: unlimited products and categories, 20 QR codes, featured items.",
+      "contactCta": "Ask for Pro"
+    },
     "categories": {
       "title": "Categories",
       "subtitle": "Organize your catalog and drag to reorder how customers see it.",
@@ -656,6 +676,7 @@
         "visibility": "Visibility",
         "visibleLabel": "Show in public catalog",
         "featuredLabel": "Feature this item",
+        "featuredProHint": "Featured items are included with Pro.",
         "attributes": "Dynamic attributes",
         "attributesHint": "Suggested fields follow the category — calories for food, clothing and shoe sizes, year for electronics. Tap sizes instead of typing them.",
         "addAttribute": "Add attribute",

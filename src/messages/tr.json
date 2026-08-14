@@ -232,7 +232,7 @@
     "pricing": {
       "eyebrow": "Basit fiyatlandırma",
       "title": "Sizinle birlikte büyüyen planlar",
-      "subtitle": "Ücretsiz başlayın. Daha fazla ürüne, QR koda veya ekip üyesine ihtiyaç duyduğunuzda yükseltin.",
+      "subtitle": "Küçük bir katalogla ücretsiz başlayın. Pro’da sınırsız ürün ve kategori.",
       "monthly": "Aylık",
       "yearly": "Yıllık",
       "yearlyBadge": "2 ay ücretsiz",
@@ -245,9 +245,9 @@
           "description": "Yeni başlayan işletme sahipleri için.",
           "cta": "Ücretsiz başla",
           "features": [
-            "1 katalog ve 3 QR kod",
-            "100 ürüne kadar, sınırsız kendi adınızdaki kategori",
-            "Temel QR tasarımı",
+            "4 kategori ve 15 ürün",
+            "2 QR kod",
+            "Misafir telefonunda canlı katalog",
             "Topluluk desteği"
           ]
         },
@@ -257,7 +257,8 @@
           "cta": "Ücretsiz denemeyi başlat",
           "features": [
             "Sınırsız ürün ve kategori",
-            "10 markalı QR koda kadar",
+            "20 markalı QR koda kadar",
+            "Öne çıkan ürün rozeti",
             "Tam QR Stüdyosu özelleştirmesi",
             "Tarama analitiği paneli",
             "Öncelikli destek"
@@ -545,6 +546,25 @@
       "openPreview": "Telefonda gör",
       "openQrStudio": "QR Stüdyosunu aç"
     },
+    "plan": {
+      "hit": {
+        "items": "Ücretsiz planda {limit} ürün var. Pro ile daha fazla ekleyebilirsiniz.",
+        "categories": "Ücretsiz planda {limit} kategori var. Pro ile daha fazla ekleyebilirsiniz.",
+        "qrCodes": "Ücretsiz planda {limit} QR kod var. Pro ile daha fazla ekleyebilirsiniz.",
+        "featured": "Öne çıkan rozeti Pro’da. Ürünü vurgulamak için yükseltin."
+      },
+      "hitHint": "Pro’da sınırsız ürün ve kategori, daha fazla QR ve öne çıkan rozeti var.",
+      "upgradeCta": "Pro’ya bak",
+      "items": "Ürünler",
+      "categories": "Kategoriler",
+      "qrCodes": "QR kodlar",
+      "bannerFree": "Ücretsiz plan · {items} ürün · {categories} kategori · {qr} QR",
+      "compareTitle": "Ücretsiz ve Pro",
+      "compareHint": "Ücretsiz küçük katalog içindir. Pro tam menü içindir.",
+      "freeName": "Ücretsiz",
+      "proLine": "Pro: sınırsız ürün ve kategori, 20 QR kod, öne çıkan rozet.",
+      "contactCta": "Pro isteyin"
+    },
     "categories": {
       "title": "Kategoriler",
       "subtitle": "Kataloğunuzu düzenleyin, müşterilerin gördüğü sırayı değiştirmek için sürükleyin.",
@@ -656,6 +676,7 @@
         "visibility": "Görünürlük",
         "visibleLabel": "Genel katalogda göster",
         "featuredLabel": "Öne çıkan yap",
+        "featuredProHint": "Öne çıkan rozeti Pro’dadır.",
         "attributes": "Dinamik özellikler",
         "attributesHint": "Alanlar kategoriye göre gelir — yemekte kalori, giyside beden. Bedenleri tek tek yazmayın, üstüne basın.",
         "addAttribute": "Özellik ekle",

@@ -3,6 +3,8 @@ import { requireSession } from "@/lib/auth/guard";
 import { itemSchema } from "@/lib/validators/item";
 import { deleteItem, getItemById, updateItem } from "@/lib/data/repositories/items";
 import { getCategoryById } from "@/lib/data/repositories/categories";
+import { getCompanyById } from "@/lib/data/repositories/companies";
+import { assertFeaturedAllowed } from "@/lib/plan-guard";
 
 interface Params {
   params: Promise<{ id: string }>;
@@ -39,6 +41,10 @@ export async function PATCH(request: NextRequest, { params }: Params) {
       return NextResponse.json({ error: "invalid_category" }, { status: 400 });
     }
   }
+
+  const company = await getCompanyById(user.companyId);
+  const featured = assertFeaturedAllowed(company?.plan ?? "FREE", parsed.data.isFeatured, existing.isFeatured);
+  if (featured) return featured;
 
   const item = await updateItem(id, user.companyId, parsed.data);
   return NextResponse.json({ item });

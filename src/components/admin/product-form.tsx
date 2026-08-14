@@ -24,6 +24,8 @@ interface ProductFormProps {
   item?: ItemWithAttributes | null;
   defaultCategoryId?: string;
   defaultCurrency: string;
+  featuredLocked?: boolean;
+  onFeaturedLocked?: () => void;
   onSubmit: (values: ItemInput) => Promise<void> | void;
   onCancel: () => void;
   isSubmitting?: boolean;
@@ -35,6 +37,8 @@ export function ProductForm({
   item,
   defaultCategoryId,
   defaultCurrency,
+  featuredLocked = false,
+  onFeaturedLocked,
   onSubmit,
   onCancel,
   isSubmitting,
@@ -191,11 +195,23 @@ export function ProductForm({
             <Switch checked={isVisible} onCheckedChange={(v) => setValue("isVisible", v)} />
           </div>
           <div className="flex items-center justify-between rounded-xl border border-border/70 bg-muted/10 p-3.5">
-            <span className="flex items-center gap-2.5 text-sm font-medium">
-              <Star className="size-4 text-muted-foreground" />
-              {t("featuredLabel")}
+            <span className="flex min-w-0 flex-col gap-0.5">
+              <span className="flex items-center gap-2.5 text-sm font-medium">
+                <Star className="size-4 text-muted-foreground" />
+                {t("featuredLabel")}
+              </span>
+              {featuredLocked ? <span className="pl-7 text-xs text-muted-foreground">{t("featuredProHint")}</span> : null}
             </span>
-            <Switch checked={isFeatured} onCheckedChange={(v) => setValue("isFeatured", v)} />
+            <Switch
+              checked={isFeatured}
+              onCheckedChange={(v) => {
+                if (v && featuredLocked) {
+                  onFeaturedLocked?.();
+                  return;
+                }
+                setValue("isFeatured", v);
+              }}
+            />
           </div>
         </section>
 
