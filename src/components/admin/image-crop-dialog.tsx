@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from "react";
 import Cropper, { type Area } from "react-easy-crop";
+import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
@@ -43,6 +44,9 @@ export function ImageCropDialog({
     try {
       const blob = await cropImageToBlob(src, pixels, shape);
       onConfirm(new File([blob], "photo.jpg", { type: "image/jpeg" }));
+      onOpenChange(false);
+    } catch {
+      toast.error(t("cropFailed"));
       onOpenChange(false);
     } finally {
       setBusy(false);

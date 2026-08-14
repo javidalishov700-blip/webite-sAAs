@@ -12,7 +12,6 @@ function required(name: string): string {
 }
 
 let client: S3Client | null = null;
-let bucketReady = false;
 
 export function getS3Bucket(): string {
   return process.env.AWS_S3_BUCKET || "qr-universe";
@@ -28,24 +27,23 @@ export function getS3Client(): S3Client {
       secretAccessKey: required("AWS_SECRET_ACCESS_KEY"),
     },
     forcePathStyle: true,
+    // Neon/S3-compatible stores reject the extra checksum headers AWS SDK v3 sends by default.
     requestChecksumCalculation: "WHEN_REQUIRED",
+    responseChecksumValidation: "WHEN_REQUIRED",
   });
   return client;
 }
 
-export async function ensureS3Bucket(): Promise<string> {
+async function ensureBucketExists(): Promise<string> {
   const bucket = getS3Bucket();
-  if (bucketReady) return bucket;
   try {
     await getS3Client().send(new CreateBucketCommand({ Bucket: bucket }));
   } catch (error) {
-    const name = error instanceof Error ? error.name : "";
-    const message = error instanceof Error ? error.message : String(error);
-    if (!/BucketAlreadyOwnedByYou|BucketAlreadyExists|Conflict|409/i.test(`${name} ${message}`)) {
+    const text = `${error instanceof Error ? error.name : ""} ${error instanceof Error ? error.message : String(error)}`;
+    if (!/BucketAlreadyOwnedByYou|BucketAlreadyExists|Conflict|409|AccessDenied|Forbidden|403/i.test(text)) {
       throw error;
     }
   }
-  bucketReady = true;
   return bucket;
 }
 
@@ -54,16 +52,24 @@ export async function putS3Object(input: {
   body: Buffer;
   contentType: string;
 }): Promise<void> {
-  const bucket = await ensureS3Bucket();
-  await getS3Client().send(
-    new PutObjectCommand({
-      Bucket: bucket,
-      Key: input.key,
-      Body: input.body,
-      ContentType: input.contentType,
-      CacheControl: "public, max-age=31536000, immutable",
-    }),
-  );
+  const bucket = getS3Bucket();
+  const payload = {
+    Bucket: bucket,
+    Key: input.key,
+    Body: input.body,
+    ContentType: input.contentType,
+    ContentLength: input.body.byteLength,
+    CacheControl: "public, max-age=31536000, immutable",
+  };
+
+  try {
+    await getS3Client().send(new PutObjectCommand(payload));
+  } catch (error) {
+    const text = `${error instanceof Error ? error.name : ""} ${error instanceof Error ? error.message : String(error)}`;
+    if (!/NoSuchBucket|NotFound|404/i.test(text)) throw error;
+    await ensureBucketExists();
+    await getS3Client().send(new PutObjectCommand(payload));
+  }
 }
 
 export async function getS3Object(key: string) {

@@ -10,10 +10,30 @@ export const IMAGE_SHAPE = {
 
 function loadImage(src: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
-    const image = new Image();
+    const image = new window.Image();
     image.addEventListener("load", () => resolve(image));
     image.addEventListener("error", () => reject(new Error("Could not load image")));
     image.src = src;
+  });
+}
+
+function canvasToJpegBlob(canvas: HTMLCanvasElement): Promise<Blob> {
+  return new Promise((resolve, reject) => {
+    canvas.toBlob((blob) => {
+      if (blob) {
+        resolve(blob);
+        return;
+      }
+      try {
+        const dataUrl = canvas.toDataURL("image/jpeg", 0.88);
+        const bytes = atob(dataUrl.split(",")[1] ?? "");
+        const buffer = new Uint8Array(bytes.length);
+        for (let i = 0; i < bytes.length; i += 1) buffer[i] = bytes.charCodeAt(i);
+        resolve(new Blob([buffer], { type: "image/jpeg" }));
+      } catch {
+        reject(new Error("Could not crop image"));
+      }
+    }, "image/jpeg", 0.88);
   });
 }
 
@@ -28,7 +48,5 @@ export async function cropImageToBlob(imageSrc: string, pixelCrop: Area, shape: 
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = "high";
   ctx.drawImage(image, pixelCrop.x, pixelCrop.y, pixelCrop.width, pixelCrop.height, 0, 0, width, height);
-  const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.88));
-  if (!blob) throw new Error("Could not crop image");
-  return blob;
+  return canvasToJpegBlob(canvas);
 }

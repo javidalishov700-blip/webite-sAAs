@@ -7,6 +7,7 @@ import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer";
 import { Badge } from "@/components/ui/badge";
 import { AttributeDisplay } from "@/components/catalog/attribute-display";
 import { formatCurrency } from "@/lib/utils";
+import { getCalorieLabel, isCalorieAttribute } from "@/lib/calories";
 import type { ItemWithAttributes } from "@/lib/data/types";
 
 interface ItemSheetProps {
@@ -19,6 +20,8 @@ interface ItemSheetProps {
 export function ItemSheet({ item, onOpenChange, locale, accentColor }: ItemSheetProps) {
   const t = useTranslations("catalog");
   const outOfStock = item?.stockCount === 0;
+  const calories = item ? getCalorieLabel(item.attributes) : null;
+  const detailAttributes = item?.attributes.filter((attr) => !isCalorieAttribute(attr)) ?? [];
 
   return (
     <Drawer open={!!item} onOpenChange={onOpenChange}>
@@ -41,6 +44,11 @@ export function ItemSheet({ item, onOpenChange, locale, accentColor }: ItemSheet
                   {t("featured")}
                 </span>
               )}
+              {calories ? (
+                <span className="absolute right-3 bottom-3 rounded-full bg-black/70 px-2.5 py-1 text-xs font-medium text-white backdrop-blur-sm">
+                  {calories}
+                </span>
+              ) : null}
             </div>
 
             <div className="space-y-5 px-5 pt-5 sm:px-6">
@@ -78,10 +86,10 @@ export function ItemSheet({ item, onOpenChange, locale, accentColor }: ItemSheet
                 </div>
               )}
 
-              {item.attributes.length > 0 && (
+              {detailAttributes.length > 0 && (
                 <div>
                   <p className="mb-2 text-xs font-semibold tracking-wide text-muted-foreground uppercase">{t("details")}</p>
-                  <AttributeDisplay attributes={item.attributes} />
+                  <AttributeDisplay attributes={detailAttributes} />
                 </div>
               )}
             </div>

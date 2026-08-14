@@ -6,6 +6,7 @@ import { ImagePlus, Loader2, Trash2, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
+import { ApiError } from "@/lib/api-client";
 import { useUploadImage } from "@/hooks/use-upload";
 import { ImageCropDialog } from "@/components/admin/image-crop-dialog";
 import type { ImageShape } from "@/lib/crop-image";
@@ -49,8 +50,8 @@ export function ImageUpload({ value, onChange, shape = "square", className }: Im
       onChange(result.url);
       URL.revokeObjectURL(objectUrl);
       setPreview(result.url);
-    } catch {
-      toast.error(t("cropFailed"));
+    } catch (error) {
+      toast.error(error instanceof ApiError ? error.message : t("cropFailed"));
       setPreview(value ?? null);
       URL.revokeObjectURL(objectUrl);
     }

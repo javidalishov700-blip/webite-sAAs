@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { ImageOff, Star } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
+import { getCalorieLabel } from "@/lib/calories";
 import type { ItemWithAttributes } from "@/lib/data/types";
 
 interface ItemCardProps {
@@ -15,6 +16,7 @@ interface ItemCardProps {
 export function ItemCard({ item, onSelect, locale }: ItemCardProps) {
   const t = useTranslations("catalog");
   const outOfStock = item.stockCount === 0;
+  const calories = getCalorieLabel(item.attributes);
 
   return (
     <button
@@ -47,6 +49,11 @@ export function ItemCard({ item, onSelect, locale }: ItemCardProps) {
           <div className="absolute inset-0 flex items-center justify-center bg-black/55">
             <span className="rounded-full bg-white/10 px-2.5 py-1 text-xs font-medium text-white">{t("outOfStock")}</span>
           </div>
+        )}
+        {calories && (
+          <span className="absolute bottom-2 left-2 rounded-full bg-black/70 px-2 py-0.5 text-[10px] font-medium text-white backdrop-blur-sm">
+            {calories}
+          </span>
         )}
         {!outOfStock && typeof item.stockCount === "number" && item.stockCount > 0 && item.stockCount <= 5 && (
           <span className="absolute right-2 bottom-2 rounded-full bg-warning/90 px-2 py-0.5 text-[10px] font-medium text-warning-foreground">
