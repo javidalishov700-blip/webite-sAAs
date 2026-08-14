@@ -32,6 +32,7 @@ export function mapUser(row: {
   passwordHash: string;
   avatarUrl: string | null;
   acceptedTermsAt?: Date | null;
+  platformAdmin?: boolean;
   createdAt: Date;
   updatedAt: Date;
 }): User {
@@ -42,6 +43,7 @@ export function mapUser(row: {
     passwordHash: row.passwordHash,
     avatarUrl: row.avatarUrl,
     acceptedTermsAt: row.acceptedTermsAt ? iso(row.acceptedTermsAt) : null,
+    platformAdmin: Boolean(row.platformAdmin),
     createdAt: iso(row.createdAt),
     updatedAt: iso(row.updatedAt),
   };
@@ -80,6 +82,8 @@ export function mapCompany(row: {
   phone: string | null;
   website: string | null;
   isPublished: boolean;
+  bannedAt?: Date | null;
+  bannedReason?: string | null;
   createdAt: Date;
   updatedAt: Date;
 }): Company {
@@ -100,6 +104,8 @@ export function mapCompany(row: {
     phone: row.phone,
     website: row.website,
     isPublished: row.isPublished,
+    bannedAt: row.bannedAt ? iso(row.bannedAt) : null,
+    bannedReason: row.bannedReason,
     createdAt: iso(row.createdAt),
     updatedAt: iso(row.updatedAt),
   };

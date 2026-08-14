@@ -1,26 +1,33 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { BarChart3, LayoutGrid, Package, QrCode, Settings, Smartphone } from "lucide-react";
+import { BarChart3, LayoutGrid, Package, QrCode, Settings, Shield, Smartphone } from "lucide-react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
-  { href: "/admin", icon: BarChart3, key: "overview", exact: true },
-  { href: "/admin/categories", icon: LayoutGrid, key: "categories", exact: false },
-  { href: "/admin/products", icon: Package, key: "products", exact: false },
-  { href: "/admin/preview", icon: Smartphone, key: "preview", exact: false },
-  { href: "/admin/qr-studio", icon: QrCode, key: "qrStudio", exact: false },
-  { href: "/admin/settings", icon: Settings, key: "settings", exact: false },
+  { href: "/admin", icon: BarChart3, key: "overview", exact: true, opsOnly: false },
+  { href: "/admin/categories", icon: LayoutGrid, key: "categories", exact: false, opsOnly: false },
+  { href: "/admin/products", icon: Package, key: "products", exact: false, opsOnly: false },
+  { href: "/admin/preview", icon: Smartphone, key: "preview", exact: false, opsOnly: false },
+  { href: "/admin/qr-studio", icon: QrCode, key: "qrStudio", exact: false, opsOnly: false },
+  { href: "/admin/ops", icon: Shield, key: "ops", exact: false, opsOnly: true },
+  { href: "/admin/settings", icon: Settings, key: "settings", exact: false, opsOnly: false },
 ] as const;
 
-export function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
+export function SidebarNav({
+  onNavigate,
+  isPlatformAdmin = false,
+}: {
+  onNavigate?: () => void;
+  isPlatformAdmin?: boolean;
+}) {
   const t = useTranslations("admin.sidebar");
   const pathname = usePathname();
 
   return (
     <nav className="flex flex-col gap-1">
-      {NAV_ITEMS.map((item) => {
+      {NAV_ITEMS.filter((item) => !item.opsOnly || isPlatformAdmin).map((item) => {
         const active = item.exact ? pathname === item.href : pathname.startsWith(item.href);
         return (
           <Link

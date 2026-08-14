@@ -42,6 +42,7 @@ export interface User {
   passwordHash: string;
   avatarUrl?: string | null;
   acceptedTermsAt?: string | null;
+  platformAdmin?: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -71,6 +72,8 @@ export interface Company {
   phone?: string | null;
   website?: string | null;
   isPublished: boolean;
+  bannedAt?: string | null;
+  bannedReason?: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -163,6 +166,8 @@ export interface SessionUser {
   companyName: string;
   companySlug: string;
   role: Role;
+  isPlatformAdmin: boolean;
+  companyBanned: boolean;
 }
 
 export interface AnalyticsSummary {

@@ -308,7 +308,8 @@
       "signupLink": "Pulsuz yaradın",
       "demoTitle": "Demo hesabı sınayın",
       "demoHint": "Demo məlumatlarını doldurmaq üçün aşağıdakı kartlardan birinə klikləyin.",
-      "invalid": "E-poçt və ya şifrə yanlışdır."
+      "invalid": "E-poçt və ya şifrə yanlışdır.",
+      "banned": "Bu iş sahəsi ban edilib. Daxil ola bilməzsiniz."
     },
     "signup": {
       "title": "İş sahənizi yaradın",
@@ -361,8 +362,60 @@
       "preview": "Önizləmə",
       "qrStudio": "QR Studiya",
       "settings": "Ayarlar",
+      "ops": "İdarə",
       "viewCatalog": "Açıq kataloqa bax",
       "backToSite": "Sayta qayıt"
+    },
+    "banned": {
+      "title": "İş sahəsi ban edilib",
+      "body": "Bu hesab şərtləri pozduğu üçün bağlanıb. Açıq kataloq görünmür. Səhv olduğunu düşünürsünüzsə dəstəyə yazın."
+    },
+    "ops": {
+      "title": "İdarə",
+      "subtitle": "İş sahəsini ban et, planı dəyiş və ya hesabı sil. Bu səhifəni yalnız sən görürsən.",
+      "searchPlaceholder": "Biznes, slug və ya sahib e-poçtu axtar…",
+      "empty": "Axtarışa uyğun iş sahəsi yoxdur.",
+      "live": "Açıq",
+      "unpublished": "Gizli",
+      "banned": "Ban",
+      "noOwner": "Sahib e-poçtu yoxdur",
+      "items": "{count} məhsul",
+      "reportCount": "{count} şikayət",
+      "ban": "Ban et",
+      "unban": "Banı aç",
+      "delete": "Sil",
+      "cancel": "Ləğv et",
+      "banTitle": "Bu iş sahəsini ban et",
+      "banHint": "{name} çıxış etdirilir, kataloq bağlanır və daxil ola bilməz.",
+      "reasonLabel": "Səbəb (istəyə bağlı)",
+      "reasonPlaceholder": "Nəyə görə ban edilir?",
+      "confirmBan": "Ban et",
+      "deleteTitle": "Bu hesabı sil",
+      "deleteHint": "Geri qayıtmır. Təsdiq üçün slug yazın: {slug}. Kataloq, QR, oxutmalar və giriş silinir.",
+      "confirmDelete": "Həmişəlik sil",
+      "protectedLiveDemo": "Canlı demo",
+      "protectedAdmin": "Sənin hesabın",
+      "protectedError": "Bu iş sahəsi qorunur.",
+      "planOk": "Plan yeniləndi.",
+      "bannedOk": "İş sahəsi ban edildi.",
+      "unbannedOk": "İş sahəsi açıldı.",
+      "deletedOk": "Hesab silindi.",
+      "error": "Əməliyyat alınmadı. Yenidən cəhd et.",
+      "reports": "Şikayətlər",
+      "noReports": "Hələ şikayət yoxdur.",
+      "plans": {
+        "FREE": "Pulsuz",
+        "PRO": "Pro",
+        "ENTERPRISE": "Korporativ"
+      },
+      "reportReasons": {
+        "ILLEGAL": "Qanunsuz",
+        "ADULT": "18+",
+        "FRAUD": "Fırıldaq",
+        "HATE": "Nifrət / təhdid",
+        "COPYRIGHT": "Müəllif hüququ",
+        "OTHER": "Digər"
+      }
     },
     "topbar": {
       "search": "Tez axtarış…"

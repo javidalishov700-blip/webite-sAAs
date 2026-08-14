@@ -35,5 +35,17 @@ export async function requireSession(): Promise<{ user: SessionUser | null; resp
   if (!user) {
     return { user: null, response: NextResponse.json({ error: "unauthorized" }, { status: 401 }) };
   }
+  if (user.companyBanned && !user.isPlatformAdmin) {
+    return { user: null, response: NextResponse.json({ error: "banned" }, { status: 403 }) };
+  }
+  return { user, response: null };
+}
+
+export async function requirePlatformAdmin(): Promise<{ user: SessionUser | null; response: NextResponse | null }> {
+  const { user, response } = await requireSession();
+  if (!user) return { user: null, response };
+  if (!user.isPlatformAdmin) {
+    return { user: null, response: NextResponse.json({ error: "forbidden" }, { status: 403 }) };
+  }
   return { user, response: null };
 }

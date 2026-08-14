@@ -28,6 +28,10 @@ export async function PATCH(request: NextRequest) {
   }
 
   const patch = { ...(onboardingParsed.data ?? {}), ...(settingsParsed.data ?? {}) };
+  const existing = await getCompanyById(user.companyId);
+  if (existing?.bannedAt && !user.isPlatformAdmin) {
+    return NextResponse.json({ error: "banned" }, { status: 403 });
+  }
   const mapped = {
     ...(patch.companyName ? { name: patch.companyName } : {}),
     ...(patch.name ? { name: patch.name } : {}),

@@ -308,7 +308,8 @@
       "signupLink": "Create one for free",
       "demoTitle": "Try a demo account",
       "demoHint": "Click any card below to autofill the demo credentials.",
-      "invalid": "Invalid email or password."
+      "invalid": "Invalid email or password.",
+      "banned": "This workspace is banned. You cannot sign in."
     },
     "signup": {
       "title": "Create your workspace",
@@ -361,8 +362,60 @@
       "preview": "Preview",
       "qrStudio": "QR Studio",
       "settings": "Settings",
+      "ops": "Control",
       "viewCatalog": "View public catalog",
       "backToSite": "Back to website"
+    },
+    "banned": {
+      "title": "Workspace banned",
+      "body": "This account is blocked for breaking the terms. The public catalog is offline. Contact support if you think this is a mistake."
+    },
+    "ops": {
+      "title": "Control",
+      "subtitle": "Ban a workspace, change its plan, or delete the account. Only you see this page.",
+      "searchPlaceholder": "Search by business, slug or owner email…",
+      "empty": "No workspaces match that search.",
+      "live": "Live",
+      "unpublished": "Unpublished",
+      "banned": "Banned",
+      "noOwner": "No owner email",
+      "items": "{count} products",
+      "reportCount": "{count} reports",
+      "ban": "Ban",
+      "unban": "Unban",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "banTitle": "Ban this workspace",
+      "banHint": "{name} will be signed out, the catalog goes offline, and they cannot log in.",
+      "reasonLabel": "Reason (optional)",
+      "reasonPlaceholder": "Why is this workspace banned?",
+      "confirmBan": "Ban workspace",
+      "deleteTitle": "Delete this account",
+      "deleteHint": "Permanent. Type the slug {slug} to confirm. Catalog, QR codes, scans and the owner login are removed.",
+      "confirmDelete": "Delete forever",
+      "protectedLiveDemo": "Live demo",
+      "protectedAdmin": "Your account",
+      "protectedError": "This workspace is protected.",
+      "planOk": "Plan updated.",
+      "bannedOk": "Workspace banned.",
+      "unbannedOk": "Workspace restored.",
+      "deletedOk": "Account deleted.",
+      "error": "That action failed. Try again.",
+      "reports": "Abuse reports",
+      "noReports": "No reports yet.",
+      "plans": {
+        "FREE": "Free",
+        "PRO": "Pro",
+        "ENTERPRISE": "Enterprise"
+      },
+      "reportReasons": {
+        "ILLEGAL": "Illegal",
+        "ADULT": "Adult / 18+",
+        "FRAUD": "Fraud",
+        "HATE": "Hate / threats",
+        "COPYRIGHT": "Copyright",
+        "OTHER": "Other"
+      }
     },
     "topbar": {
       "search": "Quick search…"

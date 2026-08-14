@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { loginSchema } from "@/lib/validators/auth";
-import { findUserByEmail } from "@/lib/data/repositories/users";
+import { findUserByEmail, getPrimaryMembership } from "@/lib/data/repositories/users";
+import { getCompanyById } from "@/lib/data/repositories/companies";
 import { verifyPassword } from "@/lib/auth/password";
 import { setSessionCookie } from "@/lib/auth/session";
+import { isPlatformOperator } from "@/lib/platform-admin";
 
 export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => null);
@@ -20,6 +22,12 @@ export async function POST(request: NextRequest) {
   const valid = await verifyPassword(password, user.passwordHash);
   if (!valid) {
     return NextResponse.json({ error: "invalid" }, { status: 401 });
+  }
+
+  const membership = await getPrimaryMembership(user.id);
+  const company = membership ? await getCompanyById(membership.companyId) : undefined;
+  if (company?.bannedAt && !isPlatformOperator(user)) {
+    return NextResponse.json({ error: "banned" }, { status: 403 });
   }
 
   await setSessionCookie(user.id);

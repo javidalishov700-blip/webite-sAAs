@@ -8,7 +8,7 @@ import type { CompanyPublicView } from "@/lib/data/types";
 export async function getPublicCatalogBySlug(slug: string): Promise<CompanyPublicView | null> {
   await ensureLiveDemoCatalog();
   const company = await getCompanyBySlug(slug);
-  if (!company || !company.isPublished) return null;
+  if (!company || !company.isPublished || company.bannedAt) return null;
 
   const categories = await Promise.all(
     (await listCategoriesByCompany(company.id, { onlyVisible: true })).map(async (category) => ({

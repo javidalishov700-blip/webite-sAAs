@@ -1,6 +1,7 @@
 import "server-only";
 import { prisma } from "@/lib/prisma";
 import { mapMembership, mapUser } from "@/lib/data/map";
+import { isPlatformOperator } from "@/lib/platform-admin";
 import type { Membership, Role, SessionUser, User } from "@/lib/data/types";
 
 export async function findUserByEmail(email: string): Promise<User | undefined> {
@@ -49,6 +50,8 @@ export async function hydrateSessionUser(userId: string): Promise<SessionUser | 
     companyName: membership.company.name,
     companySlug: membership.company.slug,
     role: membership.role,
+    isPlatformAdmin: isPlatformOperator({ email: user.email, platformAdmin: user.platformAdmin }),
+    companyBanned: Boolean(membership.company.bannedAt),
   };
 }
 

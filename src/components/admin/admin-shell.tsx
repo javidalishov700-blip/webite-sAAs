@@ -29,7 +29,7 @@ export function AdminShell({ user, children }: { user: SessionUser; children: Re
             </span>
             QR-Universe
           </Link>
-          <SidebarNav />
+          <SidebarNav isPlatformAdmin={user.isPlatformAdmin} />
           <div className="mt-auto space-y-2 pt-4">
             <Button variant="ghost" size="sm" className="w-full justify-start gap-2.5 text-muted-foreground" asChild>
               <Link href="/">
@@ -69,7 +69,7 @@ export function AdminShell({ user, children }: { user: SessionUser; children: Re
             </span>
             QR-Universe
           </Link>
-          <SidebarNav onNavigate={() => setMobileOpen(false)} />
+          <SidebarNav isPlatformAdmin={user.isPlatformAdmin} onNavigate={() => setMobileOpen(false)} />
           <div className="mt-auto space-y-2 pt-4">
             <Button variant="ghost" size="sm" className="w-full justify-start gap-2.5 text-muted-foreground" asChild>
               <Link href="/">

@@ -308,7 +308,8 @@
       "signupLink": "Ücretsiz oluşturun",
       "demoTitle": "Bir demo hesabı deneyin",
       "demoHint": "Demo bilgilerini otomatik doldurmak için aşağıdaki kartlardan birine tıklayın.",
-      "invalid": "E-posta veya şifre hatalı."
+      "invalid": "E-posta veya şifre hatalı.",
+      "banned": "Bu çalışma alanı yasaklandı. Giriş yapamazsınız."
     },
     "signup": {
       "title": "Çalışma alanınızı oluşturun",
@@ -361,8 +362,60 @@
       "preview": "Önizleme",
       "qrStudio": "QR Stüdyosu",
       "settings": "Ayarlar",
+      "ops": "Kontrol",
       "viewCatalog": "Genel kataloğu görüntüle",
       "backToSite": "Siteye dön"
+    },
+    "banned": {
+      "title": "Çalışma alanı yasaklandı",
+      "body": "Bu hesap şartları ihlal ettiği için kapatıldı. Genel katalog yayında değil. Hata olduğunu düşünüyorsanız destekle yazın."
+    },
+    "ops": {
+      "title": "Kontrol",
+      "subtitle": "Çalışma alanını yasakla, planını değiştir veya hesabı sil. Bu sayfayı yalnızca sen görürsün.",
+      "searchPlaceholder": "İşletme, slug veya sahip e-postası ara…",
+      "empty": "Aramaya uyan çalışma alanı yok.",
+      "live": "Yayında",
+      "unpublished": "Gizli",
+      "banned": "Yasaklı",
+      "noOwner": "Sahip e-postası yok",
+      "items": "{count} ürün",
+      "reportCount": "{count} şikayet",
+      "ban": "Yasakla",
+      "unban": "Yasağı kaldır",
+      "delete": "Sil",
+      "cancel": "Vazgeç",
+      "banTitle": "Bu çalışma alanını yasakla",
+      "banHint": "{name} çıkış yaptırılır, katalog kapanır ve giriş yapamaz.",
+      "reasonLabel": "Neden (isteğe bağlı)",
+      "reasonPlaceholder": "Neden yasaklanıyor?",
+      "confirmBan": "Yasakla",
+      "deleteTitle": "Bu hesabı sil",
+      "deleteHint": "Kalıcı. Onay için slug yazın: {slug}. Katalog, QR, taramalar ve giriş silinir.",
+      "confirmDelete": "Kalıcı sil",
+      "protectedLiveDemo": "Canlı demo",
+      "protectedAdmin": "Senin hesabın",
+      "protectedError": "Bu çalışma alanı korumalı.",
+      "planOk": "Plan güncellendi.",
+      "bannedOk": "Çalışma alanı yasaklandı.",
+      "unbannedOk": "Çalışma alanı açıldı.",
+      "deletedOk": "Hesap silindi.",
+      "error": "İşlem olmadı. Tekrar dene.",
+      "reports": "Şikayetler",
+      "noReports": "Henüz şikayet yok.",
+      "plans": {
+        "FREE": "Ücretsiz",
+        "PRO": "Pro",
+        "ENTERPRISE": "Kurumsal"
+      },
+      "reportReasons": {
+        "ILLEGAL": "Yasa dışı",
+        "ADULT": "Yetişkin / 18+",
+        "FRAUD": "Dolandırıcılık",
+        "HATE": "Nefret / tehdit",
+        "COPYRIGHT": "Telif",
+        "OTHER": "Diğer"
+      }
     },
     "topbar": {
       "search": "Hızlı arama…"

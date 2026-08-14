@@ -42,7 +42,7 @@ function LoginForm() {
       router.push(safeNextPath(searchParams.get("next")));
       router.refresh();
     } catch (err) {
-      setServerError(err instanceof ApiError ? t("invalid") : "Something went wrong");
+      setServerError(err instanceof ApiError && err.status === 403 ? t("banned") : err instanceof ApiError ? t("invalid") : "Something went wrong");
     }
   }
 
