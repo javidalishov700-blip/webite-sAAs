@@ -33,12 +33,15 @@ export type QrDotStyle =
 
 export type AppLocale = "en" | "ru" | "tr" | "az";
 
+export type AbuseReason = "ILLEGAL" | "ADULT" | "FRAUD" | "HATE" | "COPYRIGHT" | "OTHER";
+
 export interface User {
   id: string;
   name: string;
   email: string;
   passwordHash: string;
   avatarUrl?: string | null;
+  acceptedTermsAt?: string | null;
   createdAt: string;
   updatedAt: string;
 }

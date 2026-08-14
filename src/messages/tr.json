@@ -633,7 +633,30 @@
     "backToTop": "Başa dön",
     "addressLabel": "Adres",
     "phoneLabel": "Telefon",
-    "websiteLabel": "Web sitesi"
+    "websiteLabel": "Web sitesi",
+    "report": {
+      "link": "Bu kataloğu şikayet et",
+      "title": "Yasaklı içeriği bildir",
+      "subtitle": "Katalog yasaya veya şartlara aykırıysa kullanın. Şikayetleri inceleriz. İşletme mesajınızı görmez.",
+      "reason": "Neden",
+      "reasonPlaceholder": "Bir neden seçin",
+      "needReason": "Önce bir neden seçin.",
+      "reasons": {
+        "ILLEGAL": "Yasa dışı mal veya faaliyet",
+        "ADULT": "Yetişkin veya cinsel içerik (18+)",
+        "FRAUD": "Dolandırıcılık",
+        "HATE": "Nefret, tehdit veya taciz",
+        "COPYRIGHT": "Çalıntı veya telif hakkı ihlali",
+        "OTHER": "Diğer yasal veya şart ihlali"
+      },
+      "details": "Ayrıntı (isteğe bağlı)",
+      "detailsPlaceholder": "Ne gördünüz? Başkalarının özel verisini yazmayın.",
+      "submit": "Şikayeti gönder",
+      "sent": "Şikayet alındı. Teşekkürler.",
+      "error": "Gönderilemedi. Tekrar deneyin.",
+      "rateLimited": "Bu ağdan çok fazla şikayet var. Daha sonra deneyin.",
+      "whatsapp": "Acil mi? WhatsApp’tan yazın"
+    }
   },
   "pages": {
     "notFound": {
@@ -657,15 +680,17 @@
         {
           "heading": "2. Topladığımız veriler",
           "body": [
-            "Hesap: ad, e-posta, şifre özeti (şifreniz düz metin saklanmaz), şirket profili ve yüklediğiniz katalog.",
+            "Hesap: ad, e-posta, şifre özeti (şifreniz düz metin saklanmaz), şirket profili, yüklediğiniz katalog ve şartları kabul ettiğiniz zaman.",
             "Kullanım: QR tarama kaydı (zaman, dil), ürün detayı açılışları ve yalnızca o anda kataloğa bakan kişi sayısı için rastgele kimlik.",
-            "Teknik: giriş sonrası oturum çerezi, dil/tema, çerez onayı. Güvenlik günlüklerinde kısa süre IP tutulabilir."
+            "Teknik: giriş sonrası oturum çerezi, dil/tema, çerez onayı. Güvenlik günlüklerinde kısa süre IP tutulabilir.",
+            "Katalog misafirlerinin şikayetleri: katalog, seçilen neden, isteğe bağlı ayrıntı, hash’lenmiş ağ kimliği ve tarayıcı. Yalnızca ihlalleri incelemek için."
           ]
         },
         {
           "heading": "3. Amaç",
           "body": [
             "Çalışma alanınızı işletmek, kataloğu misafirlere göstermek, gerçek taramaları saymak, oturumu açık tutmak ve desteğe cevap vermek.",
+            "Yasaklı katalog şikayetlerini incelemek ve şartları uygulamak.",
             "Kişisel veriyi satmayız. Reklam ağı veya pazarlama pikseli kullanmayız."
           ]
         },
@@ -680,7 +705,8 @@
           "heading": "5. Saklama",
           "body": [
             "Hesap ve katalog, çalışma alanı durduğu sürece saklanır. Ayarlar’dan silerseniz şirket, katalog, QR, taramalar ve giriş kaldırılır.",
-            "Çevrimiçi varlık sinyalleri bir dakikadan kısa sürede kendiliğinden silinir."
+            "Çevrimiçi varlık sinyalleri bir dakikadan kısa sürede kendiliğinden silinir.",
+            "Şikayetler, inceleme ve hizmeti korumak için gerektiği sürece saklanır."
           ]
         },
         {
@@ -751,6 +777,7 @@
           "body": [
             "Hesap açmak için 18 yaşından büyük olmalısınız. Kataloglar yalnızca yasal iş içindir. Şunları yükleyemez, satamaz, reklamını yapamaz veya yayınlayamazsınız: yetişkin veya pornografik içerik; çocukları içeren herhangi bir cinsel içerik (kesinlikle yasaktır ve bildirilir); yasa dışı uyuşturucu veya hukuka aykırı ilgili teklifler; silah, patlayıcı veya yapım talimatı; çalıntı, sahte veya kaçak mal; dolandırıcılık, oltalama veya kara para aklama; nefret, tehdit, taciz veya kişisel veri ifşası; zararlı yazılım veya hizmete saldırı; hakkınız olmayan telif ihlali kopyalar; sizin veya müşterilerinizin bulunduğu yerde yasa dışı olan başka içerik.",
             "Kuralları ihlal ederseniz, risk ciddiyse önceden bildirim olmadan çalışma alanını askıya alabilir veya kalıcı kapatabilir, kataloğu silebilir, gördüğümüz IP veya diğer erişim kimliklerini engelleyebilir ve sonraki kayıtlara izin vermeyebiliriz. Yasa dışı faaliyeti yetkili makamlara bildirebiliriz. Her kataloğu incelemek zorunda değiliz; ihlali fark ettiğimizde içeriği kaldırabiliriz.",
+            "Misafirler bu kuralları ihlal ettiğini düşündükleri kataloğu şikayet edebilir. İncelemek ve gerekirse erişimi engellemek için şikayetin kaydını (neden, isteğe bağlı ayrıntı ve hash’lenmiş ağ kimliği) tutabiliriz.",
             "Yayınladığınız her şeyden ve müşterilerinizle ilişkinizden yalnızca siz sorumlusunuz. QR-Universe ürünleri doğrulamaz, malın mülkiyetini almaz; içeriğiniz, hizmetin yasa dışı kullanımı veya yayınlarınızdan doğan zarar, talep ya da cezadan sorumlu değildir. Kataloğunuz nedeniyle üçüncü kişi talepte bulunursa, yasaların izin verdiği ölçüde bizi tazmin edersiniz."
           ]
         },

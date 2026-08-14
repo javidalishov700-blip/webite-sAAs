@@ -633,7 +633,30 @@
     "backToTop": "Yuxarı qayıt",
     "addressLabel": "Ünvan",
     "phoneLabel": "Telefon",
-    "websiteLabel": "Veb-sayt"
+    "websiteLabel": "Veb-sayt",
+    "report": {
+      "link": "Bu kataloqu şikayət et",
+      "title": "Qadağan olunmuş məzmunu bildir",
+      "subtitle": "Kataloq qanuna və ya şərtlərə ziddirsə bundan istifadə edin. Şikayətlərə baxırıq. Satıcı mesajınızı görmür.",
+      "reason": "Səbəb",
+      "reasonPlaceholder": "Səbəb seçin",
+      "needReason": "Əvvəlcə səbəb seçin.",
+      "reasons": {
+        "ILLEGAL": "Qanunsuz mal və ya fəaliyyət",
+        "ADULT": "Yetkinlik və ya cinsi məzmun (18+)",
+        "FRAUD": "Fırıldaqçılıq",
+        "HATE": "Nifrət, təhdid və ya təqib",
+        "COPYRIGHT": "Oğurlanmış və ya müəllif hüququ pozuntusu",
+        "OTHER": "Digər qanun və ya şərt pozuntusu"
+      },
+      "details": "Ətraflı (istəyə bağlı)",
+      "detailsPlaceholder": "Nə gördünüz? Başqalarının şəxsi məlumatını yazmayın.",
+      "submit": "Şikayəti göndər",
+      "sent": "Şikayət qəbul olundu. Təşəkkürlər.",
+      "error": "Göndərilmədi. Yenidən cəhd edin.",
+      "rateLimited": "Bu şəbəkədən çox şikayət var. Sonra yenidən cəhd edin.",
+      "whatsapp": "Təcili? WhatsApp-dan yazın"
+    }
   },
   "pages": {
     "notFound": {
@@ -657,15 +680,17 @@
         {
           "heading": "2. Topladığımız məlumat",
           "body": [
-            "Hesab: ad, e-poçt, şifrənin hash-i (şifrə açıq mətndə saxlanılmır), şirkət profili və yüklədiyiniz kataloq.",
+            "Hesab: ad, e-poçt, şifrənin hash-i (şifrə açıq mətndə saxlanılmır), şirkət profili, yüklədiyiniz kataloq və şərtləri qəbul etdiyiniz vaxt.",
             "İstifadə: QR oxutma qeydi (vaxt, dil), məhsul vərəqinin açılması və yalnız həmin anda kataloqa baxanların sayı üçün təsadüfi identifikator.",
-            "Texniki: girişdən sonra sessiya kukisi, dil və tema, kuki razılığı. Təhlükəsizlik jurnallarında qısa müddətə IP ola bilər."
+            "Texniki: girişdən sonra sessiya kukisi, dil və tema, kuki razılığı. Təhlükəsizlik jurnallarında qısa müddətə IP ola bilər.",
+            "Kataloq qonaqlarının şikayətləri: kataloq, seçilmiş səbəb, istəyə bağlı ətraflı, hash olunmuş şəbəkə identifikatoru və brauzer. Yalnız pozuntulara baxmaq üçün."
           ]
         },
         {
           "heading": "3. Məqsəd",
           "body": [
             "İş sahənizi işlətmək, kataloqu qonaqlara göstərmək, real oxutmaları saymaq, sessiya saxlamaq və dəstəyə cavab vermək.",
+            "Qadağan kataloq şikayətlərinə baxmaq və şərtləri tətbiq etmək.",
             "Şəxsi məlumat satmırıq. Reklam şəbəkəsi və marketinq pikselindən istifadə etmirik."
           ]
         },
@@ -680,7 +705,8 @@
           "heading": "5. Saxlanma",
           "body": [
             "Hesab və kataloq iş sahəsi aktiv olanda saxlanılır. Ayarlardan sildikdə şirkət, kataloq, QR, oxutmalar və giriş silinir.",
-            "Onlayn iştirak siqnalları bir dəqiqədən az müddətdə avtomatik silinir."
+            "Onlayn iştirak siqnalları bir dəqiqədən az müddətdə avtomatik silinir.",
+            "Şikayətlər yoxlama və xidməti qorumaq üçün lazım olan müddət saxlanılır."
           ]
         },
         {
@@ -751,6 +777,7 @@
           "body": [
             "Hesab açmaq üçün 18 yaşınız dolmuş olmalıdır. Kataloqlar yalnız qanuni biznes üçündür. Bunları yükləmək, satmaq, reklam etmək və ya dərc etmək olmaz: yetkinlik və ya pornoqrafik məzmun; uşaqları əhatə edən hər hansı cinsi məzmun (qəti qadağandır və bildirilir); qanunsuz narkotik və ya qanuna zidd əlaqəli təkliflər; silah, partlayıcı və ya onların hazırlanması təlimatı; oğurlanmış, saxta və ya qaçaqmal mal; fırıldaqçılıq, fişinq və ya pul yuma sxemləri; nifrət, təhdid, təqib və ya şəxsi məlumat ifşası; zərərli proqram və ya xidmətə hücum; hüququnuz olmayan müəllif hüququ pozuntusu nüsxələri; sizin və ya müştərilərinizin olduğu yerdə qanunsuz olan hər hansı başqa məzmun.",
             "Qaydaları pozsanız, risk ciddi olduqda əvvəlcədən xəbərdarlıq etmədən iş sahəsini dayandıra və ya həmişəlik bağlaya, kataloqu silə, gördüyümüz IP və ya digər giriş identifikatorlarını bloklaya və gələcək qeydiyyata icazə verməyə bilərik. Qanunsuz fəaliyyəti səlahiyyətli orqanlara bildirə bilərik. Hər kataloqu yoxlamaq məcburiyyətində deyilik; pozuntunu öyrəndikdə məzmunu silə bilərik.",
+            "Qonaqlar bu qaydaları pozduğunu düşündükləri kataloqu şikayət edə bilər. Yoxlamaq və lazım olsa girişi bloklamaq üçün şikayətin qeydini (səbəb, istəyə bağlı ətraflı və hash olunmuş şəbəkə identifikatoru) saxlaya bilərik.",
             "Dərc etdiyiniz hər şeyə və müştərilərinizlə münasibətə yalnız siz cavabdehsiniz. QR-Universe məhsulları yoxlamır, malın mülkiyyətini götürmür; məzmununuza, xidmətin qanunsuz istifadəsinə və ya dərcinizdən yaranan zərər, iddia və ya cəzaya görə məsuliyyət daşımır. Kataloqunuz səbəbindən üçüncü şəxs iddia qaldırarsa, qanunun icazə verdiyi həddə bizi təzmin edirsiniz."
           ]
         },

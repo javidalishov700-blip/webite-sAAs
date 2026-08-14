@@ -8,6 +8,7 @@ import { CategoryNav } from "@/components/catalog/category-nav";
 import { ItemCard } from "@/components/catalog/item-card";
 import { ItemSheet } from "@/components/catalog/item-sheet";
 import { LanguageFab } from "@/components/catalog/language-fab";
+import { ReportAbuse } from "@/components/catalog/report-abuse";
 import { EmptyState } from "@/components/ui/empty-state";
 import type { CompanyPublicView, ItemWithAttributes } from "@/lib/data/types";
 
@@ -159,11 +160,12 @@ export function CatalogView({
         )}
       </div>
 
-      <footer className="mt-10 flex flex-col items-center gap-1 px-4 py-8 text-center text-xs text-muted-foreground">
+      <footer className="mt-10 flex flex-col items-center gap-1.5 px-4 py-8 text-center text-xs text-muted-foreground">
         {company.website && <p className="font-medium text-foreground/80">{company.website}</p>}
         <p>
           {t("poweredBy")} <span className="font-semibold text-foreground">QR-Universe</span>
         </p>
+        {!preview ? <ReportAbuse slug={company.slug} locale={locale} /> : null}
       </footer>
 
       <LanguageFab accentColor={company.accentColor} locales={company.supportedLocales} />

@@ -633,7 +633,30 @@
     "backToTop": "Back to top",
     "addressLabel": "Address",
     "phoneLabel": "Phone",
-    "websiteLabel": "Website"
+    "websiteLabel": "Website",
+    "report": {
+      "link": "Report this catalog",
+      "title": "Report prohibited content",
+      "subtitle": "Use this if the catalog breaks the law or our terms. We review reports. The merchant is not shown your message.",
+      "reason": "Reason",
+      "reasonPlaceholder": "Choose a reason",
+      "needReason": "Choose a reason first.",
+      "reasons": {
+        "ILLEGAL": "Illegal goods or activity",
+        "ADULT": "Adult or sexual content (18+)",
+        "FRAUD": "Fraud or scam",
+        "HATE": "Hate, threats or harassment",
+        "COPYRIGHT": "Stolen or copyrighted content",
+        "OTHER": "Other legal or terms violation"
+      },
+      "details": "Details (optional)",
+      "detailsPlaceholder": "What did you see? Do not include other people’s private data.",
+      "submit": "Send report",
+      "sent": "Report received. Thank you.",
+      "error": "Could not send the report. Try again.",
+      "rateLimited": "Too many reports from this network. Try later.",
+      "whatsapp": "Urgent? Message us on WhatsApp"
+    }
   },
   "pages": {
     "notFound": {
@@ -657,15 +680,17 @@
         {
           "heading": "2. Data we collect",
           "body": [
-            "Account data: name, email, password hash (never stored in plain text), company profile and catalog content you upload.",
+            "Account data: name, email, password hash (never stored in plain text), company profile and catalog content you upload, and the time you accepted the terms.",
             "Usage data: QR scan events (time, language, optional device type), product-sheet opens, and a random visitor id used only to count people currently viewing a catalog.",
-            "Technical data: a session cookie after login, language and theme preference, and cookie-consent choice. Short-lived server logs may include IP address for security."
+            "Technical data: a session cookie after login, language and theme preference, and cookie-consent choice. Short-lived server logs may include IP address for security.",
+            "Abuse reports from catalog guests: the catalog, the reason chosen, optional details, a hashed network identifier and user-agent. Used only to review violations."
           ]
         },
         {
           "heading": "3. Why we use it",
           "body": [
             "To run your workspace, show your catalog to guests, count real scans, keep you signed in, remember language and theme, and to answer support.",
+            "To review reports of prohibited catalogs and enforce the terms.",
             "We do not sell personal data. We do not run advertising networks or third-party marketing pixels."
           ]
         },
@@ -680,7 +705,8 @@
           "heading": "5. Retention",
           "body": [
             "Account and catalog data stay while your workspace is active. Deleting the workspace in Settings removes the company, catalog, QR codes, scans and the owner login.",
-            "Anonymous online-presence pings expire automatically in under a minute."
+            "Anonymous online-presence pings expire automatically in under a minute.",
+            "Abuse reports are kept as long as needed to investigate and protect the service."
           ]
         },
         {
@@ -751,6 +777,7 @@
           "body": [
             "You must be 18 or older to create an account. Catalogs are for lawful business only. You must not upload, sell, advertise or otherwise publish: adult or pornographic material; any sexual content involving minors (strictly forbidden and will be reported); illegal drugs or related offers that break the law; weapons, explosives or instructions to make them; stolen, counterfeit or smuggled goods; fraud, phishing or money-laundering schemes; hate, threats, harassment or doxxing; malware or attacks on the service; copyright-infringing copies you do not have rights to; or any other content that is illegal where you or your customers are located.",
             "If you break these rules we may, without prior notice where the risk is serious, suspend or permanently close the workspace, delete the catalog, block the IP address or other access identifiers we see, and refuse future sign-ups. We may report illegal activity to competent authorities. We are not obliged to review every catalog, but we may remove content when we become aware of a violation.",
+            "Guests may report a catalog they believe breaks these rules. We may keep a record of the report (reason, optional details and a hashed network identifier) to investigate and, where needed, block access.",
             "You are solely responsible for everything you publish and for your dealings with customers. QR-Universe does not verify products, does not take title to goods, and is not liable for your content, illegal use of the service, or any loss, claim or penalty arising from what you publish. If a third party brings a claim because of your catalog, you will indemnify us to the extent permitted by law."
           ]
         },

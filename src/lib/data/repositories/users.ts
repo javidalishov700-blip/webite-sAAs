@@ -58,12 +58,14 @@ export async function createUserWithCompanyMembership(input: {
   passwordHash: string;
   companyId: string;
   role?: Role;
+  acceptedTermsAt?: Date | null;
 }): Promise<User> {
   const user = await prisma.user.create({
     data: {
       name: input.name,
       email: input.email.trim().toLowerCase(),
       passwordHash: input.passwordHash,
+      acceptedTermsAt: input.acceptedTermsAt ?? null,
       memberships: {
         create: {
           role: input.role ?? "OWNER",

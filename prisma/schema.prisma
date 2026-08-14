@@ -62,18 +62,29 @@ enum Locale {
   az
 }
 
+enum AbuseReason {
+  ILLEGAL
+  ADULT
+  FRAUD
+  HATE
+  COPYRIGHT
+  OTHER
+}
+
 // ---------------------------------------------------------------------------
 // Identity & tenancy
 // ---------------------------------------------------------------------------
 
 model User {
-  id           String   @id @default(cuid())
-  name         String
-  email        String   @unique
-  passwordHash String
-  avatarUrl    String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id              String    @id @default(cuid())
+  name            String
+  email           String    @unique
+  passwordHash    String
+  avatarUrl       String?
+  /// When the user ticked Terms + prohibited-content rules at signup.
+  acceptedTermsAt DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
   memberships Membership[]
 
@@ -118,12 +129,13 @@ model Company {
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 
-  memberships Membership[]
-  categories  Category[]
-  items       Item[]
-  qrCodes     QrCode[]
-  scanEvents  ScanEvent[]
-  itemViews   ItemView[]
+  memberships   Membership[]
+  categories    Category[]
+  items         Item[]
+  qrCodes       QrCode[]
+  scanEvents    ScanEvent[]
+  itemViews     ItemView[]
+  abuseReports  AbuseReport[]
 
   @@index([slug])
 }
@@ -242,6 +254,24 @@ model ItemView {
 
   @@index([companyId, itemId])
   @@index([companyId, createdAt])
+}
+
+/// Guest reports of prohibited catalogs. Stored for review and enforcement.
+model AbuseReport {
+  id        String      @id @default(cuid())
+  createdAt DateTime    @default(now())
+  reason    AbuseReason
+  details   String?     @db.VarChar(500)
+  locale    Locale?
+  /// SHA-256 of the reporter IP — used for rate limits, not shown publicly.
+  ipHash    String?
+  userAgent String?     @db.VarChar(300)
+
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId String
+
+  @@index([companyId, createdAt])
+  @@index([ipHash, createdAt])
 }
 
 /// Shared across serverless instances so the live "online now" count is real.

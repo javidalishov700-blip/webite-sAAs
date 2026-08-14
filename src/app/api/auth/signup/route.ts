@@ -20,7 +20,14 @@ export async function POST(request: NextRequest) {
 
   const company = await createCompany({ name: companyName, industry });
   const passwordHash = await hashPassword(password);
-  const user = await createUserWithCompanyMembership({ name, email, passwordHash, companyId: company.id, role: "OWNER" });
+  const user = await createUserWithCompanyMembership({
+    name,
+    email,
+    passwordHash,
+    companyId: company.id,
+    role: "OWNER",
+    acceptedTermsAt: new Date(),
+  });
 
   await setSessionCookie(user.id);
 

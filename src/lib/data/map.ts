@@ -31,6 +31,7 @@ export function mapUser(row: {
   email: string;
   passwordHash: string;
   avatarUrl: string | null;
+  acceptedTermsAt?: Date | null;
   createdAt: Date;
   updatedAt: Date;
 }): User {
@@ -40,6 +41,7 @@ export function mapUser(row: {
     email: row.email,
     passwordHash: row.passwordHash,
     avatarUrl: row.avatarUrl,
+    acceptedTermsAt: row.acceptedTermsAt ? iso(row.acceptedTermsAt) : null,
     createdAt: iso(row.createdAt),
     updatedAt: iso(row.updatedAt),
   };
