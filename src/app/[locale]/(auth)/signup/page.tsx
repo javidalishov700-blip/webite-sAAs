@@ -10,6 +10,7 @@ import { useRouter, Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Card } from "@/components/ui/card";
 import { signupSchema, type SignupInput } from "@/lib/validators/auth";
 import { api, ApiError } from "@/lib/api-client";
@@ -28,7 +29,7 @@ export default function SignupPage() {
     formState: { errors, isSubmitting },
   } = useForm<SignupInput>({
     resolver: zodResolver(signupSchema),
-    defaultValues: { industry: "RESTAURANT" },
+    defaultValues: { industry: "RESTAURANT", acceptedTerms: false },
   });
 
   async function onSubmit(values: SignupInput) {
@@ -89,6 +90,43 @@ export default function SignupPage() {
                 <IndustryPicker value={field.value as Industry} onChange={field.onChange} />
               )}
             />
+          </div>
+
+          <div className="space-y-3 rounded-xl border border-border/80 bg-muted/25 p-3.5">
+            <ul className="list-disc space-y-1.5 pl-4 text-[11px] leading-relaxed text-muted-foreground">
+              {(t.raw("notice") as string[]).map((item) => (
+                <li key={item.slice(0, 48)}>{item}</li>
+              ))}
+            </ul>
+            <div className="flex items-start gap-2.5">
+              <Controller
+                control={control}
+                name="acceptedTerms"
+                render={({ field }) => (
+                  <Checkbox
+                    id="acceptedTerms"
+                    className="mt-0.5"
+                    checked={field.value}
+                    onCheckedChange={(checked) => field.onChange(checked === true)}
+                  />
+                )}
+              />
+              <label htmlFor="acceptedTerms" className="cursor-pointer text-xs leading-relaxed text-foreground/90">
+                {t.rich("acceptLabel", {
+                  terms: (chunks) => (
+                    <Link href="/terms" className="font-medium text-primary hover:underline">
+                      {chunks}
+                    </Link>
+                  ),
+                  privacy: (chunks) => (
+                    <Link href="/privacy" className="font-medium text-primary hover:underline">
+                      {chunks}
+                    </Link>
+                  ),
+                })}
+              </label>
+            </div>
+            {errors.acceptedTerms ? <p className="text-xs text-destructive">{t("mustAccept")}</p> : null}
           </div>
 
           {serverError && (

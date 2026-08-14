@@ -13,5 +13,8 @@ export const signupSchema = z.object({
   password: z.string().min(6, "Use at least 6 characters"),
   companyName: z.string().min(2).max(80),
   industry: z.enum(INDUSTRY_VALUES),
+  acceptedTerms: z.boolean().refine((value) => value === true, {
+    message: "You must accept the terms to create an account",
+  }),
 });
 export type SignupInput = z.infer<typeof signupSchema>;

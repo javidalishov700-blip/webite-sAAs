@@ -322,7 +322,14 @@
       "submit": "Hesab yarat",
       "haveAccount": "Artıq hesabınız var?",
       "loginLink": "Daxil ol",
-      "emailTaken": "Bu e-poçtla hesab artıq mövcuddur."
+      "emailTaken": "Bu e-poçtla hesab artıq mövcuddur.",
+      "acceptLabel": "18 yaşım dolub. <terms>İstifadə şərtlərini</terms> və <privacy>Məxfilik siyasətini</privacy> oxuyub qəbul edirəm; qanunsuz və ya qadağan olunmuş məzmun dərc etməyəcəyəm.",
+      "mustAccept": "Hesab yaratmaq üçün qutunu işarələyib şərtləri qəbul etməlisiniz.",
+      "notice": [
+        "Yetkinlik (18+) və ya cinsi məzmun, uşaqları əhatə edən hər hansı məzmun, qanunsuz narkotik, silah və ya partlayıcı, oğurlanmış və ya saxta mal, fırıldaqçılıq, nifrət, təhdid, şəxsi məlumat ifşası, zərərli proqram və ya qanuna zidd başqa bir şey dərc etməyin.",
+        "Qaydaları pozsanız iş sahəsini dayandıra və ya silə, IP və ya girişinizi bloklaya bilərik. Ciddi hallarda səlahiyyətli orqanlara məlumat verilə bilər.",
+        "Dərc etdiyiniz hər şeyə yalnız siz cavabdehsiniz. QR-Universe kataloqunuza, müştərilərinizə və ya qadağan olunmuş istifadədən yaranan zərərə görə məsuliyyət daşımır."
+      ]
     },
     "onboarding": {
       "step": "Addım {current} / {total}",
@@ -740,7 +747,15 @@
           ]
         },
         {
-          "heading": "6. Tətbiq olunan hüquq",
+          "heading": "6. Qadağan olunmuş məzmun və tətbiq",
+          "body": [
+            "Hesab açmaq üçün 18 yaşınız dolmuş olmalıdır. Kataloqlar yalnız qanuni biznes üçündür. Bunları yükləmək, satmaq, reklam etmək və ya dərc etmək olmaz: yetkinlik və ya pornoqrafik məzmun; uşaqları əhatə edən hər hansı cinsi məzmun (qəti qadağandır və bildirilir); qanunsuz narkotik və ya qanuna zidd əlaqəli təkliflər; silah, partlayıcı və ya onların hazırlanması təlimatı; oğurlanmış, saxta və ya qaçaqmal mal; fırıldaqçılıq, fişinq və ya pul yuma sxemləri; nifrət, təhdid, təqib və ya şəxsi məlumat ifşası; zərərli proqram və ya xidmətə hücum; hüququnuz olmayan müəllif hüququ pozuntusu nüsxələri; sizin və ya müştərilərinizin olduğu yerdə qanunsuz olan hər hansı başqa məzmun.",
+            "Qaydaları pozsanız, risk ciddi olduqda əvvəlcədən xəbərdarlıq etmədən iş sahəsini dayandıra və ya həmişəlik bağlaya, kataloqu silə, gördüyümüz IP və ya digər giriş identifikatorlarını bloklaya və gələcək qeydiyyata icazə verməyə bilərik. Qanunsuz fəaliyyəti səlahiyyətli orqanlara bildirə bilərik. Hər kataloqu yoxlamaq məcburiyyətində deyilik; pozuntunu öyrəndikdə məzmunu silə bilərik.",
+            "Dərc etdiyiniz hər şeyə və müştərilərinizlə münasibətə yalnız siz cavabdehsiniz. QR-Universe məhsulları yoxlamır, malın mülkiyyətini götürmür; məzmununuza, xidmətin qanunsuz istifadəsinə və ya dərcinizdən yaranan zərər, iddia və ya cəzaya görə məsuliyyət daşımır. Kataloqunuz səbəbindən üçüncü şəxs iddia qaldırarsa, qanunun icazə verdiyi həddə bizi təzmin edirsiniz."
+          ]
+        },
+        {
+          "heading": "7. Tətbiq olunan hüquq",
           "body": [
             "Bu şərtlər Türkiyə Respublikası qanunlarına tabedir; yaşadığınız ölkədəki məcburi istehlakçı müdafiəsi saxlanılır. Mübahisələrdə əvvəlcə +90 541 323 00 02 ilə vicdanla həll axtarılır."
           ]

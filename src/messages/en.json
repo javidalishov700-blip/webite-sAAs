@@ -322,7 +322,14 @@
       "submit": "Create account",
       "haveAccount": "Already have an account?",
       "loginLink": "Log in",
-      "emailTaken": "An account with this email already exists."
+      "emailTaken": "An account with this email already exists.",
+      "acceptLabel": "I am 18 or older. I have read and accept the <terms>Terms of service</terms> and <privacy>Privacy policy</privacy>, and I will not publish illegal or prohibited content.",
+      "mustAccept": "Tick the box to accept the terms before creating an account.",
+      "notice": [
+        "Do not publish adult or sexual content, anything involving minors, illegal drugs, weapons or explosives, stolen or counterfeit goods, fraud, hate, threats, doxxing, malware, or any other content that breaks the law.",
+        "If you break these rules we may suspend or delete your workspace and block your IP or other access. Serious cases may be reported to the authorities.",
+        "You are solely responsible for everything you publish. QR-Universe does not take responsibility for your catalog, your customers, or any loss from prohibited use."
+      ]
     },
     "onboarding": {
       "step": "Step {current} of {total}",
@@ -740,7 +747,15 @@
           ]
         },
         {
-          "heading": "6. Governing law",
+          "heading": "6. Prohibited content and enforcement",
+          "body": [
+            "You must be 18 or older to create an account. Catalogs are for lawful business only. You must not upload, sell, advertise or otherwise publish: adult or pornographic material; any sexual content involving minors (strictly forbidden and will be reported); illegal drugs or related offers that break the law; weapons, explosives or instructions to make them; stolen, counterfeit or smuggled goods; fraud, phishing or money-laundering schemes; hate, threats, harassment or doxxing; malware or attacks on the service; copyright-infringing copies you do not have rights to; or any other content that is illegal where you or your customers are located.",
+            "If you break these rules we may, without prior notice where the risk is serious, suspend or permanently close the workspace, delete the catalog, block the IP address or other access identifiers we see, and refuse future sign-ups. We may report illegal activity to competent authorities. We are not obliged to review every catalog, but we may remove content when we become aware of a violation.",
+            "You are solely responsible for everything you publish and for your dealings with customers. QR-Universe does not verify products, does not take title to goods, and is not liable for your content, illegal use of the service, or any loss, claim or penalty arising from what you publish. If a third party brings a claim because of your catalog, you will indemnify us to the extent permitted by law."
+          ]
+        },
+        {
+          "heading": "7. Governing law",
           "body": [
             "These terms are governed by the laws of the Republic of Türkiye, without prejudice to mandatory consumer protections in your country of residence. Disputes will first be addressed in good faith via +90 541 323 00 02."
           ]
