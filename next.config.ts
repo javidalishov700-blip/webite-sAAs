@@ -5,10 +5,7 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  serverExternalPackages: ["@prisma/client", "prisma"],
-  outputFileTracingIncludes: {
-    "/*": ["./node_modules/.prisma/client/**", "./node_modules/@prisma/client/**"],
-  },
+  serverExternalPackages: ["@prisma/client"],
   experimental: {
     optimizePackageImports: ["lucide-react"],
   },

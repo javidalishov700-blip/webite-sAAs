@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getStaticLiveDemoCatalog, PUBLIC_SHOWCASE_SLUG } from "@/lib/data/public-showcase";
 import { loadPublicCatalog } from "@/lib/data/load-public-catalog";
 import { CatalogView } from "@/components/catalog/catalog-view";
 import { CatalogScanTracker } from "@/components/catalog/catalog-scan-tracker";
+import type { CompanyPublicView } from "@/lib/data/types";
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -12,9 +14,18 @@ interface PageProps {
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
+function isLiveDemo(slug: string): boolean {
+  return slug.toLowerCase() === PUBLIC_SHOWCASE_SLUG;
+}
+
+async function catalogForSlug(slug: string): Promise<CompanyPublicView | null> {
+  if (isLiveDemo(slug)) return getStaticLiveDemoCatalog();
+  return loadPublicCatalog(slug);
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const company = await loadPublicCatalog(slug);
+  const company = await catalogForSlug(slug);
   if (!company) return { title: "Catalog not found" };
   return {
     title: company.name,
@@ -35,7 +46,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function PublicCatalogPage({ params, searchParams }: PageProps) {
   const { locale, slug } = await params;
   const query = await searchParams;
-  const company = await loadPublicCatalog(slug);
+  const company = await catalogForSlug(slug);
   if (!company) notFound();
   const preview = query.preview === "1";
 
