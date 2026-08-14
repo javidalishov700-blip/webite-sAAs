@@ -10,7 +10,7 @@ import { CtaBand } from "@/components/landing/cta-band";
 
 export default function HomePage() {
   return (
-    <MarketingChrome>
+    <MarketingChrome smooth>
       <Hero />
       <HowItWorks />
       <Features />

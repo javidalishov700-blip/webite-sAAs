@@ -1,24 +1,49 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { motion } from "motion/react";
 import { Menu, QrCode, X } from "lucide-react";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/utils";
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
 
-const NAV_ITEMS = [
-  { href: "/#how-it-works", key: "howItWorks" },
-  { href: "/#features", key: "features" },
-  { href: "/#use-cases", key: "useCases" },
-  { href: "/#pricing", key: "pricing" },
-  { href: "/faq", key: "faq", internal: true },
-  { href: "/contact", key: "contact", internal: true },
+const HASH_ITEMS = [
+  { hash: "how-it-works", key: "howItWorks" },
+  { hash: "features", key: "features" },
+  { hash: "use-cases", key: "useCases" },
+  { hash: "pricing", key: "pricing" },
+  { hash: "faq", key: "faq" },
 ] as const;
+
+function HashLink({
+  hash,
+  className,
+  onClick,
+  children,
+}: {
+  hash: string;
+  className?: string;
+  onClick?: () => void;
+  children: ReactNode;
+}) {
+  const pathname = usePathname();
+  if (pathname === "/") {
+    return (
+      <a href={`#${hash}`} className={className} onClick={onClick}>
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link href={{ pathname: "/", hash }} className={className} onClick={onClick}>
+      {children}
+    </Link>
+  );
+}
 
 export function SiteHeader() {
   const t = useTranslations("landing.header");
@@ -53,27 +78,23 @@ export function SiteHeader() {
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex">
-          {NAV_ITEMS.map((item) =>
-            "internal" in item && item.internal ? (
-              <Link
-                key={item.key}
-                href={item.href}
-                className="group relative rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {t(item.key)}
-                <span className="absolute inset-x-3 -bottom-0.5 h-px origin-center scale-x-0 bg-gradient-to-r from-primary to-accent transition-transform duration-300 group-hover:scale-x-100" />
-              </Link>
-            ) : (
-              <a
-                key={item.key}
-                href={item.href}
-                className="group relative rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {t(item.key)}
-                <span className="absolute inset-x-3 -bottom-0.5 h-px origin-center scale-x-0 bg-gradient-to-r from-primary to-accent transition-transform duration-300 group-hover:scale-x-100" />
-              </a>
-            ),
-          )}
+          {HASH_ITEMS.map((item) => (
+            <HashLink
+              key={item.key}
+              hash={item.hash}
+              className="group relative rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {t(item.key)}
+              <span className="absolute inset-x-3 -bottom-0.5 h-px origin-center scale-x-0 bg-gradient-to-r from-primary to-accent transition-transform duration-300 group-hover:scale-x-100" />
+            </HashLink>
+          ))}
+          <Link
+            href="/contact"
+            className="group relative rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+          >
+            {t("contact")}
+            <span className="absolute inset-x-3 -bottom-0.5 h-px origin-center scale-x-0 bg-gradient-to-r from-primary to-accent transition-transform duration-300 group-hover:scale-x-100" />
+          </Link>
         </nav>
 
         <div className="hidden items-center gap-2 sm:flex">
@@ -105,27 +126,23 @@ export function SiteHeader() {
             </Button>
           </div>
           <nav className="mt-8 flex flex-col gap-1">
-            {NAV_ITEMS.map((item) =>
-              "internal" in item && item.internal ? (
-                <Link
-                  key={item.key}
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="rounded-xl px-3 py-3 text-base text-foreground/90 hover:bg-white/5"
-                >
-                  {t(item.key)}
-                </Link>
-              ) : (
-                <a
-                  key={item.key}
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="rounded-xl px-3 py-3 text-base text-foreground/90 hover:bg-white/5"
-                >
-                  {t(item.key)}
-                </a>
-              ),
-            )}
+            {HASH_ITEMS.map((item) => (
+              <HashLink
+                key={item.key}
+                hash={item.hash}
+                onClick={() => setMobileOpen(false)}
+                className="rounded-xl px-3 py-3 text-base text-foreground/90 hover:bg-white/5"
+              >
+                {t(item.key)}
+              </HashLink>
+            ))}
+            <Link
+              href="/contact"
+              onClick={() => setMobileOpen(false)}
+              className="rounded-xl px-3 py-3 text-base text-foreground/90 hover:bg-white/5"
+            >
+              {t("contact")}
+            </Link>
           </nav>
           <div className="mt-auto flex flex-col gap-2 pt-8">
             <Button variant="outline" asChild>

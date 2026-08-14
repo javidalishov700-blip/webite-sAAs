@@ -16,7 +16,7 @@ export function SiteFooter() {
         { label: t("useCases"), href: "/#use-cases" },
         { label: t("demo"), href: "/#demo" },
         { label: t("pricing"), href: "/#pricing" },
-        { label: t("faq"), href: "/faq" },
+        { label: t("faq"), href: "/#faq" },
       ],
     },
     {
