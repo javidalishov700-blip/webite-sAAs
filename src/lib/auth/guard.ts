@@ -18,6 +18,9 @@ export async function requireUser(locale: string): Promise<SessionUser> {
   if (!user) {
     redirect(`/${locale}/login`);
   }
+  if (!user.emailVerified && !user.isPlatformAdmin) {
+    redirect(`/${locale}/check-email`);
+  }
   return user;
 }
 
@@ -37,6 +40,9 @@ export async function requireSession(): Promise<{ user: SessionUser | null; resp
   }
   if (user.companyBanned && !user.isPlatformAdmin) {
     return { user: null, response: NextResponse.json({ error: "banned" }, { status: 403 }) };
+  }
+  if (!user.emailVerified && !user.isPlatformAdmin) {
+    return { user: null, response: NextResponse.json({ error: "unverified" }, { status: 403 }) };
   }
   return { user, response: null };
 }

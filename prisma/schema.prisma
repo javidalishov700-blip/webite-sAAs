@@ -72,6 +72,11 @@ enum AbuseReason {
   OTHER
 }
 
+enum AuthTokenType {
+  EMAIL_VERIFY
+  PASSWORD_RESET
+}
+
 // ---------------------------------------------------------------------------
 // Identity & tenancy
 // ---------------------------------------------------------------------------
@@ -86,12 +91,31 @@ model User {
   acceptedTermsAt DateTime?
   /// Platform operator (ban / plans / delete any workspace). Also granted via PLATFORM_ADMIN_EMAILS.
   platformAdmin   Boolean   @default(false)
+  /// Null until the user clicks the email verification link (or an operator verifies them).
+  emailVerifiedAt DateTime?
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 
   memberships Membership[]
+  authTokens  AuthToken[]
 
   @@index([email])
+}
+
+/// One-time hashed tokens for email verification and password reset.
+model AuthToken {
+  id        String        @id @default(cuid())
+  type      AuthTokenType
+  tokenHash String        @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime      @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  @@index([userId, type])
+  @@index([expiresAt])
 }
 
 /// Join table enabling multi-tenant, multi-user companies with per-user roles.
@@ -223,6 +247,8 @@ model QrCode {
   cornerStyle     QrDotStyle @default(EXTRA_ROUNDED)
   logoUrl         String?
   scans           Int        @default(0)
+  /// When false, public `/api/qr/:id/go` returns 404 and the catalog is not opened.
+  isActive        Boolean    @default(true)
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
 

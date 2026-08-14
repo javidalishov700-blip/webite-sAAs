@@ -33,6 +33,7 @@ export function mapUser(row: {
   avatarUrl: string | null;
   acceptedTermsAt?: Date | null;
   platformAdmin?: boolean;
+  emailVerifiedAt?: Date | null;
   createdAt: Date;
   updatedAt: Date;
 }): User {
@@ -44,6 +45,7 @@ export function mapUser(row: {
     avatarUrl: row.avatarUrl,
     acceptedTermsAt: row.acceptedTermsAt ? iso(row.acceptedTermsAt) : null,
     platformAdmin: Boolean(row.platformAdmin),
+    emailVerifiedAt: row.emailVerifiedAt ? iso(row.emailVerifiedAt) : null,
     createdAt: iso(row.createdAt),
     updatedAt: iso(row.updatedAt),
   };
@@ -205,6 +207,7 @@ export function mapQr(row: {
   cornerStyle: QrDotStyle;
   logoUrl: string | null;
   scans: number;
+  isActive?: boolean;
   createdAt: Date;
   updatedAt: Date;
 }): QrCode {
@@ -219,6 +222,7 @@ export function mapQr(row: {
     cornerStyle: row.cornerStyle,
     logoUrl: row.logoUrl,
     scans: row.scans,
+    isActive: row.isActive !== false,
     createdAt: iso(row.createdAt),
     updatedAt: iso(row.updatedAt),
   };

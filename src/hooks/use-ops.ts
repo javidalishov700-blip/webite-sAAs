@@ -6,6 +6,16 @@ import { queryKeys } from "@/lib/query-keys";
 import type { Plan } from "@/lib/data/types";
 import type { OpsReport, OpsWorkspace } from "@/lib/ops-types";
 
+export type OpsPatchInput =
+  | { id: string; action: "ban"; reason?: string }
+  | { id: string; action: "unban" }
+  | { id: string; action: "setPlan"; plan: Plan }
+  | { id: string; action: "publish" }
+  | { id: string; action: "unpublish" }
+  | { id: string; action: "verifyEmail" }
+  | { id: string; action: "setQrActive"; qrId: string; isActive: boolean }
+  | { id: string; action: "setAllQrs"; isActive: boolean };
+
 export function useOpsWorkspaces(query: string) {
   return useQuery({
     queryKey: queryKeys.opsWorkspaces(query),
@@ -28,12 +38,10 @@ export function useOpsWorkspaceActions() {
   }
 
   const patch = useMutation({
-    mutationFn: (input: { id: string; action: "ban" | "unban" | "setPlan"; plan?: Plan; reason?: string }) =>
-      api.patch(`/api/ops/workspaces/${input.id}`, {
-        action: input.action,
-        plan: input.plan,
-        reason: input.reason,
-      }),
+    mutationFn: (input: OpsPatchInput) => {
+      const { id, ...body } = input;
+      return api.patch(`/api/ops/workspaces/${id}`, body);
+    },
     onSuccess: invalidate,
   });
 

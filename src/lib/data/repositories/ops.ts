@@ -35,9 +35,14 @@ export async function listOpsWorkspaces(query?: string): Promise<OpsWorkspace[]>
     include: {
       memberships: {
         where: { role: "OWNER" },
-        include: { user: { select: { name: true, email: true, platformAdmin: true } } },
+        include: { user: { select: { name: true, email: true, platformAdmin: true, emailVerifiedAt: true } } },
       },
-      _count: { select: { items: true, abuseReports: true } },
+      qrCodes: {
+        select: { id: true, name: true, isActive: true, scans: true },
+        orderBy: { createdAt: "desc" },
+        take: 20,
+      },
+      _count: { select: { items: true, abuseReports: true, qrCodes: true } },
     },
     orderBy: { createdAt: "desc" },
     take: 80,
@@ -45,6 +50,11 @@ export async function listOpsWorkspaces(query?: string): Promise<OpsWorkspace[]>
 
   return rows.map((row) => {
     const protectedReason = classifyProtection(row.slug, row.memberships);
+    const owners = row.memberships.map((member) => ({
+      name: member.user.name,
+      email: member.user.email,
+      emailVerified: Boolean(member.user.emailVerifiedAt),
+    }));
     return {
       id: row.id,
       name: row.name,
@@ -56,7 +66,10 @@ export async function listOpsWorkspaces(query?: string): Promise<OpsWorkspace[]>
       createdAt: toIso(row.createdAt),
       itemCount: row._count.items,
       reportCount: row._count.abuseReports,
-      owners: row.memberships.map((member) => ({ name: member.user.name, email: member.user.email })),
+      qrCount: row._count.qrCodes,
+      owners,
+      qrCodes: row.qrCodes,
+      emailVerified: owners.length === 0 ? true : owners.every((owner) => owner.emailVerified),
       protected: Boolean(protectedReason),
       protectedReason,
     };
@@ -102,6 +115,13 @@ export async function setWorkspacePlan(id: string, plan: Plan) {
   return prisma.company.update({
     where: { id },
     data: { plan },
+  });
+}
+
+export async function setWorkspacePublished(id: string, isPublished: boolean) {
+  return prisma.company.update({
+    where: { id },
+    data: { isPublished },
   });
 }
 

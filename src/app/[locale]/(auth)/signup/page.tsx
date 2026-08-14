@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { motion } from "motion/react";
 import { AlertCircle, ArrowRight, UserPlus } from "lucide-react";
 import { useRouter, Link } from "@/i18n/navigation";
@@ -19,6 +19,7 @@ import type { Industry } from "@/lib/data/types";
 
 export default function SignupPage() {
   const t = useTranslations("auth.signup");
+  const locale = useLocale();
   const router = useRouter();
   const [serverError, setServerError] = useState<string | null>(null);
 
@@ -35,9 +36,8 @@ export default function SignupPage() {
   async function onSubmit(values: SignupInput) {
     setServerError(null);
     try {
-      await api.post("/api/auth/signup", values);
-      router.push("/onboarding");
-      router.refresh();
+      await api.post("/api/auth/signup", { ...values, locale });
+      router.push(`/check-email?email=${encodeURIComponent(values.email)}`);
     } catch (err) {
       setServerError(err instanceof ApiError && err.status === 409 ? t("emailTaken") : t("unavailable"));
     }

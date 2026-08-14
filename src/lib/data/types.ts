@@ -43,6 +43,7 @@ export interface User {
   avatarUrl?: string | null;
   acceptedTermsAt?: string | null;
   platformAdmin?: boolean;
+  emailVerifiedAt?: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -128,6 +129,7 @@ export interface QrCode {
   cornerStyle: QrDotStyle;
   logoUrl?: string | null;
   scans: number;
+  isActive: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -168,6 +170,7 @@ export interface SessionUser {
   role: Role;
   isPlatformAdmin: boolean;
   companyBanned: boolean;
+  emailVerified: boolean;
 }
 
 export interface AnalyticsSummary {

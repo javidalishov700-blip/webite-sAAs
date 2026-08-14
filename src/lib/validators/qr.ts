@@ -10,5 +10,6 @@ export const qrSchema = z.object({
   dotsStyle: dotStyleEnum,
   cornerStyle: dotStyleEnum,
   logoUrl: z.string().optional().nullable(),
+  isActive: z.boolean().optional(),
 });
 export type QrInput = z.infer<typeof qrSchema>;

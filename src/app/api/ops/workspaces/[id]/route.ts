@@ -5,9 +5,12 @@ import {
   banWorkspace,
   getOpsWorkspaceGuard,
   setWorkspacePlan,
+  setWorkspacePublished,
   unbanWorkspace,
 } from "@/lib/data/repositories/ops";
 import { deleteCompany } from "@/lib/data/repositories/companies";
+import { verifyWorkspaceOwners } from "@/lib/data/repositories/users";
+import { setAllQrActive, setQrActiveForCompany } from "@/lib/data/repositories/qr";
 
 interface Params {
   params: Promise<{ id: string }>;
@@ -27,11 +30,46 @@ export async function PATCH(request: NextRequest, { params }: Params) {
   const guard = await getOpsWorkspaceGuard(id);
   if (!guard) return NextResponse.json({ error: "not_found" }, { status: 404 });
 
-  if (parsed.data.action === "setPlan") {
+  const action = parsed.data.action;
+
+  if (action === "setPlan") {
     if (guard.protectedReason === "live_demo") {
       return NextResponse.json({ error: "protected" }, { status: 403 });
     }
     await setWorkspacePlan(id, parsed.data.plan);
+    return NextResponse.json({ ok: true });
+  }
+
+  if (action === "verifyEmail") {
+    if (guard.protectedReason === "live_demo") {
+      return NextResponse.json({ error: "protected" }, { status: 403 });
+    }
+    await verifyWorkspaceOwners(id);
+    return NextResponse.json({ ok: true });
+  }
+
+  if (action === "publish" || action === "unpublish") {
+    if (guard.protectedReason === "live_demo") {
+      return NextResponse.json({ error: "protected" }, { status: 403 });
+    }
+    await setWorkspacePublished(id, action === "publish");
+    return NextResponse.json({ ok: true });
+  }
+
+  if (action === "setQrActive") {
+    if (guard.protectedReason === "live_demo") {
+      return NextResponse.json({ error: "protected" }, { status: 403 });
+    }
+    const qr = await setQrActiveForCompany(parsed.data.qrId, id, parsed.data.isActive);
+    if (!qr) return NextResponse.json({ error: "not_found" }, { status: 404 });
+    return NextResponse.json({ ok: true });
+  }
+
+  if (action === "setAllQrs") {
+    if (guard.protectedReason === "live_demo") {
+      return NextResponse.json({ error: "protected" }, { status: 403 });
+    }
+    await setAllQrActive(id, parsed.data.isActive);
     return NextResponse.json({ ok: true });
   }
 
@@ -41,10 +79,15 @@ export async function PATCH(request: NextRequest, { params }: Params) {
 
   if (parsed.data.action === "ban") {
     await banWorkspace(id, parsed.data.reason);
-  } else {
-    await unbanWorkspace(id);
+    return NextResponse.json({ ok: true });
   }
-  return NextResponse.json({ ok: true });
+
+  if (parsed.data.action === "unban") {
+    await unbanWorkspace(id);
+    return NextResponse.json({ ok: true });
+  }
+
+  return NextResponse.json({ error: "invalid" }, { status: 400 });
 }
 
 export async function DELETE(_request: NextRequest, { params }: Params) {

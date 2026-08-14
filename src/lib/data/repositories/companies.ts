@@ -49,6 +49,7 @@ export async function createCompany(input: {
   currency?: string;
   logoUrl?: string | null;
   accentColor?: string;
+  isPublished?: boolean;
 }): Promise<Company> {
   const row = await prisma.company.create({
     data: {
@@ -66,7 +67,7 @@ export async function createCompany(input: {
       address: null,
       phone: null,
       website: null,
-      isPublished: true,
+      isPublished: input.isPublished ?? true,
     },
   });
   return mapCompany(row);
@@ -78,7 +79,7 @@ export async function updateCompany(
 ): Promise<Company | undefined> {
   const existing = await prisma.company.findUnique({ where: { id } });
   if (!existing) return undefined;
-  const { updatedAt: _ignored, ...rest } = patch;
+  const { updatedAt: _ignored, slug: _slug, ...rest } = patch;
   const row = await prisma.company.update({
     where: { id },
     data: rest,

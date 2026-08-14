@@ -21,7 +21,7 @@ export async function GET(request: NextRequest, { params }: Params) {
   }
 
   const company = await getCompanyById(qr.companyId);
-  if (!company || !company.isPublished || company.bannedAt) {
+  if (!company || !company.isPublished || company.bannedAt || !qr.isActive) {
     return NextResponse.json({ error: "not_found" }, { status: 404 });
   }
 

@@ -43,13 +43,17 @@ function LoginForm() {
       router.refresh();
     } catch (err) {
       setServerError(
-        err instanceof ApiError && err.status === 403
-          ? t("banned")
-          : err instanceof ApiError && (err.status === 503 || err.status >= 500)
-            ? t("unavailable")
-            : err instanceof ApiError
-              ? t("invalid")
-              : t("unavailable"),
+        err instanceof ApiError && err.status === 403 && err.message === "unverified"
+          ? t("unverified")
+          : err instanceof ApiError && err.status === 403
+            ? t("banned")
+            : err instanceof ApiError && err.status === 429
+              ? t("rateLimited")
+              : err instanceof ApiError && (err.status === 503 || err.status >= 500)
+                ? t("unavailable")
+                : err instanceof ApiError
+                  ? t("invalid")
+                  : t("unavailable"),
       );
     }
   }
@@ -77,7 +81,12 @@ function LoginForm() {
             {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="password">{t("password")}</Label>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="password">{t("password")}</Label>
+              <Link href="/forgot" className="text-xs font-medium text-primary hover:underline">
+                {t("forgotLink")}
+              </Link>
+            </div>
             <Input id="password" type="password" autoComplete="current-password" placeholder="••••••••" {...register("password")} />
             {errors.password && <p className="text-xs text-destructive">{errors.password.message}</p>}
           </div>

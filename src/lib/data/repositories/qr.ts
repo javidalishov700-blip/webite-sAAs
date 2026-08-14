@@ -45,24 +45,47 @@ export async function createQrCode(input: CreateQrInput): Promise<QrCode> {
       cornerStyle: input.cornerStyle ?? "EXTRA_ROUNDED",
       logoUrl: input.logoUrl ?? null,
       scans: 0,
+      isActive: true,
     },
   });
   return mapQr(row);
 }
 
+type QrPatch = Partial<Pick<QrCode, "name" | "targetUrl" | "dotsColor" | "backgroundColor" | "dotsStyle" | "cornerStyle" | "logoUrl" | "isActive">>;
+
 export async function updateQrCode(
   id: string,
   companyId: string,
-  patch: Partial<Omit<QrCode, "id" | "companyId" | "createdAt">>,
+  patch: QrPatch,
 ): Promise<QrCode | undefined> {
   const existing = await prisma.qrCode.findFirst({ where: { id, companyId } });
   if (!existing) return undefined;
-  const { updatedAt: _ignored, ...rest } = patch;
   const row = await prisma.qrCode.update({
     where: { id },
-    data: rest,
+    data: {
+      ...(patch.name !== undefined ? { name: patch.name } : {}),
+      ...(patch.targetUrl !== undefined ? { targetUrl: patch.targetUrl } : {}),
+      ...(patch.dotsColor !== undefined ? { dotsColor: patch.dotsColor } : {}),
+      ...(patch.backgroundColor !== undefined ? { backgroundColor: patch.backgroundColor } : {}),
+      ...(patch.dotsStyle !== undefined ? { dotsStyle: patch.dotsStyle } : {}),
+      ...(patch.cornerStyle !== undefined ? { cornerStyle: patch.cornerStyle } : {}),
+      ...(patch.logoUrl !== undefined ? { logoUrl: patch.logoUrl } : {}),
+      ...(patch.isActive !== undefined ? { isActive: patch.isActive } : {}),
+    },
   });
   return mapQr(row);
+}
+
+export async function setQrActiveForCompany(id: string, companyId: string, isActive: boolean): Promise<QrCode | undefined> {
+  return updateQrCode(id, companyId, { isActive });
+}
+
+export async function setAllQrActive(companyId: string, isActive: boolean): Promise<number> {
+  const result = await prisma.qrCode.updateMany({
+    where: { companyId },
+    data: { isActive },
+  });
+  return result.count;
 }
 
 export async function deleteQrCode(id: string, companyId: string): Promise<boolean> {

@@ -6,6 +6,17 @@ export const SITE = {
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
 } as const;
 
+/** Absolute origin used in emails and QR links. Never includes a trailing slash. */
+export function appBaseUrl(): string {
+  const explicit = process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/$/, "");
+  if (explicit) return explicit;
+  const production = process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim();
+  if (production) return `https://${production.replace(/^https?:\/\//, "")}`;
+  const preview = process.env.VERCEL_URL?.trim();
+  if (preview) return `https://${preview.replace(/^https?:\/\//, "")}`;
+  return SITE.url.replace(/\/$/, "");
+}
+
 export function telHref(phone = SITE.phone): string {
   return `tel:${phone.replace(/[^\d+]/g, "")}`;
 }

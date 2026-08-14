@@ -148,7 +148,9 @@ export default function QrStudioPage() {
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium">{qr.name}</p>
-                  <p className="text-xs text-muted-foreground">{t("scans", { count: qr.scans })}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {qr.isActive ? t("scans", { count: qr.scans }) : t("paused")}
+                  </p>
                 </div>
               </button>
             ))}
@@ -167,6 +169,20 @@ export default function QrStudioPage() {
                       placeholder={t("namePlaceholder")}
                       value={draft.name}
                       onChange={(e) => setDraft({ ...draft, name: e.target.value })}
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-between rounded-xl border border-border/70 bg-muted/20 px-3 py-2.5">
+                    <div>
+                      <p className="text-sm font-medium">{t("activeLabel")}</p>
+                      <p className="text-xs text-muted-foreground">{t("activeHint")}</p>
+                    </div>
+                    <Switch
+                      checked={selected.isActive}
+                      onCheckedChange={async (checked) => {
+                        await updateQr.mutateAsync({ id: selected.id, isActive: checked });
+                        toast.success(checked ? t("resumedOk") : t("pausedOk"));
+                      }}
                     />
                   </div>
 

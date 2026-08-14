@@ -117,6 +117,7 @@ export function ensurePublicShowcase<T extends SeedDb>(data: T): T {
     cornerStyle: "EXTRA_ROUNDED",
     logoUrl: null,
     scans: 0,
+    isActive: true,
     createdAt: now,
     updatedAt: now,
   });

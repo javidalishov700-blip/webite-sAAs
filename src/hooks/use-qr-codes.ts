@@ -24,7 +24,7 @@ export function useCreateQrCode() {
 export function useUpdateQrCode() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, ...input }: { id: string } & Partial<QrInput>) =>
+    mutationFn: ({ id, ...input }: { id: string } & Partial<QrInput> & { isActive?: boolean }) =>
       api.patch<{ qrCode: QrCode }>(`/api/qr/${id}`, input).then((r) => r.qrCode),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: queryKeys.qrCodes }),
   });

@@ -5,10 +5,17 @@
 import { SignJWT, jwtVerify } from "jose";
 
 const encoder = new TextEncoder();
+const DEV_FALLBACK = "qr-universe-dev-secret-do-not-use-in-production";
 
 function getSecretKey() {
-  const secret = process.env.AUTH_SECRET ?? "qr-universe-dev-secret-do-not-use-in-production";
-  return encoder.encode(secret);
+  const secret = process.env.AUTH_SECRET?.trim();
+  if (secret && secret.length >= 16) {
+    return encoder.encode(secret);
+  }
+  if (process.env.NODE_ENV === "production" || process.env.VERCEL) {
+    console.error("[auth] AUTH_SECRET is missing or shorter than 16 characters. Set it in Vercel env.");
+  }
+  return encoder.encode(DEV_FALLBACK);
 }
 
 export interface SessionPayload {

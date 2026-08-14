@@ -2,6 +2,19 @@ import type { Plan } from "@/lib/data/types";
 
 export type OpsProtectedReason = "live_demo" | "platform_admin";
 
+export type OpsQr = {
+  id: string;
+  name: string;
+  isActive: boolean;
+  scans: number;
+};
+
+export type OpsOwner = {
+  name: string;
+  email: string;
+  emailVerified: boolean;
+};
+
 export type OpsWorkspace = {
   id: string;
   name: string;
@@ -13,7 +26,10 @@ export type OpsWorkspace = {
   createdAt: string;
   itemCount: number;
   reportCount: number;
-  owners: { name: string; email: string }[];
+  qrCount: number;
+  owners: OpsOwner[];
+  qrCodes: OpsQr[];
+  emailVerified: boolean;
   protected: boolean;
   protectedReason: OpsProtectedReason | null;
 };

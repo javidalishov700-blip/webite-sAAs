@@ -3,7 +3,18 @@
 import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Flag, Lock, Search, ShieldAlert, Trash2 } from "lucide-react";
+import {
+  BadgeCheck,
+  Eye,
+  EyeOff,
+  Flag,
+  Lock,
+  QrCode,
+  Search,
+  ShieldAlert,
+  ShieldCheck,
+  Trash2,
+} from "lucide-react";
 import { PageHeader } from "@/components/admin/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -12,6 +23,7 @@ import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   Dialog,
@@ -92,6 +104,41 @@ export function OpsConsole() {
     }
   }
 
+  async function handlePublish(workspace: OpsWorkspace, publish: boolean) {
+    try {
+      await patch.mutateAsync({ id: workspace.id, action: publish ? "publish" : "unpublish" });
+      toast.success(publish ? t("publishedOk") : t("unpublishedOk"));
+    } catch (err) {
+      fail(err);
+    }
+  }
+
+  async function handleVerify(workspace: OpsWorkspace) {
+    try {
+      await patch.mutateAsync({ id: workspace.id, action: "verifyEmail" });
+      toast.success(t("verifiedOk"));
+    } catch (err) {
+      fail(err);
+    }
+  }
+
+  async function handleAllQrs(workspace: OpsWorkspace, isActive: boolean) {
+    try {
+      await patch.mutateAsync({ id: workspace.id, action: "setAllQrs", isActive });
+      toast.success(isActive ? t("qrsOnOk") : t("qrsOffOk"));
+    } catch (err) {
+      fail(err);
+    }
+  }
+
+  async function handleQr(workspace: OpsWorkspace, qrId: string, isActive: boolean) {
+    try {
+      await patch.mutateAsync({ id: workspace.id, action: "setQrActive", qrId, isActive });
+    } catch (err) {
+      fail(err);
+    }
+  }
+
   async function handleDelete() {
     if (!deleteTarget) return;
     try {
@@ -103,6 +150,8 @@ export function OpsConsole() {
       fail(err);
     }
   }
+
+  const mutating = patch.isPending || remove.isPending;
 
   return (
     <div className="max-w-5xl">
@@ -123,9 +172,13 @@ export function OpsConsole() {
           ? Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="h-36 rounded-2xl" />)
           : workspaces.data?.length === 0
             ? <p className="text-sm text-muted-foreground">{t("empty")}</p>
-            : workspaces.data?.map((workspace) => (
+            : workspaces.data?.map((workspace) => {
+                const liveDemo = workspace.protectedReason === "live_demo";
+                const lockedHard = Boolean(workspace.protected);
+                return (
                 <Card key={workspace.id}>
-                  <CardContent className="flex flex-col gap-4 p-5 sm:flex-row sm:items-start sm:justify-between">
+                  <CardContent className="flex flex-col gap-4 p-5">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                     <div className="min-w-0 space-y-1.5">
                       <div className="flex flex-wrap items-center gap-2">
                         <h2 className="font-display text-lg font-semibold">{workspace.name}</h2>
@@ -135,6 +188,11 @@ export function OpsConsole() {
                           <Badge variant="success">{t("live")}</Badge>
                         ) : (
                           <Badge variant="muted">{t("unpublished")}</Badge>
+                        )}
+                        {workspace.emailVerified ? (
+                          <Badge variant="outline">{t("emailOk")}</Badge>
+                        ) : (
+                          <Badge variant="destructive">{t("emailPending")}</Badge>
                         )}
                         {workspace.protected ? (
                           <Badge variant="outline">
@@ -149,6 +207,7 @@ export function OpsConsole() {
                       </p>
                       <p className="text-xs text-muted-foreground">
                         {t("items", { count: workspace.itemCount })}
+                        {` · ${t("qrs", { count: workspace.qrCount })}`}
                         {workspace.reportCount > 0 ? ` · ${t("reportCount", { count: workspace.reportCount })}` : ""}
                       </p>
                       {workspace.bannedReason ? (
@@ -160,9 +219,9 @@ export function OpsConsole() {
                       <Select
                         value={workspace.plan}
                         onValueChange={(value) => handlePlan(workspace, value as Plan)}
-                        disabled={workspace.protectedReason === "live_demo" || patch.isPending}
+                        disabled={liveDemo || mutating}
                       >
-                        <SelectTrigger className="w-[160px]">
+                        <SelectTrigger className="w-[180px]">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -173,12 +232,12 @@ export function OpsConsole() {
                           ))}
                         </SelectContent>
                       </Select>
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-2 sm:justify-end">
                         {workspace.bannedAt ? (
                           <Button
                             size="sm"
                             variant="outline"
-                            disabled={workspace.protected || patch.isPending}
+                            disabled={lockedHard || mutating}
                             onClick={() => handleUnban(workspace)}
                           >
                             {t("unban")}
@@ -187,7 +246,7 @@ export function OpsConsole() {
                           <Button
                             size="sm"
                             variant="outline"
-                            disabled={workspace.protected || patch.isPending}
+                            disabled={lockedHard || mutating}
                             onClick={() => {
                               setBanReason("");
                               setBanTarget(workspace);
@@ -197,10 +256,64 @@ export function OpsConsole() {
                             {t("ban")}
                           </Button>
                         )}
+                        {workspace.isPublished ? (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            disabled={liveDemo || mutating}
+                            onClick={() => handlePublish(workspace, false)}
+                          >
+                            <EyeOff className="size-3.5" />
+                            {t("unpublish")}
+                          </Button>
+                        ) : (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            disabled={liveDemo || mutating || Boolean(workspace.bannedAt)}
+                            onClick={() => handlePublish(workspace, true)}
+                          >
+                            <Eye className="size-3.5" />
+                            {t("publish")}
+                          </Button>
+                        )}
+                        {!workspace.emailVerified ? (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            disabled={liveDemo || mutating}
+                            onClick={() => handleVerify(workspace)}
+                          >
+                            <BadgeCheck className="size-3.5" />
+                            {t("verifyEmail")}
+                          </Button>
+                        ) : (
+                          <Button size="sm" variant="ghost" disabled>
+                            <ShieldCheck className="size-3.5" />
+                            {t("emailOk")}
+                          </Button>
+                        )}
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          disabled={liveDemo || mutating || workspace.qrCount === 0}
+                          onClick={() => handleAllQrs(workspace, false)}
+                        >
+                          <QrCode className="size-3.5" />
+                          {t("pauseQrs")}
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          disabled={liveDemo || mutating || workspace.qrCount === 0}
+                          onClick={() => handleAllQrs(workspace, true)}
+                        >
+                          {t("enableQrs")}
+                        </Button>
                         <Button
                           size="sm"
                           variant="destructive"
-                          disabled={workspace.protected || remove.isPending}
+                          disabled={lockedHard || mutating}
                           onClick={() => {
                             setDeleteSlug("");
                             setDeleteTarget(workspace);
@@ -211,9 +324,35 @@ export function OpsConsole() {
                         </Button>
                       </div>
                     </div>
+                    </div>
+
+                    {workspace.qrCodes.length > 0 ? (
+                      <div className="space-y-2 rounded-xl border border-border/70 bg-muted/20 p-3">
+                        <p className="text-xs font-medium text-muted-foreground">{t("qrList")}</p>
+                        {workspace.qrCodes.map((qr) => (
+                          <div key={qr.id} className="flex items-center justify-between gap-3 text-sm">
+                            <div className="min-w-0">
+                              <p className="truncate font-medium">{qr.name}</p>
+                              <p className="text-xs text-muted-foreground">{t("qrScans", { count: qr.scans })}</p>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-xs text-muted-foreground">
+                                {qr.isActive ? t("qrOn") : t("qrOff")}
+                              </span>
+                              <Switch
+                                checked={qr.isActive}
+                                disabled={liveDemo || mutating}
+                                onCheckedChange={(checked) => handleQr(workspace, qr.id, checked)}
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : null}
                   </CardContent>
                 </Card>
-              ))}
+                );
+              })}
       </div>
 
       <Card className="mt-8">
