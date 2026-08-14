@@ -91,7 +91,8 @@ export function ProductForm({
   const isFeatured = watch("isFeatured") ?? false;
 
   function submit(values: ItemInput) {
-    return onSubmit({ ...values, images: imageUrl ? [imageUrl] : [], attributes });
+    const filledAttributes = attributes.filter((attr) => attr.key.trim().length > 0);
+    return onSubmit({ ...values, images: imageUrl ? [imageUrl] : [], attributes: filledAttributes });
   }
 
   return (

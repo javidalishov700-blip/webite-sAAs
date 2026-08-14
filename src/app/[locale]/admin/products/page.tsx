@@ -35,6 +35,7 @@ import { useCategories } from "@/hooks/use-categories";
 import { useCreateItem, useDeleteItem, useItems, useUpdateItem } from "@/hooks/use-items";
 import { useCompany } from "@/hooks/use-company";
 import { formatCurrency } from "@/lib/utils";
+import { ApiError } from "@/lib/api-client";
 import type { ItemWithAttributes } from "@/lib/data/types";
 import type { ItemInput } from "@/lib/validators/item";
 
@@ -68,15 +69,19 @@ export default function ProductsPage() {
   }, [items, search, categoryFilter, statusFilter]);
 
   async function handleSubmit(values: ItemInput) {
-    if (editingItem) {
-      await updateItem.mutateAsync({ id: editingItem.id, ...values });
-      toast.success(t("updated"));
-    } else {
-      await createItem.mutateAsync(values);
-      toast.success(t("created"));
+    try {
+      if (editingItem) {
+        await updateItem.mutateAsync({ id: editingItem.id, ...values });
+        toast.success(t("updated"));
+      } else {
+        await createItem.mutateAsync(values);
+        toast.success(t("created"));
+      }
+      setFormOpen(false);
+      setEditingItem(null);
+    } catch (err) {
+      toast.error(err instanceof ApiError ? err.message : tc("error"));
     }
-    setFormOpen(false);
-    setEditingItem(null);
   }
 
   async function handleDelete() {
