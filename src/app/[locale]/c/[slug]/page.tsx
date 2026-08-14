@@ -6,7 +6,7 @@ import { CatalogScanTracker } from "@/components/catalog/catalog-scan-tracker";
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
-  searchParams: Promise<{ qr?: string; scanned?: string }>;
+  searchParams: Promise<{ qr?: string; scanned?: string; preview?: string }>;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -34,17 +34,20 @@ export default async function PublicCatalogPage({ params, searchParams }: PagePr
   const query = await searchParams;
   const company = await getPublicCatalogBySlug(slug);
   if (!company) notFound();
+  const preview = query.preview === "1";
 
   return (
     <div className="relative min-h-[100svh] bg-background">
       <div className="pointer-events-none fixed inset-0 -z-10 bg-background" />
-      <CatalogScanTracker
-        slug={company.slug}
-        locale={locale}
-        qrId={query.qr ?? null}
-        alreadyRecorded={query.scanned === "1"}
-      />
-      <CatalogView company={company} locale={locale} />
+      {!preview ? (
+        <CatalogScanTracker
+          slug={company.slug}
+          locale={locale}
+          qrId={query.qr ?? null}
+          alreadyRecorded={query.scanned === "1"}
+        />
+      ) : null}
+      <CatalogView company={company} locale={locale} preview={preview} />
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Copy, Eye, EyeOff, ImageOff, MoreHorizontal, Package, Pencil, Plus, Search, Star, Trash2 } from "lucide-react";
+import { Copy, Eye, EyeOff, ImageOff, MoreHorizontal, Package, Pencil, Plus, Search, Smartphone, Star, Trash2 } from "lucide-react";
 import { PageHeader } from "@/components/admin/page-header";
 import { ProductForm } from "@/components/admin/product-form";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -34,6 +34,7 @@ import {
 import { useCategories } from "@/hooks/use-categories";
 import { useCreateItem, useDeleteItem, useDuplicateItem, useItems, useUpdateItem } from "@/hooks/use-items";
 import { useCompany } from "@/hooks/use-company";
+import { Link, useRouter } from "@/i18n/navigation";
 import { formatCurrency } from "@/lib/utils";
 import { ApiError } from "@/lib/api-client";
 import type { ItemWithAttributes } from "@/lib/data/types";
@@ -41,7 +42,9 @@ import type { ItemInput } from "@/lib/validators/item";
 
 export default function ProductsPage() {
   const t = useTranslations("admin.products");
+  const tp = useTranslations("admin.preview");
   const tc = useTranslations("common");
+  const router = useRouter();
   const { data: company } = useCompany();
   const { data: categories, isLoading: categoriesLoading } = useCategories();
   const { data: items, isLoading: itemsLoading } = useItems();
@@ -73,10 +76,14 @@ export default function ProductsPage() {
     try {
       if (editingItem) {
         await updateItem.mutateAsync({ id: editingItem.id, ...values });
-        toast.success(t("updated"));
+        toast.success(t("updated"), {
+          action: { label: tp("seeOnPhone"), onClick: () => router.push("/admin/preview") },
+        });
       } else {
         await createItem.mutateAsync(values);
-        toast.success(t("created"));
+        toast.success(t("created"), {
+          action: { label: tp("seeOnPhone"), onClick: () => router.push("/admin/preview") },
+        });
       }
       setFormOpen(false);
       setEditingItem(null);
@@ -101,17 +108,25 @@ export default function ProductsPage() {
         title={t("title")}
         subtitle={t("subtitle")}
         actions={
-          <Button
-            variant="glow"
-            disabled={hasNoCategoriesYet}
-            onClick={() => {
-              setEditingItem(null);
-              setFormOpen(true);
-            }}
-          >
-            <Plus className="size-4" />
-            {t("add")}
-          </Button>
+          <>
+            <Button variant="outline" asChild>
+              <Link href="/admin/preview">
+                <Smartphone className="size-4" />
+                {tp("seeOnPhone")}
+              </Link>
+            </Button>
+            <Button
+              variant="glow"
+              disabled={hasNoCategoriesYet}
+              onClick={() => {
+                setEditingItem(null);
+                setFormOpen(true);
+              }}
+            >
+              <Plus className="size-4" />
+              {t("add")}
+            </Button>
+          </>
         }
       />
 

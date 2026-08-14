@@ -351,6 +351,7 @@
       "overview": "Overview",
       "categories": "Categories",
       "products": "Products",
+      "preview": "Preview",
       "qrStudio": "QR Studio",
       "settings": "Settings",
       "viewCatalog": "View public catalog",
@@ -378,6 +379,7 @@
       "quickActions": "Quick actions",
       "addProduct": "Add a product",
       "addCategory": "Add a category",
+      "openPreview": "See it on a phone",
       "openQrStudio": "Open QR Studio"
     },
     "categories": {
@@ -484,7 +486,9 @@
       "logo": "Center logo",
       "useCompanyLogo": "Use company logo",
       "removeLogo": "Remove logo",
-      "preview": "Live preview",
+      "preview": "QR code",
+      "pagePreview": "After the scan",
+      "openPagePreview": "Open full phone preview",
       "downloadPng": "Download PNG",
       "downloadSvg": "Download SVG",
       "scans": "{count} scans",
@@ -500,6 +504,21 @@
         "CLASSY_ROUNDED": "Classy rounded",
         "EXTRA_ROUNDED": "Extra rounded"
       }
+    },
+    "preview": {
+      "title": "Scan preview",
+      "subtitle": "This is the exact page a guest sees after scanning your QR. Tap around, then edit anything that feels off.",
+      "afterScan": "After the scan",
+      "hint": "Same header, products, prices and language switcher as the live catalog. Changes you save in Products or Settings show up here after a refresh.",
+      "phoneLabel": "Guest phone",
+      "openFull": "Open full page",
+      "refresh": "Refresh preview",
+      "editProducts": "Edit products",
+      "editCategories": "Edit categories",
+      "editLook": "Edit logo & colors",
+      "unpublished": "Your catalog is unpublished. Guests scanning the QR will not see this until you publish it in Settings.",
+      "seeOnPhone": "See on phone",
+      "localeLabel": "Catalog language"
     },
     "settings": {
       "title": "Settings",

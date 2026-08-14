@@ -16,6 +16,12 @@ export function catalogAbsoluteUrl(origin: string, slug: string, locale?: string
   return `${origin.replace(/\/$/, "")}${catalogPath(slug, locale, qrId)}`;
 }
 
+/** Same-origin catalog URL for the admin phone preview (no scan counting). */
+export function catalogPreviewPath(slug: string, locale: string = DEFAULT_LOCALE): string {
+  const loc = isAppLocale(locale) ? locale : DEFAULT_LOCALE;
+  return `/${loc}/c/${encodeURIComponent(slug)}?preview=1`;
+}
+
 /** Stable scan endpoint encoded into generated QR codes. */
 export function qrGoPath(qrId: string): string {
   return `/api/qr/${encodeURIComponent(qrId)}/go`;

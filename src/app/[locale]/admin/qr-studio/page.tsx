@@ -3,9 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Download, Plus, QrCode as QrCodeIcon, Trash2 } from "lucide-react";
+import { Download, Plus, QrCode as QrCodeIcon, Smartphone, Trash2 } from "lucide-react";
 import { PageHeader } from "@/components/admin/page-header";
 import { QrCanvas, type QrCanvasHandle } from "@/components/admin/qr-canvas";
+import { CatalogPhonePreview } from "@/components/admin/catalog-phone-preview";
 import { ColorPicker } from "@/components/admin/color-picker";
 import { ImageUpload } from "@/components/admin/image-upload";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -28,8 +29,9 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useCreateQrCode, useDeleteQrCode, useQrCodes, useUpdateQrCode } from "@/hooks/use-qr-codes";
 import { useCompany } from "@/hooks/use-company";
+import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
-import { catalogAbsoluteUrl, qrGoAbsoluteUrl } from "@/lib/catalog-url";
+import { catalogAbsoluteUrl, catalogPreviewPath, qrGoAbsoluteUrl } from "@/lib/catalog-url";
 import type { QrDotStyle } from "@/lib/data/types";
 
 const DOT_STYLES: QrDotStyle[] = ["SQUARE", "DOTS", "ROUNDED", "CLASSY", "CLASSY_ROUNDED", "EXTRA_ROUNDED"];
@@ -153,7 +155,7 @@ export default function QrStudioPage() {
           </div>
 
           {selected && draft && (
-            <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
+            <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
               <Card>
                 <CardHeader>
                   <CardTitle>{t("style")}</CardTitle>
@@ -274,6 +276,22 @@ export default function QrStudioPage() {
                   </div>
                 </CardContent>
               </Card>
+
+              {company ? (
+                <div className="space-y-3">
+                  <CatalogPhonePreview
+                    size="compact"
+                    src={catalogPreviewPath(company.slug, company.defaultLocale)}
+                    label={t("pagePreview")}
+                  />
+                  <Button variant="outline" className="w-full" asChild>
+                    <Link href="/admin/preview">
+                      <Smartphone className="size-4" />
+                      {t("openPagePreview")}
+                    </Link>
+                  </Button>
+                </div>
+              ) : null}
             </div>
           )}
         </div>

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { LayoutGrid, Plus } from "lucide-react";
+import { LayoutGrid, Plus, Smartphone } from "lucide-react";
 import {
   DndContext,
   KeyboardSensor,
@@ -40,10 +40,12 @@ import {
 } from "@/hooks/use-categories";
 import { useItems } from "@/hooks/use-items";
 import { useCompany } from "@/hooks/use-company";
+import { Link } from "@/i18n/navigation";
 import type { Category } from "@/lib/data/types";
 
 export default function CategoriesPage() {
   const t = useTranslations("admin.categories");
+  const tp = useTranslations("admin.preview");
   const tc = useTranslations("common");
   const { data: company } = useCompany();
   const { data: categories, isLoading } = useCategories();
@@ -105,16 +107,24 @@ export default function CategoriesPage() {
         title={t("title")}
         subtitle={t("subtitle")}
         actions={
-          <Button
-            variant="glow"
-            onClick={() => {
-              setEditingCategory(null);
-              setFormOpen(true);
-            }}
-          >
-            <Plus className="size-4" />
-            {t("add")}
-          </Button>
+          <>
+            <Button variant="outline" asChild>
+              <Link href="/admin/preview">
+                <Smartphone className="size-4" />
+                {tp("seeOnPhone")}
+              </Link>
+            </Button>
+            <Button
+              variant="glow"
+              onClick={() => {
+                setEditingCategory(null);
+                setFormOpen(true);
+              }}
+            >
+              <Plus className="size-4" />
+              {t("add")}
+            </Button>
+          </>
         }
       />
 

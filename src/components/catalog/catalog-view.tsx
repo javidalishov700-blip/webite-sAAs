@@ -11,7 +11,15 @@ import { LanguageFab } from "@/components/catalog/language-fab";
 import { EmptyState } from "@/components/ui/empty-state";
 import type { CompanyPublicView, ItemWithAttributes } from "@/lib/data/types";
 
-export function CatalogView({ company, locale }: { company: CompanyPublicView; locale: string }) {
+export function CatalogView({
+  company,
+  locale,
+  preview = false,
+}: {
+  company: CompanyPublicView;
+  locale: string;
+  preview?: boolean;
+}) {
   const t = useTranslations("catalog");
   const [search, setSearch] = useState("");
   const [activeCategoryId, setActiveCategoryId] = useState<string | null>(company.categories[0]?.id ?? null);
@@ -74,6 +82,7 @@ export function CatalogView({ company, locale }: { company: CompanyPublicView; l
 
   function handleSelectItem(item: ItemWithAttributes) {
     setSelectedItem(item);
+    if (preview) return;
     const key = `qru-view:${item.id}`;
     try {
       if (sessionStorage.getItem(key)) return;

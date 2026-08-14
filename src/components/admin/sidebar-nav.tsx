@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { BarChart3, LayoutGrid, Package, QrCode, Settings } from "lucide-react";
+import { BarChart3, LayoutGrid, Package, QrCode, Settings, Smartphone } from "lucide-react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
@@ -9,6 +9,7 @@ const NAV_ITEMS = [
   { href: "/admin", icon: BarChart3, key: "overview", exact: true },
   { href: "/admin/categories", icon: LayoutGrid, key: "categories", exact: false },
   { href: "/admin/products", icon: Package, key: "products", exact: false },
+  { href: "/admin/preview", icon: Smartphone, key: "preview", exact: false },
   { href: "/admin/qr-studio", icon: QrCode, key: "qrStudio", exact: false },
   { href: "/admin/settings", icon: Settings, key: "settings", exact: false },
 ] as const;

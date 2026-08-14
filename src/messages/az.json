@@ -351,6 +351,7 @@
       "overview": "Ümumi baxış",
       "categories": "Kateqoriyalar",
       "products": "Məhsullar",
+      "preview": "Önizləmə",
       "qrStudio": "QR Studiya",
       "settings": "Ayarlar",
       "viewCatalog": "Açıq kataloqa bax",
@@ -378,6 +379,7 @@
       "quickActions": "Tez əməliyyatlar",
       "addProduct": "Məhsul əlavə et",
       "addCategory": "Kateqoriya əlavə et",
+      "openPreview": "Telefonda bax",
       "openQrStudio": "QR Studiyanı aç"
     },
     "categories": {
@@ -484,7 +486,9 @@
       "logo": "Mərkəzi loqo",
       "useCompanyLogo": "Şirkət loqosundan istifadə et",
       "removeLogo": "Loqonu sil",
-      "preview": "Canlı önizləmə",
+      "preview": "QR kod",
+      "pagePreview": "Skan sonrası səhifə",
+      "openPagePreview": "Böyük telefon önizləməsini aç",
       "downloadPng": "PNG endir",
       "downloadSvg": "SVG endir",
       "scans": "{count} skan",
@@ -500,6 +504,21 @@
         "CLASSY_ROUNDED": "Zərif yumşaldılmış",
         "EXTRA_ROUNDED": "Maksimum yumşaldılmış"
       }
+    },
+    "preview": {
+      "title": "QR önizləmə",
+      "subtitle": "Qonaq QR-ı oxutduqdan sonra telefondа məhz bunu görür. Toxunun, bəyənmədiyinizi məhsullardan düzəldin.",
+      "afterScan": "Skandan sonra",
+      "hint": "Canlı kataloqla eyni başlıq, məhsullar, qiymətlər və dil seçimi. Məhsullar və ya Ayarlarda saxladıqlarınız yeniləyəndə burada görünür.",
+      "phoneLabel": "Qonaq telefonu",
+      "openFull": "Tam səhifəni aç",
+      "refresh": "Önizləməni yenilə",
+      "editProducts": "Məhsulları düzəlt",
+      "editCategories": "Kateqoriyaları düzəlt",
+      "editLook": "Loqo və rənglər",
+      "unpublished": "Kataloq dərc olunmayıb. QR oxudulanda görünməsi üçün Ayarlardan dərc edin.",
+      "seeOnPhone": "Telefonda bax",
+      "localeLabel": "Kataloq dili"
     },
     "settings": {
       "title": "Ayarlar",

@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { BarChart3, LayoutGrid, Package, Plus, QrCode as QrCodeIcon, Radar, Sparkles } from "lucide-react";
+import { BarChart3, LayoutGrid, Package, Plus, QrCode as QrCodeIcon, Radar, Smartphone, Sparkles } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { PageHeader } from "@/components/admin/page-header";
 import { StatCard } from "@/components/admin/stat-card";
@@ -147,6 +147,12 @@ export default function AdminOverviewPage() {
             <Link href="/admin/categories">
               <Plus className="size-4" />
               {t("addCategory")}
+            </Link>
+          </Button>
+          <Button variant="outline" className="flex-1 justify-start gap-2.5" asChild>
+            <Link href="/admin/preview">
+              <Smartphone className="size-4" />
+              {t("openPreview")}
             </Link>
           </Button>
           <Button variant="outline" className="flex-1 justify-start gap-2.5" asChild>
