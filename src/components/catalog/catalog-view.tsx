@@ -27,8 +27,22 @@ export function CatalogView({
   const [selectedItem, setSelectedItem] = useState<ItemWithAttributes | null>(null);
   const sectionRefs = useRef<Map<string, HTMLElement>>(new Map());
   const chromeRef = useRef<HTMLDivElement>(null);
-  const chromeHeight = useRef(128);
+  const chromeHeight = useRef(220);
   const isClickScrolling = useRef(false);
+
+  function applyChromeMetrics() {
+    const el = chromeRef.current;
+    const measured = el ? Math.ceil(el.getBoundingClientRect().height) : chromeHeight.current;
+    const height = Math.max(measured, 1);
+    chromeHeight.current = height;
+    // Keep the section title fully below the sticky search + category chips.
+    const offset = height + 16;
+    const value = `${offset}px`;
+    const root = el?.closest("[data-catalog-page]");
+    (root instanceof HTMLElement ? root : el)?.style.setProperty("--catalog-chrome", value);
+    document.documentElement.style.setProperty("--catalog-chrome", value);
+    return offset;
+  }
 
   const normalizedSearch = search.trim().toLowerCase();
 
@@ -46,16 +60,13 @@ export function CatalogView({
   useLayoutEffect(() => {
     const el = chromeRef.current;
     if (!el) return;
-    const apply = () => {
-      const height = Math.round(el.getBoundingClientRect().height);
-      chromeHeight.current = height;
-      const root = el.closest("[data-catalog-page]");
-      (root instanceof HTMLElement ? root : el).style.setProperty("--catalog-chrome", `${height}px`);
-    };
-    apply();
-    const observer = new ResizeObserver(apply);
+    applyChromeMetrics();
+    const observer = new ResizeObserver(() => applyChromeMetrics());
     observer.observe(el);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      document.documentElement.style.removeProperty("--catalog-chrome");
+    };
   }, [searchResults]);
 
   useEffect(() => {
@@ -65,7 +76,7 @@ export function CatalogView({
     const syncActive = () => {
       ticking = false;
       if (isClickScrolling.current) return;
-      const marker = chromeHeight.current + 2;
+      const marker = chromeHeight.current + 16;
       let current = company.categories[0]?.id ?? null;
       for (const category of company.categories) {
         const el = sectionRefs.current.get(category.id);
@@ -88,15 +99,17 @@ export function CatalogView({
 
   function handleSelectCategory(id: string) {
     setActiveCategoryId(id);
-    const el = sectionRefs.current.get(id);
-    if (!el) return;
+    const section = sectionRefs.current.get(id);
+    if (!section) return;
     isClickScrolling.current = true;
-    const offset = chromeHeight.current;
-    const top = window.scrollY + el.getBoundingClientRect().top - offset;
+    const offset = applyChromeMetrics();
+    const heading = section.querySelector("h2");
+    const target = heading instanceof HTMLElement ? heading : section;
+    const top = window.scrollY + target.getBoundingClientRect().top - offset;
     window.scrollTo({ top: Math.max(0, top), behavior: "auto" });
     window.setTimeout(() => {
       isClickScrolling.current = false;
-    }, 200);
+    }, 250);
   }
 
   function handleSelectItem(item: ItemWithAttributes) {
@@ -160,9 +173,11 @@ export function CatalogView({
                   if (el) sectionRefs.current.set(category.id, el);
                   else sectionRefs.current.delete(category.id);
                 }}
-                className="scroll-mt-[var(--catalog-chrome,8rem)]"
+                className="scroll-mt-[var(--catalog-chrome,14.5rem)]"
               >
-                <h2 className="mb-3 font-display text-lg font-semibold">{category.name}</h2>
+                <h2 className="mb-3 scroll-mt-[var(--catalog-chrome,14.5rem)] font-display text-lg font-semibold">
+                  {category.name}
+                </h2>
                 {category.items.length === 0 ? (
                   <p className="text-sm text-muted-foreground">{t("emptyCategory")}</p>
                 ) : (
