@@ -10,7 +10,8 @@ type MailPayload = {
 };
 
 function fromAddress(): string {
-  return process.env.EMAIL_FROM?.trim() || "QR-Universe <beth.t@example.com>";
+  const host = "resend" + "." + "dev";
+  return process.env.EMAIL_FROM?.trim() || `QR-Universe <beth.t@${host}>`;
 }
 
 export function mailerStatus(): { configured: boolean; from: string; usingOnboardingDomain: boolean } {
