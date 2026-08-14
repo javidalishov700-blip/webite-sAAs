@@ -11,7 +11,7 @@ const optionalNumber = (schema: z.ZodNumber) => z.preprocess(emptyToUndefined, s
 const requiredNumber = (schema: z.ZodNumber) => z.preprocess(emptyToUndefined, schema);
 
 export const attributeSchema = z.object({
-  key: z.string().trim().min(1, "Attribute name is required").max(40),
+  key: z.string().trim().min(1, "Attribute name is required").max(60),
   value: z.string().max(400),
   type: z.enum(["TEXT", "NUMBER", "BOOLEAN", "LIST"]),
   unit: z.preprocess(emptyToUndefined, z.string().max(20).optional().nullable()),

@@ -206,7 +206,7 @@ export function ProductForm({
             <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">{t("attributes")}</p>
             <p className="mt-1 text-xs text-muted-foreground">{t("attributesHint")}</p>
           </div>
-          <AttributeEditor industry={industry} value={attributes} onChange={setAttributes} />
+          <AttributeEditor industry={industry} categoryName={categories.find((c) => c.id === watch("categoryId"))?.name} value={attributes} onChange={setAttributes} />
         </section>
       </div>
 

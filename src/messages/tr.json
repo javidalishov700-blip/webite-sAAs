@@ -392,15 +392,61 @@
       "empty": "Henüz kategori yok — ilkini ekleyerek başlayın.",
       "emptyHint": "Adı siz koyun: Mezeler, Sigara, Salon, Hafta sonu atölyesi — sattığınız her şey.",
       "suggestions": {
-        "RESTAURANT": ["Başlangıç", "Ana yemek", "Tatlı", "İçecek"],
-        "GROCERY": ["Meyve-sebze", "Süt", "Fırın", "Atıştırmalık", "İçecek"],
-        "RETAIL": ["Yeni gelen", "Giyim", "Ayakkabı", "Aksesuar"],
-        "HOME": ["Salon", "Yatak odası", "Mutfak", "Dekor"],
-        "HARDWARE": ["Aletler", "Boya", "Tesisat", "Elektrik"],
-        "EDUCATION": ["Başlangıç", "Orta", "Atölye", "Sertifika"],
-        "ELECTRONICS": ["Telefon", "Laptop", "Ses", "Aksesuar"],
-        "TOBACCO": ["Sigara", "Tütün", "Çakmak", "Aksesuar"],
-        "SERVICES": ["Saç", "Spa", "Tırnak", "Paketler"],
+        "RESTAURANT": [
+          "Başlangıç",
+          "Ana yemek",
+          "Tatlı",
+          "İçecek"
+        ],
+        "GROCERY": [
+          "Meyve-sebze",
+          "Süt",
+          "Fırın",
+          "Atıştırmalık",
+          "İçecek"
+        ],
+        "RETAIL": [
+          "Giyim",
+          "Ayakkabı",
+          "Çanta",
+          "Aksesuar"
+        ],
+        "HOME": [
+          "Salon",
+          "Yatak odası",
+          "Mutfak",
+          "Dekor"
+        ],
+        "HARDWARE": [
+          "Aletler",
+          "Boya",
+          "Tesisat",
+          "Elektrik"
+        ],
+        "EDUCATION": [
+          "Başlangıç",
+          "Orta",
+          "Atölye",
+          "Sertifika"
+        ],
+        "ELECTRONICS": [
+          "Telefon",
+          "Dizüstü",
+          "Ses",
+          "Televizyon"
+        ],
+        "TOBACCO": [
+          "Sigara",
+          "Tütün",
+          "Çakmak",
+          "Aksesuar"
+        ],
+        "SERVICES": [
+          "Saç",
+          "Spa",
+          "Tırnak",
+          "Paketler"
+        ],
         "OTHER": []
       },
       "itemsCount": "{count} ürün",
@@ -448,9 +494,9 @@
         "visibleLabel": "Genel katalogda göster",
         "featuredLabel": "Öne çıkan yap",
         "attributes": "Dinamik özellikler",
-        "attributesHint": "Kalori, beden veya garanti gibi sektörünüze özel alanlar ekleyin.",
+        "attributesHint": "Alanlar kategoriye göre gelir — yemekte kalori, giyside beden, ayakkabıda numara, elektronikte yıl. Dokunup ekleyin veya kendiniz yazın.",
         "addAttribute": "Özellik ekle",
-        "presets": "{industry} için hızlı ekle",
+        "presets": "Bu ürün için önerilenler",
         "attributeKey": "Ad",
         "attributeValue": "Değer",
         "attributeType": "Tür",
@@ -518,7 +564,15 @@
       "editLook": "Logo ve renkler",
       "unpublished": "Katalog yayında değil. QR okutulunca görünmesi için Ayarlar’dan yayınlayın.",
       "seeOnPhone": "Telefonda gör",
-      "localeLabel": "Katalog dili"
+      "localeLabel": "Katalog dili",
+      "step1Title": "Misafir QR’ı tarar",
+      "step1Body": "Basılı kod değişmez. Fiyatı güncelleseniz de hep bu kataloğu açar.",
+      "step2Title": "Telefonda bu sayfa açılır",
+      "step2Body": "Sağdaki çerçeve sahte değil, gerçek katalog. Müşteri gibi kaydırın, dokunun.",
+      "step3Title": "Düzeltin, yenileyin",
+      "step3Body": "Yanlış fotoğraf veya eksik beden? Ürünü kaydedip yenileyin; telefon hemen güncellenir.",
+      "caption": "QR tarandıktan sonra misafirin telefonunda görünen canlı katalog.",
+      "emptyHint": "Henüz ürün yok. Bir tane ekleyin, bu telefonda görünsün."
     },
     "settings": {
       "title": "Ayarlar",
@@ -584,43 +638,146 @@
       "eyebrow": "Yasal",
       "title": "Gizlilik politikası",
       "updated": "Son güncelleme: 14 Ağustos 2026",
-      "body": [
-        "QR-Universe dijital kataloglar sunar. Bu metin hangi veriyi neden tuttuğumuzu açıklar.",
-        "Hesap: ad, e-posta, hash’lenmiş şifre, girdiğiniz şirket profili ve katalog içeriği.",
-        "Kullanım: QR tarama kaydı (zaman, dil, cihaz) ve yalnızca çevrimiçi ziyaretçi sayısı için anonim bir kimlik.",
-        "Kişisel veriyi satmayız. Reklam izleyicisi kullanmayız.",
-        "Oturum çerezi sizi girişte tutar. Tercih çerezleri dil, tema ve onay seçimini hatırlar.",
-        "Ayarlar’dan çalışma alanınızı silebilirsiniz. Silme; katalog, QR ve hesabı kaldırır.",
-        "Haklarınız için +90 541 323 00 02 (WhatsApp açık).",
-        "Veriler hesap aktifken tutulur; çalışma alanı silinince kaldırılır."
+      "intro": "QR-Universe, işletmelerin QR kodla açılan dijital katalog yayınlamasını sağlar. Bu metin hangi kişisel veriyi neden işlediğimizi ve haklarınızı açıklar. Web sitesi, yönetim paneli ve barındırdığımız kataloglar için geçerlidir.",
+      "sections": [
+        {
+          "heading": "1. Veri sorumlusu",
+          "body": [
+            "Bu hizmet üzerinden işlenen kişisel verinin sorumlusu QR-Universe işletmecisidir. Talepler: +90 541 323 00 02 (WhatsApp). Türkçe, Azerbaycan Türkçesi, İngilizce ve Rusça yanıtlarız.",
+            "Bir işletmenin kataloğunu geziyorsanız ürün içeriğinden o işletme sorumludur; biz içeriği onlar adına barındırırız."
+          ]
+        },
+        {
+          "heading": "2. Topladığımız veriler",
+          "body": [
+            "Hesap: ad, e-posta, şifre özeti (şifreniz düz metin saklanmaz), şirket profili ve yüklediğiniz katalog.",
+            "Kullanım: QR tarama kaydı (zaman, dil), ürün detayı açılışları ve yalnızca o anda kataloğa bakan kişi sayısı için rastgele kimlik.",
+            "Teknik: giriş sonrası oturum çerezi, dil/tema, çerez onayı. Güvenlik günlüklerinde kısa süre IP tutulabilir."
+          ]
+        },
+        {
+          "heading": "3. Amaç",
+          "body": [
+            "Çalışma alanınızı işletmek, kataloğu misafirlere göstermek, gerçek taramaları saymak, oturumu açık tutmak ve desteğe cevap vermek.",
+            "Kişisel veriyi satmayız. Reklam ağı veya pazarlama pikseli kullanmayız."
+          ]
+        },
+        {
+          "heading": "4. Paylaşım",
+          "body": [
+            "Altyapı (PostgreSQL ve nesne depolama, Neon) veriyi yalnızca ürünü çalıştırmak için işler.",
+            "Yasal zorunluluk veya dolandırıcılığa karşı koruma dışında katalogları başka işletmelerle paylaşmayız."
+          ]
+        },
+        {
+          "heading": "5. Saklama",
+          "body": [
+            "Hesap ve katalog, çalışma alanı durduğu sürece saklanır. Ayarlar’dan silerseniz şirket, katalog, QR, taramalar ve giriş kaldırılır.",
+            "Çevrimiçi varlık sinyalleri bir dakikadan kısa sürede kendiliğinden silinir."
+          ]
+        },
+        {
+          "heading": "6. Haklarınız",
+          "body": [
+            "Ayarlar’dan verilerinize erişebilir, düzeltebilir veya çalışma alanını silebilirsiniz. Kopya için yukarıdaki numarayı arayın.",
+            "Yaşadığınız ülkedeki veri koruma otoritesine şikâyette bulunabilirsiniz."
+          ]
+        },
+        {
+          "heading": "7. Çocuklar",
+          "body": [
+            "Hizmet işletmeler içindir. 16 yaşından küçüklerden bilerek veri toplamayız."
+          ]
+        },
+        {
+          "heading": "8. Değişiklikler",
+          "body": [
+            "Uygulama değişince bu sayfa ve tarih güncellenir."
+          ]
+        }
       ]
     },
     "terms": {
       "eyebrow": "Yasal",
       "title": "Kullanım şartları",
       "updated": "Son güncelleme: 14 Ağustos 2026",
-      "body": [
-        "Hesap açarak bu şartları kabul edersiniz.",
-        "Yüklediğiniz içerik size aittir. Kataloğunuzda göstermek için bize barındırma lisansı verirsiniz.",
-        "Yasa dışı veya zararlı içerik yüklemeyin.",
-        "Plan limitleri sitede belirtilir. Fiyatlar duyuruyla değişebilir.",
-        "Hizmet olduğu gibi sunulur.",
-        "Ayarlar’dan çalışma alanınızı silebilirsiniz.",
-        "Sorular: +90 541 323 00 02."
+      "intro": "Bu şartlar QR-Universe kullanımını yönetir. Hesap açarak veya katalog yayınlayarak kabul etmiş olursunuz. Şirket adına kullanıyorsanız o şirketi bağlama yetkiniz olduğunu doğrularsınız.",
+      "sections": [
+        {
+          "heading": "1. Hizmet",
+          "body": [
+            "Kategori ve ürün oluşturur, QR tasarlarsınız; misafir kodu tarayıp tarayıcıda kataloğu açar — uygulama gerekmez.",
+            "Özellikler gelişebilir. Plan limitleri üründe yazılıdır."
+          ]
+        },
+        {
+          "heading": "2. Hesabınız",
+          "body": [
+            "Doğru bilgi verin, şifrenizi koruyun. Girişiniz altındaki işlemlerden siz sorumlusunuz.",
+            "Çalışma alanı kayıtlı şirkete aittir. Ayarlar’dan silebilirsiniz; silme geri alınamaz."
+          ]
+        },
+        {
+          "heading": "3. İçeriğiniz",
+          "body": [
+            "Yüklediğiniz fotoğraf, metin, fiyat ve QR görseli size aittir. Kataloğunuzu çalıştırmak için bize barındırma lisansı verirsiniz.",
+            "İçerik üzerinde hakkınız olduğunu ve yasa dışı olmadığını taahhüt edersiniz."
+          ]
+        },
+        {
+          "heading": "4. Kabul edilebilir kullanım",
+          "body": [
+            "Hizmeti zorlamayın, taklit etmeyin, yürürlükteki hukuka aykırı satış için kullanmayın.",
+            "Şartları ihlal eden çalışma alanını, mümkünse bildirimden sonra, askıya alabiliriz."
+          ]
+        },
+        {
+          "heading": "5. Planlar ve sorumluluk",
+          "body": [
+            "Ücretsiz, Pro ve Kurumsal mevcut hakları tanımlar.",
+            "Hizmet olduğu gibi sunulur. Yüksek erişilebilirlik hedefleriz; kesintisiz tarama garanti etmeyiz. Yasaların izin verdiği ölçüde kâr kaybından sorumlu değiliz.",
+            "Dolandırıcılık, ihmalden doğan ölüm veya yaralanma ve kanunen dışlanamayan sorumluluk bu metinle sınırlanmaz."
+          ]
+        },
+        {
+          "heading": "6. Uygulanacak hukuk",
+          "body": [
+            "Bu şartlar Türkiye Cumhuriyeti hukukuna tabidir; ikamet ülkenizdeki zorunlu tüketici korumaları saklıdır. Anlaşmazlıklarda önce +90 541 323 00 02 üzerinden iyi niyetle çözüm aranır."
+          ]
+        }
       ]
     },
     "cookies": {
       "eyebrow": "Yasal",
       "title": "Çerez politikası",
       "updated": "Son güncelleme: 14 Ağustos 2026",
-      "body": [
-        "Giriş, dil, tema ve çerez onayı için zorunlu çerezler kullanırız.",
-        "Çevrimiçi ziyaretçi sayısı için kısa ömürlü anonim bir kimlik tutulur. Reklam için kullanılmaz.",
-        "Tarayıcıdan çerezleri silebilirsiniz. Oturum çerezini engellerseniz yönetim paneline giremezsiniz."
+      "intro": "QR-Universe’in kullandığı çerezler. Yalnızca ürünün çalışması için gerekli olanlar — reklam çerezi yok.",
+      "sections": [
+        {
+          "heading": "1. Zorunlu çerezler",
+          "body": [
+            "Oturum çerezi (qru_session): yönetim paneline girişinizi tutar.",
+            "Tercih: dil, tema ve çerez onayı tarayıcıda saklanır.",
+            "Rastgele ziyaretçi kimliği yalnızca “bu kataloğa bakan kişi” sayacı içindir."
+          ]
+        },
+        {
+          "heading": "2. Kullanmadıklarımız",
+          "body": [
+            "Reklam, sosyal medya veya siteler arası izleme çerezi yok."
+          ]
+        },
+        {
+          "heading": "3. Kontrol",
+          "body": [
+            "Tarayıcı ayarlarından silebilirsiniz. Oturum çerezini engellerseniz panele giremezsiniz.",
+            "Sorular: +90 541 323 00 02."
+          ]
+        }
       ],
       "banner": {
-        "text": "Giriş, dil, tema ve canlı ziyaretçi sayısı için zorunlu çerezler kullanıyoruz. Reklam yok.",
-        "accept": "Tamam",
+        "text": "Yalnızca zorunlu çerezler: oturum, dil, tema ve o anda kataloğa bakan kişi sayısı. Reklam izleyicisi yok.",
+        "accept": "Kabul et",
         "privacy": "Gizlilik",
         "cookies": "Çerezler"
       }
@@ -628,11 +785,11 @@
     "about": {
       "eyebrow": "Şirket",
       "title": "QR-Universe hakkında",
-      "lead": "Restoran, mağaza ve servisler için taramayla açılan canlı kataloglar.",
+      "lead": "Gerçek işletmeler için katalog: tara, gez, güncelle. Yeniden baskı yok, misafire uygulama yok.",
       "body": [
-        "QR-Universe menü veya ürün listesini yayınlar, QR’ı markalar, fiyatı yeniden basmadan günceller.",
-        "Kataloglar İngilizce, Rusça, Türkçe ve Azerbaycanca çalışır. Müşteri uygulama indirmez.",
-        "Gerçek işletmeler için kuruyoruz. +90 541 323 00 02."
+        "Restoran, market, giyim, elektronik, kurs ve hizmetler için. Kategorileri siz yazarsınız; kalori, beden, yıl, garanti gibi alanları ürüne eklersiniz. QR’ı markalarsınız; misafir telefonda canlı sayfa açar.",
+        "İngilizce, Rusça, Türkçe ve Azerbaycan Türkçesi hazır gelir. Kaydettiğiniz an fiyat ve fotoğraf güncellenir — basılı kod aynı kalır.",
+        "Türkiye ve Azerbaycan’daki işletmelere hizmet eden küçük bir ekibiz. +90 541 323 00 02 (WhatsApp)."
       ]
     },
     "contact": {
@@ -677,8 +834,82 @@
         "q6": {
           "q": "Hesabı silebilir miyim?",
           "a": "Evet. Ayarlar → Çalışma alanını sil."
+        },
+        "q7": {
+          "q": "Verilerim nasıl işlenir?",
+          "a": "Hesap ve katalog sizin alanınızda kalır. Satılmaz, reklam yoktur. Ayarlar’dan silebilirsiniz. Ayrıntı Gizlilik politikasındadır."
+        },
+        "q8": {
+          "q": "Kalori, beden veya üretim yılı ekleyebilir miyim?",
+          "a": "Evet. Alanlar kategoriye göre gelir: yemekte kalori, giyside beden, ayakkabıda numara, elektronikte yıl ve garanti. Kendi alanınızı da yazabilirsiniz."
         }
       }
+    }
+  },
+  "attributes": {
+    "names": {
+      "calories": "Kalori",
+      "allergens": "Alerjenler",
+      "vegan": "Vegan",
+      "spicy": "Acılı",
+      "portion": "Porsiyon",
+      "ingredients": "İçindekiler",
+      "prepTime": "Hazırlama",
+      "alcohol": "Alkol",
+      "volume": "Hacim",
+      "weight": "Ağırlık",
+      "brand": "Marka",
+      "organic": "Organik",
+      "origin": "Menşei",
+      "expiry": "SKT",
+      "sizes": "Bedenler",
+      "color": "Renk",
+      "material": "Kumaş / malzeme",
+      "gender": "Kim için",
+      "season": "Sezon",
+      "fit": "Kalıp",
+      "shoeSize": "Ayakkabı numarası",
+      "toolSize": "Ölçü",
+      "dimensions": "Ölçüler",
+      "assembly": "Montaj gerekir",
+      "voltage": "Voltaj",
+      "power": "Güç",
+      "warranty": "Garanti",
+      "duration": "Süre",
+      "durationMin": "Süre",
+      "level": "Seviye",
+      "language": "Dil",
+      "certificate": "Sertifika",
+      "age": "Yaş grubu",
+      "year": "Yıl",
+      "model": "Model",
+      "ram": "RAM",
+      "storage": "Depolama",
+      "condition": "Durum",
+      "screen": "Ekran",
+      "strength": "Yoğunluk",
+      "packSize": "Paket",
+      "staffLevel": "Uzmanlık",
+      "homeVisit": "Eve servis",
+      "notes": "Not"
+    },
+    "units": {
+      "months": "ay",
+      "kcal": "kcal",
+      "min": "dk"
+    },
+    "types": {
+      "TEXT": "Metin",
+      "NUMBER": "Sayı",
+      "BOOLEAN": "Evet / hayır",
+      "LIST": "Liste"
+    },
+    "examples": {
+      "calories": "320",
+      "sizes": "S, M, L, XL",
+      "shoeSize": "36, 37, 38, 39, 40",
+      "year": "2024",
+      "warranty": "24"
     }
   }
 }

@@ -6,7 +6,7 @@ import { ChevronDown } from "lucide-react";
 import { Reveal } from "@/components/landing/reveal";
 import { cn } from "@/lib/utils";
 
-const KEYS = ["q1", "q2", "q3", "q4", "q5", "q6"] as const;
+const KEYS = ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8"] as const;
 
 export function Faq() {
   const t = useTranslations("pages.faq");

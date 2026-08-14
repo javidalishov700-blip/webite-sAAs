@@ -392,15 +392,61 @@
       "empty": "No categories yet — add your first one to get started.",
       "emptyHint": "Name them yourself: Starters, Cigarettes, Living room, Weekend workshop — anything you sell.",
       "suggestions": {
-        "RESTAURANT": ["Starters", "Mains", "Desserts", "Drinks"],
-        "GROCERY": ["Produce", "Dairy", "Bakery", "Snacks", "Drinks"],
-        "RETAIL": ["New in", "Apparel", "Shoes", "Accessories"],
-        "HOME": ["Living room", "Bedroom", "Kitchen", "Decor"],
-        "HARDWARE": ["Tools", "Paint", "Plumbing", "Electrical"],
-        "EDUCATION": ["Beginner", "Intermediate", "Workshops", "Certificates"],
-        "ELECTRONICS": ["Phones", "Laptops", "Audio", "Accessories"],
-        "TOBACCO": ["Cigarettes", "Tobacco", "Lighters", "Accessories"],
-        "SERVICES": ["Hair", "Spa", "Nails", "Packages"],
+        "RESTAURANT": [
+          "Starters",
+          "Mains",
+          "Desserts",
+          "Drinks"
+        ],
+        "GROCERY": [
+          "Produce",
+          "Dairy",
+          "Bakery",
+          "Snacks",
+          "Drinks"
+        ],
+        "RETAIL": [
+          "Apparel",
+          "Shoes",
+          "Bags",
+          "Accessories"
+        ],
+        "HOME": [
+          "Living room",
+          "Bedroom",
+          "Kitchen",
+          "Decor"
+        ],
+        "HARDWARE": [
+          "Tools",
+          "Paint",
+          "Plumbing",
+          "Electrical"
+        ],
+        "EDUCATION": [
+          "Beginner",
+          "Intermediate",
+          "Workshops",
+          "Certificates"
+        ],
+        "ELECTRONICS": [
+          "Phones",
+          "Laptops",
+          "Audio",
+          "TVs"
+        ],
+        "TOBACCO": [
+          "Cigarettes",
+          "Tobacco",
+          "Lighters",
+          "Accessories"
+        ],
+        "SERVICES": [
+          "Hair",
+          "Spa",
+          "Nails",
+          "Packages"
+        ],
         "OTHER": []
       },
       "itemsCount": "{count} items",
@@ -448,9 +494,9 @@
         "visibleLabel": "Show in public catalog",
         "featuredLabel": "Feature this item",
         "attributes": "Dynamic attributes",
-        "attributesHint": "Add custom fields like calories, sizes, or warranty — tailored to your industry.",
+        "attributesHint": "Suggested fields follow the category — calories for food, clothing and shoe sizes, year for electronics. Tap to add, or type your own.",
         "addAttribute": "Add attribute",
-        "presets": "Quick add for {industry}",
+        "presets": "Suggested for this product",
         "attributeKey": "Name",
         "attributeValue": "Value",
         "attributeType": "Type",
@@ -518,7 +564,15 @@
       "editLook": "Edit logo & colors",
       "unpublished": "Your catalog is unpublished. Guests scanning the QR will not see this until you publish it in Settings.",
       "seeOnPhone": "See on phone",
-      "localeLabel": "Catalog language"
+      "localeLabel": "Catalog language",
+      "step1Title": "Guest scans your QR",
+      "step1Body": "The printed code never changes. It always opens this catalog — even after you edit prices.",
+      "step2Title": "This page opens on their phone",
+      "step2Body": "The frame on the right is the real catalog, not a drawing. Scroll and tap exactly as a customer would.",
+      "step3Title": "Fix anything, then refresh",
+      "step3Body": "Wrong photo or missing size? Edit the product and hit refresh. The phone updates immediately.",
+      "caption": "What a guest sees after the scan — your live catalog on their phone.",
+      "emptyHint": "No products yet. Add one and it will appear in this phone."
     },
     "settings": {
       "title": "Settings",
@@ -584,43 +638,146 @@
       "eyebrow": "Legal",
       "title": "Privacy policy",
       "updated": "Last updated: 14 August 2026",
-      "body": [
-        "QR-Universe (“we”) provides digital catalogs accessed by QR code. This policy explains what we collect and why.",
-        "Account data: name, email, hashed password, company profile (logo, address, phone, catalog content) that you submit.",
-        "Usage data: QR scan events (time, locale, device type), catalog views, and an anonymous visitor id used only to count people currently online.",
-        "We do not sell personal data. We do not use advertising trackers.",
-        "Session cookies keep you signed in. Preference cookies remember language, theme, and cookie consent.",
-        "You may access, correct, or delete your workspace from Settings. Deleting a workspace removes the company catalog, QR codes, and the owner account.",
-        "To exercise privacy rights or ask questions, call +90 541 323 00 02 (WhatsApp available).",
-        "We retain catalog and scan data while your account is active, then delete it when you delete the workspace."
+      "intro": "QR-Universe (“we”) operates a platform that lets businesses publish digital catalogs opened by QR code. This policy explains what personal data we process, why, and what choices you have. It covers the public website, the admin dashboard, and catalogs we host.",
+      "sections": [
+        {
+          "heading": "1. Who is responsible",
+          "body": [
+            "The controller of personal data processed through this service is the operator of QR-Universe. For privacy requests call or WhatsApp +90 541 323 00 02. We answer in Azerbaijani, Turkish, English and Russian.",
+            "If you browse a merchant’s catalog, that merchant is responsible for the product content they publish. We host that content on their behalf."
+          ]
+        },
+        {
+          "heading": "2. Data we collect",
+          "body": [
+            "Account data: name, email, password hash (never stored in plain text), company profile and catalog content you upload.",
+            "Usage data: QR scan events (time, language, optional device type), product-sheet opens, and a random visitor id used only to count people currently viewing a catalog.",
+            "Technical data: a session cookie after login, language and theme preference, and cookie-consent choice. Short-lived server logs may include IP address for security."
+          ]
+        },
+        {
+          "heading": "3. Why we use it",
+          "body": [
+            "To run your workspace, show your catalog to guests, count real scans, keep you signed in, remember language and theme, and to answer support.",
+            "We do not sell personal data. We do not run advertising networks or third-party marketing pixels."
+          ]
+        },
+        {
+          "heading": "4. Sharing",
+          "body": [
+            "Infrastructure processors (PostgreSQL and object storage hosted by Neon) store data solely to run the product.",
+            "We disclose data if required by law or to protect the service against abuse. We do not share catalogs with other merchants."
+          ]
+        },
+        {
+          "heading": "5. Retention",
+          "body": [
+            "Account and catalog data stay while your workspace is active. Deleting the workspace in Settings removes the company, catalog, QR codes, scans and the owner login.",
+            "Anonymous online-presence pings expire automatically in under a minute."
+          ]
+        },
+        {
+          "heading": "6. Your rights",
+          "body": [
+            "You may access, correct or delete your workspace from Settings, or contact us at the number above for a copy of your account data.",
+            "You may lodge a complaint with a data-protection authority in your country of residence."
+          ]
+        },
+        {
+          "heading": "7. Children",
+          "body": [
+            "The service is intended for businesses. We do not knowingly collect data from children under 16."
+          ]
+        },
+        {
+          "heading": "8. Changes",
+          "body": [
+            "We will update this page when our practices change and revise the date above."
+          ]
+        }
       ]
     },
     "terms": {
       "eyebrow": "Legal",
       "title": "Terms of service",
       "updated": "Last updated: 14 August 2026",
-      "body": [
-        "By creating an account you agree to these terms.",
-        "You own the content you upload. You grant us a license to host and display it on your public catalog URL.",
-        "Do not upload illegal, infringing, or harmful content. We may suspend workspaces that violate the law or these terms.",
-        "The Free, Pro, and Enterprise plans describe current feature limits. Prices shown on the site may change with notice.",
-        "The service is provided as-is. We are not liable for lost sales from QR downtime or customer devices.",
-        "You may delete your workspace at any time from Settings.",
-        "Questions: +90 541 323 00 02."
+      "intro": "These terms govern your use of QR-Universe. By creating an account or publishing a catalog you agree to them. If you use the product for a company, you confirm you are authorised to bind that company.",
+      "sections": [
+        {
+          "heading": "1. The service",
+          "body": [
+            "QR-Universe lets you create categories and products, design QR codes, and publish a public catalog. Guests scan the code and open the catalog in a mobile browser — no app install.",
+            "We may improve features. Plan limits are shown in the product. We will give reasonable notice of material reductions."
+          ]
+        },
+        {
+          "heading": "2. Your account",
+          "body": [
+            "Provide accurate details and keep your password confidential. You are responsible for activity under your login.",
+            "The workspace belongs to the company you register. You may delete it at any time from Settings; deletion is permanent."
+          ]
+        },
+        {
+          "heading": "3. Your content",
+          "body": [
+            "You own the photos, text, prices and QR artwork you upload. You grant us a licence to host and display that content solely to operate your catalog and QR codes.",
+            "You confirm you have the rights to that content and that it is not illegal or infringing."
+          ]
+        },
+        {
+          "heading": "4. Acceptable use",
+          "body": [
+            "Do not probe or overload the service, impersonate others, or use catalogs to sell goods in a way that breaks applicable law.",
+            "We may suspend a workspace that violates these terms, after notice where reasonably possible."
+          ]
+        },
+        {
+          "heading": "5. Plans, availability and liability",
+          "body": [
+            "Free, Pro and Enterprise describe current entitlements. Paid plans, when offered, are billed as stated at checkout.",
+            "The service is provided as-is. We aim for high availability but do not warrant uninterrupted QR scans. To the fullest extent permitted by law we are not liable for lost profits or issues on the guest’s device.",
+            "Nothing limits liability for fraud, death or personal injury caused by negligence, or any liability that cannot be excluded by law."
+          ]
+        },
+        {
+          "heading": "6. Governing law",
+          "body": [
+            "These terms are governed by the laws of the Republic of Türkiye, without prejudice to mandatory consumer protections in your country of residence. Disputes will first be addressed in good faith via +90 541 323 00 02."
+          ]
+        }
       ]
     },
     "cookies": {
       "eyebrow": "Legal",
       "title": "Cookie policy",
       "updated": "Last updated: 14 August 2026",
-      "body": [
-        "We use essential cookies for login (session) and to store your language, theme, and cookie-consent choice.",
-        "A short-lived anonymous id counts how many visitors are online. It is not used for advertising.",
-        "You can clear cookies in your browser. Blocking the session cookie will sign you out of the admin dashboard."
+      "intro": "This page describes the cookies QR-Universe uses. We only set what is needed to run the product — no advertising cookies.",
+      "sections": [
+        {
+          "heading": "1. Essential cookies",
+          "body": [
+            "Session cookie (qru_session): keeps you signed in to admin. It is set after login and cleared on logout.",
+            "Preference storage: language, theme, and cookie-consent choice so the site does not reset on every visit.",
+            "A random visitor id powers the “people viewing this catalog” count. It is not a login and is not used for ads."
+          ]
+        },
+        {
+          "heading": "2. What we do not use",
+          "body": [
+            "We do not set advertising, social-media or cross-site tracking cookies, and we do not drop third-party marketing pixels on the public catalog."
+          ]
+        },
+        {
+          "heading": "3. How to control them",
+          "body": [
+            "You can delete cookies in your browser. Blocking the session cookie will sign you out of admin.",
+            "Questions: +90 541 323 00 02 (WhatsApp available)."
+          ]
+        }
       ],
       "banner": {
-        "text": "We use essential cookies for login, language, theme, and a live visitor count. No ads.",
-        "accept": "OK",
+        "text": "We use essential cookies only: to keep you signed in, remember language and theme, and count people currently viewing a catalog. No advertising trackers.",
+        "accept": "Accept",
         "privacy": "Privacy",
         "cookies": "Cookies"
       }
@@ -628,11 +785,11 @@
     "about": {
       "eyebrow": "Company",
       "title": "About QR-Universe",
-      "lead": "Interactive catalogs, one scan away — for restaurants, retail, electronics and services.",
+      "lead": "A catalog platform for real shops — scan, browse, update. No reprinting, no guest app.",
       "body": [
-        "QR-Universe lets a business publish a living menu or product list, brand a QR code, and update prices without reprinting.",
-        "Catalogs work in English, Russian, Turkish and Azerbaijani. Customers do not install an app.",
-        "We are building in the open for real shops. Talk to us on +90 541 323 00 02."
+        "QR-Universe is built for restaurants, markets, fashion, electronics, courses and services. You type your own category names, add the details that matter (calories, sizes, year, warranty), brand a QR, and guests open a living page on their phone.",
+        "English, Russian, Turkish and Azerbaijani ship with the product. Prices and photos update the moment you save — the printed code stays the same.",
+        "We are a small team serving Türkiye and Azerbaijan. Talk to us on +90 541 323 00 02 (WhatsApp)."
       ]
     },
     "contact": {
@@ -677,8 +834,82 @@
         "q6": {
           "q": "Can I delete my account?",
           "a": "Yes. Settings → Delete workspace removes the company, catalog, QR codes and login."
+        },
+        "q7": {
+          "q": "How is my data handled?",
+          "a": "Account and catalog data stay in your workspace. We do not sell it or run ads. You can delete everything from Settings. Full detail is in the Privacy policy."
+        },
+        "q8": {
+          "q": "Can I add calories, sizes or a model year?",
+          "a": "Yes. Product fields follow the category: calories for food, clothing and shoe sizes, year and warranty for electronics. You can also type your own."
         }
       }
+    }
+  },
+  "attributes": {
+    "names": {
+      "calories": "Calories",
+      "allergens": "Allergens",
+      "vegan": "Vegan",
+      "spicy": "Spicy",
+      "portion": "Portion",
+      "ingredients": "Ingredients",
+      "prepTime": "Prep time",
+      "alcohol": "Alcohol",
+      "volume": "Volume",
+      "weight": "Weight",
+      "brand": "Brand",
+      "organic": "Organic",
+      "origin": "Origin",
+      "expiry": "Best before",
+      "sizes": "Clothing sizes",
+      "color": "Color",
+      "material": "Material",
+      "gender": "For",
+      "season": "Season",
+      "fit": "Fit",
+      "shoeSize": "Shoe sizes",
+      "toolSize": "Size",
+      "dimensions": "Dimensions",
+      "assembly": "Assembly required",
+      "voltage": "Voltage",
+      "power": "Power",
+      "warranty": "Warranty",
+      "duration": "Duration",
+      "durationMin": "Duration",
+      "level": "Level",
+      "language": "Language",
+      "certificate": "Certificate",
+      "age": "Age group",
+      "year": "Year",
+      "model": "Model",
+      "ram": "RAM",
+      "storage": "Storage",
+      "condition": "Condition",
+      "screen": "Screen",
+      "strength": "Strength",
+      "packSize": "Pack size",
+      "staffLevel": "Staff",
+      "homeVisit": "Home visit",
+      "notes": "Notes"
+    },
+    "units": {
+      "months": "months",
+      "kcal": "kcal",
+      "min": "min"
+    },
+    "types": {
+      "TEXT": "Text",
+      "NUMBER": "Number",
+      "BOOLEAN": "Yes / no",
+      "LIST": "List"
+    },
+    "examples": {
+      "calories": "320",
+      "sizes": "S, M, L, XL",
+      "shoeSize": "36, 37, 38, 39, 40",
+      "year": "2024",
+      "warranty": "24"
     }
   }
 }

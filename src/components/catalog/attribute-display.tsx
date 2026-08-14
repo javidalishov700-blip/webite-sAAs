@@ -7,11 +7,11 @@ export function AttributeDisplay({ attributes }: { attributes: ItemAttribute[] }
 
   const badges = attributes.filter((a) => a.type === "BOOLEAN" && a.value === "true");
   const lists = attributes.filter((a) => a.type === "LIST" && a.value.trim());
-  const rows = attributes.filter((a) => a.type === "TEXT" || a.type === "NUMBER");
+  const rows = attributes.filter((a) => (a.type === "TEXT" || a.type === "NUMBER") && a.value.trim());
 
   return (
     <div className="space-y-4">
-      {(badges.length > 0 || lists.length > 0) && (
+      {badges.length > 0 && (
         <div className="flex flex-wrap gap-1.5">
           {badges.map((attr) => (
             <Badge key={attr.id} variant="success" className="gap-1 py-1">
@@ -19,8 +19,14 @@ export function AttributeDisplay({ attributes }: { attributes: ItemAttribute[] }
               {attr.key}
             </Badge>
           ))}
-          {lists.map((attr) =>
-            attr.value
+        </div>
+      )}
+
+      {lists.map((attr) => (
+        <div key={attr.id}>
+          <p className="mb-1.5 text-xs font-medium text-muted-foreground">{attr.key}</p>
+          <div className="flex flex-wrap gap-1.5">
+            {attr.value
               .split(",")
               .map((v) => v.trim())
               .filter(Boolean)
@@ -28,10 +34,10 @@ export function AttributeDisplay({ attributes }: { attributes: ItemAttribute[] }
                 <Badge key={`${attr.id}-${value}`} variant="outline" className="py-1">
                   {value}
                 </Badge>
-              )),
-          )}
+              ))}
+          </div>
         </div>
-      )}
+      ))}
 
       {rows.length > 0 && (
         <dl className="divide-y divide-border/70 overflow-hidden rounded-xl border border-border/70">

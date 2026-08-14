@@ -12,44 +12,51 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ATTRIBUTE_PRESETS, type AttributePreset } from "@/lib/constants";
+import { resolveAttributePresets, type AttributePreset } from "@/lib/attribute-presets";
 import type { AttributeInput } from "@/lib/validators/item";
 import type { AttributeType, Industry } from "@/lib/data/types";
 import { cn } from "@/lib/utils";
 
-const TYPE_LABELS: Record<AttributeType, string> = {
-  TEXT: "Text",
-  NUMBER: "Number",
-  BOOLEAN: "Toggle",
-  LIST: "List",
-};
-
 interface AttributeEditorProps {
   industry: Industry;
+  categoryName?: string;
   value: AttributeInput[];
   onChange: (attributes: AttributeInput[]) => void;
 }
 
-export function AttributeEditor({ industry, value, onChange }: AttributeEditorProps) {
+export function AttributeEditor({ industry, categoryName, value, onChange }: AttributeEditorProps) {
   const t = useTranslations("admin.products.form");
-  const ti = useTranslations("industries");
+  const tp = useTranslations("attributes");
 
   function updateRow(index: number, patch: Partial<AttributeInput>) {
-    const next = value.map((row, i) => (i === index ? { ...row, ...patch } : row));
-    onChange(next);
+    onChange(value.map((row, i) => (i === index ? { ...row, ...patch } : row)));
   }
 
   function removeRow(index: number) {
     onChange(value.filter((_, i) => i !== index));
   }
 
-  function addRow(preset?: AttributePreset) {
-    onChange([...value, { key: preset?.key ?? "", value: preset?.type === "BOOLEAN" ? "false" : "", type: preset?.type ?? "TEXT", unit: preset?.unit ?? "" }]);
+  function localizedUnit(unit?: string) {
+    if (!unit) return "";
+    if (unit === "months") return tp("units.months");
+    return unit;
   }
 
-  const presets = ATTRIBUTE_PRESETS[industry] ?? [];
-  const usedKeys = new Set(value.map((v) => v.key));
-  const availablePresets = presets.filter((p) => !usedKeys.has(p.key));
+  function addRow(preset?: AttributePreset) {
+    onChange([
+      ...value,
+      {
+        key: preset ? tp(`names.${preset.id}`) : "",
+        value: preset?.type === "BOOLEAN" ? "false" : "",
+        type: preset?.type ?? "TEXT",
+        unit: localizedUnit(preset?.unit),
+      },
+    ]);
+  }
+
+  const presets = resolveAttributePresets(industry, categoryName);
+  const usedKeys = new Set(value.map((v) => v.key.trim().toLowerCase()));
+  const availablePresets = presets.filter((p) => !usedKeys.has(tp(`names.${p.id}`).toLowerCase()));
 
   return (
     <div className="space-y-3">
@@ -57,17 +64,17 @@ export function AttributeEditor({ industry, value, onChange }: AttributeEditorPr
         <div>
           <p className="mb-2 flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
             <Sparkles className="size-3.5" />
-            {t("presets", { industry: ti(industry) })}
+            {t("presets")}
           </p>
           <div className="flex flex-wrap gap-1.5">
             {availablePresets.map((preset) => (
               <button
-                key={preset.key}
+                key={preset.id}
                 type="button"
                 onClick={() => addRow(preset)}
                 className="rounded-full border border-dashed border-border px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:border-primary/50 hover:bg-primary/5 hover:text-primary"
               >
-                + {preset.key}
+                + {tp(`names.${preset.id}`)}
               </button>
             ))}
           </div>
@@ -78,7 +85,7 @@ export function AttributeEditor({ industry, value, onChange }: AttributeEditorPr
 
       <div className="space-y-2.5">
         {value.map((attr, index) => (
-          <div key={index} className="grid grid-cols-12 items-center gap-2 rounded-xl border border-border/70 bg-muted/10 p-2.5">
+          <div key={`${attr.key}-${index}`} className="grid grid-cols-12 items-center gap-2 rounded-xl border border-border/70 bg-muted/10 p-2.5">
             <Input
               className="col-span-4 h-9"
               placeholder={t("attributeKey")}
@@ -90,9 +97,9 @@ export function AttributeEditor({ industry, value, onChange }: AttributeEditorPr
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {Object.entries(TYPE_LABELS).map(([value, label]) => (
-                  <SelectItem key={value} value={value}>
-                    {label}
+                {(["TEXT", "NUMBER", "BOOLEAN", "LIST"] as const).map((type) => (
+                  <SelectItem key={type} value={type}>
+                    {tp(`types.${type}`)}
                   </SelectItem>
                 ))}
               </SelectContent>
