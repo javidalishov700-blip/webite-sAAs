@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { SearchX } from "lucide-react";
+import { SearchX, Store } from "lucide-react";
 import { CatalogHeader } from "@/components/catalog/catalog-header";
 import { CategoryNav } from "@/components/catalog/category-nav";
 import { ItemCard } from "@/components/catalog/item-card";
@@ -75,7 +75,9 @@ export function CatalogView({ company, locale }: { company: CompanyPublicView; l
       )}
 
       <div className="px-4 pt-3">
-        {searchResults ? (
+        {company.categories.length === 0 ? (
+          <EmptyState icon={Store} title={t("emptyCatalog")} description={t("emptyCatalogHint")} className="mt-6 glass-card border-solid" />
+        ) : searchResults ? (
           searchResults.length === 0 ? (
             <EmptyState icon={SearchX} title={t("noResults", { query: search })} className="mt-6" />
           ) : (
@@ -122,7 +124,7 @@ export function CatalogView({ company, locale }: { company: CompanyPublicView; l
         </p>
       </footer>
 
-      <LanguageFab accentColor={company.accentColor} />
+      <LanguageFab accentColor={company.accentColor} locales={company.supportedLocales} />
 
       <ItemSheet item={selectedItem} onOpenChange={(open) => !open && setSelectedItem(null)} locale={locale} accentColor={company.accentColor} />
     </div>

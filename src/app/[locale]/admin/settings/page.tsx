@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Check, ExternalLink } from "lucide-react";
 import { PageHeader } from "@/components/admin/page-header";
@@ -16,6 +16,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useCompany, useUpdateCompany } from "@/hooks/use-company";
+import { catalogAbsoluteUrl } from "@/lib/catalog-url";
 import { CURRENCIES, LOCALES, LOCALE_META } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import type { AppLocale } from "@/lib/data/types";
@@ -23,6 +24,7 @@ import type { AppLocale } from "@/lib/data/types";
 export default function SettingsPage() {
   const t = useTranslations("admin.settings");
   const tc = useTranslations("common");
+  const locale = useLocale();
   const { data: company, isLoading } = useCompany();
   const updateCompany = useUpdateCompany();
 
@@ -83,7 +85,11 @@ export default function SettingsPage() {
     );
   }
 
-  const publicUrl = `${typeof window !== "undefined" ? window.location.origin : ""}/c/${company.slug}`;
+  const publicUrl = catalogAbsoluteUrl(
+    typeof window !== "undefined" ? window.location.origin : "",
+    company.slug,
+    locale,
+  );
 
   return (
     <div className="max-w-3xl">
@@ -223,7 +229,7 @@ export default function SettingsPage() {
               </Badge>
               <div>
                 <p className="text-sm font-medium">{t("publicUrlLabel")}</p>
-                <a href={`/c/${company.slug}`} target="_blank" rel="noreferrer" className="flex items-center gap-1 font-mono text-xs text-primary hover:underline">
+                <a href={`/${locale}/c/${company.slug}`} target="_blank" rel="noreferrer" className="flex items-center gap-1 font-mono text-xs text-primary hover:underline">
                   {publicUrl.replace(/^https?:\/\//, "")}
                   <ExternalLink className="size-3" />
                 </a>

@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { Check, Globe } from "lucide-react";
 import { useLocaleSwitcher } from "@/hooks/use-locale-switcher";
 import { cn } from "@/lib/utils";
@@ -11,7 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 
-export function LanguageSwitcher({
+function LanguageSwitcherInner({
   variant = "ghost",
   className,
 }: {
@@ -41,5 +42,22 @@ export function LanguageSwitcher({
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+export function LanguageSwitcher(props: {
+  variant?: "ghost" | "glass" | "outline";
+  className?: string;
+}) {
+  return (
+    <Suspense
+      fallback={
+        <Button variant={props.variant ?? "ghost"} size="sm" className={cn("gap-1.5 px-2.5", props.className)} disabled>
+          <Globe className="size-4" />
+        </Button>
+      }
+    >
+      <LanguageSwitcherInner {...props} />
+    </Suspense>
   );
 }

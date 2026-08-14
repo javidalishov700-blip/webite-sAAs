@@ -299,8 +299,9 @@
         "price": "Price",
         "status": "Status"
       },
-      "empty": "No products match your filters.",
-      "emptyState": "Your catalog is empty — add your first product.",
+    "empty": "No products match your filters.",
+    "emptyState": "Your catalog is empty — add your first product.",
+    "needCategory": "Create a category first, then add products to it.",
       "form": {
         "titleNew": "New product",
         "titleEdit": "Edit product",
@@ -400,6 +401,8 @@
     "searchPlaceholder": "Search the menu…",
     "noResults": "No items match \"{query}\"",
     "emptyCategory": "Nothing in this category yet.",
+    "emptyCatalog": "This catalog is being prepared.",
+    "emptyCatalogHint": "Check back soon — new items are on the way.",
     "poweredBy": "Powered by",
     "featured": "Featured",
     "outOfStock": "Out of stock",

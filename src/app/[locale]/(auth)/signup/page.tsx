@@ -51,11 +51,13 @@ export default function SignupPage() {
 
   return (
     <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="w-full max-w-lg">
-      <Card className="p-7 sm:p-9">
+      <Card className="glow-border p-7 sm:p-9">
         <div className="glow-ring mb-5 flex size-11 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 text-primary">
           <UserPlus className="size-5" />
         </div>
-        <h1 className="font-display text-2xl font-bold">{t("title")}</h1>
+        <h1 className="font-display text-2xl font-bold">
+          <span className="text-gradient">{t("title")}</span>
+        </h1>
         <p className="mt-1.5 text-sm text-muted-foreground">{t("subtitle")}</p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="mt-7 space-y-4">

@@ -16,7 +16,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         </Link>
         <LanguageSwitcher variant="glass" />
       </header>
-      <main className="flex flex-1 items-center justify-center px-4 pb-16">{children}</main>
+      <main className="relative flex flex-1 items-center justify-center px-4 pb-16">{children}</main>
     </div>
   );
 }

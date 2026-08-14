@@ -299,8 +299,9 @@
         "price": "Fiyat",
         "status": "Durum"
       },
-      "empty": "Filtrelerinize uyan ürün yok.",
-      "emptyState": "Kataloğunuz boş — ilk ürününüzü ekleyin.",
+    "empty": "Filtrelerinize uyan ürün yok.",
+    "emptyState": "Kataloğunuz boş — ilk ürününüzü ekleyin.",
+    "needCategory": "Önce bir kategori oluşturun, sonra ürün ekleyin.",
       "form": {
         "titleNew": "Yeni ürün",
         "titleEdit": "Ürünü düzenle",
@@ -400,6 +401,8 @@
     "searchPlaceholder": "Menüde ara…",
     "noResults": "\"{query}\" ile eşleşen ürün yok",
     "emptyCategory": "Bu kategoride henüz bir şey yok.",
+    "emptyCatalog": "Bu katalog henüz hazırlanıyor.",
+    "emptyCatalogHint": "Yakında yeni ürünler eklenecek — tekrar bakın.",
     "poweredBy": "Alt yapı",
     "featured": "Öne çıkan",
     "outOfStock": "Stokta yok",

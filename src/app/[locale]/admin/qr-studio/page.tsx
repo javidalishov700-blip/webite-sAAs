@@ -29,6 +29,7 @@ import {
 import { useCreateQrCode, useDeleteQrCode, useQrCodes, useUpdateQrCode } from "@/hooks/use-qr-codes";
 import { useCompany } from "@/hooks/use-company";
 import { cn } from "@/lib/utils";
+import { catalogAbsoluteUrl, qrGoAbsoluteUrl } from "@/lib/catalog-url";
 import type { QrDotStyle } from "@/lib/data/types";
 
 const DOT_STYLES: QrDotStyle[] = ["SQUARE", "DOTS", "ROUNDED", "CLASSY", "CLASSY_ROUNDED", "EXTRA_ROUNDED"];
@@ -72,7 +73,8 @@ export default function QrStudioPage() {
   }, [selected?.id]);
 
   const origin = typeof window !== "undefined" ? window.location.origin : "";
-  const catalogUrl = company ? `${origin}/c/${company.slug}` : "";
+  const catalogUrl = company ? catalogAbsoluteUrl(origin, company.slug, company.defaultLocale) : "";
+  const qrPayload = selected ? qrGoAbsoluteUrl(origin, selected.id) : catalogUrl;
 
   async function handleCreate() {
     const qr = await createQr.mutateAsync({ name: `QR code ${(qrCodes?.length ?? 0) + 1}` });
@@ -169,7 +171,7 @@ export default function QrStudioPage() {
                   <div className="space-y-1.5">
                     <Label>{t("urlLabel")}</Label>
                     <p className="truncate rounded-lg border border-border/70 bg-muted/20 px-3 py-2 font-mono text-xs text-muted-foreground">
-                      {catalogUrl}
+                      {qrPayload || catalogUrl}
                     </p>
                   </div>
 
@@ -251,7 +253,7 @@ export default function QrStudioPage() {
                   <div className="glow-ring rounded-3xl bg-white p-4">
                     <QrCanvas
                       ref={qrRef}
-                      data={catalogUrl}
+                      data={qrPayload}
                       dotsColor={draft.dotsColor}
                       backgroundColor={draft.backgroundColor}
                       dotsStyle={draft.dotsStyle}

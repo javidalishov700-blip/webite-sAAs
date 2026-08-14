@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireSession } from "@/lib/auth/guard";
 import { qrSchema } from "@/lib/validators/qr";
-import { createQrCode, listQrCodesByCompany } from "@/lib/data/repositories/qr";
+import { createQrCode, listQrCodesByCompany, updateQrCode } from "@/lib/data/repositories/qr";
 import { getCompanyById } from "@/lib/data/repositories/companies";
+import { qrGoPath } from "@/lib/catalog-url";
 
 export async function GET() {
   const { user, response } = await requireSession();
@@ -31,5 +32,6 @@ export async function POST(request: NextRequest) {
     cornerStyle: parsed.data.cornerStyle,
     backgroundColor: parsed.data.backgroundColor,
   });
-  return NextResponse.json({ qrCode: qr }, { status: 201 });
+  const withGoUrl = updateQrCode(qr.id, user.companyId, { targetUrl: qrGoPath(qr.id) }) ?? qr;
+  return NextResponse.json({ qrCode: withGoUrl }, { status: 201 });
 }

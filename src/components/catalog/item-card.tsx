@@ -22,7 +22,7 @@ export function ItemCard({ item, onSelect, locale }: ItemCardProps) {
       layoutId={`item-${item.id}`}
       onClick={onSelect}
       whileTap={{ scale: 0.97 }}
-      className="glass-card group flex flex-col overflow-hidden rounded-2xl text-left"
+      className="glass-card glow-border group flex flex-col overflow-hidden rounded-2xl text-left"
     >
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-muted">
         {item.images[0] ? (

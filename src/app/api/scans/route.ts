@@ -7,6 +7,7 @@ import { recordScan } from "@/lib/data/repositories/scans";
 const scanSchema = z.object({
   slug: z.string().min(1),
   locale: z.enum(["en", "ru", "tr", "az"]).default("en"),
+  qrCodeId: z.string().min(1).optional(),
 });
 
 export async function POST(request: NextRequest) {
@@ -18,7 +19,9 @@ export async function POST(request: NextRequest) {
   if (!company) return NextResponse.json({ error: "not_found" }, { status: 404 });
 
   const device = /mobile|android|iphone/i.test(request.headers.get("user-agent") ?? "") ? "mobile" : "desktop";
-  const [qrCode] = listQrCodesByCompany(company.id);
+  const codes = listQrCodesByCompany(company.id);
+  const matched = parsed.data.qrCodeId ? codes.find((q) => q.id === parsed.data.qrCodeId) : undefined;
+  const qrCode = matched ?? codes[0];
 
   recordScan({ companyId: company.id, qrCodeId: qrCode?.id, locale: parsed.data.locale, device });
   return NextResponse.json({ ok: true });

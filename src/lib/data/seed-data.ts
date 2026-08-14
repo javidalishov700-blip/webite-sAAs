@@ -735,7 +735,7 @@ export function buildSeedDb(): SeedDb {
         id: qrId,
         companyId,
         name: qrSeed.name,
-        targetUrl: `/c/${seed.slug}`,
+        targetUrl: `/api/qr/${qrId}/go`,
         dotsColor: qrSeed.dotsColor,
         backgroundColor: qrSeed.backgroundColor,
         dotsStyle: qrSeed.dotsStyle,

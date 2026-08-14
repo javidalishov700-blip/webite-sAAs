@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { ExternalLink, LogOut, User } from "lucide-react";
+import { useLocale } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -19,6 +20,7 @@ import type { SessionUser } from "@/lib/data/types";
 export function UserMenu({ user }: { user: SessionUser }) {
   const t = useTranslations("admin.sidebar");
   const tc = useTranslations("common");
+  const locale = useLocale();
   const router = useRouter();
 
   async function handleSignOut() {
@@ -42,7 +44,7 @@ export function UserMenu({ user }: { user: SessionUser }) {
         <DropdownMenuLabel className="truncate">{user.email}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <a href={`/c/${user.companySlug}`} target="_blank" rel="noreferrer">
+          <a href={`/${locale}/c/${user.companySlug}`} target="_blank" rel="noreferrer">
             <ExternalLink className="size-4" />
             {t("viewCatalog")}
           </a>

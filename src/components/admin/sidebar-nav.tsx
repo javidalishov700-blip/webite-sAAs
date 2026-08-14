@@ -28,7 +28,9 @@ export function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
             onClick={onNavigate}
             className={cn(
               "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
-              active ? "bg-primary/15 text-primary" : "text-muted-foreground hover:bg-white/5 hover:text-foreground",
+              active
+                ? "bg-primary/15 text-primary shadow-[0_0_24px_-8px_var(--primary)]"
+                : "text-muted-foreground hover:bg-white/5 hover:text-foreground",
             )}
           >
             <item.icon className={cn("size-[18px] shrink-0", active && "text-primary")} />

@@ -301,6 +301,7 @@
       },
       "empty": "Filtrlərinizə uyğun məhsul yoxdur.",
       "emptyState": "Kataloqunuz boşdur — ilk məhsulunuzu əlavə edin.",
+      "needCategory": "Əvvəlcə kateqoriya yaradın, sonra məhsul əlavə edin.",
       "form": {
         "titleNew": "Yeni məhsul",
         "titleEdit": "Məhsulu redaktə et",
@@ -400,6 +401,8 @@
     "searchPlaceholder": "Menyuda axtar…",
     "noResults": "\"{query}\" ilə uyğun məhsul tapılmadı",
     "emptyCategory": "Bu kateqoriyada hələ heç nə yoxdur.",
+    "emptyCatalog": "Bu kataloq hələ hazırlanır.",
+    "emptyCatalogHint": "Tezliklə yeni məhsullar əlavə olunacaq — yenidən baxın.",
     "poweredBy": "Təminatçı",
     "featured": "Seçilmiş",
     "outOfStock": "Stokda yoxdur",

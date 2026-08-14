@@ -11,6 +11,11 @@ export function getQrCodeById(id: string, companyId: string): QrCode | undefined
   return db.state.qrCodes.find((q) => q.id === id && q.companyId === companyId);
 }
 
+/** Public lookup used by the QR scan redirect (`/api/qr/:id/go`). */
+export function getQrCodeByIdPublic(id: string): QrCode | undefined {
+  return db.state.qrCodes.find((q) => q.id === id);
+}
+
 export interface CreateQrInput {
   companyId: string;
   name: string;

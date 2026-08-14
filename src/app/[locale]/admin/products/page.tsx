@@ -151,7 +151,7 @@ export default function ProductsPage() {
         <EmptyState
           icon={Package}
           title={t("form.basics")}
-          description="Create a category first, then add products to it."
+          description={t("needCategory")}
         />
       ) : (items?.length ?? 0) === 0 ? (
         <EmptyState
@@ -261,6 +261,7 @@ export default function ProductsPage() {
           </DrawerHeader>
           {categories && company && (
             <ProductForm
+              key={editingItem?.id ?? "new"}
               categories={categories}
               industry={company.industry}
               item={editingItem}

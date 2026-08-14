@@ -14,6 +14,7 @@ import { QrCanvas, type QrCanvasHandle } from "@/components/admin/qr-canvas";
 import { useCompany, useUpdateCompany } from "@/hooks/use-company";
 import { useCreateQrCode, useQrCodes } from "@/hooks/use-qr-codes";
 import { cn } from "@/lib/utils";
+import { qrGoAbsoluteUrl } from "@/lib/catalog-url";
 import type { Industry } from "@/lib/data/types";
 
 const ACCENTS = ["#7C5CFF", "#00E5FF", "#FF6B4A", "#33D69F", "#FFD24A", "#FF5470"];
@@ -54,9 +55,10 @@ export default function OnboardingPage() {
   }, [company]);
 
   const origin = typeof window !== "undefined" ? window.location.origin : "";
-  const catalogPath = company ? `/c/${company.slug}` : "";
-  const catalogUrl = `${origin}${catalogPath}`;
+  const catalogHref = company ? `/c/${company.slug}` : "";
+  const catalogUrl = company ? `${origin}/${company.defaultLocale}/c/${company.slug}` : "";
   const existingQr = qrCodes?.[0];
+  const qrPayload = existingQr ? qrGoAbsoluteUrl(origin, existingQr.id) : catalogUrl;
 
   async function goNext() {
     if (step === 1) {
@@ -76,7 +78,7 @@ export default function OnboardingPage() {
   useEffect(() => {
     if (step === 3 && !existingQr && !qrCreated && company) {
       setQrCreated(true);
-      createQr.mutate({ name: "Storefront QR", targetUrl: catalogPath });
+      createQr.mutate({ name: "Storefront QR", targetUrl: catalogHref });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step, existingQr, qrCreated, company]);
@@ -98,11 +100,13 @@ export default function OnboardingPage() {
         {t("step", { current: step, total: TOTAL_STEPS })}
       </p>
 
-      <Card className="overflow-hidden p-7 sm:p-9">
+      <Card className="glow-border overflow-hidden p-7 sm:p-9">
         <AnimatePresence mode="wait">
           {step === 1 && (
             <motion.div key="step1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-              <h1 className="font-display text-2xl font-bold">{t("step1.title")}</h1>
+              <h1 className="font-display text-2xl font-bold">
+                <span className="text-gradient">{t("step1.title")}</span>
+              </h1>
               <p className="mt-1.5 text-sm text-muted-foreground">{t("step1.subtitle")}</p>
 
               <div className="mt-7 grid grid-cols-1 gap-6 sm:grid-cols-[1fr_140px]">
@@ -169,9 +173,9 @@ export default function OnboardingPage() {
 
               <div className="mt-7 flex flex-col items-center gap-5">
                 <div className="glow-ring rounded-3xl bg-white p-4">
-                  <QrCanvas
+                    <QrCanvas
                     ref={qrRef}
-                    data={catalogUrl}
+                    data={qrPayload}
                     dotsColor={existingQr?.dotsColor ?? accent}
                     backgroundColor="#ffffff"
                     dotsStyle={existingQr?.dotsStyle ?? "EXTRA_ROUNDED"}
@@ -195,7 +199,7 @@ export default function OnboardingPage() {
                 <div className="w-full rounded-xl border border-border/70 bg-muted/20 p-3 text-center">
                   <p className="text-xs text-muted-foreground">{t("step3.catalogLive")}</p>
                   <a
-                    href={catalogPath}
+                    href={catalogHref}
                     target="_blank"
                     rel="noreferrer"
                     className="mt-1 flex items-center justify-center gap-1.5 font-mono text-sm font-medium text-primary hover:underline"

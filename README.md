@@ -2,65 +2,98 @@
 
 A global, multi-tenant SaaS platform for creating interactive, dynamic digital catalogs and menus accessed via QR codes — built for restaurants, retail, electronics stores, and services.
 
-## Stack
-
-- **Framework:** Next.js 15 (App Router, Server Components, Server Actions, Route Handlers)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS v4 (CSS-first theme), custom glassmorphism/glow design system
-- **Motion/3D:** Motion (Framer Motion successor) + React Three Fiber / drei for the WebGL hero
-- **Data fetching:** TanStack Query (client) + Server Components (server)
-- **State:** Zustand (small client UI state), React Query cache (server state)
-- **Forms/validation:** React Hook Form + Zod
-- **i18n:** next-intl — English, Russian, Turkish, Azerbaijani
-- **Auth:** Custom cookie/JWT session (jose) + bcrypt password hashing
-- **Data layer:** Repository pattern backed by an in-memory + on-disk JSON store that mirrors the `prisma/schema.prisma` data model 1:1, so it can be swapped for a real Postgres database via Prisma without touching call sites
-- **QR generation:** qr-code-styling (dots/colors/logo, PNG & SVG export)
-- **DnD:** dnd-kit (category reordering)
-- **Charts:** Recharts
-
-## Getting started
+## Run locally
 
 ```bash
+git checkout cursor/build-qr-universe-saas-8ded
 pnpm install
 pnpm dev
 ```
 
-The app runs at [http://localhost:3000](http://localhost:3000) and redirects to your preferred locale (`/en`, `/ru`, `/tr`, `/az`).
+Open [http://localhost:3000/en](http://localhost:3000/en). The app also redirects `/` to your preferred locale (`/en`, `/ru`, `/tr`, `/az`).
 
-### Demo accounts
+### Scripts
 
-Seeded on first run (see `src/lib/data/seed-data.ts`):
+| Command | What it does |
+| --- | --- |
+| `pnpm dev` | Next.js 15 dev server on port 3000 |
+| `pnpm lint` | ESLint |
+| `pnpm typecheck` | `tsc --noEmit` |
+| `pnpm build` | Production build |
 
-| Email | Password | Company |
-| --- | --- | --- |
-| `demo@bellafoods.com` | `demo1234` | Bella Foods (restaurant) |
-| `demo@urbansole.com` | `demo1234` | Urban Sole (sneaker store) |
-| `demo@nexustech.com` | `demo1234` | NexusTech (electronics) |
+## Demo accounts
 
-Public catalogs (no login required):
+Seeded on first run (see `src/lib/data/seed-data.ts`). Password for every account: **`demo1234`**.
 
-- `/en/c/bella-foods`
-- `/en/c/urban-sole`
-- `/en/c/nexustech`
+| Email | Company |
+| --- | --- |
+| `demo@bellafoods.com` | Bella Foods (restaurant) |
+| `demo@urbansole.com` | Urban Sole (sneaker store) |
+| `demo@nexustech.com` | NexusTech (electronics) |
+
+After login you land on `/en/admin`. Sign out from the sidebar user menu. Unauthenticated visits to `/admin` or `/onboarding` redirect to login.
+
+## Public catalogs
+
+No login required. Language switcher on the catalog respects each company’s supported locales.
+
+- [http://localhost:3000/en/c/bella-foods](http://localhost:3000/en/c/bella-foods)
+- [http://localhost:3000/en/c/urban-sole](http://localhost:3000/en/c/urban-sole)
+- [http://localhost:3000/en/c/nexustech](http://localhost:3000/en/c/nexustech)
+
+### QR scan → catalog → analytics
+
+QR Studio and onboarding encode `/api/qr/{id}/go`. Opening that URL:
+
+1. Records a scan against that specific QR (increments `scans`, appends a `scanEvents` row).
+2. Redirects to `/{locale}/c/{slug}?scanned=1&qr={id}`.
+
+Direct catalog visits (no `scanned=1`) are recorded once per browser tab via `POST /api/scans`. Totals show up on the admin Overview chart.
+
+## PWA
+
+The public catalog and marketing site ship as an installable PWA:
+
+- `public/manifest.webmanifest`
+- 192 / 512 icons + Apple touch icon
+- `appleWebApp` + `themeColor` in the locale layout
+
+Add to Home Screen from a mobile browser; no custom service worker is bundled (avoids stale-cache issues in local/dev).
+
+## Stack
+
+- **Framework:** Next.js 15 (App Router, Server Components, Route Handlers)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS v4, glassmorphism / neon design system
+- **Motion/3D:** Motion + React Three Fiber / drei (landing hero only)
+- **Data fetching:** TanStack Query + Server Components
+- **State:** Zustand (small UI state)
+- **Forms/validation:** React Hook Form + Zod
+- **i18n:** next-intl — English, Russian, Turkish, Azerbaijani
+- **Auth:** Cookie/JWT session (`jose`) + bcrypt
+- **Data layer:** Repository pattern + in-memory / `.data/db.json` store (Prisma schema is the future contract — not wired)
+- **QR:** qr-code-styling (PNG & SVG export)
+- **DnD:** dnd-kit (category reorder)
+- **Charts:** Recharts
 
 ## Project structure
 
 ```
 src/
-  app/                 # Next.js routes ([locale] marketing, auth, admin, public catalog, API routes)
-  components/          # UI kit, landing, admin, catalog components
-  lib/                 # data layer, auth, i18n helpers, utils, validators
+  app/                 # [locale] marketing, auth, admin, public catalog, API
+  components/          # UI kit, landing (3D hero), admin, catalog
+  lib/                 # data layer, auth, validators, catalog/QR URLs
   hooks/               # React Query hooks
   store/               # Zustand stores
-  messages/            # en/ru/tr/az translation catalogs
+  messages/            # en/ru/tr/az
 prisma/
-  schema.prisma        # canonical multi-tenant data model definition
+  schema.prisma        # canonical multi-tenant model (not used at runtime)
 ```
 
-## Notes on the data & media layer
+## Data & media
 
-No external database or object storage is provisioned in this environment. Rather than leaving the app non-functional, the backend is implemented as a fully working, well-abstracted **mock service layer**:
+No external database or object storage is required:
 
-- `prisma/schema.prisma` documents the production data model (Postgres-ready, multi-tenant, with row-level isolation by `companyId`).
-- `src/lib/data/*` implements the same models with an in-memory store, persisted to `.data/db.json` between requests/dev-server restarts, exposed through repository functions (`getCompanyBySlug`, `createItem`, `reorderCategories`, …). Swapping this for real Prisma calls later only requires changing the repository implementations — every consumer already talks to the repository interface.
-- Image "uploads" are handled by a mock media service (`src/lib/media.ts`) that accepts a file, stores it as a data URL, and returns a stable URL — trivially swappable for S3/Cloudinary/Vercel Blob later.
+- `src/lib/data/*` is a working mock service layer persisted to `.data/db.json`.
+- Image uploads are stored as data URLs (`src/lib/media.ts`).
+- Do not commit secrets. Copy `.env.example` if you want a local `AUTH_SECRET`; a development fallback is used when it is unset.

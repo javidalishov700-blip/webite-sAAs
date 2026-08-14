@@ -22,7 +22,7 @@ export function AdminShell({ user, children }: { user: SessionUser; children: Re
       <AmbientBackground className="opacity-60" />
 
       <div className="mx-auto flex min-h-screen max-w-[1600px]">
-        <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col border-r border-border/70 p-4 lg:flex">
+        <aside className="glass sticky top-0 hidden h-screen w-64 shrink-0 flex-col border-r border-border/70 p-4 lg:flex">
           <Link href="/" className="mb-6 flex items-center gap-2 px-2 font-display text-base font-semibold">
             <span className="glow-ring flex size-8 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent text-white">
               <QrCode className="size-4.5" />
@@ -44,7 +44,7 @@ export function AdminShell({ user, children }: { user: SessionUser; children: Re
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <header className="sticky top-0 z-30 flex items-center gap-3 border-b border-border/70 bg-background/70 px-4 py-3 backdrop-blur-xl sm:px-6 lg:justify-end">
+          <header className="glass sticky top-0 z-30 flex items-center gap-3 border-b border-border/70 px-4 py-3 sm:px-6 lg:justify-end">
             <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setMobileOpen(true)}>
               <Menu className="size-5" />
             </Button>

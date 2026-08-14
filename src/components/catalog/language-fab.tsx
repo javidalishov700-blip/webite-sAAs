@@ -1,15 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Languages } from "lucide-react";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 import { useLocaleSwitcher } from "@/hooks/use-locale-switcher";
 import { cn } from "@/lib/utils";
+import type { AppLocale } from "@/lib/data/types";
 
-export function LanguageFab({ accentColor }: { accentColor: string }) {
+function LanguageFabInner({ accentColor, locales: available }: { accentColor: string; locales?: readonly AppLocale[] }) {
   const t = useTranslations("catalog");
-  const { locale, locales, localeMeta, setLocale } = useLocaleSwitcher();
+  const { locale, locales, localeMeta, setLocale } = useLocaleSwitcher(available);
   const [open, setOpen] = useState(false);
 
   return (
@@ -56,5 +57,13 @@ export function LanguageFab({ accentColor }: { accentColor: string }) {
         </DrawerContent>
       </Drawer>
     </>
+  );
+}
+
+export function LanguageFab(props: { accentColor: string; locales?: readonly AppLocale[] }) {
+  return (
+    <Suspense fallback={null}>
+      <LanguageFabInner {...props} />
+    </Suspense>
   );
 }

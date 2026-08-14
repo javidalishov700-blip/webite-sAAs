@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { motion } from "motion/react";
 import { AlertCircle, ArrowRight, LogIn } from "lucide-react";
@@ -12,8 +13,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
+import { TiltCard } from "@/components/landing/tilt-card";
 import { loginSchema, type LoginInput } from "@/lib/validators/auth";
 import { api, ApiError } from "@/lib/api-client";
+import { stripLocalePrefix } from "@/lib/catalog-url";
 
 const DEMO_ACCOUNTS = [
   { email: "demo@bellafoods.com", name: "Bella Foods", industry: "Restaurant", initials: "BF", color: "#FF6B4A" },
@@ -22,9 +25,17 @@ const DEMO_ACCOUNTS = [
 ];
 const DEMO_PASSWORD = "demo1234";
 
-export default function LoginPage() {
+function safeNextPath(raw: string | null): string {
+  if (!raw || !raw.startsWith("/") || raw.startsWith("//")) return "/admin";
+  const stripped = stripLocalePrefix(raw);
+  if (!stripped.startsWith("/") || stripped.startsWith("//")) return "/admin";
+  return stripped;
+}
+
+function LoginForm() {
   const t = useTranslations("auth.login");
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [serverError, setServerError] = useState<string | null>(null);
 
   const {
@@ -38,7 +49,7 @@ export default function LoginPage() {
     setServerError(null);
     try {
       await api.post("/api/auth/login", values);
-      router.push("/admin");
+      router.push(safeNextPath(searchParams.get("next")));
       router.refresh();
     } catch (err) {
       setServerError(err instanceof ApiError ? t("invalid") : "Something went wrong");
@@ -58,11 +69,13 @@ export default function LoginPage() {
       transition={{ duration: 0.5 }}
       className="grid w-full max-w-4xl grid-cols-1 gap-6 lg:grid-cols-[1.1fr_0.9fr]"
     >
-      <Card className="p-7 sm:p-9">
+      <Card className="glow-border p-7 sm:p-9">
         <div className="glow-ring mb-5 flex size-11 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 text-primary">
           <LogIn className="size-5" />
         </div>
-        <h1 className="font-display text-2xl font-bold">{t("title")}</h1>
+        <h1 className="font-display text-2xl font-bold">
+          <span className="text-gradient">{t("title")}</span>
+        </h1>
         <p className="mt-1.5 text-sm text-muted-foreground">{t("subtitle")}</p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="mt-7 space-y-4">
@@ -98,34 +111,43 @@ export default function LoginPage() {
         </p>
       </Card>
 
-      <Card className="flex flex-col justify-center p-7 sm:p-9">
+      <Card className="glow-border flex flex-col justify-center p-7 sm:p-9">
         <p className="font-display text-base font-semibold">{t("demoTitle")}</p>
         <p className="mt-1.5 text-sm text-muted-foreground">{t("demoHint")}</p>
         <div className="mt-5 space-y-2.5">
           {DEMO_ACCOUNTS.map((account) => (
-            <button
-              key={account.email}
-              type="button"
-              onClick={() => fillDemo(account.email)}
-              className="flex w-full items-center gap-3 rounded-xl border border-border/70 bg-muted/20 p-3 text-left transition-colors hover:border-primary/50 hover:bg-primary/5"
-            >
-              <span
-                className="flex size-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white"
-                style={{ background: `linear-gradient(135deg, ${account.color}, transparent)`, backgroundColor: account.color }}
+            <TiltCard key={account.email} maxTilt={8} hoverScale={1.02} className="rounded-xl">
+              <button
+                type="button"
+                onClick={() => fillDemo(account.email)}
+                className="glass-card flex w-full items-center gap-3 rounded-xl p-3 text-left transition-colors hover:border-primary/50"
               >
-                {account.initials}
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="block truncate text-sm font-medium">{account.name}</span>
-                <span className="block truncate text-xs text-muted-foreground">{account.email}</span>
-              </span>
-              <span className="shrink-0 rounded-full bg-muted px-2 py-1 text-[10px] font-medium text-muted-foreground">
-                {account.industry}
-              </span>
-            </button>
+                <span
+                  className="flex size-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white"
+                  style={{ background: `linear-gradient(135deg, ${account.color}, transparent)`, backgroundColor: account.color }}
+                >
+                  {account.initials}
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-sm font-medium">{account.name}</span>
+                  <span className="block truncate text-xs text-muted-foreground">{account.email}</span>
+                </span>
+                <span className="shrink-0 rounded-full bg-muted px-2 py-1 text-[10px] font-medium text-muted-foreground">
+                  {account.industry}
+                </span>
+              </button>
+            </TiltCard>
           ))}
         </div>
       </Card>
     </motion.div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
   );
 }
