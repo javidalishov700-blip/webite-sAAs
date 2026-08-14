@@ -39,7 +39,7 @@ export function LiveDemo() {
           ))}
           <RevealItem>
             <Button variant="glow" size="lg" className="mt-2 w-fit" asChild>
-              <Link href="/c/bella-foods">
+              <Link href="/c/live-demo">
                 {t("cta")}
                 <ArrowUpRight className="size-4" />
               </Link>
@@ -59,12 +59,12 @@ export function LiveDemo() {
               <div className="absolute top-2 left-1/2 z-10 h-5 w-24 -translate-x-1/2 rounded-full bg-[#161622]" />
               <div className="flex h-full flex-col overflow-hidden rounded-[2.1rem] bg-gradient-to-b from-[#0c0c16] to-[#08080f]">
                 <div className="flex items-center gap-2.5 px-4 pt-9 pb-3">
-                  <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#FF6B4A] to-[#ffb347] text-sm font-bold text-white">
-                    BF
+                  <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent text-sm font-bold text-white">
+                    QR
                   </div>
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-semibold text-white">Bella Foods</p>
-                    <p className="text-[11px] text-white/50">Open · closes 11PM</p>
+                    <p className="truncate text-sm font-semibold text-white">Your catalog</p>
+                    <p className="text-[11px] text-white/50">Live after you sign up</p>
                   </div>
                   <QrCode className="ml-auto size-4 text-white/40" />
                 </div>

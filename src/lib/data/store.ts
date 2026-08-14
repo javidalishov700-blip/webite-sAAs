@@ -10,7 +10,8 @@ import type {
   ScanEvent,
   User,
 } from "@/lib/data/types";
-import { buildSeedDb, type SeedDb } from "@/lib/data/seed-data";
+import { buildSeedDb, stripDemoTenants, type SeedDb } from "@/lib/data/seed-data";
+import { ensurePublicShowcase } from "@/lib/data/public-showcase";
 
 export { generateId, nowIso } from "@/lib/data/ids";
 
@@ -38,7 +39,7 @@ function readFromDisk(): DbShape | null {
     const raw = fs.readFileSync(DB_FILE, "utf-8");
     const parsed = JSON.parse(raw) as DbShape;
     if (!parsed.companies || !Array.isArray(parsed.companies)) return null;
-    return parsed;
+    return stripDemoTenants(parsed);
   } catch {
     return null;
   }
@@ -56,10 +57,10 @@ function writeToDisk(data: DbShape) {
 
 function initDb(): DbShape {
   const fromDisk = readFromDisk();
-  if (fromDisk) return fromDisk;
-  const seeded = buildSeedDb();
-  writeToDisk(seeded);
-  return seeded;
+  const base = fromDisk ?? buildSeedDb();
+  const next = ensurePublicShowcase(base);
+  writeToDisk(next);
+  return next;
 }
 
 function getDb(): DbShape {
@@ -81,7 +82,7 @@ export const db = {
   persist,
   /** Testing/demo utility: wipes all data and reseeds from scratch. */
   reset() {
-    globalThis.__qrUniverseDb = buildSeedDb();
+    globalThis.__qrUniverseDb = ensurePublicShowcase(buildSeedDb());
     persist();
     return globalThis.__qrUniverseDb;
   },

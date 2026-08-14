@@ -7,14 +7,16 @@ import { Menu, QrCode, X } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/utils";
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
 
 const NAV_ITEMS = [
-  { href: "#features", key: "features" },
-  { href: "#use-cases", key: "useCases" },
-  { href: "#demo", key: "demo" },
-  { href: "#pricing", key: "pricing" },
+  { href: "/#features", key: "features" },
+  { href: "/#use-cases", key: "useCases" },
+  { href: "/#pricing", key: "pricing" },
+  { href: "/faq", key: "faq", internal: true },
+  { href: "/contact", key: "contact", internal: true },
 ] as const;
 
 export function SiteHeader() {
@@ -50,19 +52,31 @@ export function SiteHeader() {
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex">
-          {NAV_ITEMS.map((item) => (
-            <a
-              key={item.key}
-              href={item.href}
-              className="group relative rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              {t(item.key)}
-              <span className="absolute inset-x-3 -bottom-0.5 h-px origin-center scale-x-0 bg-gradient-to-r from-primary to-accent transition-transform duration-300 group-hover:scale-x-100" />
-            </a>
-          ))}
+          {NAV_ITEMS.map((item) =>
+            "internal" in item && item.internal ? (
+              <Link
+                key={item.key}
+                href={item.href}
+                className="group relative rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {t(item.key)}
+                <span className="absolute inset-x-3 -bottom-0.5 h-px origin-center scale-x-0 bg-gradient-to-r from-primary to-accent transition-transform duration-300 group-hover:scale-x-100" />
+              </Link>
+            ) : (
+              <a
+                key={item.key}
+                href={item.href}
+                className="group relative rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {t(item.key)}
+                <span className="absolute inset-x-3 -bottom-0.5 h-px origin-center scale-x-0 bg-gradient-to-r from-primary to-accent transition-transform duration-300 group-hover:scale-x-100" />
+              </a>
+            ),
+          )}
         </nav>
 
         <div className="hidden items-center gap-2 sm:flex">
+          <ThemeToggle />
           <LanguageSwitcher />
           <Button variant="ghost" size="sm" asChild>
             <Link href="/login">{t("login")}</Link>
@@ -73,6 +87,7 @@ export function SiteHeader() {
         </div>
 
         <div className="flex items-center gap-1.5 sm:hidden">
+          <ThemeToggle />
           <LanguageSwitcher />
           <Button variant="ghost" size="icon" onClick={() => setMobileOpen(true)} aria-label="Open menu">
             <Menu className="size-5" />
@@ -89,16 +104,27 @@ export function SiteHeader() {
             </Button>
           </div>
           <nav className="mt-8 flex flex-col gap-1">
-            {NAV_ITEMS.map((item) => (
-              <a
-                key={item.key}
-                href={item.href}
-                onClick={() => setMobileOpen(false)}
-                className="rounded-xl px-3 py-3 text-base text-foreground/90 hover:bg-white/5"
-              >
-                {t(item.key)}
-              </a>
-            ))}
+            {NAV_ITEMS.map((item) =>
+              "internal" in item && item.internal ? (
+                <Link
+                  key={item.key}
+                  href={item.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="rounded-xl px-3 py-3 text-base text-foreground/90 hover:bg-white/5"
+                >
+                  {t(item.key)}
+                </Link>
+              ) : (
+                <a
+                  key={item.key}
+                  href={item.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="rounded-xl px-3 py-3 text-base text-foreground/90 hover:bg-white/5"
+                >
+                  {t(item.key)}
+                </a>
+              ),
+            )}
           </nav>
           <div className="mt-auto flex flex-col gap-2 pt-8">
             <Button variant="outline" asChild>

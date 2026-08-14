@@ -2,10 +2,11 @@
 
 import { useTranslations } from "next-intl";
 import { motion } from "motion/react";
-import { ArrowRight, ChevronDown, PlayCircle, Radio } from "lucide-react";
+import { ArrowRight, ChevronDown, PlayCircle } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Hero3D } from "@/components/landing/hero-3d";
+import { ActiveUsersBadge } from "@/components/landing/active-users";
 
 export function Hero() {
   const t = useTranslations("landing.hero");
@@ -20,7 +21,10 @@ export function Hero() {
           className="flex flex-col items-start"
         >
           <div className="glass mb-6 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-medium text-muted-foreground">
-            <Radio className="size-3.5 text-accent" />
+            <span className="relative flex size-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
+              <span className="relative inline-flex size-2 rounded-full bg-accent" />
+            </span>
             {t("eyebrow")}
           </div>
 
@@ -70,13 +74,7 @@ export function Hero() {
           className="relative order-first h-[280px] sm:h-[380px] lg:order-last lg:h-[560px]"
         >
           <Hero3D />
-          <div className="glass animate-float absolute top-6 right-2 flex items-center gap-2 rounded-2xl px-3 py-2 text-xs font-medium sm:right-6">
-            <span className="relative flex size-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
-              <span className="relative inline-flex size-2 rounded-full bg-success" />
-            </span>
-            {t("badgeLive")} — 128 {t("badgeScans")}
-          </div>
+          <ActiveUsersBadge className="glass animate-float absolute top-6 right-2 flex items-center gap-2 rounded-2xl px-3 py-2 text-xs font-medium sm:right-6" />
         </motion.div>
       </div>
 

@@ -2,6 +2,7 @@ import { QrCode } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { AmbientBackground } from "@/components/landing/ambient-background";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -14,7 +15,10 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
           </span>
           QR-Universe
         </Link>
-        <LanguageSwitcher variant="glass" />
+        <div className="flex items-center gap-1.5">
+          <ThemeToggle />
+          <LanguageSwitcher variant="glass" />
+        </div>
       </header>
       <main className="relative flex flex-1 items-center justify-center px-4 pb-16">{children}</main>
     </div>

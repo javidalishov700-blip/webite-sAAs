@@ -88,7 +88,7 @@ export function Pricing() {
                   </div>
 
                   <Button variant={isPopular ? "glow" : "outline"} className="mt-6 w-full" asChild>
-                    <Link href="/signup">{t(`plans.${plan}.cta`)}</Link>
+                    <Link href={plan === "enterprise" ? "/contact" : "/signup"}>{t(`plans.${plan}.cta`)}</Link>
                   </Button>
 
                   <ul className="mt-7 space-y-3 text-sm">

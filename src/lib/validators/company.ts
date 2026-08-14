@@ -11,6 +11,7 @@ export const companySettingsSchema = z.object({
   phone: z.string().max(40).optional().nullable(),
   website: z.string().max(160).optional().nullable(),
   logoUrl: z.string().optional().nullable(),
+  isPublished: z.boolean().optional(),
 });
 export type CompanySettingsInput = z.infer<typeof companySettingsSchema>;
 

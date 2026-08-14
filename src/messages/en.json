@@ -51,7 +51,9 @@
       "demo": "Live demo",
       "pricing": "Pricing",
       "login": "Log in",
-      "getStarted": "Get started free"
+      "getStarted": "Get started free",
+      "faq": "FAQ",
+      "contact": "Contact"
     },
     "hero": {
       "eyebrow": "QR-native digital catalogs",
@@ -68,7 +70,8 @@
       "statBusinessesLabel": "businesses onboard",
       "statCountries": "42",
       "statCountriesLabel": "countries",
-      "scrollHint": "Scroll to explore"
+      "scrollHint": "Scroll to explore",
+      "onlineNow": "online now"
     },
     "logos": {
       "title": "Trusted by modern, fast-moving teams"
@@ -113,19 +116,31 @@
           "label": "Restaurant",
           "title": "Menus that update themselves",
           "description": "86 an item, launch a seasonal special, or update a price — it's live everywhere in seconds. Track allergens, calories, and vegan options per dish.",
-          "bullets": ["Live menu editing, zero reprints", "Allergens, calories & dietary tags", "Table-side QR ordering flow"]
+          "bullets": [
+            "Live menu editing, zero reprints",
+            "Allergens, calories & dietary tags",
+            "Table-side QR ordering flow"
+          ]
         },
         "retail": {
           "label": "Retail & Fashion",
           "title": "A lookbook that never goes out of stock",
           "description": "Show sizes, materials and colorways for every sneaker or garment, and hide items the moment they sell out.",
-          "bullets": ["Size & material attributes", "Instant sold-out hiding", "Seasonal collection drops"]
+          "bullets": [
+            "Size & material attributes",
+            "Instant sold-out hiding",
+            "Seasonal collection drops"
+          ]
         },
         "electronics": {
           "label": "Electronics",
           "title": "Spec sheets customers can actually scan",
           "description": "RAM, storage, warranty — lay out full technical specs beautifully, right on the showroom floor.",
-          "bullets": ["Rich technical spec fields", "Warranty & stock indicators", "Comparison-ready layout"]
+          "bullets": [
+            "Rich technical spec fields",
+            "Warranty & stock indicators",
+            "Comparison-ready layout"
+          ]
         }
       }
     },
@@ -153,19 +168,36 @@
           "name": "Free",
           "description": "For solo owners just getting started.",
           "cta": "Start for free",
-          "features": ["1 catalog & 1 QR code", "Up to 20 items", "Basic QR styling", "Community support"]
+          "features": [
+            "1 catalog & 1 QR code",
+            "Up to 20 items",
+            "Basic QR styling",
+            "Community support"
+          ]
         },
         "pro": {
           "name": "Pro",
           "description": "For growing businesses with multiple categories.",
           "cta": "Start free trial",
-          "features": ["Unlimited items & categories", "Up to 10 branded QR codes", "Full QR Studio customization", "Scan analytics dashboard", "Priority support"]
+          "features": [
+            "Unlimited items & categories",
+            "Up to 10 branded QR codes",
+            "Full QR Studio customization",
+            "Scan analytics dashboard",
+            "Priority support"
+          ]
         },
         "enterprise": {
           "name": "Enterprise",
           "description": "For multi-location brands & franchises.",
           "cta": "Talk to sales",
-          "features": ["Unlimited locations", "Team roles & permissions", "Dedicated onboarding", "API access", "SLA & priority support"]
+          "features": [
+            "Unlimited locations",
+            "Team roles & permissions",
+            "Dedicated onboarding",
+            "API access",
+            "SLA & priority support"
+          ]
         }
       }
     },
@@ -189,7 +221,10 @@
       "blog": "Blog",
       "privacy": "Privacy policy",
       "terms": "Terms of service",
-      "rights": "All rights reserved."
+      "rights": "All rights reserved.",
+      "faq": "FAQ",
+      "cookies": "Cookies",
+      "reachUs": "Reach us:"
     }
   },
   "auth": {
@@ -284,7 +319,8 @@
       "created": "Category created",
       "updated": "Category updated",
       "deleted": "Category deleted",
-      "reordered": "Order saved"
+      "reordered": "Order saved",
+      "emptyHint": "Name categories yourself — Starters, Mains, or anything that fits your business."
     },
     "products": {
       "title": "Products",
@@ -299,9 +335,9 @@
         "price": "Price",
         "status": "Status"
       },
-    "empty": "No products match your filters.",
-    "emptyState": "Your catalog is empty — add your first product.",
-    "needCategory": "Create a category first, then add products to it.",
+      "empty": "No products match your filters.",
+      "emptyState": "Your catalog is empty — add your first product.",
+      "needCategory": "Create a category first, then add products to it.",
       "form": {
         "titleNew": "New product",
         "titleEdit": "Edit product",
@@ -340,7 +376,9 @@
       "deleted": "Product deleted",
       "visibilityUpdated": "Visibility updated",
       "deleteConfirmTitle": "Delete product?",
-      "deleteConfirmDescription": "This will permanently delete \"{name}\"."
+      "deleteConfirmDescription": "This will permanently delete \"{name}\".",
+      "duplicate": "Duplicate",
+      "duplicated": "Product duplicated"
     },
     "qr": {
       "title": "QR Studio",
@@ -394,7 +432,12 @@
       "accentColorLabel": "Accent color",
       "planLabel": "Plan",
       "publicUrlLabel": "Public catalog URL",
-      "saved": "Settings saved"
+      "saved": "Settings saved",
+      "publishedLabel": "Catalog is public",
+      "dangerTitle": "Delete workspace",
+      "dangerHint": "Permanently deletes your company, catalog, QR codes, and account. This cannot be undone.",
+      "dangerConfirm": "Delete your workspace and account forever?",
+      "dangerAction": "Delete everything"
     }
   },
   "catalog": {
@@ -420,5 +463,112 @@
     "addressLabel": "Address",
     "phoneLabel": "Phone",
     "websiteLabel": "Website"
+  },
+  "pages": {
+    "notFound": {
+      "title": "Page not found",
+      "body": "That link is missing or the catalog is unpublished.",
+      "home": "Back home"
+    },
+    "privacy": {
+      "eyebrow": "Legal",
+      "title": "Privacy policy",
+      "updated": "Last updated: 14 August 2026",
+      "body": [
+        "QR-Universe (“we”) provides digital catalogs accessed by QR code. This policy explains what we collect and why.",
+        "Account data: name, email, hashed password, company profile (logo, address, phone, catalog content) that you submit.",
+        "Usage data: QR scan events (time, locale, device type), catalog views, and an anonymous visitor id used only to count people currently online.",
+        "We do not sell personal data. We do not use advertising trackers.",
+        "Session cookies keep you signed in. Preference cookies remember language, theme, and cookie consent.",
+        "You may access, correct, or delete your workspace from Settings. Deleting a workspace removes the company catalog, QR codes, and the owner account.",
+        "To exercise privacy rights or ask questions, call +90 541 323 00 02 (WhatsApp available).",
+        "We retain catalog and scan data while your account is active, then delete it when you delete the workspace."
+      ]
+    },
+    "terms": {
+      "eyebrow": "Legal",
+      "title": "Terms of service",
+      "updated": "Last updated: 14 August 2026",
+      "body": [
+        "By creating an account you agree to these terms.",
+        "You own the content you upload. You grant us a license to host and display it on your public catalog URL.",
+        "Do not upload illegal, infringing, or harmful content. We may suspend workspaces that violate the law or these terms.",
+        "The Free, Pro, and Enterprise plans describe current feature limits. Prices shown on the site may change with notice.",
+        "The service is provided as-is. We are not liable for lost sales from QR downtime or customer devices.",
+        "You may delete your workspace at any time from Settings.",
+        "Questions: +90 541 323 00 02."
+      ]
+    },
+    "cookies": {
+      "eyebrow": "Legal",
+      "title": "Cookie policy",
+      "updated": "Last updated: 14 August 2026",
+      "body": [
+        "We use essential cookies for login (session) and to store your language, theme, and cookie-consent choice.",
+        "A short-lived anonymous id counts how many visitors are online. It is not used for advertising.",
+        "You can clear cookies in your browser. Blocking the session cookie will sign you out of the admin dashboard."
+      ],
+      "banner": {
+        "text": "We use essential cookies for login, language, theme, and a live visitor count. No ads.",
+        "accept": "OK",
+        "privacy": "Privacy",
+        "cookies": "Cookies"
+      }
+    },
+    "about": {
+      "eyebrow": "Company",
+      "title": "About QR-Universe",
+      "lead": "Interactive catalogs, one scan away — for restaurants, retail, electronics and services.",
+      "body": [
+        "QR-Universe lets a business publish a living menu or product list, brand a QR code, and update prices without reprinting.",
+        "Catalogs work in English, Russian, Turkish and Azerbaijani. Customers do not install an app.",
+        "We are building in the open for real shops. Talk to us on +90 541 323 00 02."
+      ]
+    },
+    "contact": {
+      "eyebrow": "Support",
+      "title": "Contact",
+      "lead": "Call or WhatsApp. We answer in Turkish, Azerbaijani, English and Russian.",
+      "phoneLabel": "Direct line",
+      "hours": "Every day, 09:00–22:00 (GMT+4 / Türkiye & Azerbaijan).",
+      "call": "Call now"
+    },
+    "careers": {
+      "eyebrow": "Team",
+      "title": "Careers",
+      "lead": "We are a small team. If you want to build QR-native commerce with us, say hello.",
+      "cta": "Contact us"
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "Questions, answered",
+      "subtitle": "How QR-Universe works for real businesses.",
+      "items": {
+        "q1": {
+          "q": "Do customers need an app?",
+          "a": "No. They scan the QR and the catalog opens in the phone browser."
+        },
+        "q2": {
+          "q": "Can I edit prices after printing the QR?",
+          "a": "Yes. The QR points at your live catalog. Change an item in admin and every table or shelf updates instantly."
+        },
+        "q3": {
+          "q": "Who creates categories?",
+          "a": "You do. After signup the catalog is empty — add the names that match your business."
+        },
+        "q4": {
+          "q": "Which languages are supported?",
+          "a": "English, Russian, Turkish and Azerbaijani. You choose which ones your catalog offers."
+        },
+        "q5": {
+          "q": "How do I reach support?",
+          "a": "Call or WhatsApp +90 541 323 00 02."
+        },
+        "q6": {
+          "q": "Can I delete my account?",
+          "a": "Yes. Settings → Delete workspace removes the company, catalog, QR codes and login."
+        }
+      }
+    }
   }
 }

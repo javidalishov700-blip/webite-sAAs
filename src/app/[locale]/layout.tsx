@@ -80,7 +80,7 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   return (
-    <html lang={locale} className="dark" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body className={`${inter.variable} ${outfit.variable} ${jetbrainsMono.variable} font-sans`} suppressHydrationWarning>
         <NextIntlClientProvider>
           <Providers>{children}</Providers>

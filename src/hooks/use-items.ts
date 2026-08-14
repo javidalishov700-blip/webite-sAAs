@@ -47,6 +47,17 @@ export function useUpdateItem() {
   });
 }
 
+export function useDuplicateItem() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => api.post<{ item: ItemWithAttributes }>(`/api/items/${id}/duplicate`).then((r) => r.item),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.items });
+      queryClient.invalidateQueries({ queryKey: queryKeys.analytics });
+    },
+  });
+}
+
 export function useDeleteItem() {
   const queryClient = useQueryClient();
   return useMutation({

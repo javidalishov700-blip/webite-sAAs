@@ -13,6 +13,14 @@ export function useCompany(initialData?: Company) {
   });
 }
 
+export function useDeleteCompany() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: () => api.delete("/api/companies/me"),
+    onSuccess: () => queryClient.clear(),
+  });
+}
+
 export function useUpdateCompany() {
   const queryClient = useQueryClient();
   return useMutation({

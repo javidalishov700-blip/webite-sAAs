@@ -51,7 +51,9 @@
       "demo": "Canlı demo",
       "pricing": "Qiymətlər",
       "login": "Daxil ol",
-      "getStarted": "Pulsuz başla"
+      "getStarted": "Pulsuz başla",
+      "faq": "SSS",
+      "contact": "Əlaqə"
     },
     "hero": {
       "eyebrow": "QR əsaslı rəqəmsal kataloqlar",
@@ -68,7 +70,8 @@
       "statBusinessesLabel": "qoşulmuş biznes",
       "statCountries": "42",
       "statCountriesLabel": "ölkə",
-      "scrollHint": "Kəşf etmək üçün aşağı sürüşdürün"
+      "scrollHint": "Kəşf etmək üçün aşağı sürüşdürün",
+      "onlineNow": "indi onlayn"
     },
     "logos": {
       "title": "Sürətlə böyüyən müasir komandaların etibar etdiyi platforma"
@@ -113,19 +116,31 @@
           "label": "Restoran",
           "title": "Özü-özünü yeniləyən menyular",
           "description": "Bir mövqeyi satışdan çıxarın, mövsümi təklif başladın və ya qiyməti dəyişin — saniyələr içində hər yerdə canlı olur. Hər yemək üçün allergenləri, kaloriləri və vegan seçimlərini izləyin.",
-          "bullets": ["Yenidən çapsız canlı menyu redaktəsi", "Allergen, kalori və pəhriz etiketləri", "Masabaşı QR sifariş axını"]
+          "bullets": [
+            "Yenidən çapsız canlı menyu redaktəsi",
+            "Allergen, kalori və pəhriz etiketləri",
+            "Masabaşı QR sifariş axını"
+          ]
         },
         "retail": {
           "label": "Pərakəndə və Moda",
           "title": "Heç vaxt tükənməyən lookbook",
           "description": "Hər bir idman ayaqqabısı və ya geyim üçün ölçü, material və rəngləri göstərin, satılan məhsulları dərhal gizlədin.",
-          "bullets": ["Ölçü və material atributları", "Anında \"satıldı\" gizlətmə", "Mövsümi kolleksiya təqdimatları"]
+          "bullets": [
+            "Ölçü və material atributları",
+            "Anında \"satıldı\" gizlətmə",
+            "Mövsümi kolleksiya təqdimatları"
+          ]
         },
         "electronics": {
           "label": "Elektronika",
           "title": "Müştərilərin rahatlıqla skan edə biləcəyi texniki vərəqlər",
           "description": "RAM, yaddaş, zəmanət — mağazada tam texniki xüsusiyyətləri gözəl şəkildə təqdim edin.",
-          "bullets": ["Zəngin texniki xüsusiyyət sahələri", "Zəmanət və stok göstəriciləri", "Müqayisəyə hazır düzülüş"]
+          "bullets": [
+            "Zəngin texniki xüsusiyyət sahələri",
+            "Zəmanət və stok göstəriciləri",
+            "Müqayisəyə hazır düzülüş"
+          ]
         }
       }
     },
@@ -153,19 +168,36 @@
           "name": "Pulsuz",
           "description": "Yeni başlayan sahibkarlar üçün.",
           "cta": "Pulsuz başla",
-          "features": ["1 kataloq və 1 QR kod", "20 məhsula qədər", "Sadə QR dizaynı", "İcma dəstəyi"]
+          "features": [
+            "1 kataloq və 1 QR kod",
+            "20 məhsula qədər",
+            "Sadə QR dizaynı",
+            "İcma dəstəyi"
+          ]
         },
         "pro": {
           "name": "Pro",
           "description": "Bir neçə kateqoriyası olan böyüyən bizneslər üçün.",
           "cta": "Pulsuz sınaq başlat",
-          "features": ["Limitsiz məhsul və kateqoriya", "10-a qədər brendli QR kod", "Tam QR Studiya fərdiləşdirməsi", "Skan analitikası paneli", "Prioritet dəstək"]
+          "features": [
+            "Limitsiz məhsul və kateqoriya",
+            "10-a qədər brendli QR kod",
+            "Tam QR Studiya fərdiləşdirməsi",
+            "Skan analitikası paneli",
+            "Prioritet dəstək"
+          ]
         },
         "enterprise": {
           "name": "Korporativ",
           "description": "Çox filiallı brendlər və franşizalar üçün.",
           "cta": "Satış komandası ilə əlaqə",
-          "features": ["Limitsiz filial", "Komanda rolları və icazələr", "Xüsusi başlanğıc dəstəyi", "API girişi", "SLA və prioritet dəstək"]
+          "features": [
+            "Limitsiz filial",
+            "Komanda rolları və icazələr",
+            "Xüsusi başlanğıc dəstəyi",
+            "API girişi",
+            "SLA və prioritet dəstək"
+          ]
         }
       }
     },
@@ -189,7 +221,10 @@
       "blog": "Bloq",
       "privacy": "Məxfilik siyasəti",
       "terms": "İstifadə şərtləri",
-      "rights": "Bütün hüquqlar qorunur."
+      "rights": "Bütün hüquqlar qorunur.",
+      "faq": "SSS",
+      "cookies": "Kukilər",
+      "reachUs": "Əlaqə:"
     }
   },
   "auth": {
@@ -284,7 +319,8 @@
       "created": "Kateqoriya yaradıldı",
       "updated": "Kateqoriya yeniləndi",
       "deleted": "Kateqoriya silindi",
-      "reordered": "Ardıcıllıq saxlanıldı"
+      "reordered": "Ardıcıllıq saxlanıldı",
+      "emptyHint": "Kateqoriyaları siz adlandırın — işinizə uyğun istənilən ad."
     },
     "products": {
       "title": "Məhsullar",
@@ -340,7 +376,9 @@
       "deleted": "Məhsul silindi",
       "visibilityUpdated": "Görünürlük yeniləndi",
       "deleteConfirmTitle": "Məhsul silinsin?",
-      "deleteConfirmDescription": "\"{name}\" həmişəlik silinəcək."
+      "deleteConfirmDescription": "\"{name}\" həmişəlik silinəcək.",
+      "duplicate": "Kopyala",
+      "duplicated": "Məhsul kopyalandı"
     },
     "qr": {
       "title": "QR Studiya",
@@ -394,7 +432,12 @@
       "accentColorLabel": "Vurğu rəngi",
       "planLabel": "Plan",
       "publicUrlLabel": "Açıq kataloq linki",
-      "saved": "Ayarlar saxlanıldı"
+      "saved": "Ayarlar saxlanıldı",
+      "publishedLabel": "Kataloq ictimaidir",
+      "dangerTitle": "İş sahəsini sil",
+      "dangerHint": "Şirkət, kataloq, QR və hesab silinir. Geri qayıtmaz.",
+      "dangerConfirm": "İş sahəsi və hesab həmişəlik silinsin?",
+      "dangerAction": "Hamısını sil"
     }
   },
   "catalog": {
@@ -420,5 +463,112 @@
     "addressLabel": "Ünvan",
     "phoneLabel": "Telefon",
     "websiteLabel": "Veb-sayt"
+  },
+  "pages": {
+    "notFound": {
+      "title": "Səhifə tapılmadı",
+      "body": "Link yoxdur və ya kataloq gizlidir.",
+      "home": "Ana səhifə"
+    },
+    "privacy": {
+      "eyebrow": "Hüquqi",
+      "title": "Məxfilik siyasəti",
+      "updated": "Yenilənib: 14 avqust 2026",
+      "body": [
+        "QR-Universe QR ilə açılan rəqəmsal kataloqlar təqdim edir.",
+        "Hesab: ad, e-poçt, hash şifrə, şirkət profili və kataloq.",
+        "İstifadə: QR skanları və onlayn sayı üçün anonim id.",
+        "Data satmırıq, reklam izləyicisi yoxdur.",
+        "Sessiya kukisi giriş üçündür.",
+        "Parametrlərdən iş sahəsini silə bilərsiniz.",
+        "Hüquqlar: +90 541 323 00 02 (WhatsApp).",
+        "Data hesab aktiv olanda saxlanılır."
+      ]
+    },
+    "terms": {
+      "eyebrow": "Hüquqi",
+      "title": "İstifadə şərtləri",
+      "updated": "Yenilənib: 14 avqust 2026",
+      "body": [
+        "Qeydiyyat bu şərtləri qəbul etməkdir.",
+        "Məzmun sizindir; göstərmək üçün bizə lisenziya verirsiniz.",
+        "Qanunsuz məzmun yükləməyin.",
+        "Plan limitləri saytdadır.",
+        "Xidmət olduğu kimi verilir.",
+        "Silmə Parametrlərdədir.",
+        "Suallar: +90 541 323 00 02."
+      ]
+    },
+    "cookies": {
+      "eyebrow": "Hüquqi",
+      "title": "Kuki siyasəti",
+      "updated": "Yenilənib: 14 avqust 2026",
+      "body": [
+        "Giriş, dil, tema və razılıq üçün zəruri kukilər.",
+        "Onlayn sayğac üçün qısa anonim id. Reklam yoxdur.",
+        "Brauzerdən kukiləri silə bilərsiniz."
+      ],
+      "banner": {
+        "text": "Giriş, dil, tema və canlı qonaq sayı üçün zəruri kukilər. Reklam yoxdur.",
+        "accept": "OK",
+        "privacy": "Məxfilik",
+        "cookies": "Kukilər"
+      }
+    },
+    "about": {
+      "eyebrow": "Şirkət",
+      "title": "QR-Universe haqqında",
+      "lead": "Restoran və mağazalar üçün skanla açılan canlı kataloq.",
+      "body": [
+        "Menyu dərc edin, QR-i brendləyin, qiyməti təkrar çap etmədən dəyişin.",
+        "EN / RU / TR / AZ. Müştəri tətbiq yükləmir.",
+        "Telefon: +90 541 323 00 02."
+      ]
+    },
+    "contact": {
+      "eyebrow": "Dəstək",
+      "title": "Əlaqə",
+      "lead": "Zəng və ya WhatsApp. AZ, TR, EN, RU.",
+      "phoneLabel": "Birbaşa xətt",
+      "hours": "Hər gün 09:00–22:00.",
+      "call": "İndi zəng et"
+    },
+    "careers": {
+      "eyebrow": "Komanda",
+      "title": "Karyera",
+      "lead": "Kiçik komandayıq. Birlikdə qurmaq istəyirsinizsə yazın.",
+      "cta": "Əlaqə"
+    },
+    "faq": {
+      "eyebrow": "SSS",
+      "title": "Tez-tez soruşulanlar",
+      "subtitle": "Biznesdə necə işləyir.",
+      "items": {
+        "q1": {
+          "q": "Müştəri tətbiq yükləyir?",
+          "a": "Xeyr. QR brauzerdə açılır."
+        },
+        "q2": {
+          "q": "QR çapdan sonra qiymət?",
+          "a": "Bəli. QR canlı kataloqa gedir."
+        },
+        "q3": {
+          "q": "Kateqoriyanı kim yazır?",
+          "a": "Siz. Qeydiyyatdan sonra kataloq boşdur."
+        },
+        "q4": {
+          "q": "Dillər?",
+          "a": "EN, RU, TR, AZ."
+        },
+        "q5": {
+          "q": "Dəstək?",
+          "a": "+90 541 323 00 02."
+        },
+        "q6": {
+          "q": "Hesabı silmək?",
+          "a": "Parametrlər → iş sahəsini sil."
+        }
+      }
+    }
   }
 }

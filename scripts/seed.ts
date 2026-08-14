@@ -1,6 +1,6 @@
 /**
- * Resets the local mock database (`.data/db.json`) back to the seeded demo
- * state. Useful after playing around in the admin dashboard.
+ * Resets `.data/db.json` to a clean state plus the public live-demo catalog
+ * (no login accounts).
  *
  * Usage: pnpm seed
  */
@@ -8,11 +8,8 @@ import { db } from "@/lib/data/store";
 
 const fresh = db.reset();
 
-console.log("Seeded QR-Universe mock database:");
-console.log(`  companies:  ${fresh.companies.length}`);
+console.log("Reset QR-Universe store:");
+console.log(`  companies:  ${fresh.companies.length} (includes public /c/live-demo)`);
 console.log(`  categories: ${fresh.categories.length}`);
 console.log(`  items:      ${fresh.items.length}`);
-console.log(`  qr codes:   ${fresh.qrCodes.length}`);
-console.log(`  scans:      ${fresh.scanEvents.length}`);
-console.log("\nDemo logins (password: demo1234):");
-fresh.users.forEach((u) => console.log(`  - ${u.email}`));
+console.log(`  users:      ${fresh.users.length} (signups create real accounts)`);

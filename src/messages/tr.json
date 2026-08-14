@@ -51,7 +51,9 @@
       "demo": "Canlı demo",
       "pricing": "Fiyatlandırma",
       "login": "Giriş yap",
-      "getStarted": "Ücretsiz başla"
+      "getStarted": "Ücretsiz başla",
+      "faq": "SSS",
+      "contact": "İletişim"
     },
     "hero": {
       "eyebrow": "QR tabanlı dijital kataloglar",
@@ -68,7 +70,8 @@
       "statBusinessesLabel": "kayıtlı işletme",
       "statCountries": "42",
       "statCountriesLabel": "ülke",
-      "scrollHint": "Keşfetmek için kaydırın"
+      "scrollHint": "Keşfetmek için kaydırın",
+      "onlineNow": "çevrimiçi"
     },
     "logos": {
       "title": "Hızla büyüyen modern ekipler tarafından tercih ediliyor"
@@ -113,19 +116,31 @@
           "label": "Restoran",
           "title": "Kendi kendini güncelleyen menüler",
           "description": "Bir ürünü tükendi olarak işaretleyin, sezonluk bir özel sunun ya da fiyatı değiştirin — saniyeler içinde her yerde canlı olur. Her yemek için alerjen, kalori ve vegan seçeneklerini takip edin.",
-          "bullets": ["Yeniden basım olmadan canlı menü düzenleme", "Alerjen, kalori ve diyet etiketleri", "Masa başında QR ile sipariş akışı"]
+          "bullets": [
+            "Yeniden basım olmadan canlı menü düzenleme",
+            "Alerjen, kalori ve diyet etiketleri",
+            "Masa başında QR ile sipariş akışı"
+          ]
         },
         "retail": {
           "label": "Perakende & Moda",
           "title": "Asla tükenmeyen bir lookbook",
           "description": "Her spor ayakkabısı veya kıyafet için beden, materyal ve renk seçeneklerini gösterin, tükenen ürünleri anında gizleyin.",
-          "bullets": ["Beden ve materyal özellikleri", "Anında tükendi gizleme", "Sezonluk koleksiyon lansmanları"]
+          "bullets": [
+            "Beden ve materyal özellikleri",
+            "Anında tükendi gizleme",
+            "Sezonluk koleksiyon lansmanları"
+          ]
         },
         "electronics": {
           "label": "Elektronik",
           "title": "Müşterilerin gerçekten tarayabileceği teknik föyler",
           "description": "RAM, depolama, garanti — mağaza içinde tam teknik özellikleri güzelce sunun.",
-          "bullets": ["Zengin teknik özellik alanları", "Garanti ve stok göstergeleri", "Karşılaştırmaya hazır düzen"]
+          "bullets": [
+            "Zengin teknik özellik alanları",
+            "Garanti ve stok göstergeleri",
+            "Karşılaştırmaya hazır düzen"
+          ]
         }
       }
     },
@@ -153,19 +168,36 @@
           "name": "Ücretsiz",
           "description": "Yeni başlayan işletme sahipleri için.",
           "cta": "Ücretsiz başla",
-          "features": ["1 katalog ve 1 QR kod", "20 ürüne kadar", "Temel QR tasarımı", "Topluluk desteği"]
+          "features": [
+            "1 katalog ve 1 QR kod",
+            "20 ürüne kadar",
+            "Temel QR tasarımı",
+            "Topluluk desteği"
+          ]
         },
         "pro": {
           "name": "Pro",
           "description": "Birden çok kategorisi olan büyüyen işletmeler için.",
           "cta": "Ücretsiz denemeyi başlat",
-          "features": ["Sınırsız ürün ve kategori", "10 markalı QR koda kadar", "Tam QR Stüdyosu özelleştirmesi", "Tarama analitiği paneli", "Öncelikli destek"]
+          "features": [
+            "Sınırsız ürün ve kategori",
+            "10 markalı QR koda kadar",
+            "Tam QR Stüdyosu özelleştirmesi",
+            "Tarama analitiği paneli",
+            "Öncelikli destek"
+          ]
         },
         "enterprise": {
           "name": "Kurumsal",
           "description": "Çok şubeli markalar ve bayilikler için.",
           "cta": "Satış ekibiyle görüş",
-          "features": ["Sınırsız şube", "Ekip rolleri ve izinleri", "Özel katılım süreci", "API erişimi", "SLA ve öncelikli destek"]
+          "features": [
+            "Sınırsız şube",
+            "Ekip rolleri ve izinleri",
+            "Özel katılım süreci",
+            "API erişimi",
+            "SLA ve öncelikli destek"
+          ]
         }
       }
     },
@@ -189,7 +221,10 @@
       "blog": "Blog",
       "privacy": "Gizlilik politikası",
       "terms": "Kullanım şartları",
-      "rights": "Tüm hakları saklıdır."
+      "rights": "Tüm hakları saklıdır.",
+      "faq": "SSS",
+      "cookies": "Çerezler",
+      "reachUs": "Bize ulaşın:"
     }
   },
   "auth": {
@@ -284,7 +319,8 @@
       "created": "Kategori oluşturuldu",
       "updated": "Kategori güncellendi",
       "deleted": "Kategori silindi",
-      "reordered": "Sıralama kaydedildi"
+      "reordered": "Sıralama kaydedildi",
+      "emptyHint": "Kategorileri siz adlandırın — Başlangıç, Ana yemek veya işinize uyan herhangi bir isim."
     },
     "products": {
       "title": "Ürünler",
@@ -299,9 +335,9 @@
         "price": "Fiyat",
         "status": "Durum"
       },
-    "empty": "Filtrelerinize uyan ürün yok.",
-    "emptyState": "Kataloğunuz boş — ilk ürününüzü ekleyin.",
-    "needCategory": "Önce bir kategori oluşturun, sonra ürün ekleyin.",
+      "empty": "Filtrelerinize uyan ürün yok.",
+      "emptyState": "Kataloğunuz boş — ilk ürününüzü ekleyin.",
+      "needCategory": "Önce bir kategori oluşturun, sonra ürün ekleyin.",
       "form": {
         "titleNew": "Yeni ürün",
         "titleEdit": "Ürünü düzenle",
@@ -340,7 +376,9 @@
       "deleted": "Ürün silindi",
       "visibilityUpdated": "Görünürlük güncellendi",
       "deleteConfirmTitle": "Ürün silinsin mi?",
-      "deleteConfirmDescription": "\"{name}\" kalıcı olarak silinecek."
+      "deleteConfirmDescription": "\"{name}\" kalıcı olarak silinecek.",
+      "duplicate": "Kopyala",
+      "duplicated": "Ürün kopyalandı"
     },
     "qr": {
       "title": "QR Stüdyosu",
@@ -394,7 +432,12 @@
       "accentColorLabel": "Vurgu rengi",
       "planLabel": "Plan",
       "publicUrlLabel": "Genel katalog adresi",
-      "saved": "Ayarlar kaydedildi"
+      "saved": "Ayarlar kaydedildi",
+      "publishedLabel": "Katalog herkese açık",
+      "dangerTitle": "Çalışma alanını sil",
+      "dangerHint": "Şirket, katalog, QR kodları ve hesabınız kalıcı olarak silinir. Geri alınamaz.",
+      "dangerConfirm": "Çalışma alanınız ve hesabınız sonsuza kadar silinsin mi?",
+      "dangerAction": "Her şeyi sil"
     }
   },
   "catalog": {
@@ -420,5 +463,112 @@
     "addressLabel": "Adres",
     "phoneLabel": "Telefon",
     "websiteLabel": "Web sitesi"
+  },
+  "pages": {
+    "notFound": {
+      "title": "Sayfa bulunamadı",
+      "body": "Bağlantı yok veya katalog yayında değil.",
+      "home": "Ana sayfa"
+    },
+    "privacy": {
+      "eyebrow": "Yasal",
+      "title": "Gizlilik politikası",
+      "updated": "Son güncelleme: 14 Ağustos 2026",
+      "body": [
+        "QR-Universe dijital kataloglar sunar. Bu metin hangi veriyi neden tuttuğumuzu açıklar.",
+        "Hesap: ad, e-posta, hash’lenmiş şifre, girdiğiniz şirket profili ve katalog içeriği.",
+        "Kullanım: QR tarama kaydı (zaman, dil, cihaz) ve yalnızca çevrimiçi ziyaretçi sayısı için anonim bir kimlik.",
+        "Kişisel veriyi satmayız. Reklam izleyicisi kullanmayız.",
+        "Oturum çerezi sizi girişte tutar. Tercih çerezleri dil, tema ve onay seçimini hatırlar.",
+        "Ayarlar’dan çalışma alanınızı silebilirsiniz. Silme; katalog, QR ve hesabı kaldırır.",
+        "Haklarınız için +90 541 323 00 02 (WhatsApp açık).",
+        "Veriler hesap aktifken tutulur; çalışma alanı silinince kaldırılır."
+      ]
+    },
+    "terms": {
+      "eyebrow": "Yasal",
+      "title": "Kullanım şartları",
+      "updated": "Son güncelleme: 14 Ağustos 2026",
+      "body": [
+        "Hesap açarak bu şartları kabul edersiniz.",
+        "Yüklediğiniz içerik size aittir. Kataloğunuzda göstermek için bize barındırma lisansı verirsiniz.",
+        "Yasa dışı veya zararlı içerik yüklemeyin.",
+        "Plan limitleri sitede belirtilir. Fiyatlar duyuruyla değişebilir.",
+        "Hizmet olduğu gibi sunulur.",
+        "Ayarlar’dan çalışma alanınızı silebilirsiniz.",
+        "Sorular: +90 541 323 00 02."
+      ]
+    },
+    "cookies": {
+      "eyebrow": "Yasal",
+      "title": "Çerez politikası",
+      "updated": "Son güncelleme: 14 Ağustos 2026",
+      "body": [
+        "Giriş, dil, tema ve çerez onayı için zorunlu çerezler kullanırız.",
+        "Çevrimiçi ziyaretçi sayısı için kısa ömürlü anonim bir kimlik tutulur. Reklam için kullanılmaz.",
+        "Tarayıcıdan çerezleri silebilirsiniz. Oturum çerezini engellerseniz yönetim paneline giremezsiniz."
+      ],
+      "banner": {
+        "text": "Giriş, dil, tema ve canlı ziyaretçi sayısı için zorunlu çerezler kullanıyoruz. Reklam yok.",
+        "accept": "Tamam",
+        "privacy": "Gizlilik",
+        "cookies": "Çerezler"
+      }
+    },
+    "about": {
+      "eyebrow": "Şirket",
+      "title": "QR-Universe hakkında",
+      "lead": "Restoran, mağaza ve servisler için taramayla açılan canlı kataloglar.",
+      "body": [
+        "QR-Universe menü veya ürün listesini yayınlar, QR’ı markalar, fiyatı yeniden basmadan günceller.",
+        "Kataloglar İngilizce, Rusça, Türkçe ve Azerbaycanca çalışır. Müşteri uygulama indirmez.",
+        "Gerçek işletmeler için kuruyoruz. +90 541 323 00 02."
+      ]
+    },
+    "contact": {
+      "eyebrow": "Destek",
+      "title": "İletişim",
+      "lead": "Arayın veya WhatsApp yazın. Türkçe, Azerbaycan Türkçesi, İngilizce ve Rusça.",
+      "phoneLabel": "Direkt hat",
+      "hours": "Her gün 09:00–22:00 (Türkiye & Azerbaycan saati).",
+      "call": "Hemen ara"
+    },
+    "careers": {
+      "eyebrow": "Ekip",
+      "title": "Kariyer",
+      "lead": "Küçük bir ekibiz. QR ticaretini birlikte kurmak isterseniz yazın.",
+      "cta": "İletişime geç"
+    },
+    "faq": {
+      "eyebrow": "SSS",
+      "title": "Sık sorulanlar",
+      "subtitle": "QR-Universe gerçek işletmelerde nasıl çalışır.",
+      "items": {
+        "q1": {
+          "q": "Müşteri uygulama indirir mi?",
+          "a": "Hayır. QR’ı tarar, katalog tarayıcıda açılır."
+        },
+        "q2": {
+          "q": "QR’ı bastıktan sonra fiyat değişir mi?",
+          "a": "Evet. QR canlı kataloğa gider. Admin’de değişince her masada güncellenir."
+        },
+        "q3": {
+          "q": "Kategorileri kim yazar?",
+          "a": "Siz. Kayıttan sonra katalog boştur — işinize uyan isimleri ekleyin."
+        },
+        "q4": {
+          "q": "Hangi diller var?",
+          "a": "İngilizce, Rusça, Türkçe, Azerbaycanca. Hangilerinin açık olacağını siz seçersiniz."
+        },
+        "q5": {
+          "q": "Destek?",
+          "a": "+90 541 323 00 02 (arama veya WhatsApp)."
+        },
+        "q6": {
+          "q": "Hesabı silebilir miyim?",
+          "a": "Evet. Ayarlar → Çalışma alanını sil."
+        }
+      }
+    }
   }
 }

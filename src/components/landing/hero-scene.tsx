@@ -1,10 +1,9 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, type MutableRefObject } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, Float, Lightformer, RoundedBox, Sparkles } from "@react-three/drei";
 import * as THREE from "three";
-import { useWindowPointer } from "@/hooks/use-window-pointer";
 
 const GRID_SIZE = 11;
 const CELL = 0.34;
@@ -42,17 +41,17 @@ function buildPattern(): boolean[][] {
   return grid;
 }
 
-function QrModules() {
+function QrModules({ hovering }: { hovering: MutableRefObject<boolean> }) {
   const groupRef = useRef<THREE.Group>(null);
   const pattern = useMemo(buildPattern, []);
-  const pointer = useWindowPointer();
 
-  useFrame(() => {
-    const { x, y } = pointer.current;
-    if (groupRef.current) {
-      groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, 0.35 + x * 0.45, 0.045);
-      groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, -0.15 + y * 0.28, 0.045);
-    }
+  useFrame((state) => {
+    if (!groupRef.current) return;
+    const over = hovering.current;
+    const targetY = over ? state.pointer.x * 0.55 : 0;
+    const targetX = over ? -state.pointer.y * 0.32 : 0;
+    groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetY, 0.1);
+    groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, targetX, 0.1);
   });
 
   const cells = useMemo(() => {
@@ -77,7 +76,7 @@ function QrModules() {
   }, [pattern]);
 
   return (
-    <group ref={groupRef} rotation={[-0.15, 0.35, 0]}>
+    <group ref={groupRef}>
       {/* Brushed-metal backplate, lit by the procedural environment below */}
       <RoundedBox args={[GRID_SIZE * CELL + 0.5, GRID_SIZE * CELL + 0.5, 0.12]} radius={0.35} smoothness={4} position={[0, 0, -0.3]}>
         <meshPhysicalMaterial
@@ -155,17 +154,24 @@ function BrandEnvironment() {
 }
 
 export default function HeroScene() {
+  const hovering = useRef(false);
   return (
     <Canvas
       dpr={[1, 1.6]}
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       camera={{ position: [0, 0, 7.2], fov: 42 }}
       className="!touch-none"
+      onPointerEnter={() => {
+        hovering.current = true;
+      }}
+      onPointerLeave={() => {
+        hovering.current = false;
+      }}
     >
       <Lights />
       <BrandEnvironment />
       <Float speed={1.4} floatIntensity={0.6} rotationIntensity={0}>
-        <QrModules />
+        <QrModules hovering={hovering} />
       </Float>
       <fog attach="fog" args={["#06060b", 8, 16]} />
     </Canvas>

@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Eye, EyeOff, ImageOff, MoreHorizontal, Package, Pencil, Plus, Search, Star, Trash2 } from "lucide-react";
+import { Copy, Eye, EyeOff, ImageOff, MoreHorizontal, Package, Pencil, Plus, Search, Star, Trash2 } from "lucide-react";
 import { PageHeader } from "@/components/admin/page-header";
 import { ProductForm } from "@/components/admin/product-form";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -32,7 +32,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useCategories } from "@/hooks/use-categories";
-import { useCreateItem, useDeleteItem, useItems, useUpdateItem } from "@/hooks/use-items";
+import { useCreateItem, useDeleteItem, useDuplicateItem, useItems, useUpdateItem } from "@/hooks/use-items";
 import { useCompany } from "@/hooks/use-company";
 import { formatCurrency } from "@/lib/utils";
 import { ApiError } from "@/lib/api-client";
@@ -48,6 +48,7 @@ export default function ProductsPage() {
   const createItem = useCreateItem();
   const updateItem = useUpdateItem();
   const deleteItem = useDeleteItem();
+  const duplicateItem = useDuplicateItem();
 
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
@@ -237,6 +238,14 @@ export default function ProductsPage() {
                         >
                           <Pencil className="size-4" />
                           {tc("edit")}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onSelect={() => {
+                            duplicateItem.mutate(item.id, { onSuccess: () => toast.success(t("duplicated")) });
+                          }}
+                        >
+                          <Copy className="size-4" />
+                          {t("duplicate")}
                         </DropdownMenuItem>
                         <DropdownMenuItem variant="destructive" onSelect={() => setDeletingItem(item)}>
                           <Trash2 className="size-4" />

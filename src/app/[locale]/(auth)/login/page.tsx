@@ -7,23 +7,14 @@ import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { motion } from "motion/react";
 import { AlertCircle, ArrowRight, LogIn } from "lucide-react";
-import { useRouter } from "@/i18n/navigation";
-import { Link } from "@/i18n/navigation";
+import { useRouter, Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
-import { TiltCard } from "@/components/landing/tilt-card";
 import { loginSchema, type LoginInput } from "@/lib/validators/auth";
 import { api, ApiError } from "@/lib/api-client";
 import { stripLocalePrefix } from "@/lib/catalog-url";
-
-const DEMO_ACCOUNTS = [
-  { email: "demo@bellafoods.com", name: "Bella Foods", industry: "Restaurant", initials: "BF", color: "#FF6B4A" },
-  { email: "demo@urbansole.com", name: "Urban Sole", industry: "Retail", initials: "US", color: "#3AD1C4" },
-  { email: "demo@nexustech.com", name: "NexusTech", industry: "Electronics", initials: "NT", color: "#7C5CFF" },
-];
-const DEMO_PASSWORD = "demo1234";
 
 function safeNextPath(raw: string | null): string {
   if (!raw || !raw.startsWith("/") || raw.startsWith("//")) return "/admin";
@@ -41,7 +32,6 @@ function LoginForm() {
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors, isSubmitting },
   } = useForm<LoginInput>({ resolver: zodResolver(loginSchema) });
 
@@ -56,18 +46,12 @@ function LoginForm() {
     }
   }
 
-  function fillDemo(email: string) {
-    setValue("email", email, { shouldValidate: true });
-    setValue("password", DEMO_PASSWORD, { shouldValidate: true });
-    setServerError(null);
-  }
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="grid w-full max-w-4xl grid-cols-1 gap-6 lg:grid-cols-[1.1fr_0.9fr]"
+      className="w-full max-w-md"
     >
       <Card className="glow-border p-7 sm:p-9">
         <div className="glow-ring mb-5 flex size-11 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 text-primary">
@@ -109,36 +93,6 @@ function LoginForm() {
             {t("signupLink")}
           </Link>
         </p>
-      </Card>
-
-      <Card className="glow-border flex flex-col justify-center p-7 sm:p-9">
-        <p className="font-display text-base font-semibold">{t("demoTitle")}</p>
-        <p className="mt-1.5 text-sm text-muted-foreground">{t("demoHint")}</p>
-        <div className="mt-5 space-y-2.5">
-          {DEMO_ACCOUNTS.map((account) => (
-            <TiltCard key={account.email} maxTilt={8} hoverScale={1.02} className="rounded-xl">
-              <button
-                type="button"
-                onClick={() => fillDemo(account.email)}
-                className="glass-card flex w-full items-center gap-3 rounded-xl p-3 text-left transition-colors hover:border-primary/50"
-              >
-                <span
-                  className="flex size-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white"
-                  style={{ background: `linear-gradient(135deg, ${account.color}, transparent)`, backgroundColor: account.color }}
-                >
-                  {account.initials}
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block truncate text-sm font-medium">{account.name}</span>
-                  <span className="block truncate text-xs text-muted-foreground">{account.email}</span>
-                </span>
-                <span className="shrink-0 rounded-full bg-muted px-2 py-1 text-[10px] font-medium text-muted-foreground">
-                  {account.industry}
-                </span>
-              </button>
-            </TiltCard>
-          ))}
-        </div>
       </Card>
     </motion.div>
   );

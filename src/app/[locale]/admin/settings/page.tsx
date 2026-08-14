@@ -15,7 +15,9 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useCompany, useUpdateCompany } from "@/hooks/use-company";
+import { useCompany, useDeleteCompany, useUpdateCompany } from "@/hooks/use-company";
+import { Switch } from "@/components/ui/switch";
+import { useRouter } from "@/i18n/navigation";
 import { catalogAbsoluteUrl } from "@/lib/catalog-url";
 import { CURRENCIES, LOCALES, LOCALE_META } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -27,6 +29,8 @@ export default function SettingsPage() {
   const locale = useLocale();
   const { data: company, isLoading } = useCompany();
   const updateCompany = useUpdateCompany();
+  const deleteCompany = useDeleteCompany();
+  const router = useRouter();
 
   const [form, setForm] = useState({
     name: "",
@@ -235,6 +239,37 @@ export default function SettingsPage() {
                 </a>
               </div>
             </div>
+            <div className="flex items-center gap-3">
+              <Label htmlFor="published">{t("publishedLabel")}</Label>
+              <Switch
+                id="published"
+                checked={company.isPublished}
+                onCheckedChange={(checked) => {
+                  updateCompany.mutate({ isPublished: checked }, { onSuccess: () => toast.success(t("saved")) });
+                }}
+              />
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-destructive/30">
+          <CardHeader>
+            <CardTitle>{t("dangerTitle")}</CardTitle>
+            <CardDescription>{t("dangerHint")}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button
+              variant="destructive"
+              onClick={async () => {
+                if (!window.confirm(t("dangerConfirm"))) return;
+                await deleteCompany.mutateAsync();
+                router.push("/");
+                router.refresh();
+              }}
+              loading={deleteCompany.isPending}
+            >
+              {t("dangerAction")}
+            </Button>
           </CardContent>
         </Card>
       </div>

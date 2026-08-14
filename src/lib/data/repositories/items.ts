@@ -129,6 +129,25 @@ export function updateItem(id: string, companyId: string, patch: UpdateItemInput
   return withAttributes(item);
 }
 
+export function duplicateItem(id: string, companyId: string): ItemWithAttributes | undefined {
+  const item = getItemById(id);
+  if (!item || item.companyId !== companyId) return undefined;
+  return createItem({
+    companyId,
+    categoryId: item.categoryId,
+    title: `${item.title} (copy)`,
+    description: item.description,
+    price: item.price,
+    compareAtPrice: item.compareAtPrice,
+    currency: item.currency,
+    images: [...item.images],
+    isVisible: item.isVisible,
+    isFeatured: false,
+    stockCount: item.stockCount,
+    attributes: item.attributes.map((a) => ({ key: a.key, value: a.value, type: a.type, unit: a.unit })),
+  });
+}
+
 export function deleteItem(id: string, companyId: string): boolean {
   const idx = db.state.items.findIndex((i) => i.id === id && i.companyId === companyId);
   if (idx === -1) return false;

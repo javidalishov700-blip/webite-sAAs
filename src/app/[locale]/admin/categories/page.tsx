@@ -124,6 +124,7 @@ export default function CategoriesPage() {
         <EmptyState
           icon={LayoutGrid}
           title={t("empty")}
+          description={t("emptyHint")}
           action={
             <Button variant="glow" onClick={() => setFormOpen(true)}>
               <Plus className="size-4" />
