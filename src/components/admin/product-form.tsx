@@ -100,8 +100,8 @@ export function ProductForm({
       <div className="flex-1 space-y-7 overflow-y-auto px-5 py-5 sm:px-6">
         <section className="space-y-4">
           <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">{t("basics")}</p>
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-[120px_1fr]">
-            <ImageUpload value={imageUrl} onChange={setImageUrl} shape="square" />
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-[168px_1fr]">
+            <ImageUpload value={imageUrl} onChange={setImageUrl} shape="photo" />
             <div className="space-y-4">
               <div className="space-y-1.5">
                 <Label htmlFor="title">{t("titleLabel")}</Label>

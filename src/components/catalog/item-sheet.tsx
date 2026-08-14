@@ -25,7 +25,7 @@ export function ItemSheet({ item, onOpenChange, locale, accentColor }: ItemSheet
       <DrawerContent className="max-h-[88vh]">
         {item && (
           <div className="flex-1 overflow-y-auto pb-8" data-no-scrollbar>
-            <div className="relative aspect-[16/10] w-full overflow-hidden bg-muted">
+            <div className="relative aspect-[4/3] w-full overflow-hidden bg-muted">
               {item.images[0] ? (
                 <Image src={item.images[0]} alt={item.title} fill unoptimized className="object-cover" priority />
               ) : (
