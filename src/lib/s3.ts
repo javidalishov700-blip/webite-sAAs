@@ -59,7 +59,6 @@ export async function putS3Object(input: {
     Body: input.body,
     ContentType: input.contentType,
     ContentLength: input.body.byteLength,
-    CacheControl: "public, max-age=31536000, immutable",
   };
 
   try {

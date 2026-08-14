@@ -288,3 +288,11 @@ model PresencePing {
   @@id([visitorId, scope])
   @@index([scope, lastSeen])
 }
+
+/// Product photos when object storage is unavailable. Served at `/api/media/db/:id`.
+model MediaFile {
+  id          String   @id @default(cuid())
+  contentType String
+  data        Bytes
+  createdAt   DateTime @default(now())
+}
