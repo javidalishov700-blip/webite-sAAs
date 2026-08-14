@@ -11,10 +11,13 @@ function isLiveDemoSlug(slug: string): boolean {
  * or dead DATABASE_URL cannot crash the module graph. Live Kitchen always has
  * a static fallback.
  */
-export async function loadPublicCatalog(slug: string): Promise<CompanyPublicView | null> {
+export async function loadPublicCatalog(
+  slug: string,
+  opts?: { ownerPreview?: boolean; viewer?: { companyId: string; isPlatformAdmin: boolean } | null },
+): Promise<CompanyPublicView | null> {
   try {
     const { getPublicCatalogBySlug } = await import("@/lib/data/repositories/catalog");
-    const company = await getPublicCatalogBySlug(slug);
+    const company = await getPublicCatalogBySlug(slug, opts);
     if (company) return company;
   } catch (error) {
     console.error("[catalog] database unavailable:", error);

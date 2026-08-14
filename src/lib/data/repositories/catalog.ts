@@ -10,21 +10,36 @@ function isLiveDemoSlug(slug: string): boolean {
   return slug.toLowerCase() === PUBLIC_SHOWCASE_SLUG;
 }
 
-/** Hydrates the full public-facing catalog tree (visible categories + visible items) for a company slug. */
-export async function getPublicCatalogBySlug(slug: string): Promise<CompanyPublicView | null> {
+export type CatalogViewer = {
+  companyId: string;
+  isPlatformAdmin: boolean;
+};
+
+/** Hydrates the catalog tree for a company slug. */
+export async function getPublicCatalogBySlug(
+  slug: string,
+  opts?: { ownerPreview?: boolean; viewer?: CatalogViewer | null },
+): Promise<CompanyPublicView | null> {
   if (isLiveDemoSlug(slug)) {
     await ensureLiveDemoCatalog();
   }
 
   const company = await getCompanyBySlug(slug);
-  if (!company || !company.isPublished || company.bannedAt) {
+  const canDraft =
+    Boolean(opts?.ownerPreview) &&
+    Boolean(company) &&
+    Boolean(opts?.viewer) &&
+    (opts!.viewer!.isPlatformAdmin || opts!.viewer!.companyId === company!.id);
+
+  if (!company || (company.bannedAt && !opts?.viewer?.isPlatformAdmin) || (!company.isPublished && !canDraft)) {
     return isLiveDemoSlug(slug) ? getStaticLiveDemoCatalog() : null;
   }
 
+  const onlyVisible = !canDraft;
   const categories = await Promise.all(
-    (await listCategoriesByCompany(company.id, { onlyVisible: true })).map(async (category) => ({
+    (await listCategoriesByCompany(company.id, { onlyVisible })).map(async (category) => ({
       ...category,
-      items: await listItemsByCategory(category.id, { onlyVisible: true }),
+      items: await listItemsByCategory(category.id, { onlyVisible }),
     })),
   );
 

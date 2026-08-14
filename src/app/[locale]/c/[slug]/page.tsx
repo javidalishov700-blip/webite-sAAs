@@ -18,14 +18,25 @@ function isLiveDemo(slug: string): boolean {
   return slug.toLowerCase() === PUBLIC_SHOWCASE_SLUG;
 }
 
-async function catalogForSlug(slug: string): Promise<CompanyPublicView | null> {
+async function catalogForSlug(slug: string, preview = false): Promise<CompanyPublicView | null> {
   if (isLiveDemo(slug)) return getStaticLiveDemoCatalog();
+  if (preview) {
+    const { getCurrentUser } = await import("@/lib/auth/guard");
+    const user = await getCurrentUser();
+    if (user) {
+      return loadPublicCatalog(slug, {
+        ownerPreview: true,
+        viewer: { companyId: user.companyId, isPlatformAdmin: user.isPlatformAdmin },
+      });
+    }
+  }
   return loadPublicCatalog(slug);
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const company = await catalogForSlug(slug);
+  const query = await searchParams;
+  const company = await catalogForSlug(slug, query.preview === "1");
   if (!company) return { title: "Catalog not found" };
   return {
     title: company.name,
@@ -46,9 +57,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function PublicCatalogPage({ params, searchParams }: PageProps) {
   const { locale, slug } = await params;
   const query = await searchParams;
-  const company = await catalogForSlug(slug);
-  if (!company) notFound();
   const preview = query.preview === "1";
+  const company = await catalogForSlug(slug, preview);
+  if (!company) notFound();
 
   return (
     <div className="relative min-h-[100svh] bg-background">

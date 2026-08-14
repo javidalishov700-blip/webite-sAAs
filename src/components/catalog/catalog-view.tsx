@@ -139,6 +139,9 @@ export function CatalogView({
   return (
     <div data-catalog-page className="mx-auto min-h-[100svh] max-w-2xl touch-pan-y pb-28">
       <div ref={chromeRef} className="catalog-chrome sticky top-0 z-20 pt-[env(safe-area-inset-top)]">
+        {preview ? (
+          <p className="px-4 pt-2 text-center text-[11px] font-medium text-warning">{t("previewBanner")}</p>
+        ) : null}
         <CatalogHeader company={company} search={search} onSearchChange={setSearch} />
         {!searchResults && (
           <CategoryNav

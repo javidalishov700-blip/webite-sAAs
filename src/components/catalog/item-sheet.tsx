@@ -89,7 +89,7 @@ export function ItemSheet({ item, onOpenChange, locale, accentColor }: ItemSheet
               {detailAttributes.length > 0 && (
                 <div>
                   <p className="mb-2 text-xs font-semibold tracking-wide text-muted-foreground uppercase">{t("details")}</p>
-                  <AttributeDisplay attributes={detailAttributes} />
+                  <AttributeDisplay attributes={detailAttributes} accentColor={accentColor} />
                 </div>
               )}
             </div>

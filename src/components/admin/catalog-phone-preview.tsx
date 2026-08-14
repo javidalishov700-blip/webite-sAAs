@@ -20,6 +20,8 @@ export function CatalogPhonePreview({
 
   useEffect(() => {
     setLoaded(false);
+    const timer = window.setTimeout(() => setLoaded(true), 8000);
+    return () => window.clearTimeout(timer);
   }, [src]);
 
   const compact = size === "compact";
@@ -53,13 +55,15 @@ export function CatalogPhonePreview({
               <span className="size-8 animate-spin rounded-full border-2 border-white/15 border-t-white/70" />
             </div>
           ) : null}
-          <iframe
-            key={src}
-            title={label ?? "Catalog preview"}
-            src={src}
-            className="h-full w-full border-0 bg-background"
-            onLoad={() => setLoaded(true)}
-          />
+          {src ? (
+            <iframe
+              key={src}
+              title={label ?? "Catalog preview"}
+              src={src}
+              className="h-full w-full border-0 bg-background"
+              onLoad={() => setLoaded(true)}
+            />
+          ) : null}
         </div>
       </div>
       {caption ? <p className="mt-4 max-w-[22rem] text-center text-sm leading-relaxed text-muted-foreground">{caption}</p> : null}
