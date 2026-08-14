@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getPublicCatalogBySlug } from "@/lib/data/repositories/catalog";
+import { loadPublicCatalog } from "@/lib/data/load-public-catalog";
 import { CatalogView } from "@/components/catalog/catalog-view";
 import { CatalogScanTracker } from "@/components/catalog/catalog-scan-tracker";
 
@@ -9,9 +9,12 @@ interface PageProps {
   searchParams: Promise<{ qr?: string; scanned?: string; preview?: string }>;
 }
 
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const company = await getPublicCatalogBySlug(slug);
+  const company = await loadPublicCatalog(slug);
   if (!company) return { title: "Catalog not found" };
   return {
     title: company.name,
@@ -32,7 +35,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function PublicCatalogPage({ params, searchParams }: PageProps) {
   const { locale, slug } = await params;
   const query = await searchParams;
-  const company = await getPublicCatalogBySlug(slug);
+  const company = await loadPublicCatalog(slug);
   if (!company) notFound();
   const preview = query.preview === "1";
 

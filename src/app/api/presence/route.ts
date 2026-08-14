@@ -17,14 +17,24 @@ export async function GET(request: NextRequest) {
   if (!/^(site|catalog:[a-z0-9-]+)$/i.test(scope)) {
     return NextResponse.json({ error: "invalid" }, { status: 400 });
   }
-  const count = await onlineCount(scope);
-  return NextResponse.json({ count });
+  try {
+    const count = await onlineCount(scope);
+    return NextResponse.json({ count });
+  } catch (error) {
+    console.error("[presence]", error);
+    return NextResponse.json({ count: 0 });
+  }
 }
 
 export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => null);
   const parsed = bodySchema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: "invalid" }, { status: 400 });
-  const count = await heartbeat(parsed.data.visitorId, parsed.data.scope);
-  return NextResponse.json({ count });
+  try {
+    const count = await heartbeat(parsed.data.visitorId, parsed.data.scope);
+    return NextResponse.json({ count });
+  } catch (error) {
+    console.error("[presence]", error);
+    return NextResponse.json({ count: 0 });
+  }
 }

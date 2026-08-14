@@ -723,6 +723,11 @@
       "body": "Link yoxdur və ya kataloq gizlidir.",
       "home": "Ana səhifə"
     },
+    "error": {
+      "title": "Xəta baş verdi",
+      "body": "Səhifə yüklənmədi. Bir az sonra yenidən yoxla.",
+      "retry": "Yenidən cəhd et"
+    },
     "privacy": {
       "eyebrow": "Hüquqi",
       "title": "Məxfilik siyasəti",

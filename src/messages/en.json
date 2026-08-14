@@ -723,6 +723,11 @@
       "body": "That link is missing or the catalog is unpublished.",
       "home": "Back home"
     },
+    "error": {
+      "title": "Something went wrong",
+      "body": "This page failed to load. Try again in a moment.",
+      "retry": "Try again"
+    },
     "privacy": {
       "eyebrow": "Legal",
       "title": "Privacy policy",

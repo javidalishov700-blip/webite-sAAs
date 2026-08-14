@@ -1,5 +1,6 @@
 import { generateId, nowIso } from "@/lib/data/ids";
 import type { SeedDb } from "@/lib/data/seed-data";
+import type { CompanyPublicView } from "@/lib/data/types";
 
 export const PUBLIC_SHOWCASE_SLUG = "live-demo";
 
@@ -121,4 +122,66 @@ export function ensurePublicShowcase<T extends SeedDb>(data: T): T {
   });
 
   return data;
+}
+
+/**
+ * DB-free Live Kitchen catalog for the landing CTA.
+ * Used when Neon/Prisma is unreachable so "/c/live-demo" never 500s.
+ */
+export function getStaticLiveDemoCatalog(): CompanyPublicView {
+  const now = "2026-01-01T00:00:00.000Z";
+  const companyId = "cmp_live_demo";
+  return {
+    id: companyId,
+    slug: PUBLIC_SHOWCASE_SLUG,
+    name: "Live Kitchen",
+    description: "A public sample catalog — scan, browse, tap. Create your own after signup.",
+    logoUrl: unsplash("1414235077428-338989a2e8c0", 256),
+    coverUrl: unsplash("1414235077428-338989a2e8c0", 1600),
+    industry: "RESTAURANT",
+    plan: "PRO",
+    currency: "USD",
+    defaultLocale: "en",
+    supportedLocales: ["en", "ru", "tr", "az"],
+    accentColor: "#FF6B4A",
+    address: "Sample venue",
+    phone: null,
+    website: null,
+    isPublished: true,
+    bannedAt: null,
+    bannedReason: null,
+    createdAt: now,
+    updatedAt: now,
+    categories: SHOWCASE_MENU.map((cat, ci) => {
+      const categoryId = `cat_live_${ci}`;
+      return {
+        id: categoryId,
+        companyId,
+        name: cat.name,
+        icon: cat.icon,
+        position: ci,
+        isVisible: true,
+        createdAt: now,
+        updatedAt: now,
+        items: cat.items.map((item, ii) => ({
+          id: `itm_live_${ci}_${ii}`,
+          companyId,
+          categoryId,
+          title: item.title,
+          description: item.desc,
+          price: item.price,
+          compareAtPrice: null,
+          currency: "USD",
+          images: [unsplash(item.image)],
+          isVisible: true,
+          isFeatured: Boolean("featured" in item && item.featured),
+          stockCount: null,
+          position: ii,
+          createdAt: now,
+          updatedAt: now,
+          attributes: [],
+        })),
+      };
+    }),
+  };
 }

@@ -723,6 +723,11 @@
       "body": "Bağlantı yok veya katalog yayında değil.",
       "home": "Ana sayfa"
     },
+    "error": {
+      "title": "Bir şeyler ters gitti",
+      "body": "Sayfa yüklenmedi. Biraz sonra tekrar dene.",
+      "retry": "Tekrar dene"
+    },
     "privacy": {
       "eyebrow": "Yasal",
       "title": "Gizlilik politikası",
