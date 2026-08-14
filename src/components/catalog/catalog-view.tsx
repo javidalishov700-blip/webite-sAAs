@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { SearchX, Store } from "lucide-react";
 import { CatalogHeader } from "@/components/catalog/catalog-header";
@@ -26,6 +26,8 @@ export function CatalogView({
   const [activeCategoryId, setActiveCategoryId] = useState<string | null>(company.categories[0]?.id ?? null);
   const [selectedItem, setSelectedItem] = useState<ItemWithAttributes | null>(null);
   const sectionRefs = useRef<Map<string, HTMLElement>>(new Map());
+  const chromeRef = useRef<HTMLDivElement>(null);
+  const chromeHeight = useRef(128);
   const isClickScrolling = useRef(false);
 
   const normalizedSearch = search.trim().toLowerCase();
@@ -41,6 +43,21 @@ export function CatalogView({
     );
   }, [company.categories, normalizedSearch]);
 
+  useLayoutEffect(() => {
+    const el = chromeRef.current;
+    if (!el) return;
+    const apply = () => {
+      const height = Math.round(el.getBoundingClientRect().height);
+      chromeHeight.current = height;
+      const root = el.closest("[data-catalog-page]");
+      (root instanceof HTMLElement ? root : el).style.setProperty("--catalog-chrome", `${height}px`);
+    };
+    apply();
+    const observer = new ResizeObserver(apply);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [searchResults]);
+
   useEffect(() => {
     if (searchResults) return;
     let ticking = false;
@@ -48,7 +65,7 @@ export function CatalogView({
     const syncActive = () => {
       ticking = false;
       if (isClickScrolling.current) return;
-      const marker = 132;
+      const marker = chromeHeight.current + 2;
       let current = company.categories[0]?.id ?? null;
       for (const category of company.categories) {
         const el = sectionRefs.current.get(category.id);
@@ -74,8 +91,9 @@ export function CatalogView({
     const el = sectionRefs.current.get(id);
     if (!el) return;
     isClickScrolling.current = true;
-    const top = window.scrollY + el.getBoundingClientRect().top - 128;
-    window.scrollTo({ top, behavior: "auto" });
+    const offset = chromeHeight.current;
+    const top = window.scrollY + el.getBoundingClientRect().top - offset;
+    window.scrollTo({ top: Math.max(0, top), behavior: "auto" });
     window.setTimeout(() => {
       isClickScrolling.current = false;
     }, 200);
@@ -107,7 +125,7 @@ export function CatalogView({
 
   return (
     <div data-catalog-page className="mx-auto min-h-[100svh] max-w-2xl touch-pan-y pb-28">
-      <div className="catalog-chrome sticky top-0 z-20 pt-[env(safe-area-inset-top)]">
+      <div ref={chromeRef} className="catalog-chrome sticky top-0 z-20 pt-[env(safe-area-inset-top)]">
         <CatalogHeader company={company} search={search} onSearchChange={setSearch} />
         {!searchResults && (
           <CategoryNav
@@ -142,7 +160,7 @@ export function CatalogView({
                   if (el) sectionRefs.current.set(category.id, el);
                   else sectionRefs.current.delete(category.id);
                 }}
-                className="scroll-mt-36"
+                className="scroll-mt-[var(--catalog-chrome,8rem)]"
               >
                 <h2 className="mb-3 font-display text-lg font-semibold">{category.name}</h2>
                 {category.items.length === 0 ? (

@@ -23,6 +23,69 @@ import { CURRENCIES, LOCALES, LOCALE_META } from "@/lib/constants";
 import { IndustryPicker } from "@/components/industry-picker";
 import { cn } from "@/lib/utils";
 import type { AppLocale, Industry } from "@/lib/data/types";
+import { api, ApiError } from "@/lib/api-client";
+
+function PasswordCard() {
+  const t = useTranslations("admin.settings");
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function handleChange() {
+    setLoading(true);
+    try {
+      await api.post("/api/auth/password", { currentPassword, newPassword });
+      setCurrentPassword("");
+      setNewPassword("");
+      toast.success(t("passwordOk"));
+    } catch (err) {
+      toast.error(err instanceof ApiError && err.status === 401 ? t("passwordWrong") : t("passwordFail"));
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>{t("passwordTitle")}</CardTitle>
+        <CardDescription>{t("passwordHint")}</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="space-y-1.5">
+            <Label htmlFor="current-password">{t("currentPassword")}</Label>
+            <Input
+              id="current-password"
+              type="password"
+              autoComplete="current-password"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+            />
+          </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="new-password">{t("newPassword")}</Label>
+            <Input
+              id="new-password"
+              type="password"
+              autoComplete="new-password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+          </div>
+        </div>
+        <Button
+          variant="outline"
+          loading={loading}
+          disabled={currentPassword.length < 1 || newPassword.length < 6}
+          onClick={() => void handleChange()}
+        >
+          {t("passwordSave")}
+        </Button>
+      </CardContent>
+    </Card>
+  );
+}
 
 export default function SettingsPage() {
   const t = useTranslations("admin.settings");
@@ -259,6 +322,8 @@ export default function SettingsPage() {
             </div>
           </CardContent>
         </Card>
+
+        <PasswordCard />
 
         <Card className="border-destructive/30">
           <CardHeader>

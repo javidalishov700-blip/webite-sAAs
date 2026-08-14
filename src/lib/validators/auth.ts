@@ -36,4 +36,8 @@ export const resetPasswordSchema = z.object({
   token: z.string().min(16).max(128),
   password: z.string().min(6, "Use at least 6 characters"),
 });
-export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;
+export const changePasswordSchema = z.object({
+  currentPassword: z.string().min(1),
+  newPassword: z.string().min(6, "Use at least 6 characters"),
+});
+export type ChangePasswordInput = z.infer<typeof changePasswordSchema>;
