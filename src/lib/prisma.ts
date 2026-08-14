@@ -1,19 +1,25 @@
 import { PrismaClient } from "@prisma/client";
+import { PrismaNeon } from "@prisma/adapter-neon";
+import { neonConfig } from "@neondatabase/serverless";
+import ws from "ws";
 
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
 
-/** Neon pooler + Vercel: longer connect timeout, pgbouncer, one connection per isolate. */
-function resolveDatabaseUrl(): string | undefined {
+// Node (Vercel included) has no WebSocket in some runtimes; Neon pool needs one.
+neonConfig.webSocketConstructor = ws;
+
+function databaseUrl(): string {
   const raw = process.env.DATABASE_URL;
-  if (!raw) return undefined;
+  if (!raw) {
+    throw new Error("DATABASE_URL is not set");
+  }
   try {
     const url = new URL(raw);
     if (!url.searchParams.has("sslmode")) url.searchParams.set("sslmode", "require");
-    if (!url.searchParams.has("connect_timeout")) url.searchParams.set("connect_timeout", "15");
-    if (url.hostname.includes("-pooler")) {
-      if (!url.searchParams.has("pgbouncer")) url.searchParams.set("pgbouncer", "true");
-      if (!url.searchParams.has("connection_limit")) url.searchParams.set("connection_limit", "1");
-    }
+    // Prisma-engine pooler flags are not used by the Neon WebSocket driver.
+    url.searchParams.delete("pgbouncer");
+    url.searchParams.delete("connection_limit");
+    url.searchParams.delete("connect_timeout");
     return url.toString();
   } catch {
     return raw;
@@ -21,15 +27,12 @@ function resolveDatabaseUrl(): string | undefined {
 }
 
 function createPrisma(): PrismaClient {
-  const url = resolveDatabaseUrl();
+  const adapter = new PrismaNeon({ connectionString: databaseUrl() });
   return new PrismaClient({
+    adapter,
     log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
-    ...(url ? { datasources: { db: { url } } } : {}),
   });
 }
 
 export const prisma = globalForPrisma.prisma ?? createPrisma();
-
-if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = prisma;
-}
+globalForPrisma.prisma = prisma;

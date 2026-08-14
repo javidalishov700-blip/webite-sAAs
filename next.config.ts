@@ -5,7 +5,7 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  serverExternalPackages: ["@prisma/client"],
+  serverExternalPackages: ["@prisma/client", "@neondatabase/serverless", "ws"],
   experimental: {
     optimizePackageImports: ["lucide-react"],
   },

@@ -315,7 +315,8 @@
       "demoTitle": "Bir demo hesabı deneyin",
       "demoHint": "Demo bilgilerini otomatik doldurmak için aşağıdaki kartlardan birine tıklayın.",
       "invalid": "E-posta veya şifre hatalı.",
-      "banned": "Bu çalışma alanı yasaklandı. Giriş yapamazsınız."
+      "banned": "Bu çalışma alanı yasaklandı. Giriş yapamazsınız.",
+      "unavailable": "Veritabanına ulaşılamadı. Biraz sonra tekrar dene."
     },
     "signup": {
       "title": "Çalışma alanınızı oluşturun",
@@ -330,6 +331,7 @@
       "haveAccount": "Zaten bir hesabınız var mı?",
       "loginLink": "Giriş yap",
       "emailTaken": "Bu e-posta ile bir hesap zaten mevcut.",
+      "unavailable": "Hesap oluşturulamadı. Biraz sonra tekrar dene.",
       "acceptLabel": "18 yaşından büyüğüm. <terms>Kullanım şartlarını</terms> ve <privacy>Gizlilik politikasını</privacy> okudum, kabul ediyorum; yasa dışı veya yasaklı içerik yayınlamayacağım.",
       "mustAccept": "Hesap oluşturmak için kutuyu işaretleyip şartları kabul etmelisiniz.",
       "notice": [

@@ -315,6 +315,7 @@
       "demoTitle": "Demo hesabı sınayın",
       "demoHint": "Demo məlumatlarını doldurmaq üçün aşağıdakı kartlardan birinə klikləyin.",
       "invalid": "E-poçt və ya şifrə yanlışdır.",
+      "unavailable": "Verilənlər bazasına qoşulmaq olmadı. Bir az sonra yenidən yoxla.",
       "banned": "Bu iş sahəsi ban edilib. Daxil ola bilməzsiniz."
     },
     "signup": {
@@ -330,6 +331,7 @@
       "haveAccount": "Artıq hesabınız var?",
       "loginLink": "Daxil ol",
       "emailTaken": "Bu e-poçtla hesab artıq mövcuddur.",
+      "unavailable": "Hesabı yaratmaq olmadı. Bir az sonra yenidən yoxla.",
       "acceptLabel": "18 yaşım dolub. <terms>İstifadə şərtlərini</terms> və <privacy>Məxfilik siyasətini</privacy> oxuyub qəbul edirəm; qanunsuz və ya qadağan olunmuş məzmun dərc etməyəcəyəm.",
       "mustAccept": "Hesab yaratmaq üçün qutunu işarələyib şərtləri qəbul etməlisiniz.",
       "notice": [

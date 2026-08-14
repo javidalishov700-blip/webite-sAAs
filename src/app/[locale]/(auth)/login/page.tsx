@@ -42,7 +42,15 @@ function LoginForm() {
       router.push(safeNextPath(searchParams.get("next")));
       router.refresh();
     } catch (err) {
-      setServerError(err instanceof ApiError && err.status === 403 ? t("banned") : err instanceof ApiError ? t("invalid") : "Something went wrong");
+      setServerError(
+        err instanceof ApiError && err.status === 403
+          ? t("banned")
+          : err instanceof ApiError && (err.status === 503 || err.status >= 500)
+            ? t("unavailable")
+            : err instanceof ApiError
+              ? t("invalid")
+              : t("unavailable"),
+      );
     }
   }
 

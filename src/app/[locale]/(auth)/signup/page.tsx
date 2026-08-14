@@ -39,7 +39,7 @@ export default function SignupPage() {
       router.push("/onboarding");
       router.refresh();
     } catch (err) {
-      setServerError(err instanceof ApiError && err.status === 409 ? t("emailTaken") : "Something went wrong");
+      setServerError(err instanceof ApiError && err.status === 409 ? t("emailTaken") : t("unavailable"));
     }
   }
 

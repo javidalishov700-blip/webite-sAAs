@@ -315,7 +315,8 @@
       "demoTitle": "Try a demo account",
       "demoHint": "Click any card below to autofill the demo credentials.",
       "invalid": "Invalid email or password.",
-      "banned": "This workspace is banned. You cannot sign in."
+      "banned": "This workspace is banned. You cannot sign in.",
+      "unavailable": "We could not reach the database. Try again in a moment."
     },
     "signup": {
       "title": "Create your workspace",
@@ -330,6 +331,7 @@
       "haveAccount": "Already have an account?",
       "loginLink": "Log in",
       "emailTaken": "An account with this email already exists.",
+      "unavailable": "We could not create your account. Try again in a moment.",
       "acceptLabel": "I am 18 or older. I have read and accept the <terms>Terms of service</terms> and <privacy>Privacy policy</privacy>, and I will not publish illegal or prohibited content.",
       "mustAccept": "Tick the box to accept the terms before creating an account.",
       "notice": [
