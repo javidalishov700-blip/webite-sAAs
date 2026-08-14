@@ -1,19 +1,25 @@
-import { db, generateId, nowIso } from "@/lib/data/store";
+import "server-only";
+import { prisma } from "@/lib/prisma";
+import { mapQr } from "@/lib/data/map";
 import type { QrCode, QrDotStyle } from "@/lib/data/types";
 
-export function listQrCodesByCompany(companyId: string): QrCode[] {
-  return db.state.qrCodes
-    .filter((q) => q.companyId === companyId)
-    .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+export async function listQrCodesByCompany(companyId: string): Promise<QrCode[]> {
+  const rows = await prisma.qrCode.findMany({
+    where: { companyId },
+    orderBy: { createdAt: "desc" },
+  });
+  return rows.map(mapQr);
 }
 
-export function getQrCodeById(id: string, companyId: string): QrCode | undefined {
-  return db.state.qrCodes.find((q) => q.id === id && q.companyId === companyId);
+export async function getQrCodeById(id: string, companyId: string): Promise<QrCode | undefined> {
+  const row = await prisma.qrCode.findFirst({ where: { id, companyId } });
+  return row ? mapQr(row) : undefined;
 }
 
 /** Public lookup used by the QR scan redirect (`/api/qr/:id/go`). */
-export function getQrCodeByIdPublic(id: string): QrCode | undefined {
-  return db.state.qrCodes.find((q) => q.id === id);
+export async function getQrCodeByIdPublic(id: string): Promise<QrCode | undefined> {
+  const row = await prisma.qrCode.findUnique({ where: { id } });
+  return row ? mapQr(row) : undefined;
 }
 
 export interface CreateQrInput {
@@ -27,43 +33,39 @@ export interface CreateQrInput {
   logoUrl?: string | null;
 }
 
-export function createQrCode(input: CreateQrInput): QrCode {
-  const timestamp = nowIso();
-  const qr: QrCode = {
-    id: generateId("qr"),
-    companyId: input.companyId,
-    name: input.name,
-    targetUrl: input.targetUrl,
-    dotsColor: input.dotsColor ?? "#7C5CFF",
-    backgroundColor: input.backgroundColor ?? "#0B0B14",
-    dotsStyle: input.dotsStyle ?? "ROUNDED",
-    cornerStyle: input.cornerStyle ?? "EXTRA_ROUNDED",
-    logoUrl: input.logoUrl ?? null,
-    scans: 0,
-    createdAt: timestamp,
-    updatedAt: timestamp,
-  };
-  db.state.qrCodes.push(qr);
-  db.persist();
-  return qr;
+export async function createQrCode(input: CreateQrInput): Promise<QrCode> {
+  const row = await prisma.qrCode.create({
+    data: {
+      companyId: input.companyId,
+      name: input.name,
+      targetUrl: input.targetUrl,
+      dotsColor: input.dotsColor ?? "#7C5CFF",
+      backgroundColor: input.backgroundColor ?? "#0B0B14",
+      dotsStyle: input.dotsStyle ?? "ROUNDED",
+      cornerStyle: input.cornerStyle ?? "EXTRA_ROUNDED",
+      logoUrl: input.logoUrl ?? null,
+      scans: 0,
+    },
+  });
+  return mapQr(row);
 }
 
-export function updateQrCode(
+export async function updateQrCode(
   id: string,
   companyId: string,
   patch: Partial<Omit<QrCode, "id" | "companyId" | "createdAt">>,
-): QrCode | undefined {
-  const qr = getQrCodeById(id, companyId);
-  if (!qr) return undefined;
-  Object.assign(qr, patch, { updatedAt: nowIso() });
-  db.persist();
-  return qr;
+): Promise<QrCode | undefined> {
+  const existing = await prisma.qrCode.findFirst({ where: { id, companyId } });
+  if (!existing) return undefined;
+  const { updatedAt: _ignored, ...rest } = patch;
+  const row = await prisma.qrCode.update({
+    where: { id },
+    data: rest,
+  });
+  return mapQr(row);
 }
 
-export function deleteQrCode(id: string, companyId: string): boolean {
-  const idx = db.state.qrCodes.findIndex((q) => q.id === id && q.companyId === companyId);
-  if (idx === -1) return false;
-  db.state.qrCodes.splice(idx, 1);
-  db.persist();
-  return true;
+export async function deleteQrCode(id: string, companyId: string): Promise<boolean> {
+  const result = await prisma.qrCode.deleteMany({ where: { id, companyId } });
+  return result.count > 0;
 }

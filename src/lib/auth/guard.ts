@@ -9,7 +9,7 @@ import type { SessionUser } from "@/lib/data/types";
 export async function getCurrentUser(): Promise<SessionUser | null> {
   const userId = await getSessionUserId();
   if (!userId) return null;
-  return hydrateSessionUser(userId);
+  return await hydrateSessionUser(userId);
 }
 
 /** For use in Server Components/layouts that must be authenticated — redirects to /login otherwise. */

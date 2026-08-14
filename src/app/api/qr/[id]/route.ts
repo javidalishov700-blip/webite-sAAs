@@ -18,7 +18,7 @@ export async function PATCH(request: NextRequest, { params }: Params) {
     return NextResponse.json({ error: "invalid" }, { status: 400 });
   }
 
-  const qr = updateQrCode(id, user.companyId, parsed.data);
+  const qr = await updateQrCode(id, user.companyId, parsed.data);
   if (!qr) return NextResponse.json({ error: "not_found" }, { status: 404 });
   return NextResponse.json({ qrCode: qr });
 }
@@ -28,7 +28,7 @@ export async function DELETE(_request: NextRequest, { params }: Params) {
   if (!user) return response!;
   const { id } = await params;
 
-  const ok = deleteQrCode(id, user.companyId);
+  const ok = await deleteQrCode(id, user.companyId);
   if (!ok) return NextResponse.json({ error: "not_found" }, { status: 404 });
   return NextResponse.json({ ok: true });
 }

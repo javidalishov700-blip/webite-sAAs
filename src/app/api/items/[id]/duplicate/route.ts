@@ -10,10 +10,10 @@ export async function POST(_request: Request, { params }: Params) {
   const { user, response } = await requireSession();
   if (!user) return response!;
   const { id } = await params;
-  const existing = getItemById(id);
+  const existing = await getItemById(id);
   if (!existing || existing.companyId !== user.companyId) {
     return NextResponse.json({ error: "not_found" }, { status: 404 });
   }
-  const item = duplicateItem(id, user.companyId);
+  const item = await duplicateItem(id, user.companyId);
   return NextResponse.json({ item }, { status: 201 });
 }

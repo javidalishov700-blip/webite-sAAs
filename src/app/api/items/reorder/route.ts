@@ -14,11 +14,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "invalid" }, { status: 400 });
   }
 
-  const category = getCategoryById(parsed.data.categoryId);
+  const category = await getCategoryById(parsed.data.categoryId);
   if (!category || category.companyId !== user.companyId) {
     return NextResponse.json({ error: "not_found" }, { status: 404 });
   }
 
-  const items = reorderItems(parsed.data.categoryId, parsed.data.orderedIds);
+  const items = await reorderItems(parsed.data.categoryId, parsed.data.orderedIds);
   return NextResponse.json({ items });
 }

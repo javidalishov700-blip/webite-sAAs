@@ -14,13 +14,13 @@ export async function POST(request: NextRequest) {
 
   const { name, email, password, companyName, industry } = parsed.data;
 
-  if (findUserByEmail(email)) {
+  if (await findUserByEmail(email)) {
     return NextResponse.json({ error: "emailTaken" }, { status: 409 });
   }
 
-  const company = createCompany({ name: companyName, industry });
+  const company = await createCompany({ name: companyName, industry });
   const passwordHash = await hashPassword(password);
-  const user = createUserWithCompanyMembership({ name, email, passwordHash, companyId: company.id, role: "OWNER" });
+  const user = await createUserWithCompanyMembership({ name, email, passwordHash, companyId: company.id, role: "OWNER" });
 
   await setSessionCookie(user.id);
 

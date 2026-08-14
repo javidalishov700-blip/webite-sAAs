@@ -5,5 +5,5 @@ import { getAnalyticsSummary } from "@/lib/data/repositories/analytics";
 export async function GET() {
   const { user, response } = await requireSession();
   if (!user) return response!;
-  return NextResponse.json({ summary: getAnalyticsSummary(user.companyId) });
+  return NextResponse.json({ summary: await getAnalyticsSummary(user.companyId) });
 }

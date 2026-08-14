@@ -7,7 +7,7 @@ interface Params {
 
 export async function GET(_request: NextRequest, { params }: Params) {
   const { slug } = await params;
-  const company = getPublicCatalogBySlug(slug);
+  const company = await getPublicCatalogBySlug(slug);
   if (!company) {
     return NextResponse.json({ error: "not_found" }, { status: 404 });
   }

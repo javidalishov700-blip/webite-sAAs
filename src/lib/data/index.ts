@@ -1,5 +1,4 @@
 export * from "@/lib/data/types";
-export * from "@/lib/data/store";
 export * as UserRepo from "@/lib/data/repositories/users";
 export * as CompanyRepo from "@/lib/data/repositories/companies";
 export * as CategoryRepo from "@/lib/data/repositories/categories";

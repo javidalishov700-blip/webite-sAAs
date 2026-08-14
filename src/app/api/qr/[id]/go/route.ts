@@ -15,18 +15,18 @@ interface Params {
  */
 export async function GET(request: NextRequest, { params }: Params) {
   const { id } = await params;
-  const qr = getQrCodeByIdPublic(id);
+  const qr = await getQrCodeByIdPublic(id);
   if (!qr) {
     return NextResponse.json({ error: "not_found" }, { status: 404 });
   }
 
-  const company = getCompanyById(qr.companyId);
+  const company = await getCompanyById(qr.companyId);
   if (!company || !company.isPublished) {
     return NextResponse.json({ error: "not_found" }, { status: 404 });
   }
 
   const device = /mobile|android|iphone/i.test(request.headers.get("user-agent") ?? "") ? "mobile" : "desktop";
-  recordScan({
+  await recordScan({
     companyId: company.id,
     qrCodeId: qr.id,
     locale: company.defaultLocale,

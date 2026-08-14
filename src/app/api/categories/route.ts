@@ -6,7 +6,7 @@ import { createCategory, listCategoriesByCompany } from "@/lib/data/repositories
 export async function GET() {
   const { user, response } = await requireSession();
   if (!user) return response!;
-  return NextResponse.json({ categories: listCategoriesByCompany(user.companyId) });
+  return NextResponse.json({ categories: await listCategoriesByCompany(user.companyId) });
 }
 
 export async function POST(request: NextRequest) {
@@ -19,6 +19,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: parsed.error.issues[0]?.message ?? "invalid" }, { status: 400 });
   }
 
-  const category = createCategory({ companyId: user.companyId, name: parsed.data.name, icon: parsed.data.icon });
+  const category = await createCategory({ companyId: user.companyId, name: parsed.data.name, icon: parsed.data.icon });
   return NextResponse.json({ category }, { status: 201 });
 }

@@ -12,7 +12,7 @@ export async function GET(_request: NextRequest, { params }: Params) {
   const { user, response } = await requireSession();
   if (!user) return response!;
   const { id } = await params;
-  const item = getItemById(id);
+  const item = await getItemById(id);
   if (!item || item.companyId !== user.companyId) return NextResponse.json({ error: "not_found" }, { status: 404 });
   return NextResponse.json({ item });
 }
@@ -22,7 +22,7 @@ export async function PATCH(request: NextRequest, { params }: Params) {
   if (!user) return response!;
   const { id } = await params;
 
-  const existing = getItemById(id);
+  const existing = await getItemById(id);
   if (!existing || existing.companyId !== user.companyId) {
     return NextResponse.json({ error: "not_found" }, { status: 404 });
   }
@@ -34,13 +34,13 @@ export async function PATCH(request: NextRequest, { params }: Params) {
   }
 
   if (parsed.data.categoryId) {
-    const category = getCategoryById(parsed.data.categoryId);
+    const category = await getCategoryById(parsed.data.categoryId);
     if (!category || category.companyId !== user.companyId) {
       return NextResponse.json({ error: "invalid_category" }, { status: 400 });
     }
   }
 
-  const item = updateItem(id, user.companyId, parsed.data);
+  const item = await updateItem(id, user.companyId, parsed.data);
   return NextResponse.json({ item });
 }
 
@@ -49,7 +49,7 @@ export async function DELETE(_request: NextRequest, { params }: Params) {
   if (!user) return response!;
   const { id } = await params;
 
-  const ok = deleteItem(id, user.companyId);
+  const ok = await deleteItem(id, user.companyId);
   if (!ok) return NextResponse.json({ error: "not_found" }, { status: 404 });
   return NextResponse.json({ ok: true });
 }

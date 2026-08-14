@@ -1,15 +1,26 @@
 /**
- * Resets `.data/db.json` to a clean state plus the public live-demo catalog
- * (no login accounts).
+ * Seeds the public live-demo catalog in Neon if it is missing.
+ * Does not wipe user workspaces.
  *
  * Usage: pnpm seed
  */
-import { db } from "@/lib/data/store";
+import { ensureLiveDemoCatalog } from "@/lib/data/ensure-live-demo";
+import { prisma } from "@/lib/prisma";
 
-const fresh = db.reset();
+async function main() {
+  await ensureLiveDemoCatalog();
+  const companies = await prisma.company.count();
+  const items = await prisma.item.count();
+  console.log("Neon seed complete:");
+  console.log(`  companies: ${companies} (includes public /c/live-demo)`);
+  console.log(`  items:      ${items}`);
+}
 
-console.log("Reset QR-Universe store:");
-console.log(`  companies:  ${fresh.companies.length} (includes public /c/live-demo)`);
-console.log(`  categories: ${fresh.categories.length}`);
-console.log(`  items:      ${fresh.items.length}`);
-console.log(`  users:      ${fresh.users.length} (signups create real accounts)`);
+main()
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

@@ -29,15 +29,18 @@ Copy `.env.example` → `.env` on the server.
 
 Contact on the site is **+90 541 323 00 02** (call + WhatsApp).
 
-## Database
+## Database & media
 
-Use **Neon** (https://console.neon.tech — free Postgres):
+The app uses **Neon Postgres** (`DATABASE_URL`) and **Neon Object Storage** (S3-compatible `AWS_*` vars). Copy `.env.example` → `.env`, then:
 
-1. Create project → copy the connection string  
-2. Paste as `DATABASE_URL` in `.env`  
-3. Prisma schema is in `prisma/schema.prisma` (ready for Postgres)
+```bash
+pnpm install
+pnpm db:push
+pnpm seed
+pnpm dev
+```
 
-The app currently persists to `.data/db.json` so it runs without Postgres on a machine with disk (local / VPS). Serverless hosts (Vercel) need a real database — Neon is that database. After `DATABASE_URL` is set we can switch repositories to Prisma without changing screens.
+Uploads go to the `qr-universe` bucket and are served at `/api/media/...`.
 
 ## What was removed / how catalogs work
 

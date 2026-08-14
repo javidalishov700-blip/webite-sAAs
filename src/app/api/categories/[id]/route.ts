@@ -18,7 +18,7 @@ export async function PATCH(request: NextRequest, { params }: Params) {
     return NextResponse.json({ error: "invalid" }, { status: 400 });
   }
 
-  const category = updateCategory(id, user.companyId, parsed.data);
+  const category = await updateCategory(id, user.companyId, parsed.data);
   if (!category) return NextResponse.json({ error: "not_found" }, { status: 404 });
   return NextResponse.json({ category });
 }
@@ -28,7 +28,7 @@ export async function DELETE(_request: NextRequest, { params }: Params) {
   if (!user) return response!;
   const { id } = await params;
 
-  const ok = deleteCategory(id, user.companyId);
+  const ok = await deleteCategory(id, user.companyId);
   if (!ok) return NextResponse.json({ error: "not_found" }, { status: 404 });
   return NextResponse.json({ ok: true });
 }

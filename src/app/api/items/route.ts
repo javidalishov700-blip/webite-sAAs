@@ -7,7 +7,7 @@ import { getCategoryById } from "@/lib/data/repositories/categories";
 export async function GET() {
   const { user, response } = await requireSession();
   if (!user) return response!;
-  return NextResponse.json({ items: listItemsByCompany(user.companyId) });
+  return NextResponse.json({ items: await listItemsByCompany(user.companyId) });
 }
 
 export async function POST(request: NextRequest) {
@@ -20,11 +20,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: parsed.error.issues[0]?.message ?? "invalid" }, { status: 400 });
   }
 
-  const category = getCategoryById(parsed.data.categoryId);
+  const category = await getCategoryById(parsed.data.categoryId);
   if (!category || category.companyId !== user.companyId) {
     return NextResponse.json({ error: "invalid_category" }, { status: 400 });
   }
 
-  const item = createItem({ companyId: user.companyId, ...parsed.data });
+  const item = await createItem({ companyId: user.companyId, ...parsed.data });
   return NextResponse.json({ item }, { status: 201 });
 }

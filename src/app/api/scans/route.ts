@@ -15,14 +15,14 @@ export async function POST(request: NextRequest) {
   const parsed = scanSchema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: "invalid" }, { status: 400 });
 
-  const company = getCompanyBySlug(parsed.data.slug);
+  const company = await getCompanyBySlug(parsed.data.slug);
   if (!company) return NextResponse.json({ error: "not_found" }, { status: 404 });
 
   const device = /mobile|android|iphone/i.test(request.headers.get("user-agent") ?? "") ? "mobile" : "desktop";
-  const codes = listQrCodesByCompany(company.id);
+  const codes = await listQrCodesByCompany(company.id);
   const matched = parsed.data.qrCodeId ? codes.find((q) => q.id === parsed.data.qrCodeId) : undefined;
   const qrCode = matched ?? codes[0];
 
-  recordScan({ companyId: company.id, qrCodeId: qrCode?.id, locale: parsed.data.locale, device });
+  await recordScan({ companyId: company.id, qrCodeId: qrCode?.id, locale: parsed.data.locale, device });
   return NextResponse.json({ ok: true });
 }

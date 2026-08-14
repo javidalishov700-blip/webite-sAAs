@@ -1,32 +1,38 @@
-import { db, generateId, nowIso } from "@/lib/data/store";
-import type { AttributeType, Item, ItemAttribute, ItemWithAttributes } from "@/lib/data/types";
+import "server-only";
+import { prisma } from "@/lib/prisma";
+import { mapItem } from "@/lib/data/map";
+import type { AttributeType, ItemAttribute, ItemWithAttributes } from "@/lib/data/types";
 
-function withAttributes(item: Item): ItemWithAttributes {
-  return {
-    ...item,
-    attributes: db.state.attributes
-      .filter((a) => a.itemId === item.id)
-      .sort((a, b) => a.position - b.position),
-  };
+export async function listItemsByCompany(companyId: string): Promise<ItemWithAttributes[]> {
+  const rows = await prisma.item.findMany({
+    where: { companyId },
+    include: { attributes: { orderBy: { position: "asc" } } },
+    orderBy: { position: "asc" },
+  });
+  return rows.map(mapItem);
 }
 
-export function listItemsByCompany(companyId: string): ItemWithAttributes[] {
-  return db.state.items
-    .filter((i) => i.companyId === companyId)
-    .sort((a, b) => a.position - b.position)
-    .map(withAttributes);
+export async function listItemsByCategory(
+  categoryId: string,
+  opts?: { onlyVisible?: boolean },
+): Promise<ItemWithAttributes[]> {
+  const rows = await prisma.item.findMany({
+    where: {
+      categoryId,
+      ...(opts?.onlyVisible ? { isVisible: true } : {}),
+    },
+    include: { attributes: { orderBy: { position: "asc" } } },
+    orderBy: { position: "asc" },
+  });
+  return rows.map(mapItem);
 }
 
-export function listItemsByCategory(categoryId: string, opts?: { onlyVisible?: boolean }): ItemWithAttributes[] {
-  return db.state.items
-    .filter((i) => i.categoryId === categoryId && (!opts?.onlyVisible || i.isVisible))
-    .sort((a, b) => a.position - b.position)
-    .map(withAttributes);
-}
-
-export function getItemById(id: string): ItemWithAttributes | undefined {
-  const item = db.state.items.find((i) => i.id === id);
-  return item ? withAttributes(item) : undefined;
+export async function getItemById(id: string): Promise<ItemWithAttributes | undefined> {
+  const row = await prisma.item.findUnique({
+    where: { id },
+    include: { attributes: { orderBy: { position: "asc" } } },
+  });
+  return row ? mapItem(row) : undefined;
 }
 
 export interface ItemAttributeInput {
@@ -51,42 +57,35 @@ export interface CreateItemInput {
   attributes?: ItemAttributeInput[];
 }
 
-export function createItem(input: CreateItemInput): ItemWithAttributes {
-  const timestamp = nowIso();
-  const siblings = db.state.items.filter((i) => i.categoryId === input.categoryId);
-  const item: Item = {
-    id: generateId("itm"),
-    companyId: input.companyId,
-    categoryId: input.categoryId,
-    title: input.title,
-    description: input.description ?? null,
-    price: input.price,
-    compareAtPrice: input.compareAtPrice ?? null,
-    currency: input.currency,
-    images: input.images ?? [],
-    isVisible: input.isVisible ?? true,
-    isFeatured: input.isFeatured ?? false,
-    stockCount: input.stockCount ?? null,
-    position: siblings.length,
-    createdAt: timestamp,
-    updatedAt: timestamp,
-  };
-  db.state.items.push(item);
-
-  (input.attributes ?? []).forEach((attr, index) => {
-    db.state.attributes.push({
-      id: generateId("atr"),
-      itemId: item.id,
-      key: attr.key,
-      value: attr.value,
-      type: attr.type,
-      unit: attr.unit ?? null,
-      position: index,
-    });
+export async function createItem(input: CreateItemInput): Promise<ItemWithAttributes> {
+  const siblings = await prisma.item.count({ where: { categoryId: input.categoryId } });
+  const row = await prisma.item.create({
+    data: {
+      companyId: input.companyId,
+      categoryId: input.categoryId,
+      title: input.title,
+      description: input.description ?? null,
+      price: input.price,
+      compareAtPrice: input.compareAtPrice ?? null,
+      currency: input.currency,
+      images: input.images ?? [],
+      isVisible: input.isVisible ?? true,
+      isFeatured: input.isFeatured ?? false,
+      stockCount: input.stockCount ?? null,
+      position: siblings,
+      attributes: {
+        create: (input.attributes ?? []).map((attr, index) => ({
+          key: attr.key,
+          value: attr.value,
+          type: attr.type,
+          unit: attr.unit ?? null,
+          position: index,
+        })),
+      },
+    },
+    include: { attributes: { orderBy: { position: "asc" } } },
   });
-
-  db.persist();
-  return withAttributes(item);
+  return mapItem(row);
 }
 
 export interface UpdateItemInput {
@@ -103,34 +102,42 @@ export interface UpdateItemInput {
   attributes?: ItemAttributeInput[];
 }
 
-export function updateItem(id: string, companyId: string, patch: UpdateItemInput): ItemWithAttributes | undefined {
-  const item = db.state.items.find((i) => i.id === id && i.companyId === companyId);
-  if (!item) return undefined;
+export async function updateItem(
+  id: string,
+  companyId: string,
+  patch: UpdateItemInput,
+): Promise<ItemWithAttributes | undefined> {
+  const existing = await prisma.item.findFirst({ where: { id, companyId } });
+  if (!existing) return undefined;
 
   const { attributes, ...rest } = patch;
-  Object.assign(item, rest, { updatedAt: nowIso() });
-
-  if (attributes) {
-    db.state.attributes = db.state.attributes.filter((a) => a.itemId !== id);
-    attributes.forEach((attr, index) => {
-      db.state.attributes.push({
-        id: generateId("atr"),
-        itemId: id,
-        key: attr.key,
-        value: attr.value,
-        type: attr.type,
-        unit: attr.unit ?? null,
-        position: index,
-      });
+  const row = await prisma.$transaction(async (tx) => {
+    if (attributes) {
+      await tx.itemAttribute.deleteMany({ where: { itemId: id } });
+      if (attributes.length) {
+        await tx.itemAttribute.createMany({
+          data: attributes.map((attr, index) => ({
+            itemId: id,
+            key: attr.key,
+            value: attr.value,
+            type: attr.type,
+            unit: attr.unit ?? null,
+            position: index,
+          })),
+        });
+      }
+    }
+    return tx.item.update({
+      where: { id },
+      data: rest,
+      include: { attributes: { orderBy: { position: "asc" } } },
     });
-  }
-
-  db.persist();
-  return withAttributes(item);
+  });
+  return mapItem(row);
 }
 
-export function duplicateItem(id: string, companyId: string): ItemWithAttributes | undefined {
-  const item = getItemById(id);
+export async function duplicateItem(id: string, companyId: string): Promise<ItemWithAttributes | undefined> {
+  const item = await getItemById(id);
   if (!item || item.companyId !== companyId) return undefined;
   return createItem({
     companyId,
@@ -148,25 +155,28 @@ export function duplicateItem(id: string, companyId: string): ItemWithAttributes
   });
 }
 
-export function deleteItem(id: string, companyId: string): boolean {
-  const idx = db.state.items.findIndex((i) => i.id === id && i.companyId === companyId);
-  if (idx === -1) return false;
-  db.state.items.splice(idx, 1);
-  db.state.attributes = db.state.attributes.filter((a) => a.itemId !== id);
-  db.persist();
-  return true;
+export async function deleteItem(id: string, companyId: string): Promise<boolean> {
+  const result = await prisma.item.deleteMany({ where: { id, companyId } });
+  return result.count > 0;
 }
 
-export function reorderItems(categoryId: string, orderedIds: string[]): ItemWithAttributes[] {
-  orderedIds.forEach((id, index) => {
-    const item = db.state.items.find((i) => i.id === id && i.categoryId === categoryId);
-    if (item) item.position = index;
-  });
-  db.persist();
+export async function reorderItems(categoryId: string, orderedIds: string[]): Promise<ItemWithAttributes[]> {
+  await prisma.$transaction(
+    orderedIds.map((id, index) =>
+      prisma.item.updateMany({
+        where: { id, categoryId },
+        data: { position: index },
+      }),
+    ),
+  );
   return listItemsByCategory(categoryId);
 }
 
-export function setItemVisibility(id: string, companyId: string, isVisible: boolean): ItemWithAttributes | undefined {
+export async function setItemVisibility(
+  id: string,
+  companyId: string,
+  isVisible: boolean,
+): Promise<ItemWithAttributes | undefined> {
   return updateItem(id, companyId, { isVisible });
 }
 

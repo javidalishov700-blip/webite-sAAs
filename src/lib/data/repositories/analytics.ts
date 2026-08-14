@@ -1,4 +1,5 @@
-import { db } from "@/lib/data/store";
+import "server-only";
+import { prisma } from "@/lib/prisma";
 import type { AnalyticsSummary, AppLocale } from "@/lib/data/types";
 import { listCategoriesByCompany } from "@/lib/data/repositories/categories";
 import { listItemsByCompany } from "@/lib/data/repositories/items";
@@ -15,14 +16,17 @@ function toDateKey(iso: string): string {
   return iso.slice(0, 10);
 }
 
-export function getAnalyticsSummary(companyId: string, days = 30): AnalyticsSummary {
-  const allScans = db.state.scanEvents.filter((s) => s.companyId === companyId);
+export async function getAnalyticsSummary(companyId: string, days = 30): Promise<AnalyticsSummary> {
+  const allScans = await prisma.scanEvent.findMany({
+    where: { companyId },
+    select: { createdAt: true, locale: true },
+  });
   const now = Date.now();
   const dayMs = 24 * 60 * 60 * 1000;
 
-  const last7 = allScans.filter((s) => now - new Date(s.createdAt).getTime() <= 7 * dayMs).length;
+  const last7 = allScans.filter((s) => now - s.createdAt.getTime() <= 7 * dayMs).length;
   const prev7 = allScans.filter((s) => {
-    const age = now - new Date(s.createdAt).getTime();
+    const age = now - s.createdAt.getTime();
     return age > 7 * dayMs && age <= 14 * dayMs;
   }).length;
   const scansTrendPct = prev7 === 0 ? (last7 > 0 ? 100 : 0) : Math.round(((last7 - prev7) / prev7) * 1000) / 10;
@@ -33,7 +37,7 @@ export function getAnalyticsSummary(companyId: string, days = 30): AnalyticsSumm
     byDate.set(d.toISOString().slice(0, 10), 0);
   }
   allScans.forEach((scan) => {
-    const key = toDateKey(scan.createdAt);
+    const key = toDateKey(scan.createdAt.toISOString());
     if (byDate.has(key)) byDate.set(key, (byDate.get(key) ?? 0) + 1);
   });
   const scansOverTime = Array.from(byDate.entries()).map(([date, scans]) => ({ date, scans }));
@@ -46,8 +50,8 @@ export function getAnalyticsSummary(companyId: string, days = 30): AnalyticsSumm
     .map(([locale, count]) => ({ locale, count }))
     .sort((a, b) => b.count - a.count);
 
-  const items = listItemsByCompany(companyId);
-  const categories = listCategoriesByCompany(companyId);
+  const items = await listItemsByCompany(companyId);
+  const categories = await listCategoriesByCompany(companyId);
 
   const topItems = [...items]
     .filter((i) => i.isVisible)

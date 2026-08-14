@@ -8,7 +8,7 @@ export async function GET() {
   const { user, response } = await requireSession();
   if (!user) return response!;
 
-  const company = getCompanyById(user.companyId);
+  const company = await getCompanyById(user.companyId);
   if (!company) return NextResponse.json({ error: "not_found" }, { status: 404 });
   return NextResponse.json({ company });
 }
@@ -44,7 +44,7 @@ export async function PATCH(request: NextRequest) {
     ...(patch.isPublished !== undefined ? { isPublished: patch.isPublished } : {}),
   };
 
-  const company = updateCompany(user.companyId, mapped);
+  const company = await updateCompany(user.companyId, mapped);
   if (!company) return NextResponse.json({ error: "not_found" }, { status: 404 });
   return NextResponse.json({ company });
 }
@@ -55,7 +55,7 @@ export async function DELETE() {
   if (user.role !== "OWNER") {
     return NextResponse.json({ error: "forbidden" }, { status: 403 });
   }
-  deleteCompany(user.companyId);
+  await deleteCompany(user.companyId);
   await clearSessionCookie();
   return NextResponse.json({ ok: true });
 }

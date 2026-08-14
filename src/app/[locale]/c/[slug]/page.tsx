@@ -12,7 +12,7 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const company = getPublicCatalogBySlug(slug);
+  const company = await getPublicCatalogBySlug(slug);
   if (!company) return { title: "Catalog not found" };
   return {
     title: company.name,
@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function PublicCatalogPage({ params, searchParams }: PageProps) {
   const { locale, slug } = await params;
   const query = await searchParams;
-  const company = getPublicCatalogBySlug(slug);
+  const company = await getPublicCatalogBySlug(slug);
   if (!company) notFound();
 
   return (

@@ -1,16 +1,8 @@
-// QR-Universe — canonical data model definition.
-//
-// This schema documents the production data model for the platform and is the
-// source of truth for entity shapes, relations and constraints. In this
-// environment there is no provisioned Postgres/Supabase instance, so the app
-// runs against a well-abstracted in-memory + JSON-persisted mock service that
-// mirrors these exact models (see `src/lib/data`). Pointing `DATABASE_URL` at
-// a real Postgres instance and swapping the repository implementations in
-// `src/lib/data/repositories/*` for `@prisma/client` calls is the only work
-// required to go live.
+// QR-Universe — production data model (Neon Postgres via Prisma).
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
 datasource db {

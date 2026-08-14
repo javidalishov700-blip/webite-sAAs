@@ -1,68 +1,76 @@
-import { db, generateId, nowIso } from "@/lib/data/store";
+import "server-only";
+import { prisma } from "@/lib/prisma";
+import { mapMembership, mapUser } from "@/lib/data/map";
 import type { Membership, Role, SessionUser, User } from "@/lib/data/types";
 
-export function findUserByEmail(email: string): User | undefined {
-  const normalized = email.trim().toLowerCase();
-  return db.state.users.find((u) => u.email.toLowerCase() === normalized);
+export async function findUserByEmail(email: string): Promise<User | undefined> {
+  const row = await prisma.user.findUnique({ where: { email: email.trim().toLowerCase() } });
+  return row ? mapUser(row) : undefined;
 }
 
-export function findUserById(id: string): User | undefined {
-  return db.state.users.find((u) => u.id === id);
+export async function findUserById(id: string): Promise<User | undefined> {
+  const row = await prisma.user.findUnique({ where: { id } });
+  return row ? mapUser(row) : undefined;
 }
 
-export function getMembershipsForUser(userId: string): Membership[] {
-  return db.state.memberships.filter((m) => m.userId === userId);
+export async function getMembershipsForUser(userId: string): Promise<Membership[]> {
+  const rows = await prisma.membership.findMany({ where: { userId } });
+  return rows.map(mapMembership);
 }
 
-export function getPrimaryMembership(userId: string): Membership | undefined {
-  return getMembershipsForUser(userId)[0];
+export async function getPrimaryMembership(userId: string): Promise<Membership | undefined> {
+  const row = await prisma.membership.findFirst({
+    where: { userId },
+    orderBy: { createdAt: "asc" },
+  });
+  return row ? mapMembership(row) : undefined;
 }
 
 /** Hydrates a bare user id into the denormalized session payload stored in the JWT. */
-export function hydrateSessionUser(userId: string): SessionUser | null {
-  const user = findUserById(userId);
-  if (!user) return null;
-  const membership = getPrimaryMembership(userId);
-  if (!membership) return null;
-  const company = db.state.companies.find((c) => c.id === membership.companyId);
-  if (!company) return null;
+export async function hydrateSessionUser(userId: string): Promise<SessionUser | null> {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    include: {
+      memberships: {
+        orderBy: { createdAt: "asc" },
+        take: 1,
+        include: { company: true },
+      },
+    },
+  });
+  const membership = user?.memberships[0];
+  if (!user || !membership) return null;
   return {
     id: user.id,
     name: user.name,
     email: user.email,
     avatarUrl: user.avatarUrl,
-    companyId: company.id,
-    companyName: company.name,
-    companySlug: company.slug,
+    companyId: membership.company.id,
+    companyName: membership.company.name,
+    companySlug: membership.company.slug,
     role: membership.role,
   };
 }
 
-export function createUserWithCompanyMembership(input: {
+export async function createUserWithCompanyMembership(input: {
   name: string;
   email: string;
   passwordHash: string;
   companyId: string;
   role?: Role;
-}): User {
-  const timestamp = nowIso();
-  const user: User = {
-    id: generateId("usr"),
-    name: input.name,
-    email: input.email.trim().toLowerCase(),
-    passwordHash: input.passwordHash,
-    avatarUrl: null,
-    createdAt: timestamp,
-    updatedAt: timestamp,
-  };
-  db.state.users.push(user);
-  db.state.memberships.push({
-    id: generateId("mem"),
-    role: input.role ?? "OWNER",
-    userId: user.id,
-    companyId: input.companyId,
-    createdAt: timestamp,
+}): Promise<User> {
+  const user = await prisma.user.create({
+    data: {
+      name: input.name,
+      email: input.email.trim().toLowerCase(),
+      passwordHash: input.passwordHash,
+      memberships: {
+        create: {
+          role: input.role ?? "OWNER",
+          companyId: input.companyId,
+        },
+      },
+    },
   });
-  db.persist();
-  return user;
+  return mapUser(user);
 }

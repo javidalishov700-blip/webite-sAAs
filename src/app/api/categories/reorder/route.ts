@@ -13,6 +13,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "invalid" }, { status: 400 });
   }
 
-  const categories = reorderCategories(user.companyId, parsed.data.orderedIds);
+  const categories = await reorderCategories(user.companyId, parsed.data.orderedIds);
   return NextResponse.json({ categories });
 }

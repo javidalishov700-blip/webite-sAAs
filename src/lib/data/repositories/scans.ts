@@ -1,25 +1,30 @@
-import { db, generateId, nowIso } from "@/lib/data/store";
+import "server-only";
+import { prisma } from "@/lib/prisma";
+import { mapScan } from "@/lib/data/map";
 import type { AppLocale, ScanEvent } from "@/lib/data/types";
 
-export function recordScan(input: {
+export async function recordScan(input: {
   companyId: string;
   qrCodeId?: string | null;
   locale: AppLocale;
   device?: string | null;
-}): ScanEvent {
-  const scan: ScanEvent = {
-    id: generateId("scn"),
-    companyId: input.companyId,
-    qrCodeId: input.qrCodeId ?? null,
-    createdAt: nowIso(),
-    locale: input.locale,
-    device: input.device ?? null,
-  };
-  db.state.scanEvents.push(scan);
-  if (input.qrCodeId) {
-    const qr = db.state.qrCodes.find((q) => q.id === input.qrCodeId);
-    if (qr) qr.scans += 1;
-  }
-  db.persist();
-  return scan;
+}): Promise<ScanEvent> {
+  const scan = await prisma.$transaction(async (tx) => {
+    const created = await tx.scanEvent.create({
+      data: {
+        companyId: input.companyId,
+        qrCodeId: input.qrCodeId ?? null,
+        locale: input.locale,
+        device: input.device ?? null,
+      },
+    });
+    if (input.qrCodeId) {
+      await tx.qrCode.update({
+        where: { id: input.qrCodeId },
+        data: { scans: { increment: 1 } },
+      });
+    }
+    return created;
+  });
+  return mapScan(scan);
 }

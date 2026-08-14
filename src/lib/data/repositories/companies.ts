@@ -1,16 +1,25 @@
-import { db, generateId, nowIso } from "@/lib/data/store";
+import "server-only";
+import { prisma } from "@/lib/prisma";
+import { mapCompany } from "@/lib/data/map";
 import type { Company, Industry } from "@/lib/data/types";
 
-export function getCompanyById(id: string): Company | undefined {
-  return db.state.companies.find((c) => c.id === id);
+export async function getCompanyById(id: string): Promise<Company | undefined> {
+  const row = await prisma.company.findUnique({ where: { id } });
+  return row ? mapCompany(row) : undefined;
 }
 
-export function getCompanyBySlug(slug: string): Company | undefined {
-  return db.state.companies.find((c) => c.slug.toLowerCase() === slug.toLowerCase());
+export async function getCompanyBySlug(slug: string): Promise<Company | undefined> {
+  const row = await prisma.company.findFirst({
+    where: { slug: { equals: slug, mode: "insensitive" } },
+  });
+  return row ? mapCompany(row) : undefined;
 }
 
-export function isSlugTaken(slug: string): boolean {
-  return db.state.companies.some((c) => c.slug.toLowerCase() === slug.toLowerCase());
+export async function isSlugTaken(slug: string): Promise<boolean> {
+  const count = await prisma.company.count({
+    where: { slug: { equals: slug, mode: "insensitive" } },
+  });
+  return count > 0;
 }
 
 export function slugify(input: string): string {
@@ -23,74 +32,72 @@ export function slugify(input: string): string {
     .slice(0, 48);
 }
 
-export function generateUniqueSlug(name: string): string {
+export async function generateUniqueSlug(name: string): Promise<string> {
   const base = slugify(name) || "company";
   let candidate = base;
   let suffix = 1;
-  while (isSlugTaken(candidate)) {
+  while (await isSlugTaken(candidate)) {
     suffix += 1;
     candidate = `${base}-${suffix}`;
   }
   return candidate;
 }
 
-export function createCompany(input: {
+export async function createCompany(input: {
   name: string;
   industry: Industry;
   currency?: string;
   logoUrl?: string | null;
   accentColor?: string;
-}): Company {
-  const timestamp = nowIso();
-  const company: Company = {
-    id: generateId("cmp"),
-    slug: generateUniqueSlug(input.name),
-    name: input.name,
-    description: null,
-    logoUrl: input.logoUrl ?? null,
-    coverUrl: null,
-    industry: input.industry,
-    plan: "FREE",
-    currency: input.currency ?? "USD",
-    defaultLocale: "en",
-    supportedLocales: ["en"],
-    accentColor: input.accentColor ?? "#7C5CFF",
-    address: null,
-    phone: null,
-    website: null,
-    isPublished: true,
-    createdAt: timestamp,
-    updatedAt: timestamp,
-  };
-  db.state.companies.push(company);
-  db.persist();
-  return company;
+}): Promise<Company> {
+  const row = await prisma.company.create({
+    data: {
+      slug: await generateUniqueSlug(input.name),
+      name: input.name,
+      description: null,
+      logoUrl: input.logoUrl ?? null,
+      coverUrl: null,
+      industry: input.industry,
+      plan: "FREE",
+      currency: input.currency ?? "USD",
+      defaultLocale: "en",
+      supportedLocales: ["en"],
+      accentColor: input.accentColor ?? "#7C5CFF",
+      address: null,
+      phone: null,
+      website: null,
+      isPublished: true,
+    },
+  });
+  return mapCompany(row);
 }
 
-export function updateCompany(id: string, patch: Partial<Omit<Company, "id" | "createdAt">>): Company | undefined {
-  const company = getCompanyById(id);
-  if (!company) return undefined;
-  Object.assign(company, patch, { updatedAt: nowIso() });
-  db.persist();
-  return company;
+export async function updateCompany(
+  id: string,
+  patch: Partial<Omit<Company, "id" | "createdAt">>,
+): Promise<Company | undefined> {
+  const existing = await prisma.company.findUnique({ where: { id } });
+  if (!existing) return undefined;
+  const { updatedAt: _ignored, ...rest } = patch;
+  const row = await prisma.company.update({
+    where: { id },
+    data: rest,
+  });
+  return mapCompany(row);
 }
 
-export function deleteCompany(id: string): boolean {
-  if (!getCompanyById(id)) return false;
-  const itemIds = new Set(db.state.items.filter((i) => i.companyId === id).map((i) => i.id));
-  db.state.attributes = db.state.attributes.filter((a) => !itemIds.has(a.itemId));
-  db.state.items = db.state.items.filter((i) => i.companyId !== id);
-  db.state.categories = db.state.categories.filter((c) => c.companyId !== id);
-  db.state.qrCodes = db.state.qrCodes.filter((q) => q.companyId !== id);
-  db.state.scanEvents = db.state.scanEvents.filter((s) => s.companyId !== id);
-  const memberUserIds = db.state.memberships.filter((m) => m.companyId === id).map((m) => m.userId);
-  db.state.memberships = db.state.memberships.filter((m) => m.companyId !== id);
-  for (const userId of memberUserIds) {
-    if (!db.state.memberships.some((m) => m.userId === userId)) {
-      db.state.users = db.state.users.filter((u) => u.id !== userId);
+export async function deleteCompany(id: string): Promise<boolean> {
+  const existing = await prisma.company.findUnique({ where: { id } });
+  if (!existing) return false;
+
+  const members = await prisma.membership.findMany({ where: { companyId: id } });
+  await prisma.company.delete({ where: { id } });
+
+  for (const member of members) {
+    const remaining = await prisma.membership.count({ where: { userId: member.userId } });
+    if (remaining === 0) {
+      await prisma.user.delete({ where: { id: member.userId } }).catch(() => undefined);
     }
   }
-  db.state.companies = db.state.companies.filter((c) => c.id !== id);
-  db.persist();
   return true;
 }

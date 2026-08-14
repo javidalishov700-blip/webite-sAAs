@@ -8,7 +8,7 @@ import { qrGoPath } from "@/lib/catalog-url";
 export async function GET() {
   const { user, response } = await requireSession();
   if (!user) return response!;
-  return NextResponse.json({ qrCodes: listQrCodesByCompany(user.companyId) });
+  return NextResponse.json({ qrCodes: await listQrCodesByCompany(user.companyId) });
 }
 
 export async function POST(request: NextRequest) {
@@ -21,8 +21,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "invalid" }, { status: 400 });
   }
 
-  const company = getCompanyById(user.companyId);
-  const qr = createQrCode({
+  const company = await getCompanyById(user.companyId);
+  const qr = await createQrCode({
     companyId: user.companyId,
     name: parsed.data.name ?? "New QR code",
     targetUrl: parsed.data.targetUrl ?? `/c/${company?.slug ?? ""}`,
@@ -32,6 +32,6 @@ export async function POST(request: NextRequest) {
     cornerStyle: parsed.data.cornerStyle,
     backgroundColor: parsed.data.backgroundColor,
   });
-  const withGoUrl = updateQrCode(qr.id, user.companyId, { targetUrl: qrGoPath(qr.id) }) ?? qr;
+  const withGoUrl = (await updateQrCode(qr.id, user.companyId, { targetUrl: qrGoPath(qr.id) })) ?? qr;
   return NextResponse.json({ qrCode: withGoUrl }, { status: 201 });
 }
