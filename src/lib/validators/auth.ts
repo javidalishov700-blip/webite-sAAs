@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { INDUSTRY_VALUES } from "@/lib/industries";
 
 export const loginSchema = z.object({
   email: z.string().email(),
@@ -11,6 +12,6 @@ export const signupSchema = z.object({
   email: z.string().email(),
   password: z.string().min(6, "Use at least 6 characters"),
   companyName: z.string().min(2).max(80),
-  industry: z.enum(["RESTAURANT", "RETAIL", "ELECTRONICS", "SERVICES", "OTHER"]),
+  industry: z.enum(INDUSTRY_VALUES),
 });
 export type SignupInput = z.infer<typeof signupSchema>;

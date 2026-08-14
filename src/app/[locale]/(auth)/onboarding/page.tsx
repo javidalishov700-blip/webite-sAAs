@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "motion/react";
-import { Check, Cpu, Download, ExternalLink, Salad, Shirt, Sparkles } from "lucide-react";
+import { Check, Download, ExternalLink } from "lucide-react";
 import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,16 +15,10 @@ import { useCompany, useUpdateCompany } from "@/hooks/use-company";
 import { useCreateQrCode, useQrCodes } from "@/hooks/use-qr-codes";
 import { cn } from "@/lib/utils";
 import { qrGoAbsoluteUrl } from "@/lib/catalog-url";
+import { IndustryPicker } from "@/components/industry-picker";
 import type { Industry } from "@/lib/data/types";
 
 const ACCENTS = ["#7C5CFF", "#00E5FF", "#FF6B4A", "#33D69F", "#FFD24A", "#FF5470"];
-
-const INDUSTRY_OPTIONS: { value: Industry; icon: typeof Salad }[] = [
-  { value: "RESTAURANT", icon: Salad },
-  { value: "RETAIL", icon: Shirt },
-  { value: "ELECTRONICS", icon: Cpu },
-  { value: "SERVICES", icon: Sparkles },
-];
 
 const TOTAL_STEPS = 3;
 
@@ -145,23 +139,9 @@ export default function OnboardingPage() {
               <h1 className="font-display text-2xl font-bold">{t("step2.title")}</h1>
               <p className="mt-1.5 text-sm text-muted-foreground">{t("step2.subtitle")}</p>
 
-              <div className="mt-7 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                {INDUSTRY_OPTIONS.map((option) => (
-                  <button
-                    key={option.value}
-                    type="button"
-                    onClick={() => setIndustry(option.value)}
-                    className={cn(
-                      "flex flex-col items-center gap-2 rounded-2xl border p-4 text-xs font-medium transition-colors",
-                      industry === option.value
-                        ? "border-primary bg-primary/10 text-primary"
-                        : "border-border/70 bg-muted/20 text-muted-foreground hover:bg-muted/40",
-                    )}
-                  >
-                    <option.icon className="size-5" />
-                    {option.value.charAt(0) + option.value.slice(1).toLowerCase()}
-                  </button>
-                ))}
+              <div className="mt-7">
+                <IndustryPicker value={industry} onChange={setIndustry} />
+                <p className="mt-3 text-xs text-muted-foreground">{t("step2.hint")}</p>
               </div>
             </motion.div>
           )}

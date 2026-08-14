@@ -5,7 +5,7 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { motion } from "motion/react";
-import { AlertCircle, ArrowRight, Cpu, Salad, Shirt, Sparkles, UserPlus } from "lucide-react";
+import { AlertCircle, ArrowRight, UserPlus } from "lucide-react";
 import { useRouter, Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,15 +13,8 @@ import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { signupSchema, type SignupInput } from "@/lib/validators/auth";
 import { api, ApiError } from "@/lib/api-client";
-import { cn } from "@/lib/utils";
+import { IndustryPicker } from "@/components/industry-picker";
 import type { Industry } from "@/lib/data/types";
-
-const INDUSTRY_OPTIONS: { value: Industry; icon: typeof Salad; labelKey: string }[] = [
-  { value: "RESTAURANT", icon: Salad, labelKey: "Restaurant" },
-  { value: "RETAIL", icon: Shirt, labelKey: "Retail & Fashion" },
-  { value: "ELECTRONICS", icon: Cpu, labelKey: "Electronics" },
-  { value: "SERVICES", icon: Sparkles, labelKey: "Services" },
-];
 
 export default function SignupPage() {
   const t = useTranslations("auth.signup");
@@ -88,28 +81,12 @@ export default function SignupPage() {
 
           <div className="space-y-2">
             <Label>{t("industry")}</Label>
+            <p className="text-xs text-muted-foreground">{t("industryHint")}</p>
             <Controller
               control={control}
               name="industry"
               render={({ field }) => (
-                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                  {INDUSTRY_OPTIONS.map((option) => (
-                    <button
-                      key={option.value}
-                      type="button"
-                      onClick={() => field.onChange(option.value)}
-                      className={cn(
-                        "flex flex-col items-center gap-1.5 rounded-xl border p-3 text-xs font-medium transition-colors",
-                        field.value === option.value
-                          ? "border-primary bg-primary/10 text-primary"
-                          : "border-border/70 bg-muted/20 text-muted-foreground hover:bg-muted/40",
-                      )}
-                    >
-                      <option.icon className="size-4.5" />
-                      {option.labelKey}
-                    </button>
-                  ))}
-                </div>
+                <IndustryPicker value={field.value as Industry} onChange={field.onChange} />
               )}
             />
           </div>

@@ -20,8 +20,9 @@ import { Switch } from "@/components/ui/switch";
 import { useRouter } from "@/i18n/navigation";
 import { catalogAbsoluteUrl } from "@/lib/catalog-url";
 import { CURRENCIES, LOCALES, LOCALE_META } from "@/lib/constants";
+import { IndustryPicker } from "@/components/industry-picker";
 import { cn } from "@/lib/utils";
-import type { AppLocale } from "@/lib/data/types";
+import type { AppLocale, Industry } from "@/lib/data/types";
 
 export default function SettingsPage() {
   const t = useTranslations("admin.settings");
@@ -43,6 +44,7 @@ export default function SettingsPage() {
     defaultLocale: "en" as AppLocale,
     supportedLocales: ["en"] as AppLocale[],
     accentColor: "#7C5CFF",
+    industry: "OTHER" as Industry,
   });
 
   useEffect(() => {
@@ -58,6 +60,7 @@ export default function SettingsPage() {
         defaultLocale: company.defaultLocale,
         supportedLocales: company.supportedLocales,
         accentColor: company.accentColor,
+        industry: company.industry,
       });
     }
   }, [company]);
@@ -155,6 +158,11 @@ export default function SettingsPage() {
             <div className="space-y-1.5">
               <Label>{t("accentColorLabel")}</Label>
               <ColorPicker value={form.accentColor} onChange={(color) => setForm({ ...form, accentColor: color })} />
+            </div>
+            <div className="space-y-2">
+              <Label>{t("industryLabel")}</Label>
+              <p className="text-xs text-muted-foreground">{t("industryHint")}</p>
+              <IndustryPicker value={form.industry} onChange={(industry) => setForm({ ...form, industry })} />
             </div>
           </CardContent>
         </Card>

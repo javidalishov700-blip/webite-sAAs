@@ -44,6 +44,18 @@
     "error": "Something went wrong",
     "retry": "Try again"
   },
+  "industries": {
+    "RESTAURANT": "Restaurant & cafe",
+    "GROCERY": "Market & grocery",
+    "RETAIL": "Retail & fashion",
+    "HOME": "Home & furniture",
+    "HARDWARE": "Tools & renovation",
+    "EDUCATION": "Courses & training",
+    "ELECTRONICS": "Electronics",
+    "TOBACCO": "Tobacco & kiosk",
+    "SERVICES": "Services",
+    "OTHER": "Something else"
+  },
   "landing": {
     "header": {
       "features": "Features",
@@ -111,36 +123,77 @@
     "useCases": {
       "eyebrow": "One engine, every vertical",
       "title": "Built for how you actually sell",
-      "subtitle": "Switch industries below to see how QR-Universe adapts its fields, categories, and layout automatically.",
+      "subtitle": "Restaurant, market, home, tools, courses — or type your own categories. The catalog is whatever you sell.",
+      "livePreview": "Live preview",
       "tabs": {
         "restaurant": {
           "label": "Restaurant",
           "title": "Menus that update themselves",
-          "description": "86 an item, launch a seasonal special, or update a price — it's live everywhere in seconds. Track allergens, calories, and vegan options per dish.",
+          "description": "86 an item, launch a seasonal special, or update a price — it's live everywhere in seconds.",
           "bullets": [
             "Live menu editing, zero reprints",
             "Allergens, calories & dietary tags",
-            "Table-side QR ordering flow"
+            "Table-side QR flow"
           ]
         },
-        "retail": {
-          "label": "Retail & Fashion",
-          "title": "A lookbook that never goes out of stock",
-          "description": "Show sizes, materials and colorways for every sneaker or garment, and hide items the moment they sell out.",
+        "grocery": {
+          "label": "Market",
+          "title": "Aisle prices that match the shelf",
+          "description": "Produce, dairy, bakery, household — guests scan once and see today’s prices.",
           "bullets": [
-            "Size & material attributes",
-            "Instant sold-out hiding",
-            "Seasonal collection drops"
+            "Weight, brand, origin fields",
+            "Hide an item the moment it sells out",
+            "Categories you name: Produce, Snacks, whatever you stock"
+          ]
+        },
+        "home": {
+          "label": "Home",
+          "title": "Furniture and decor, room by room",
+          "description": "Living room, bedroom, kitchen — show dimensions, materials, and assembly notes.",
+          "bullets": [
+            "Room-based categories you create",
+            "Size and material attributes",
+            "Update a price without reprinting tags"
+          ]
+        },
+        "hardware": {
+          "label": "Tools",
+          "title": "Renovation and hardware catalogs",
+          "description": "Drills, paint, plumbing, electrical — built for yards and job sites, not restaurants.",
+          "bullets": [
+            "Tools, paint, electrical — you name the aisles",
+            "Voltage, size, warranty fields",
+            "QR on the counter or the van"
+          ]
+        },
+        "education": {
+          "label": "Courses",
+          "title": "Programs and workshops in a scan",
+          "description": "Level, duration, language, certificate — students open the list from a poster QR.",
+          "bullets": [
+            "Beginner to certificate tracks",
+            "Duration and language fields",
+            "Change a fee without reprinting flyers"
           ]
         },
         "electronics": {
           "label": "Electronics",
-          "title": "Spec sheets customers can actually scan",
-          "description": "RAM, storage, warranty — lay out full technical specs beautifully, right on the showroom floor.",
+          "title": "Spec sheets customers can scan",
+          "description": "RAM, storage, warranty — full technical specs on the showroom floor.",
           "bullets": [
             "Rich technical spec fields",
             "Warranty & stock indicators",
             "Comparison-ready layout"
+          ]
+        },
+        "custom": {
+          "label": "Your own",
+          "title": "If it is not in the list, you type it",
+          "description": "Cigarettes, pets, auto parts, anything. Categories are free text — we never lock you into four restaurant sections.",
+          "bullets": [
+            "Name every category yourself",
+            "Add your own product fields",
+            "One QR, your catalog"
           ]
         }
       }
@@ -186,8 +239,8 @@
           "description": "For solo owners just getting started.",
           "cta": "Start for free",
           "features": [
-            "1 catalog & 1 QR code",
-            "Up to 20 items",
+            "1 catalog & 3 QR codes",
+            "Up to 100 items, unlimited categories you name",
             "Basic QR styling",
             "Community support"
           ]
@@ -264,7 +317,8 @@
       "email": "Email address",
       "password": "Password",
       "companyName": "Business name",
-      "industry": "Industry",
+      "industry": "What do you sell?",
+      "industryHint": "A starting point only. You type every category name yourself after signup.",
       "submit": "Create account",
       "haveAccount": "Already have an account?",
       "loginLink": "Log in",
@@ -280,8 +334,9 @@
         "accentLabel": "Accent color"
       },
       "step2": {
-        "title": "Choose your industry",
-        "subtitle": "We'll tailor categories, fields, and starter content for you."
+        "title": "What kind of catalog is this?",
+        "subtitle": "Pick a starting point. You still name every category — market, home, courses, cigarettes, anything.",
+        "hint": "Nothing is created for you. Empty catalog until you add your own sections."
       },
       "step3": {
         "title": "Your first QR code is ready",
@@ -329,8 +384,23 @@
       "title": "Categories",
       "subtitle": "Organize your catalog and drag to reorder how customers see it.",
       "add": "Add category",
-      "namePlaceholder": "e.g. Main Course",
+      "namePlaceholder": "Type a name — Produce, Tools, Python 101…",
+      "typeYourOwn": "Write whatever fits. Suggestions are optional; they are not locked in.",
+      "iconLabel": "Icon",
       "empty": "No categories yet — add your first one to get started.",
+      "emptyHint": "Name them yourself: Starters, Cigarettes, Living room, Weekend workshop — anything you sell.",
+      "suggestions": {
+        "RESTAURANT": ["Starters", "Mains", "Desserts", "Drinks"],
+        "GROCERY": ["Produce", "Dairy", "Bakery", "Snacks", "Drinks"],
+        "RETAIL": ["New in", "Apparel", "Shoes", "Accessories"],
+        "HOME": ["Living room", "Bedroom", "Kitchen", "Decor"],
+        "HARDWARE": ["Tools", "Paint", "Plumbing", "Electrical"],
+        "EDUCATION": ["Beginner", "Intermediate", "Workshops", "Certificates"],
+        "ELECTRONICS": ["Phones", "Laptops", "Audio", "Accessories"],
+        "TOBACCO": ["Cigarettes", "Tobacco", "Lighters", "Accessories"],
+        "SERVICES": ["Hair", "Spa", "Nails", "Packages"],
+        "OTHER": []
+      },
       "itemsCount": "{count} items",
       "dragHint": "Drag the handle to reorder",
       "deleteConfirmTitle": "Delete category?",
@@ -338,8 +408,7 @@
       "created": "Category created",
       "updated": "Category updated",
       "deleted": "Category deleted",
-      "reordered": "Order saved",
-      "emptyHint": "Name categories yourself — Starters, Mains, or anything that fits your business."
+      "reordered": "Order saved"
     },
     "products": {
       "title": "Products",
@@ -449,6 +518,8 @@
       "supportedLocalesLabel": "Supported languages",
       "currencyLabel": "Currency",
       "accentColorLabel": "Accent color",
+      "industryLabel": "What you sell",
+      "industryHint": "Only a starting point for field suggestions. Categories stay whatever you type.",
       "planLabel": "Plan",
       "publicUrlLabel": "Public catalog URL",
       "saved": "Settings saved",

@@ -44,6 +44,18 @@
     "error": "Nəsə səhv getdi",
     "retry": "Yenidən cəhd et"
   },
+  "industries": {
+    "RESTAURANT": "Restoran və kafe",
+    "GROCERY": "Market və ərzaq",
+    "RETAIL": "Pərakəndə və moda",
+    "HOME": "Ev və mebel",
+    "HARDWARE": "Alət və təmir",
+    "EDUCATION": "Kurs və təlim",
+    "ELECTRONICS": "Elektronika",
+    "TOBACCO": "Siqaret və kiosk",
+    "SERVICES": "Xidmətlər",
+    "OTHER": "Başqa bir şey"
+  },
   "landing": {
     "header": {
       "features": "Xüsusiyyətlər",
@@ -111,36 +123,77 @@
     "useCases": {
       "eyebrow": "Bir mühərrik, hər sahə",
       "title": "Real satış tərzinizə uyğun qurulub",
-      "subtitle": "QR-Universe-in sahələri, kateqoriyaları və düzülüşü avtomatik necə uyğunlaşdırdığını görmək üçün aşağıda sahəni dəyişin.",
+      "subtitle": "Restoran, market, ev, alət, kurs — və ya kateqoriyanı özünüz yazın. Kataloq satdığınız hər şeydir.",
+      "livePreview": "Canlı önizləmə",
       "tabs": {
         "restaurant": {
           "label": "Restoran",
-          "title": "Özü-özünü yeniləyən menyular",
-          "description": "Bir mövqeyi satışdan çıxarın, mövsümi təklif başladın və ya qiyməti dəyişin — saniyələr içində hər yerdə canlı olur. Hər yemək üçün allergenləri, kaloriləri və vegan seçimlərini izləyin.",
+          "title": "Özü yenilənən menyular",
+          "description": "Məhsulu bitmiş edin, qiyməti dəyişin — saniyələr içində hər yerdə canlı.",
           "bullets": [
-            "Yenidən çapsız canlı menyu redaktəsi",
-            "Allergen, kalori və pəhriz etiketləri",
-            "Masabaşı QR sifariş axını"
+            "Çapsız canlı menyu",
+            "Allergen və kalori",
+            "Masabaşı QR"
           ]
         },
-        "retail": {
-          "label": "Pərakəndə və Moda",
-          "title": "Heç vaxt tükənməyən lookbook",
-          "description": "Hər bir idman ayaqqabısı və ya geyim üçün ölçü, material və rəngləri göstərin, satılan məhsulları dərhal gizlədin.",
+        "grocery": {
+          "label": "Market",
+          "title": "Rəfdəki qiymətlə eyni qiymət",
+          "description": "Tərəvəz, süd, çörək — qonaq bir dəfə skan edir, bu günün qiymətini görür.",
           "bullets": [
-            "Ölçü və material atributları",
-            "Anında \"satıldı\" gizlətmə",
-            "Mövsümi kolleksiya təqdimatları"
+            "Çəki, brend, mənşə",
+            "Bitəndə gizlət",
+            "Kateqoriyanı siz yazırsınız"
+          ]
+        },
+        "home": {
+          "label": "Ev",
+          "title": "Otaq-otaq mebel və dekor",
+          "description": "Qonaq otağı, yataq, mətbəx — ölçü, material, yığılma qeydi.",
+          "bullets": [
+            "Otaq kateqoriyalarını siz yaradırsınız",
+            "Ölçü və material",
+            "Yeni etiket çap etmədən qiymət"
+          ]
+        },
+        "hardware": {
+          "label": "Alət",
+          "title": "Təmir və tikinti kataloqu",
+          "description": "Drel, boya, santexnika, elektrik — restoran şablonu deyil.",
+          "bullets": [
+            "Alət, boya, elektrik — adı siz qoyursunuz",
+            "Gərginlik, ölçü, zəmanət",
+            "Pultada və ya maşında QR"
+          ]
+        },
+        "education": {
+          "label": "Kurs",
+          "title": "Proqram və seminarlar bir skanda",
+          "description": "Səviyyə, müddət, dil, sertifikat — tələbə afişadakı QR-dan siyahını açır.",
+          "bullets": [
+            "Başlanğıcdan sertifikata",
+            "Müddət və dil sahələri",
+            "Qiyməti afişa çap etmədən dəyişin"
           ]
         },
         "electronics": {
           "label": "Elektronika",
-          "title": "Müştərilərin rahatlıqla skan edə biləcəyi texniki vərəqlər",
-          "description": "RAM, yaddaş, zəmanət — mağazada tam texniki xüsusiyyətləri gözəl şəkildə təqdim edin.",
+          "title": "Skan edilən texniki vərəqlər",
+          "description": "RAM, yaddaş, zəmanət — mağaza içində.",
           "bullets": [
-            "Zəngin texniki xüsusiyyət sahələri",
-            "Zəmanət və stok göstəriciləri",
-            "Müqayisəyə hazır düzülüş"
+            "Texniki sahələr",
+            "Zəmanət və stok",
+            "Müqayisəyə hazır"
+          ]
+        },
+        "custom": {
+          "label": "Özün yaz",
+          "title": "Siyahıda yoxdursa, siz yazırsınız",
+          "description": "Siqaret, ev heyvanı, ehtiyat hissə. Kateqoriyalar sərbəst mətn — sizi dörd restoran bölməsinə bağlamırıq.",
+          "bullets": [
+            "Hər kateqoriyanı siz adlandırırsınız",
+            "Öz məhsul sahələrinizi əlavə edin",
+            "Bir QR, sizin kataloq"
           ]
         }
       }
@@ -186,8 +239,8 @@
           "description": "Yeni başlayan sahibkarlar üçün.",
           "cta": "Pulsuz başla",
           "features": [
-            "1 kataloq və 1 QR kod",
-            "20 məhsula qədər",
+            "1 kataloq və 3 QR kod",
+            "100 məhsula qədər, öz adınızla limitsiz kateqoriya",
             "Sadə QR dizaynı",
             "İcma dəstəyi"
           ]
@@ -264,7 +317,8 @@
       "email": "E-poçt ünvanı",
       "password": "Şifrə",
       "companyName": "Biznes adı",
-      "industry": "Sahə",
+      "industry": "Nə satırsınız?",
+      "industryHint": "Yalnız başlanğıc. Qeydiyyatdan sonra hər kateqoriya adını siz yazırsınız.",
       "submit": "Hesab yarat",
       "haveAccount": "Artıq hesabınız var?",
       "loginLink": "Daxil ol",
@@ -280,8 +334,9 @@
         "accentLabel": "Vurğu rəngi"
       },
       "step2": {
-        "title": "Sahənizi seçin",
-        "subtitle": "Kateqoriyaları, sahələri və başlanğıc məzmununu sizin üçün uyğunlaşdıracağıq."
+        "title": "Bu nə cür kataloqdur?",
+        "subtitle": "Başlanğıc seçin. Kateqoriyaları yenə siz yazırsınız — market, ev, kurs, siqaret, nə olursa.",
+        "hint": "Sizin üçün kateqoriya yaradılmır. Bölmə əlavə edənə qədər kataloq boşdur."
       },
       "step3": {
         "title": "İlk QR kodunuz hazırdır",
@@ -329,8 +384,23 @@
       "title": "Kateqoriyalar",
       "subtitle": "Kataloqunuzu təşkil edin və müştərilərin gördüyü ardıcıllığı dəyişmək üçün sürüşdürün.",
       "add": "Kateqoriya əlavə et",
-      "namePlaceholder": "məs. Əsas Yeməklər",
+      "namePlaceholder": "Ad yazın — Tərəvəz, Alət, Python 101…",
+      "typeYourOwn": "Uyğun gələni yazın. Təkliflər istəyə bağlıdır.",
+      "iconLabel": "İkon",
       "empty": "Hələ kateqoriya yoxdur — ilkini əlavə edərək başlayın.",
+      "emptyHint": "Adı siz qoyun: qəlyanaltı, siqaret, qonaq otağı, həftəsonu seminarı — satdığınız hər şey.",
+      "suggestions": {
+        "RESTAURANT": ["Başlanğıc", "Əsas yemək", "Şirniyyat", "İçki"],
+        "GROCERY": ["Tərəvəz", "Süd", "Çörək", "Qəlyanaltı", "İçki"],
+        "RETAIL": ["Yeni", "Geyim", "Ayaqqabı", "Aksesuar"],
+        "HOME": ["Qonaq otağı", "Yataq", "Mətbəx", "Dekor"],
+        "HARDWARE": ["Alətlər", "Boya", "Santexnika", "Elektrik"],
+        "EDUCATION": ["Başlanğıc", "Orta", "Seminar", "Sertifikat"],
+        "ELECTRONICS": ["Telefon", "Laptop", "Səs", "Aksesuar"],
+        "TOBACCO": ["Siqaret", "Tütün", "Alovlandırıcı", "Aksesuar"],
+        "SERVICES": ["Saç", "Spa", "Dırnaq", "Paketlər"],
+        "OTHER": []
+      },
       "itemsCount": "{count} məhsul",
       "dragHint": "Ardıcıllığı dəyişmək üçün dəstəkdən tutub sürüşdürün",
       "deleteConfirmTitle": "Kateqoriya silinsin?",
@@ -338,8 +408,7 @@
       "created": "Kateqoriya yaradıldı",
       "updated": "Kateqoriya yeniləndi",
       "deleted": "Kateqoriya silindi",
-      "reordered": "Ardıcıllıq saxlanıldı",
-      "emptyHint": "Kateqoriyaları siz adlandırın — işinizə uyğun istənilən ad."
+      "reordered": "Ardıcıllıq saxlanıldı"
     },
     "products": {
       "title": "Məhsullar",
@@ -449,6 +518,8 @@
       "supportedLocalesLabel": "Dəstəklənən dillər",
       "currencyLabel": "Valyuta",
       "accentColorLabel": "Vurğu rəngi",
+      "industryLabel": "Nə satırsınız",
+      "industryHint": "Yalnız sahə təklifləri üçün. Kateqoriya adları sizin yazdığınız kimi qalır.",
       "planLabel": "Plan",
       "publicUrlLabel": "Açıq kataloq linki",
       "saved": "Ayarlar saxlanıldı",

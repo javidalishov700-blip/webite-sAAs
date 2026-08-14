@@ -39,10 +39,13 @@ import {
   useUpdateCategory,
 } from "@/hooks/use-categories";
 import { useItems } from "@/hooks/use-items";
+import { useCompany } from "@/hooks/use-company";
 import type { Category } from "@/lib/data/types";
 
 export default function CategoriesPage() {
   const t = useTranslations("admin.categories");
+  const tc = useTranslations("common");
+  const { data: company } = useCompany();
   const { data: categories, isLoading } = useCategories();
   const { data: items } = useItems();
   const createCategory = useCreateCategory();
@@ -94,6 +97,7 @@ export default function CategoriesPage() {
 
   const itemCountByCategory = new Map<string, number>();
   items?.forEach((item) => itemCountByCategory.set(item.categoryId, (itemCountByCategory.get(item.categoryId) ?? 0) + 1));
+  const suggestions = (t.raw(`suggestions.${company?.industry ?? "OTHER"}`) as string[] | undefined) ?? [];
 
   return (
     <div>
@@ -163,6 +167,7 @@ export default function CategoriesPage() {
         open={formOpen}
         onOpenChange={setFormOpen}
         category={editingCategory}
+        suggestions={suggestions}
         onSubmit={handleSubmit}
         isSubmitting={createCategory.isPending || updateCategory.isPending}
       />
@@ -179,8 +184,8 @@ export default function CategoriesPage() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
+            <AlertDialogCancel>{tc("cancel")}</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDelete}>{tc("delete")}</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

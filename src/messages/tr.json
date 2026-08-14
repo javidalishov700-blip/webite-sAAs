@@ -44,6 +44,18 @@
     "error": "Bir şeyler ters gitti",
     "retry": "Tekrar dene"
   },
+  "industries": {
+    "RESTAURANT": "Restoran & kafe",
+    "GROCERY": "Market & bakkal",
+    "RETAIL": "Perakende & moda",
+    "HOME": "Ev & mobilya",
+    "HARDWARE": "Hırdavat & tadilat",
+    "EDUCATION": "Kurs & eğitim",
+    "ELECTRONICS": "Elektronik",
+    "TOBACCO": "Sigara & büfe",
+    "SERVICES": "Hizmetler",
+    "OTHER": "Başka bir şey"
+  },
   "landing": {
     "header": {
       "features": "Özellikler",
@@ -111,36 +123,77 @@
     "useCases": {
       "eyebrow": "Tek motor, her sektör",
       "title": "Gerçekten sattığınız şekilde tasarlandı",
-      "subtitle": "QR-Universe'ün alanları, kategorileri ve düzeni otomatik olarak nasıl uyarladığını görmek için aşağıdan sektör seçin.",
+      "subtitle": "Restoran, market, ev, alet, kurs — ya da kategorileri kendiniz yazın. Katalog, sattığınız her şeydir.",
+      "livePreview": "Canlı önizleme",
       "tabs": {
         "restaurant": {
           "label": "Restoran",
           "title": "Kendi kendini güncelleyen menüler",
-          "description": "Bir ürünü tükendi olarak işaretleyin, sezonluk bir özel sunun ya da fiyatı değiştirin — saniyeler içinde her yerde canlı olur. Her yemek için alerjen, kalori ve vegan seçeneklerini takip edin.",
+          "description": "Ürünü tükendi işaretleyin, fiyatı değiştirin — saniyeler içinde her yerde canlı.",
           "bullets": [
-            "Yeniden basım olmadan canlı menü düzenleme",
+            "Yeniden basım olmadan canlı menü",
             "Alerjen, kalori ve diyet etiketleri",
-            "Masa başında QR ile sipariş akışı"
+            "Masa başında QR"
           ]
         },
-        "retail": {
-          "label": "Perakende & Moda",
-          "title": "Asla tükenmeyen bir lookbook",
-          "description": "Her spor ayakkabısı veya kıyafet için beden, materyal ve renk seçeneklerini gösterin, tükenen ürünleri anında gizleyin.",
+        "grocery": {
+          "label": "Market",
+          "title": "Raftaki fiyatla aynı fiyat",
+          "description": "Meyve, süt, fırın, temizlik — müşteri bir kez tarar, bugünün fiyatını görür.",
           "bullets": [
-            "Beden ve materyal özellikleri",
-            "Anında tükendi gizleme",
-            "Sezonluk koleksiyon lansmanları"
+            "Gramaj, marka, menşei alanları",
+            "Bitince gizle",
+            "Kategorileri siz yazın: Meyve, Atıştırmalık, ne stokluyorsanız"
+          ]
+        },
+        "home": {
+          "label": "Ev",
+          "title": "Oda oda mobilya ve dekor",
+          "description": "Salon, yatak odası, mutfak — ölçü, malzeme, montaj notu gösterin.",
+          "bullets": [
+            "Oda bazlı kategoriler sizin",
+            "Ölçü ve malzeme alanları",
+            "Etiket basmadan fiyat güncelle"
+          ]
+        },
+        "hardware": {
+          "label": "Alet",
+          "title": "Tadilat ve hırdavat katalogları",
+          "description": "Matkap, boya, tesisat, elektrik — restoran şablonu değil, şantiye ve dükkan için.",
+          "bullets": [
+            "Alet, boya, elektrik — koridor adını siz koyun",
+            "Voltaj, ölçü, garanti",
+            "Tezgâhta veya araçta QR"
+          ]
+        },
+        "education": {
+          "label": "Kurs",
+          "title": "Program ve atölyeler bir taramada",
+          "description": "Seviye, süre, dil, sertifika — öğrenci afişteki QR’dan listeyi açar.",
+          "bullets": [
+            "Başlangıçtan sertifikaya",
+            "Süre ve dil alanları",
+            "Ücreti afiş basmadan değiştirin"
           ]
         },
         "electronics": {
           "label": "Elektronik",
-          "title": "Müşterilerin gerçekten tarayabileceği teknik föyler",
-          "description": "RAM, depolama, garanti — mağaza içinde tam teknik özellikleri güzelce sunun.",
+          "title": "Taranabilir teknik föyler",
+          "description": "RAM, depolama, garanti — mağaza içinde tam özellikler.",
           "bullets": [
-            "Zengin teknik özellik alanları",
-            "Garanti ve stok göstergeleri",
-            "Karşılaştırmaya hazır düzen"
+            "Teknik özellik alanları",
+            "Garanti ve stok",
+            "Karşılaştırmaya hazır"
+          ]
+        },
+        "custom": {
+          "label": "Kendin yaz",
+          "title": "Listede yoksa siz yazarsınız",
+          "description": "Sigara, evcil hayvan, yedek parça, her şey. Kategoriler serbest metin — sizi dört restoran bölümüne kilitlemeyiz.",
+          "bullets": [
+            "Her kategoriyi siz adlandırın",
+            "Kendi ürün alanlarınızı ekleyin",
+            "Tek QR, sizin katalog"
           ]
         }
       }
@@ -186,8 +239,8 @@
           "description": "Yeni başlayan işletme sahipleri için.",
           "cta": "Ücretsiz başla",
           "features": [
-            "1 katalog ve 1 QR kod",
-            "20 ürüne kadar",
+            "1 katalog ve 3 QR kod",
+            "100 ürüne kadar, sınırsız kendi adınızdaki kategori",
             "Temel QR tasarımı",
             "Topluluk desteği"
           ]
@@ -264,7 +317,8 @@
       "email": "E-posta adresi",
       "password": "Şifre",
       "companyName": "İşletme adı",
-      "industry": "Sektör",
+      "industry": "Ne satıyorsunuz?",
+      "industryHint": "Sadece bir başlangıç. Kayıttan sonra her kategori adını siz yazarsınız.",
       "submit": "Hesap oluştur",
       "haveAccount": "Zaten bir hesabınız var mı?",
       "loginLink": "Giriş yap",
@@ -280,8 +334,9 @@
         "accentLabel": "Vurgu rengi"
       },
       "step2": {
-        "title": "Sektörünüzü seçin",
-        "subtitle": "Kategorileri, alanları ve başlangıç içeriğini sizin için özelleştireceğiz."
+        "title": "Bu ne tür bir katalog?",
+        "subtitle": "Bir başlangıç seçin. Kategorileri yine siz yazarsınız — market, ev, kurs, sigara, ne olursa.",
+        "hint": "Sizin için kategori oluşturulmaz. Bölüm ekleyene kadar katalog boştur."
       },
       "step3": {
         "title": "İlk QR kodunuz hazır",
@@ -329,8 +384,23 @@
       "title": "Kategoriler",
       "subtitle": "Kataloğunuzu düzenleyin, müşterilerin gördüğü sırayı değiştirmek için sürükleyin.",
       "add": "Kategori ekle",
-      "namePlaceholder": "örn. Ana Yemekler",
+      "namePlaceholder": "Bir ad yazın — Meyve, Alet, Python 101…",
+      "typeYourOwn": "Uyan her şeyi yazın. Öneriler isteğe bağlı, kilitli değil.",
+      "iconLabel": "İkon",
       "empty": "Henüz kategori yok — ilkini ekleyerek başlayın.",
+      "emptyHint": "Adı siz koyun: Mezeler, Sigara, Salon, Hafta sonu atölyesi — sattığınız her şey.",
+      "suggestions": {
+        "RESTAURANT": ["Başlangıç", "Ana yemek", "Tatlı", "İçecek"],
+        "GROCERY": ["Meyve-sebze", "Süt", "Fırın", "Atıştırmalık", "İçecek"],
+        "RETAIL": ["Yeni gelen", "Giyim", "Ayakkabı", "Aksesuar"],
+        "HOME": ["Salon", "Yatak odası", "Mutfak", "Dekor"],
+        "HARDWARE": ["Aletler", "Boya", "Tesisat", "Elektrik"],
+        "EDUCATION": ["Başlangıç", "Orta", "Atölye", "Sertifika"],
+        "ELECTRONICS": ["Telefon", "Laptop", "Ses", "Aksesuar"],
+        "TOBACCO": ["Sigara", "Tütün", "Çakmak", "Aksesuar"],
+        "SERVICES": ["Saç", "Spa", "Tırnak", "Paketler"],
+        "OTHER": []
+      },
       "itemsCount": "{count} ürün",
       "dragHint": "Sıralamayı değiştirmek için tutamağı sürükleyin",
       "deleteConfirmTitle": "Kategori silinsin mi?",
@@ -338,8 +408,7 @@
       "created": "Kategori oluşturuldu",
       "updated": "Kategori güncellendi",
       "deleted": "Kategori silindi",
-      "reordered": "Sıralama kaydedildi",
-      "emptyHint": "Kategorileri siz adlandırın — Başlangıç, Ana yemek veya işinize uyan herhangi bir isim."
+      "reordered": "Sıralama kaydedildi"
     },
     "products": {
       "title": "Ürünler",
@@ -449,6 +518,8 @@
       "supportedLocalesLabel": "Desteklenen diller",
       "currencyLabel": "Para birimi",
       "accentColorLabel": "Vurgu rengi",
+      "industryLabel": "Ne satıyorsunuz",
+      "industryHint": "Sadece alan önerileri için. Kategori adları sizin yazdığınız gibi kalır.",
       "planLabel": "Plan",
       "publicUrlLabel": "Genel katalog adresi",
       "saved": "Ayarlar kaydedildi",

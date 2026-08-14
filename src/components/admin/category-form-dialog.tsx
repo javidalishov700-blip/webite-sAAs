@@ -14,11 +14,19 @@ interface CategoryFormDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   category?: Category | null;
+  suggestions?: string[];
   onSubmit: (values: { name: string; icon: string }) => Promise<void> | void;
   isSubmitting?: boolean;
 }
 
-export function CategoryFormDialog({ open, onOpenChange, category, onSubmit, isSubmitting }: CategoryFormDialogProps) {
+export function CategoryFormDialog({
+  open,
+  onOpenChange,
+  category,
+  suggestions = [],
+  onSubmit,
+  isSubmitting,
+}: CategoryFormDialogProps) {
   const t = useTranslations("admin.categories");
   const tc = useTranslations("common");
   const [name, setName] = useState("");
@@ -55,10 +63,25 @@ export function CategoryFormDialog({ open, onOpenChange, category, onSubmit, isS
               onChange={(e) => setName(e.target.value)}
               placeholder={t("namePlaceholder")}
             />
+            <p className="text-xs text-muted-foreground">{t("typeYourOwn")}</p>
+            {!category && suggestions.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 pt-1">
+                {suggestions.map((suggestion) => (
+                  <button
+                    type="button"
+                    key={suggestion}
+                    onClick={() => setName(suggestion)}
+                    className="rounded-full border border-dashed border-border px-2.5 py-1 text-xs text-muted-foreground hover:border-primary/50 hover:text-primary"
+                  >
+                    {suggestion}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="space-y-1.5">
-            <Label>Icon</Label>
+            <Label>{t("iconLabel")}</Label>
             <div className="grid grid-cols-8 gap-1.5 sm:grid-cols-11">
               {CATEGORY_ICON_NAMES.map((iconName) => {
                 const Icon = getCategoryIcon(iconName);

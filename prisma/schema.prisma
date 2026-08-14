@@ -22,8 +22,13 @@ enum Role {
 
 enum Industry {
   RESTAURANT
+  GROCERY
   RETAIL
+  HOME
+  HARDWARE
+  EDUCATION
   ELECTRONICS
+  TOBACCO
   SERVICES
   OTHER
 }

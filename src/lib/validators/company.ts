@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { INDUSTRY_VALUES } from "@/lib/industries";
 
 export const companySettingsSchema = z.object({
   name: z.string().min(2).max(80),
@@ -12,12 +13,13 @@ export const companySettingsSchema = z.object({
   website: z.string().max(160).optional().nullable(),
   logoUrl: z.string().optional().nullable(),
   isPublished: z.boolean().optional(),
+  industry: z.enum(INDUSTRY_VALUES).optional(),
 });
 export type CompanySettingsInput = z.infer<typeof companySettingsSchema>;
 
 export const onboardingSchema = z.object({
   companyName: z.string().min(2).max(80),
-  industry: z.enum(["RESTAURANT", "RETAIL", "ELECTRONICS", "SERVICES", "OTHER"]),
+  industry: z.enum(INDUSTRY_VALUES),
   logoUrl: z.string().optional().nullable(),
   accentColor: z.string().min(3).optional(),
 });

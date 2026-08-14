@@ -32,6 +32,7 @@ interface AttributeEditorProps {
 
 export function AttributeEditor({ industry, value, onChange }: AttributeEditorProps) {
   const t = useTranslations("admin.products.form");
+  const ti = useTranslations("industries");
 
   function updateRow(index: number, patch: Partial<AttributeInput>) {
     const next = value.map((row, i) => (i === index ? { ...row, ...patch } : row));
@@ -56,7 +57,7 @@ export function AttributeEditor({ industry, value, onChange }: AttributeEditorPr
         <div>
           <p className="mb-2 flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
             <Sparkles className="size-3.5" />
-            {t("presets", { industry: industry.charAt(0) + industry.slice(1).toLowerCase() })}
+            {t("presets", { industry: ti(industry) })}
           </p>
           <div className="flex flex-wrap gap-1.5">
             {availablePresets.map((preset) => (

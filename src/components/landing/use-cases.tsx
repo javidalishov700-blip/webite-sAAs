@@ -3,7 +3,16 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "motion/react";
-import { Check, Cpu, ShoppingBag, UtensilsCrossed } from "lucide-react";
+import {
+  BookOpen,
+  Check,
+  Cpu,
+  Hammer,
+  House,
+  Package,
+  ShoppingBasket,
+  UtensilsCrossed,
+} from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -17,7 +26,7 @@ const TABS = [
     icon: UtensilsCrossed,
     accent: "#FF6B4A",
     mock: {
-      category: "Main Course",
+      category: "Mains",
       items: [
         { title: "Truffle Pasta", price: "$14.50", tags: ["540 kcal", "Vegan"] },
         { title: "Ribeye Steak", price: "$24.90", tags: ["700 kcal", "Spicy"] },
@@ -25,26 +34,74 @@ const TABS = [
     },
   },
   {
-    key: "retail",
-    icon: ShoppingBag,
-    accent: "#3AD1C4",
+    key: "grocery",
+    icon: ShoppingBasket,
+    accent: "#33D69F",
     mock: {
-      category: "Sneakers",
+      category: "Produce",
       items: [
-        { title: "Nova Runner X1", price: "$129.99", tags: ["Sizes 38–43", "Mesh"] },
-        { title: "Cloud Step Pro", price: "$149.99", tags: ["Sizes 40–44", "Knit"] },
+        { title: "Organic tomatoes", price: "$2.40/kg", tags: ["Local", "1 kg"] },
+        { title: "Sourdough loaf", price: "$3.90", tags: ["Bakery", "Fresh"] },
+      ],
+    },
+  },
+  {
+    key: "home",
+    icon: House,
+    accent: "#FFD24A",
+    mock: {
+      category: "Living room",
+      items: [
+        { title: "Linen sofa", price: "$890", tags: ["3-seat", "Oak legs"] },
+        { title: "Floor lamp", price: "$120", tags: ["Brass", "E27"] },
+      ],
+    },
+  },
+  {
+    key: "hardware",
+    icon: Hammer,
+    accent: "#FF8A4C",
+    mock: {
+      category: "Tools",
+      items: [
+        { title: "Cordless drill 18V", price: "$79", tags: ["2 batteries"] },
+        { title: "Interior paint 10L", price: "$34", tags: ["Washable"] },
+      ],
+    },
+  },
+  {
+    key: "education",
+    icon: BookOpen,
+    accent: "#7C5CFF",
+    mock: {
+      category: "Courses",
+      items: [
+        { title: "Python from zero", price: "$149", tags: ["8 weeks", "Certificate"] },
+        { title: "UI workshop", price: "$89", tags: ["Weekend", "Beginner"] },
       ],
     },
   },
   {
     key: "electronics",
     icon: Cpu,
-    accent: "#7C5CFF",
+    accent: "#3AD1C4",
     mock: {
       category: "Laptops",
       items: [
-        { title: "NexusBook Air 14", price: "$1,299", tags: ["16GB RAM", "512GB SSD"] },
-        { title: "NexusBook Pro 16", price: "$1,899", tags: ["32GB RAM", "24mo warranty"] },
+        { title: "NexusBook Air 14", price: "$1,299", tags: ["16GB RAM", "512GB"] },
+        { title: "NexusBook Pro 16", price: "$1,899", tags: ["32GB", "24mo"] },
+      ],
+    },
+  },
+  {
+    key: "custom",
+    icon: Package,
+    accent: "#A78BFA",
+    mock: {
+      category: "Your name",
+      items: [
+        { title: "Whatever you sell", price: "Your price", tags: ["Your field"] },
+        { title: "Type it yourself", price: "—", tags: ["No template"] },
       ],
     },
   },
@@ -65,9 +122,9 @@ export function UseCases() {
 
       <Reveal delay={0.1} className="mt-10 flex justify-center">
         <Tabs value={active} onValueChange={(v) => setActive(v as typeof active)}>
-          <TabsList className="h-auto flex-wrap p-1.5">
+          <TabsList className="h-auto flex-wrap justify-center p-1.5">
             {TABS.map((tab) => (
-              <TabsTrigger key={tab.key} value={tab.key} className="h-10 gap-2 px-4">
+              <TabsTrigger key={tab.key} value={tab.key} className="h-10 gap-2 px-3 sm:px-4">
                 <tab.icon className="size-4" />
                 {t(`tabs.${tab.key}.label`)}
               </TabsTrigger>
@@ -121,7 +178,7 @@ export function UseCases() {
                   <Badge variant="outline" className="text-xs">
                     {activeTab.mock.category}
                   </Badge>
-                  <span className="text-xs text-muted-foreground">Live preview</span>
+                  <span className="text-xs text-muted-foreground">{t("livePreview")}</span>
                 </div>
                 <div className="space-y-3">
                   {activeTab.mock.items.map((item) => (

@@ -7,7 +7,17 @@
 
 export type Role = "OWNER" | "ADMIN" | "EDITOR";
 
-export type Industry = "RESTAURANT" | "RETAIL" | "ELECTRONICS" | "SERVICES" | "OTHER";
+export type Industry =
+  | "RESTAURANT"
+  | "GROCERY"
+  | "RETAIL"
+  | "HOME"
+  | "HARDWARE"
+  | "EDUCATION"
+  | "ELECTRONICS"
+  | "TOBACCO"
+  | "SERVICES"
+  | "OTHER";
 
 export type Plan = "FREE" | "PRO" | "ENTERPRISE";
 
