@@ -5,8 +5,8 @@ import { useOnlineCount } from "@/components/presence-beacon";
 
 export function ActiveUsersBadge({ className }: { className?: string }) {
   const t = useTranslations("landing.hero");
-  const { data: count } = useOnlineCount();
-  const n = count ?? 1;
+  const { data: count } = useOnlineCount("site");
+  const n = count ?? 0;
 
   return (
     <div className={className}>

@@ -118,6 +118,7 @@ model Company {
   items       Item[]
   qrCodes     QrCode[]
   scanEvents  ScanEvent[]
+  itemViews   ItemView[]
 
   @@index([slug])
 }
@@ -164,6 +165,7 @@ model Item {
   categoryId String
 
   attributes ItemAttribute[]
+  views      ItemView[]
 
   @@index([companyId, categoryId, position])
 }
@@ -221,4 +223,28 @@ model ScanEvent {
   qrCodeId  String?
 
   @@index([companyId, createdAt])
+}
+
+/// Anonymous product opens on the public catalog. Powers real "top items".
+model ItemView {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId String
+  item      Item    @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  itemId    String
+
+  @@index([companyId, itemId])
+  @@index([companyId, createdAt])
+}
+
+/// Shared across serverless instances so the live "online now" count is real.
+model PresencePing {
+  visitorId String
+  scope     String
+  lastSeen  DateTime @updatedAt
+
+  @@id([visitorId, scope])
+  @@index([scope, lastSeen])
 }

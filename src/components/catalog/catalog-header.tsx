@@ -6,6 +6,8 @@ import { useTranslations } from "next-intl";
 import { Check, MapPin, Phone, Search, Share2, X } from "lucide-react";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { useOnlineCount } from "@/components/presence-beacon";
 import type { Company } from "@/lib/data/types";
 
 interface CatalogHeaderProps {
@@ -17,6 +19,7 @@ interface CatalogHeaderProps {
 export function CatalogHeader({ company, search, onSearchChange }: CatalogHeaderProps) {
   const t = useTranslations("catalog");
   const [copied, setCopied] = useState(false);
+  const { data: viewing } = useOnlineCount(`catalog:${company.slug}`);
 
   async function handleShare() {
     const url = window.location.href;
@@ -35,7 +38,7 @@ export function CatalogHeader({ company, search, onSearchChange }: CatalogHeader
   }
 
   return (
-    <div className="glass sticky top-0 z-20 pt-[env(safe-area-inset-top)]">
+    <div>
       <div className="flex items-center gap-3 px-4 pt-3 pb-2.5">
         <div className="relative size-11 shrink-0 overflow-hidden rounded-2xl bg-muted ring-1 ring-white/10">
           {company.logoUrl ? (
@@ -52,6 +55,11 @@ export function CatalogHeader({ company, search, onSearchChange }: CatalogHeader
         <div className="min-w-0 flex-1">
           <h1 className="truncate font-display text-base font-semibold">{company.name}</h1>
           <div className="flex items-center gap-2 truncate text-xs text-muted-foreground">
+            {typeof viewing === "number" && viewing > 0 && (
+              <span className="shrink-0 text-success">
+                {t("viewingNow", { count: viewing })}
+              </span>
+            )}
             {company.address && (
               <span className="flex items-center gap-1 truncate">
                 <MapPin className="size-3 shrink-0" />
@@ -66,7 +74,9 @@ export function CatalogHeader({ company, search, onSearchChange }: CatalogHeader
             )}
           </div>
         </div>
+        <ThemeToggle className="size-9 shrink-0 rounded-full" />
         <button
+          type="button"
           onClick={handleShare}
           className="flex size-9 shrink-0 items-center justify-center rounded-full bg-muted/60 text-muted-foreground transition-colors hover:bg-muted"
           aria-label={t("share")}
@@ -86,6 +96,7 @@ export function CatalogHeader({ company, search, onSearchChange }: CatalogHeader
           />
           {search && (
             <button
+              type="button"
               onClick={() => onSearchChange("")}
               className="absolute top-1/2 right-3 flex size-5 -translate-y-1/2 items-center justify-center rounded-full bg-muted-foreground/20"
             >

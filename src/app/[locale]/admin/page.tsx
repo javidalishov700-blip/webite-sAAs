@@ -86,15 +86,20 @@ export default function AdminOverviewPage() {
             <CardContent className="space-y-3">
               {isLoading || !summary
                 ? Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="h-9 w-full rounded-lg" />)
-                : summary.topItems.map((item, i) => (
+                : summary.topItems.length === 0 ? (
+                    <p className="text-sm text-muted-foreground">{t("topItemsEmpty")}</p>
+                  ) : (
+                    summary.topItems.map((item, i) => (
                     <div key={item.itemId} className="flex items-center gap-3">
                       <span className="flex size-6 shrink-0 items-center justify-center rounded-md bg-muted text-xs font-semibold text-muted-foreground">
                         {i + 1}
                       </span>
                       <span className="min-w-0 flex-1 truncate text-sm">{item.title}</span>
-                      <span className="shrink-0 font-mono text-xs text-muted-foreground">{item.scans}</span>
+                      <span className="shrink-0 font-mono text-xs text-muted-foreground">
+                        {item.scans} {t("views")}
+                      </span>
                     </div>
-                  ))}
+                  )))}
             </CardContent>
           </Card>
 

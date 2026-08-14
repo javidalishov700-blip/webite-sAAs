@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
 
 const NAV_ITEMS = [
+  { href: "/#how-it-works", key: "howItWorks" },
   { href: "/#features", key: "features" },
   { href: "/#use-cases", key: "useCases" },
   { href: "/#pricing", key: "pricing" },

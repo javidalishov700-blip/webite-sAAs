@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import { getPublicCatalogBySlug } from "@/lib/data/repositories/catalog";
 import { CatalogView } from "@/components/catalog/catalog-view";
 import { CatalogScanTracker } from "@/components/catalog/catalog-scan-tracker";
-import { AmbientBackground } from "@/components/landing/ambient-background";
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -37,8 +36,8 @@ export default async function PublicCatalogPage({ params, searchParams }: PagePr
   if (!company) notFound();
 
   return (
-    <div className="relative min-h-[100svh]">
-      <AmbientBackground className="opacity-70" />
+    <div className="relative min-h-[100svh] bg-background">
+      <div className="pointer-events-none fixed inset-0 -z-10 bg-background" />
       <CatalogScanTracker
         slug={company.slug}
         locale={locale}

@@ -17,7 +17,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     <ReactLenis
       root
       options={{
-        duration: 1.1,
+        duration: 0.85,
         smoothWheel: true,
         syncTouch: false,
         wheelMultiplier: 1,

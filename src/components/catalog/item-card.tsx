@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { motion } from "motion/react";
 import { ImageOff, Star } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 import type { ItemWithAttributes } from "@/lib/data/types";
@@ -18,11 +17,10 @@ export function ItemCard({ item, onSelect, locale }: ItemCardProps) {
   const outOfStock = item.stockCount === 0;
 
   return (
-    <motion.button
-      layoutId={`item-${item.id}`}
+    <button
+      type="button"
       onClick={onSelect}
-      whileTap={{ scale: 0.97 }}
-      className="glass-card glow-border group flex flex-col overflow-hidden rounded-2xl text-left"
+      className="group flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-card text-left shadow-sm active:scale-[0.98]"
     >
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-muted">
         {item.images[0] ? (
@@ -32,7 +30,7 @@ export function ItemCard({ item, onSelect, locale }: ItemCardProps) {
             fill
             unoptimized
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className="object-cover"
           />
         ) : (
           <div className="flex size-full items-center justify-center text-muted-foreground">
@@ -40,13 +38,13 @@ export function ItemCard({ item, onSelect, locale }: ItemCardProps) {
           </div>
         )}
         {item.isFeatured && (
-          <span className="absolute top-2 left-2 flex items-center gap-1 rounded-full bg-black/60 px-2 py-1 text-[10px] font-medium text-white backdrop-blur">
+          <span className="absolute top-2 left-2 flex items-center gap-1 rounded-full bg-black/60 px-2 py-1 text-[10px] font-medium text-white">
             <Star className="size-2.5 fill-warning text-warning" />
             {t("featured")}
           </span>
         )}
         {outOfStock && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/55 backdrop-blur-[1px]">
+          <div className="absolute inset-0 flex items-center justify-center bg-black/55">
             <span className="rounded-full bg-white/10 px-2.5 py-1 text-xs font-medium text-white">{t("outOfStock")}</span>
           </div>
         )}
@@ -68,6 +66,6 @@ export function ItemCard({ item, onSelect, locale }: ItemCardProps) {
           )}
         </div>
       </div>
-    </motion.button>
+    </button>
   );
 }

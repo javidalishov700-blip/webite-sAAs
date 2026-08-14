@@ -34,59 +34,92 @@ export function CatalogView({ company, locale }: { company: CompanyPublicView; l
 
   useEffect(() => {
     if (searchResults) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (isClickScrolling.current) return;
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-        if (visible[0]) {
-          const id = visible[0].target.getAttribute("data-category-id");
-          if (id) setActiveCategoryId(id);
-        }
-      },
-      { rootMargin: "-140px 0px -65% 0px", threshold: 0 },
-    );
-    sectionRefs.current.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+    let ticking = false;
+
+    const syncActive = () => {
+      ticking = false;
+      if (isClickScrolling.current) return;
+      const marker = 132;
+      let current = company.categories[0]?.id ?? null;
+      for (const category of company.categories) {
+        const el = sectionRefs.current.get(category.id);
+        if (!el) continue;
+        if (el.getBoundingClientRect().top <= marker) current = category.id;
+      }
+      setActiveCategoryId((prev) => (prev === current ? prev : current));
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(syncActive);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    syncActive();
+    return () => window.removeEventListener("scroll", onScroll);
   }, [searchResults, company.categories]);
 
   function handleSelectCategory(id: string) {
     setActiveCategoryId(id);
     const el = sectionRefs.current.get(id);
-    if (el) {
-      isClickScrolling.current = true;
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-      window.setTimeout(() => (isClickScrolling.current = false), 700);
+    if (!el) return;
+    isClickScrolling.current = true;
+    const top = window.scrollY + el.getBoundingClientRect().top - 128;
+    window.scrollTo({ top, behavior: "auto" });
+    window.setTimeout(() => {
+      isClickScrolling.current = false;
+    }, 200);
+  }
+
+  function handleSelectItem(item: ItemWithAttributes) {
+    setSelectedItem(item);
+    const key = `qru-view:${item.id}`;
+    try {
+      if (sessionStorage.getItem(key)) return;
+      sessionStorage.setItem(key, "1");
+    } catch {
+      /* continue */
     }
+    fetch("/api/catalog/view", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ slug: company.slug, itemId: item.id }),
+      keepalive: true,
+    }).catch(() => {
+      try {
+        sessionStorage.removeItem(key);
+      } catch {
+        /* ignore */
+      }
+    });
   }
 
   return (
-    <div className="mx-auto min-h-[100svh] max-w-2xl pb-28">
-      <CatalogHeader company={company} search={search} onSearchChange={setSearch} />
-
-      {!searchResults && (
-        <CategoryNav
-          categories={company.categories}
-          activeId={activeCategoryId}
-          onSelect={handleSelectCategory}
-          accentColor={company.accentColor}
-        />
-      )}
+    <div data-catalog-page className="mx-auto min-h-[100svh] max-w-2xl touch-pan-y pb-28">
+      <div className="catalog-chrome sticky top-0 z-20 pt-[env(safe-area-inset-top)]">
+        <CatalogHeader company={company} search={search} onSearchChange={setSearch} />
+        {!searchResults && (
+          <CategoryNav
+            categories={company.categories}
+            activeId={activeCategoryId}
+            onSelect={handleSelectCategory}
+            accentColor={company.accentColor}
+          />
+        )}
+      </div>
 
       <div className="px-4 pt-3">
         {company.categories.length === 0 ? (
-          <EmptyState icon={Store} title={t("emptyCatalog")} description={t("emptyCatalogHint")} className="mt-6 glass-card border-solid" />
+          <EmptyState icon={Store} title={t("emptyCatalog")} description={t("emptyCatalogHint")} className="mt-6 border border-border bg-card" />
         ) : searchResults ? (
           searchResults.length === 0 ? (
             <EmptyState icon={SearchX} title={t("noResults", { query: search })} className="mt-6" />
           ) : (
-            <div>
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-                {searchResults.map((item) => (
-                  <ItemCard key={item.id} item={item} locale={locale} onSelect={() => setSelectedItem(item)} />
-                ))}
-              </div>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+              {searchResults.map((item) => (
+                <ItemCard key={item.id} item={item} locale={locale} onSelect={() => handleSelectItem(item)} />
+              ))}
             </div>
           )
         ) : (
@@ -107,7 +140,7 @@ export function CatalogView({ company, locale }: { company: CompanyPublicView; l
                 ) : (
                   <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                     {category.items.map((item) => (
-                      <ItemCard key={item.id} item={item} locale={locale} onSelect={() => setSelectedItem(item)} />
+                      <ItemCard key={item.id} item={item} locale={locale} onSelect={() => handleSelectItem(item)} />
                     ))}
                   </div>
                 )}

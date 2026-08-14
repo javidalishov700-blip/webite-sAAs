@@ -3,9 +3,9 @@
 import { useEffect } from "react";
 
 /**
- * Records a catalog open once per browser tab session.
- * Skips when the visitor already came through `/api/qr/:id/go` (`scanned=1`),
- * so QR analytics are not double-counted.
+ * Records a QR scan only when the visitor arrived with `?qr=` and was not
+ * already counted by `/api/qr/:id/go` (`scanned=1`). Direct catalog visits
+ * are not scans.
  */
 export function CatalogScanTracker({
   slug,
@@ -19,19 +19,19 @@ export function CatalogScanTracker({
   alreadyRecorded?: boolean;
 }) {
   useEffect(() => {
-    if (alreadyRecorded) return;
-    const key = `qru-scan:${slug}:${qrId ?? "direct"}`;
+    if (alreadyRecorded || !qrId) return;
+    const key = `qru-scan:${slug}:${qrId}`;
     try {
       if (sessionStorage.getItem(key)) return;
       sessionStorage.setItem(key, "1");
     } catch {
-      // private mode / blocked storage — still attempt the record
+      // private mode — still attempt the record
     }
 
     fetch("/api/scans", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ slug, locale, qrCodeId: qrId ?? undefined }),
+      body: JSON.stringify({ slug, locale, qrCodeId: qrId }),
       keepalive: true,
     }).catch(() => {
       try {
