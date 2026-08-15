@@ -28,13 +28,14 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useCreateQrCode, useDeleteQrCode, useQrCodes, useUpdateQrCode } from "@/hooks/use-qr-codes";
-import { useCompany } from "@/hooks/use-company";
+import { useCompany, useUpdateCompany } from "@/hooks/use-company";
 import { usePlanUsage } from "@/hooks/use-plan-usage";
 import { usePlanLimitToast } from "@/hooks/use-plan-limit-toast";
 import { PlanUsageBanner } from "@/components/admin/plan-usage-banner";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { catalogAbsoluteUrl, catalogPreviewPath, qrGoAbsoluteUrl } from "@/lib/catalog-url";
+import { appBaseUrl } from "@/lib/site";
 import { ApiError } from "@/lib/api-client";
 import type { QrDotStyle } from "@/lib/data/types";
 
@@ -44,6 +45,7 @@ export default function QrStudioPage() {
   const t = useTranslations("admin.qr");
   const tc = useTranslations("common");
   const { data: company } = useCompany();
+  const updateCompany = useUpdateCompany();
   const { data: qrCodes, isLoading } = useQrCodes();
   const usage = usePlanUsage();
   const planToast = usePlanLimitToast();
@@ -80,7 +82,7 @@ export default function QrStudioPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected?.id]);
 
-  const origin = typeof window !== "undefined" ? window.location.origin : "";
+  const origin = appBaseUrl();
   const catalogUrl = company ? catalogAbsoluteUrl(origin, company.slug, company.defaultLocale) : "";
   const qrPayload = selected ? qrGoAbsoluteUrl(origin, selected.id) : catalogUrl;
 
@@ -136,6 +138,25 @@ export default function QrStudioPage() {
       />
 
       <PlanUsageBanner />
+
+      {company && !company.isPublished ? (
+        <div className="mb-4 flex flex-col gap-3 rounded-2xl border border-warning/40 bg-warning/10 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm text-warning">{t("needPublish")}</p>
+          <Button
+            variant="glow"
+            size="sm"
+            loading={updateCompany.isPending}
+            onClick={() => {
+              updateCompany.mutate(
+                { isPublished: true },
+                { onSuccess: () => toast.success(t("publishedOk")) },
+              );
+            }}
+          >
+            {t("publishNow")}
+          </Button>
+        </div>
+      ) : null}
 
       {!qrCodes || qrCodes.length === 0 ? (
         <EmptyState

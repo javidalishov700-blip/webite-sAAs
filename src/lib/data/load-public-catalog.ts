@@ -13,7 +13,11 @@ function isLiveDemoSlug(slug: string): boolean {
  */
 export async function loadPublicCatalog(
   slug: string,
-  opts?: { ownerPreview?: boolean; viewer?: { companyId: string; isPlatformAdmin: boolean } | null },
+  opts?: {
+    ownerPreview?: boolean;
+    viewer?: { companyId: string; isPlatformAdmin: boolean } | null;
+    qrId?: string | null;
+  },
 ): Promise<CompanyPublicView | null> {
   try {
     const { getPublicCatalogBySlug } = await import("@/lib/data/repositories/catalog");

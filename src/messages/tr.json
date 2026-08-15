@@ -472,7 +472,7 @@
       "bannedOk": "Çalışma alanı engellendi.",
       "unbannedOk": "Çalışma alanı açıldı.",
       "publishedOk": "Katalog herkese açık.",
-      "unpublishedOk": "Katalog gizli. QR taraması 404 verir.",
+      "unpublishedOk": "Katalog gizli. QR taraması yine kataloğu açar.",
       "verifiedOk": "E-posta doğrulanmış sayıldı. Giriş yapabilir.",
       "qrsOffOk": "Tüm QR kodlar durduruldu.",
       "qrsOnOk": "Tüm QR kodlar aktif.",
@@ -742,7 +742,10 @@
       "scans": "{count} tarama",
       "paused": "Durduruldu — tarama çalışmaz",
       "activeLabel": "QR aktif",
-      "activeHint": "Kapatırsan bu kod tarandığında 404 döner.",
+      "activeHint": "Kapatırsan bu kod tarandığında katalog açılmaz.",
+      "needPublish": "Katalog gizli. Tarama yine açacak — herkese açık yapmak için yayınla.",
+      "publishNow": "Kataloğu yayınla",
+      "publishedOk": "Katalog artık açık. QR’ı tekrar okut.",
       "pausedOk": "QR durdu. Misafir bu kodla kataloğa giremez.",
       "resumedOk": "QR tekrar yayında.",
       "created": "QR kod oluşturuldu",
@@ -875,6 +878,13 @@
     "notFound": {
       "title": "Sayfa bulunamadı",
       "body": "Bağlantı yok veya katalog yayında değil.",
+      "home": "Ana sayfa"
+    },
+    "qrClosed": {
+      "title": "Bu QR açılamadı",
+      "missing": "Kod bulunamadı veya silinmiş. QR Stüdyo’dan yenisini indir.",
+      "paused": "Bu QR durdurulmuş. Stüdyo’dan tekrar aç.",
+      "banned": "Bu katalog kapatılmış.",
       "home": "Ana sayfa"
     },
     "error": {

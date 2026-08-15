@@ -472,7 +472,7 @@
       "bannedOk": "Workspace blocked.",
       "unbannedOk": "Workspace restored.",
       "publishedOk": "Catalog is public.",
-      "unpublishedOk": "Catalog is hidden. QR scans will 404.",
+      "unpublishedOk": "Catalog is hidden. QR scans still open it.",
       "verifiedOk": "Email marked as verified. They can log in.",
       "qrsOffOk": "All QR codes paused.",
       "qrsOnOk": "All QR codes enabled.",
@@ -742,7 +742,10 @@
       "scans": "{count} scans",
       "paused": "Paused — scans are off",
       "activeLabel": "QR is active",
-      "activeHint": "Turn off to make this code return 404 when scanned.",
+      "activeHint": "Turn off to stop this code from opening the catalog.",
+      "needPublish": "The catalog is hidden. Scans still open it — publish to make the public link work too.",
+      "publishNow": "Publish catalog",
+      "publishedOk": "Catalog is live. Scan the QR again.",
       "pausedOk": "QR paused. Guests cannot open the catalog from this code.",
       "resumedOk": "QR is live again.",
       "created": "QR code created",
@@ -875,6 +878,13 @@
     "notFound": {
       "title": "Page not found",
       "body": "That link is missing or the catalog is unpublished.",
+      "home": "Back home"
+    },
+    "qrClosed": {
+      "title": "This QR did not open",
+      "missing": "The code was not found or was deleted. Download a new one from QR Studio.",
+      "paused": "This QR is paused. Turn it back on in Studio.",
+      "banned": "This catalog is closed.",
       "home": "Back home"
     },
     "error": {

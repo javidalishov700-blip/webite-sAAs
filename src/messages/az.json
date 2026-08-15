@@ -472,7 +472,7 @@
       "bannedOk": "İş sahəsi bloklandı.",
       "unbannedOk": "İş sahəsi açıldı.",
       "publishedOk": "Kataloq açıqdır.",
-      "unpublishedOk": "Kataloq gizlidir. QR skanı 404 verəcək.",
+      "unpublishedOk": "Kataloq gizlidir. QR skanı yenə kataloqu açır.",
       "verifiedOk": "E-poçt təsdiqli sayıldı. Daxil ola bilər.",
       "qrsOffOk": "Bütün QR-lər dayandırıldı.",
       "qrsOnOk": "Bütün QR-lər aktivdir.",
@@ -742,7 +742,10 @@
       "scans": "{count} skan",
       "paused": "Dayanıb — skan işləmir",
       "activeLabel": "QR aktivdir",
-      "activeHint": "Söndürsən bu kod skan olunanda 404 qayıdır.",
+      "activeHint": "Söndürsən bu kod skan olunanda kataloq açılmır.",
+      "needPublish": "Kataloq gizlidir. Skan indi açılacaq — ictimai etmək üçün yayınla.",
+      "publishNow": "Kataloqu yayınla",
+      "publishedOk": "Kataloq indi açıqdır. QR-ı yenidən oxudun.",
       "pausedOk": "QR dayandı. Qonaq bu kodla kataloqa girə bilməz.",
       "resumedOk": "QR yenidən canlıdır.",
       "created": "QR kod yaradıldı",
@@ -875,6 +878,13 @@
     "notFound": {
       "title": "Səhifə tapılmadı",
       "body": "Link yoxdur və ya kataloq gizlidir.",
+      "home": "Ana səhifə"
+    },
+    "qrClosed": {
+      "title": "Bu QR açılmadı",
+      "missing": "Kod tapılmadı və ya silinib. QR Studiyadan yenisini endirin.",
+      "paused": "Bu QR dayandırılıb. Studiyada yenidən açın.",
+      "banned": "Bu kataloq bağlanıb.",
       "home": "Ana səhifə"
     },
     "error": {

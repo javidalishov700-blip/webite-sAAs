@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { requireSession } from "@/lib/auth/guard";
 import { qrSchema } from "@/lib/validators/qr";
 import { createQrCode, listQrCodesByCompany, updateQrCode } from "@/lib/data/repositories/qr";
-import { getCompanyById } from "@/lib/data/repositories/companies";
+import { getCompanyById, updateCompany } from "@/lib/data/repositories/companies";
 import { qrGoPath } from "@/lib/catalog-url";
 import { assertPlanCapacity } from "@/lib/plan-guard";
 
@@ -26,6 +26,10 @@ export async function POST(request: NextRequest) {
   if (!company) return NextResponse.json({ error: "not_found" }, { status: 404 });
   const capacity = await assertPlanCapacity(user.companyId, company.plan, "qrCodes");
   if (capacity) return capacity;
+
+  if (!company.isPublished) {
+    await updateCompany(user.companyId, { isPublished: true });
+  }
 
   const qr = await createQrCode({
     companyId: user.companyId,

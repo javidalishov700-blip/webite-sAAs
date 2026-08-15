@@ -31,6 +31,11 @@ export function qrGoAbsoluteUrl(origin: string, qrId: string): string {
   return `${origin.replace(/\/$/, "")}${qrGoPath(qrId)}`;
 }
 
+export function qrClosedPath(locale: string, reason: "missing" | "paused" | "banned"): string {
+  const loc = isAppLocale(locale) ? locale : DEFAULT_LOCALE;
+  return `/${loc}/qr-closed?reason=${reason}`;
+}
+
 /** Strip a leading /en|/ru|/tr|/az prefix so next-intl `router.push` does not double it. */
 export function stripLocalePrefix(pathname: string): string {
   const match = pathname.match(/^\/(en|ru|tr|az)(?=\/|$)/);

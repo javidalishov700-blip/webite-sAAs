@@ -2,27 +2,40 @@ import { NextRequest, NextResponse } from "next/server";
 import { getQrCodeByIdPublic } from "@/lib/data/repositories/qr";
 import { getCompanyById } from "@/lib/data/repositories/companies";
 import { recordScan } from "@/lib/data/repositories/scans";
-import { catalogPath } from "@/lib/catalog-url";
+import { catalogPath, qrClosedPath } from "@/lib/catalog-url";
+import { DEFAULT_LOCALE } from "@/lib/constants";
 
 interface Params {
   params: Promise<{ id: string }>;
+}
+
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
+function sendTo(request: NextRequest, path: string) {
+  return NextResponse.redirect(new URL(path, request.url));
 }
 
 /**
  * Public QR landing: record a scan against the specific code, then send the
  * visitor to the live catalog. Encoded into every Studio / onboarding QR so
  * analytics stay accurate even when JavaScript is unavailable.
+ *
+ * Never returns raw JSON — phone cameras would show `{ error: "not_found" }`.
  */
 export async function GET(request: NextRequest, { params }: Params) {
   const { id } = await params;
-  const qr = await getQrCodeByIdPublic(id);
+  const qr = await getQrCodeByIdPublic(decodeURIComponent(id));
   if (!qr) {
-    return NextResponse.json({ error: "not_found" }, { status: 404 });
+    return sendTo(request, qrClosedPath(DEFAULT_LOCALE, "missing"));
   }
 
   const company = await getCompanyById(qr.companyId);
-  if (!company || !company.isPublished || company.bannedAt || !qr.isActive) {
-    return NextResponse.json({ error: "not_found" }, { status: 404 });
+  if (!company || company.bannedAt) {
+    return sendTo(request, qrClosedPath(company?.defaultLocale ?? DEFAULT_LOCALE, company?.bannedAt ? "banned" : "missing"));
+  }
+  if (!qr.isActive) {
+    return sendTo(request, qrClosedPath(company.defaultLocale, "paused"));
   }
 
   const device = /mobile|android|iphone/i.test(request.headers.get("user-agent") ?? "") ? "mobile" : "desktop";

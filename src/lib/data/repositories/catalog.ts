@@ -18,7 +18,7 @@ export type CatalogViewer = {
 /** Hydrates the catalog tree for a company slug. */
 export async function getPublicCatalogBySlug(
   slug: string,
-  opts?: { ownerPreview?: boolean; viewer?: CatalogViewer | null },
+  opts?: { ownerPreview?: boolean; viewer?: CatalogViewer | null; qrId?: string | null },
 ): Promise<CompanyPublicView | null> {
   if (isLiveDemoSlug(slug)) {
     await ensureLiveDemoCatalog();
@@ -31,7 +31,14 @@ export async function getPublicCatalogBySlug(
     Boolean(opts?.viewer) &&
     (opts!.viewer!.isPlatformAdmin || opts!.viewer!.companyId === company!.id);
 
-  if (!company || (company.bannedAt && !opts?.viewer?.isPlatformAdmin) || (!company.isPublished && !canDraft)) {
+  let viaQr = false;
+  if (company && opts?.qrId) {
+    const { getQrCodeByIdPublic } = await import("@/lib/data/repositories/qr");
+    const qr = await getQrCodeByIdPublic(opts.qrId);
+    viaQr = Boolean(qr && qr.companyId === company.id && qr.isActive);
+  }
+
+  if (!company || (company.bannedAt && !opts?.viewer?.isPlatformAdmin) || (!company.isPublished && !canDraft && !viaQr)) {
     return isLiveDemoSlug(slug) ? getStaticLiveDemoCatalog() : null;
   }
 
