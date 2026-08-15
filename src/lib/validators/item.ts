@@ -44,6 +44,13 @@ export type ItemInput = z.infer<typeof itemSchema>;
 /** Pre-parse shape used by the form (defaulted fields are optional until submit-time validation fills them in). */
 export type ItemFormValues = z.input<typeof itemSchema>;
 
+/** Same as the item API, but category can be created from a typed name on save. */
+export const productFormSchema = itemSchema.extend({
+  categoryId: z.string().optional().default(""),
+});
+export type ProductFormValues = z.input<typeof productFormSchema>;
+export type ProductFormOutput = z.output<typeof productFormSchema>;
+
 export const reorderItemsSchema = z.object({
   categoryId: z.string().min(1),
   orderedIds: z.array(z.string()).min(1),

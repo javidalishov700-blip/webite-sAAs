@@ -32,7 +32,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { CategoryFormDialog } from "@/components/admin/category-form-dialog";
 import { useCategories, useCreateCategory } from "@/hooks/use-categories";
 import { useCreateItem, useDeleteItem, useDuplicateItem, useItems, useUpdateItem } from "@/hooks/use-items";
 import { useCompany } from "@/hooks/use-company";
@@ -68,25 +67,47 @@ export default function ProductsPage() {
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
   const [formOpen, setFormOpen] = useState(false);
-  const [categoryFormOpen, setCategoryFormOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<ItemWithAttributes | null>(null);
   const [deletingItem, setDeletingItem] = useState<ItemWithAttributes | null>(null);
   const openedFromQuery = useRef(false);
 
   const isLoading = categoriesLoading || itemsLoading;
-  const hasNoCategoriesYet = !categoriesLoading && (categories?.length ?? 0) === 0;
+  const categorySuggestions =
+    (tCat.raw(`suggestions.${company?.industry ?? "OTHER"}`) as string[] | undefined) ?? [];
 
   function openCreateProduct() {
-    if (hasNoCategoriesYet) {
-      setCategoryFormOpen(true);
-      return;
-    }
     if (!usage.items.canAdd) {
       planToast.show("items", usage.items.limit);
       return;
     }
     setEditingItem(null);
     setFormOpen(true);
+  }
+
+  async function ensureCategory(name: string): Promise<string> {
+    const existing = (categories ?? []).find(
+      (category) => category.name.trim().toLowerCase() === name.trim().toLowerCase(),
+    );
+    if (existing) return existing.id;
+    if (!usage.categories.canAdd) {
+      planToast.show("categories", usage.categories.limit);
+      throw new ApiError("plan_limit", 403);
+    }
+    try {
+      const created = await createCategory.mutateAsync({ name: name.trim() });
+      if (!created?.id) throw new ApiError(tc("error"), 500);
+      queryClient.setQueryData(queryKeys.categories, (current: typeof categories) => {
+        const list = current ?? [];
+        return list.some((row) => row.id === created.id) ? list : [...list, created];
+      });
+      setCategoryFilter(created.id);
+      return created.id;
+    } catch (err) {
+      if (!planToast.fromError(err)) {
+        toast.error(err instanceof ApiError ? err.message : tc("error"));
+      }
+      throw err;
+    }
   }
 
   useEffect(() => {
@@ -153,7 +174,7 @@ export default function ProductsPage() {
           <>
             <Button variant="glow" className="w-full sm:w-auto" onClick={openCreateProduct}>
               <Plus className="size-4" />
-              {hasNoCategoriesYet ? t("addCategoryFirst") : t("add")}
+              {t("add")}
             </Button>
             <Button variant="outline" className="w-full sm:w-auto" asChild>
               <Link href="/admin/preview">
@@ -205,18 +226,6 @@ export default function ProductsPage() {
             <Skeleton key={i} className="h-16 rounded-2xl" />
           ))}
         </div>
-      ) : hasNoCategoriesYet ? (
-        <EmptyState
-          icon={Package}
-          title={t("needCategoryTitle")}
-          description={t("needCategory")}
-          action={
-            <Button variant="glow" onClick={() => setCategoryFormOpen(true)}>
-              <Plus className="size-4" />
-              {t("addCategoryFirst")}
-            </Button>
-          }
-        />
       ) : (items?.length ?? 0) === 0 ? (
         <EmptyState
           icon={Package}
@@ -332,36 +341,9 @@ export default function ProductsPage() {
       <div className="sticky bottom-4 z-20 mt-6 sm:hidden">
         <Button variant="glow" size="lg" className="w-full" onClick={openCreateProduct}>
           <Plus className="size-4" />
-          {hasNoCategoriesYet ? t("addCategoryFirst") : t("add")}
+          {t("add")}
         </Button>
       </div>
-
-      <CategoryFormDialog
-        open={categoryFormOpen}
-        onOpenChange={setCategoryFormOpen}
-        suggestions={(tCat.raw(`suggestions.${company?.industry ?? "OTHER"}`) as string[] | undefined) ?? []}
-        onSubmit={async (values) => {
-          try {
-            const created = await createCategory.mutateAsync(values);
-            queryClient.setQueryData(queryKeys.categories, (current: typeof categories) => {
-              if (!created) return current;
-              const list = current ?? [];
-              return list.some((row) => row.id === created.id) ? list : [...list, created];
-            });
-            toast.success(t("categoryCreated"));
-            setCategoryFormOpen(false);
-            if (created?.id) setCategoryFilter(created.id);
-            if (usage.items.canAdd) {
-              setEditingItem(null);
-              setFormOpen(true);
-            }
-          } catch (err) {
-            if (planToast.fromError(err)) return;
-            toast.error(err instanceof ApiError ? err.message : tc("error"));
-          }
-        }}
-        isSubmitting={createCategory.isPending}
-      />
 
       <Drawer
         open={formOpen}
@@ -376,20 +358,27 @@ export default function ProductsPage() {
             <DrawerTitle>{editingItem ? t("form.titleEdit") : t("form.titleNew")}</DrawerTitle>
             <p className="text-sm text-muted-foreground">{t("form.categoryHint")}</p>
           </DrawerHeader>
-          {categories && company && (
+          {company ? (
             <ProductForm
               key={editingItem?.id ?? `new-${categoryFilter}`}
-              categories={categories}
+              categories={categories ?? []}
               industry={company.industry}
               item={editingItem}
               defaultCategoryId={categoryFilter !== "all" ? categoryFilter : undefined}
               defaultCurrency={company.currency}
+              suggestions={categorySuggestions}
               featuredLocked={!usage.canFeature}
               onFeaturedLocked={() => planToast.show("featured")}
+              onEnsureCategory={ensureCategory}
               onSubmit={handleSubmit}
               onCancel={() => setFormOpen(false)}
-              isSubmitting={createItem.isPending || updateItem.isPending}
+              isSubmitting={createItem.isPending || updateItem.isPending || createCategory.isPending}
             />
+          ) : (
+            <div className="space-y-3 px-5 py-5">
+              <Skeleton className="h-24 rounded-2xl" />
+              <Skeleton className="h-40 rounded-2xl" />
+            </div>
           )}
         </DrawerContent>
       </Drawer>
