@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
-import { Star, Eye } from "lucide-react";
+import { Check, Star, Eye } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -15,7 +15,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ImageUpload } from "@/components/admin/image-upload";
 import { AttributeEditor } from "@/components/admin/attribute-editor";
 import { itemSchema, type AttributeInput, type ItemInput, type ItemFormValues } from "@/lib/validators/item";
+import { getCategoryIcon } from "@/lib/category-icons";
 import { CURRENCIES } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 import type { Category, Industry, ItemWithAttributes } from "@/lib/data/types";
 
 interface ProductFormProps {
@@ -93,6 +95,8 @@ export function ProductForm({
 
   const isVisible = watch("isVisible") ?? true;
   const isFeatured = watch("isFeatured") ?? false;
+  const categoryId = watch("categoryId");
+  const selectedCategory = categories.find((category) => category.id === categoryId);
 
   function submit(values: ItemInput) {
     const filledAttributes = attributes.filter((attr) => attr.key.trim().length > 0);
@@ -100,8 +104,58 @@ export function ProductForm({
   }
 
   return (
-    <form onSubmit={handleSubmit(submit)} className="flex h-full flex-col">
-      <div className="flex-1 space-y-7 overflow-y-auto px-5 py-5 sm:px-6">
+    <form onSubmit={handleSubmit(submit)} className="flex min-h-0 flex-1 flex-col">
+      <div className="min-h-0 flex-1 space-y-7 overflow-y-auto px-5 py-5 sm:px-6">
+        <section className="space-y-3 rounded-2xl border border-primary/25 bg-primary/5 p-3.5">
+          <div>
+            <Label htmlFor="category" className="text-sm font-semibold">
+              {t("categoryLabel")} *
+            </Label>
+            <p className="mt-0.5 text-xs text-muted-foreground">{t("categoryHint")}</p>
+          </div>
+          {categories.length === 0 ? (
+            <p className="text-sm text-destructive">{t("categoryMissing")}</p>
+          ) : (
+            <Controller
+              control={control}
+              name="categoryId"
+              render={({ field }) => (
+                <div id="category" className="grid grid-cols-1 gap-2 sm:grid-cols-2" role="radiogroup" aria-label={t("categoryLabel")}>
+                  {categories.map((category) => {
+                    const Icon = getCategoryIcon(category.icon);
+                    const selected = field.value === category.id;
+                    return (
+                      <button
+                        key={category.id}
+                        type="button"
+                        role="radio"
+                        aria-checked={selected}
+                        onClick={() => field.onChange(category.id)}
+                        className={cn(
+                          "flex min-h-12 items-center gap-2.5 rounded-xl border px-3.5 py-3 text-left text-sm font-medium transition-colors",
+                          selected
+                            ? "border-primary bg-primary text-primary-foreground shadow-sm"
+                            : "border-border bg-background hover:border-primary/50 hover:bg-primary/10",
+                        )}
+                      >
+                        <Icon className="size-4 shrink-0" />
+                        <span className="min-w-0 flex-1 truncate">{category.name}</span>
+                        {selected ? <Check className="size-4 shrink-0" /> : null}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            />
+          )}
+          {selectedCategory ? (
+            <p className="text-sm font-medium text-primary">{t("categoryPicked", { name: selectedCategory.name })}</p>
+          ) : (
+            <p className="text-sm text-destructive">{t("categoryRequired")}</p>
+          )}
+          {errors.categoryId && <p className="text-xs text-destructive">{errors.categoryId.message}</p>}
+        </section>
+
         <section className="space-y-4">
           <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">{t("basics")}</p>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-[168px_1fr]">
@@ -111,27 +165,6 @@ export function ProductForm({
                 <Label htmlFor="title">{t("titleLabel")}</Label>
                 <Input id="title" placeholder={t("titlePlaceholder")} {...register("title")} />
                 {errors.title && <p className="text-xs text-destructive">{errors.title.message}</p>}
-              </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="category">{t("categoryLabel")}</Label>
-                <Controller
-                  control={control}
-                  name="categoryId"
-                  render={({ field }) => (
-                    <Select value={field.value} onValueChange={field.onChange}>
-                      <SelectTrigger id="category">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {categories.map((c) => (
-                          <SelectItem key={c.id} value={c.id}>
-                            {c.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  )}
-                />
               </div>
             </div>
           </div>
@@ -222,7 +255,7 @@ export function ProductForm({
             <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">{t("attributes")}</p>
             <p className="mt-1 text-xs text-muted-foreground">{t("attributesHint")}</p>
           </div>
-          <AttributeEditor industry={industry} categoryName={categories.find((c) => c.id === watch("categoryId"))?.name} value={attributes} onChange={setAttributes} />
+          <AttributeEditor industry={industry} categoryName={selectedCategory?.name} value={attributes} onChange={setAttributes} />
         </section>
       </div>
 
