@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { LayoutGrid, Plus, Smartphone } from "lucide-react";
@@ -43,7 +43,7 @@ import { useCompany } from "@/hooks/use-company";
 import { usePlanUsage } from "@/hooks/use-plan-usage";
 import { usePlanLimitToast } from "@/hooks/use-plan-limit-toast";
 import { PlanUsageBanner } from "@/components/admin/plan-usage-banner";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { ApiError } from "@/lib/api-client";
 import type { Category } from "@/lib/data/types";
 
@@ -51,6 +51,7 @@ export default function CategoriesPage() {
   const t = useTranslations("admin.categories");
   const tp = useTranslations("admin.preview");
   const tc = useTranslations("common");
+  const router = useRouter();
   const { data: company } = useCompany();
   const { data: categories, isLoading } = useCategories();
   const { data: items } = useItems();
@@ -64,6 +65,21 @@ export default function CategoriesPage() {
   const [formOpen, setFormOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [deletingCategory, setDeletingCategory] = useState<Category | null>(null);
+
+  function openCreate() {
+    if (!usage.categories.canAdd) {
+      planToast.show("categories", usage.categories.limit);
+      return;
+    }
+    setEditingCategory(null);
+    setFormOpen(true);
+  }
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("new") === "1") openCreate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
@@ -119,25 +135,15 @@ export default function CategoriesPage() {
         subtitle={t("subtitle")}
         actions={
           <>
-            <Button variant="outline" asChild>
+            <Button variant="glow" className="w-full sm:w-auto" onClick={openCreate}>
+              <Plus className="size-4" />
+              {t("add")}
+            </Button>
+            <Button variant="outline" className="w-full sm:w-auto" asChild>
               <Link href="/admin/preview">
                 <Smartphone className="size-4" />
                 {tp("seeOnPhone")}
               </Link>
-            </Button>
-            <Button
-              variant="glow"
-              onClick={() => {
-                if (!usage.categories.canAdd) {
-                  planToast.show("categories", usage.categories.limit);
-                  return;
-                }
-                setEditingCategory(null);
-                setFormOpen(true);
-              }}
-            >
-              <Plus className="size-4" />
-              {t("add")}
             </Button>
           </>
         }
@@ -157,13 +163,7 @@ export default function CategoriesPage() {
           title={t("empty")}
           description={t("emptyHint")}
           action={
-            <Button variant="glow" onClick={() => {
-              if (!usage.categories.canAdd) {
-                planToast.show("categories", usage.categories.limit);
-                return;
-              }
-              setFormOpen(true);
-            }}>
+            <Button variant="glow" onClick={openCreate}>
               <Plus className="size-4" />
               {t("add")}
             </Button>
@@ -184,6 +184,7 @@ export default function CategoriesPage() {
                   category={category}
                   itemCount={itemCountByCategory.get(category.id) ?? 0}
                   onToggleVisible={(visible) => updateCategory.mutate({ id: category.id, isVisible: visible })}
+                  onAddProduct={() => router.push(`/admin/products?category=${category.id}&new=1`)}
                   onEdit={() => {
                     setEditingCategory(category);
                     setFormOpen(true);
@@ -195,6 +196,13 @@ export default function CategoriesPage() {
           </SortableContext>
         </DndContext>
       )}
+
+      <div className="sticky bottom-4 z-20 mt-6 sm:hidden">
+        <Button variant="glow" size="lg" className="w-full" onClick={openCreate}>
+          <Plus className="size-4" />
+          {t("add")}
+        </Button>
+      </div>
 
       <CategoryFormDialog
         open={formOpen}

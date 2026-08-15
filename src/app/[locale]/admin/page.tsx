@@ -148,13 +148,13 @@ export default function AdminOverviewPage() {
         </CardHeader>
         <CardContent className="flex flex-col gap-3 sm:flex-row">
           <Button variant="outline" className="flex-1 justify-start gap-2.5" asChild>
-            <Link href="/admin/products">
+            <Link href="/admin/products?new=1">
               <Plus className="size-4" />
               {t("addProduct")}
             </Link>
           </Button>
           <Button variant="outline" className="flex-1 justify-start gap-2.5" asChild>
-            <Link href="/admin/categories">
+            <Link href="/admin/categories?new=1">
               <Plus className="size-4" />
               {t("addCategory")}
             </Link>

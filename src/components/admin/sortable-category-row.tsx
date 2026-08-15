@@ -3,7 +3,7 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useTranslations } from "next-intl";
-import { GripVertical, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { GripVertical, MoreHorizontal, Pencil, Plus, Trash2 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
@@ -19,9 +19,17 @@ interface SortableCategoryRowProps {
   onToggleVisible: (visible: boolean) => void;
   onEdit: () => void;
   onDelete: () => void;
+  onAddProduct: () => void;
 }
 
-export function SortableCategoryRow({ category, itemCount, onToggleVisible, onEdit, onDelete }: SortableCategoryRowProps) {
+export function SortableCategoryRow({
+  category,
+  itemCount,
+  onToggleVisible,
+  onEdit,
+  onDelete,
+  onAddProduct,
+}: SortableCategoryRowProps) {
   const t = useTranslations("admin.categories");
   const tc = useTranslations("common");
   const Icon = getCategoryIcon(category.icon);
@@ -31,7 +39,7 @@ export function SortableCategoryRow({ category, itemCount, onToggleVisible, onEd
     <Card
       ref={setNodeRef}
       style={{ transform: CSS.Transform.toString(transform), transition }}
-      className={cn("flex items-center gap-3 p-3.5 sm:p-4", isDragging && "z-10 opacity-70 shadow-2xl")}
+      className={cn("flex flex-wrap items-center gap-3 p-3.5 sm:p-4", isDragging && "z-10 opacity-70 shadow-2xl")}
     >
       <button
         {...attributes}
@@ -56,6 +64,12 @@ export function SortableCategoryRow({ category, itemCount, onToggleVisible, onEd
           {tc("hidden")}
         </Badge>
       )}
+
+      <Button type="button" variant="glow" size="sm" className="shrink-0" onClick={onAddProduct}>
+        <Plus className="size-3.5" />
+        <span className="hidden sm:inline">{t("addProduct")}</span>
+        <span className="sm:hidden">{t("addProductShort")}</span>
+      </Button>
 
       <Switch checked={category.isVisible} onCheckedChange={onToggleVisible} aria-label={tc("visible")} />
 

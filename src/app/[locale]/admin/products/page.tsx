@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
@@ -31,7 +32,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useCategories } from "@/hooks/use-categories";
+import { CategoryFormDialog } from "@/components/admin/category-form-dialog";
+import { useCategories, useCreateCategory } from "@/hooks/use-categories";
 import { useCreateItem, useDeleteItem, useDuplicateItem, useItems, useUpdateItem } from "@/hooks/use-items";
 import { useCompany } from "@/hooks/use-company";
 import { usePlanUsage } from "@/hooks/use-plan-usage";
@@ -39,20 +41,24 @@ import { usePlanLimitToast } from "@/hooks/use-plan-limit-toast";
 import { PlanUsageBanner } from "@/components/admin/plan-usage-banner";
 import { Link, useRouter } from "@/i18n/navigation";
 import { formatCurrency } from "@/lib/utils";
+import { queryKeys } from "@/lib/query-keys";
 import { ApiError, isPlanLimitError } from "@/lib/api-client";
 import type { ItemWithAttributes } from "@/lib/data/types";
 import type { ItemInput } from "@/lib/validators/item";
 
 export default function ProductsPage() {
   const t = useTranslations("admin.products");
+  const tCat = useTranslations("admin.categories");
   const tp = useTranslations("admin.preview");
   const tc = useTranslations("common");
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { data: company } = useCompany();
   const { data: categories, isLoading: categoriesLoading } = useCategories();
   const { data: items, isLoading: itemsLoading } = useItems();
   const usage = usePlanUsage();
   const planToast = usePlanLimitToast();
+  const createCategory = useCreateCategory();
   const createItem = useCreateItem();
   const updateItem = useUpdateItem();
   const deleteItem = useDeleteItem();
@@ -62,8 +68,41 @@ export default function ProductsPage() {
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
   const [formOpen, setFormOpen] = useState(false);
+  const [categoryFormOpen, setCategoryFormOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<ItemWithAttributes | null>(null);
   const [deletingItem, setDeletingItem] = useState<ItemWithAttributes | null>(null);
+  const openedFromQuery = useRef(false);
+
+  const isLoading = categoriesLoading || itemsLoading;
+  const hasNoCategoriesYet = !categoriesLoading && (categories?.length ?? 0) === 0;
+
+  function openCreateProduct() {
+    if (hasNoCategoriesYet) {
+      setCategoryFormOpen(true);
+      return;
+    }
+    if (!usage.items.canAdd) {
+      planToast.show("items", usage.items.limit);
+      return;
+    }
+    setEditingItem(null);
+    setFormOpen(true);
+  }
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const categoryId = params.get("category");
+    if (categoryId) setCategoryFilter(categoryId);
+  }, []);
+
+  useEffect(() => {
+    if (openedFromQuery.current || categoriesLoading) return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("new") !== "1") return;
+    openedFromQuery.current = true;
+    openCreateProduct();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categoriesLoading, categories]);
 
   const categoryById = useMemo(() => new Map((categories ?? []).map((c) => [c.id, c])), [categories]);
 
@@ -105,9 +144,6 @@ export default function ProductsPage() {
     setDeletingItem(null);
   }
 
-  const isLoading = categoriesLoading || itemsLoading;
-  const hasNoCategoriesYet = !categoriesLoading && (categories?.length ?? 0) === 0;
-
   return (
     <div>
       <PageHeader
@@ -115,26 +151,15 @@ export default function ProductsPage() {
         subtitle={t("subtitle")}
         actions={
           <>
-            <Button variant="outline" asChild>
+            <Button variant="glow" className="w-full sm:w-auto" onClick={openCreateProduct}>
+              <Plus className="size-4" />
+              {hasNoCategoriesYet ? t("addCategoryFirst") : t("add")}
+            </Button>
+            <Button variant="outline" className="w-full sm:w-auto" asChild>
               <Link href="/admin/preview">
                 <Smartphone className="size-4" />
                 {tp("seeOnPhone")}
               </Link>
-            </Button>
-            <Button
-              variant="glow"
-              disabled={hasNoCategoriesYet}
-              onClick={() => {
-                if (!usage.items.canAdd) {
-                  planToast.show("items", usage.items.limit);
-                  return;
-                }
-                setEditingItem(null);
-                setFormOpen(true);
-              }}
-            >
-              <Plus className="size-4" />
-              {t("add")}
             </Button>
           </>
         }
@@ -183,21 +208,21 @@ export default function ProductsPage() {
       ) : hasNoCategoriesYet ? (
         <EmptyState
           icon={Package}
-          title={t("form.basics")}
+          title={t("needCategoryTitle")}
           description={t("needCategory")}
+          action={
+            <Button variant="glow" onClick={() => setCategoryFormOpen(true)}>
+              <Plus className="size-4" />
+              {t("addCategoryFirst")}
+            </Button>
+          }
         />
       ) : (items?.length ?? 0) === 0 ? (
         <EmptyState
           icon={Package}
           title={t("emptyState")}
           action={
-            <Button variant="glow" onClick={() => {
-              if (!usage.items.canAdd) {
-                planToast.show("items", usage.items.limit);
-                return;
-              }
-              setFormOpen(true);
-            }}>
+            <Button variant="glow" onClick={openCreateProduct}>
               <Plus className="size-4" />
               {t("add")}
             </Button>
@@ -304,6 +329,40 @@ export default function ProductsPage() {
         </div>
       )}
 
+      <div className="sticky bottom-4 z-20 mt-6 sm:hidden">
+        <Button variant="glow" size="lg" className="w-full" onClick={openCreateProduct}>
+          <Plus className="size-4" />
+          {hasNoCategoriesYet ? t("addCategoryFirst") : t("add")}
+        </Button>
+      </div>
+
+      <CategoryFormDialog
+        open={categoryFormOpen}
+        onOpenChange={setCategoryFormOpen}
+        suggestions={(tCat.raw(`suggestions.${company?.industry ?? "OTHER"}`) as string[] | undefined) ?? []}
+        onSubmit={async (values) => {
+          try {
+            const created = await createCategory.mutateAsync(values);
+            queryClient.setQueryData(queryKeys.categories, (current: typeof categories) => {
+              if (!created) return current;
+              const list = current ?? [];
+              return list.some((row) => row.id === created.id) ? list : [...list, created];
+            });
+            toast.success(t("categoryCreated"));
+            setCategoryFormOpen(false);
+            if (created?.id) setCategoryFilter(created.id);
+            if (usage.items.canAdd) {
+              setEditingItem(null);
+              setFormOpen(true);
+            }
+          } catch (err) {
+            if (planToast.fromError(err)) return;
+            toast.error(err instanceof ApiError ? err.message : tc("error"));
+          }
+        }}
+        isSubmitting={createCategory.isPending}
+      />
+
       <Drawer
         open={formOpen}
         onOpenChange={(open) => {
@@ -318,7 +377,7 @@ export default function ProductsPage() {
           </DrawerHeader>
           {categories && company && (
             <ProductForm
-              key={editingItem?.id ?? "new"}
+              key={editingItem?.id ?? `new-${categoryFilter}`}
               categories={categories}
               industry={company.industry}
               item={editingItem}
