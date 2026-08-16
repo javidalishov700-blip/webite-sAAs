@@ -79,7 +79,7 @@
       "titleLine1": "İşletmeniz,",
       "titleHighlight": "bir taramada.",
       "subtitle": "QR-Universe; restoranlar, perakende, elektronik ve hizmet sektörleri için her menüyü, kataloğu veya fiyat listesini canlı bir mobil deneyime dönüştürür. Uygulama kurmaya, menü bastırmaya gerek yok.",
-      "ctaPrimary": "Ücretsiz başla — kart gerekmez",
+      "ctaPrimary": "Ücretsiz başla",
       "ctaSecondary": "Nasıl çalıştığını izleyin",
       "badgeScans": "bu ay tarama",
       "badgeLive": "Canlı",
@@ -230,57 +230,53 @@
       "cta": "Canlı kataloğu dene"
     },
     "pricing": {
-      "eyebrow": "Basit fiyatlandırma",
-      "title": "Sizinle birlikte büyüyen planlar",
-      "subtitle": "Küçük bir katalogla ücretsiz başlayın. Pro’da sınırsız ürün ve kategori.",
-      "monthly": "Aylık",
-      "yearly": "Yıllık",
-      "yearlyBadge": "2 ay ücretsiz",
-      "mostPopular": "En popüler",
+      "eyebrow": "Basit fiyat",
+      "title": "Ücretsiz başla. Pro için yaz.",
+      "subtitle": "Küçük katalog ücretsiz. Tam menü Pro — ödemeyi birlikte konuşuruz.",
+      "contactNote": "Sitede kartla ödeme yok. Pro veya Kurumsal isteyen WhatsApp’tan yazsın.",
+      "whatsappMessage": "Merhaba Javid, QR-Universe Pro almak istiyorum.",
+      "mostPopular": "Büyüyen menü",
       "perMonth": "/ay",
-      "custom": "Özel",
+      "custom": "Konuşalım",
       "plans": {
         "free": {
           "name": "Ücretsiz",
-          "description": "Yeni başlayan işletme sahipleri için.",
+          "description": "Küçük katalog için.",
           "cta": "Ücretsiz başla",
           "features": [
             "4 kategori ve 15 ürün",
             "2 QR kod",
-            "Misafir telefonunda canlı katalog",
-            "Topluluk desteği"
+            "Misafir telefonunda canlı katalog"
           ]
         },
         "pro": {
           "name": "Pro",
-          "description": "Birden çok kategorisi olan büyüyen işletmeler için.",
-          "cta": "Ücretsiz denemeyi başlat",
+          "description": "Tam menü. Planı ben açarım.",
+          "cta": "WhatsApp’tan yaz",
           "features": [
             "Sınırsız ürün ve kategori",
             "20 markalı QR koda kadar",
             "Öne çıkan ürün rozeti",
-            "Tam QR Stüdyosu özelleştirmesi",
-            "Tarama analitiği paneli",
-            "Öncelikli destek"
+            "Tarama analitiği",
+            "Doğrudan destek"
           ]
         },
         "enterprise": {
           "name": "Kurumsal",
-          "description": "Çok şubeli markalar ve bayilikler için.",
-          "cta": "Satış ekibiyle görüş",
+          "description": "Birden çok şube. Birlikte anlaşırız.",
+          "cta": "WhatsApp’tan yaz",
           "features": [
             "Sınırsız şube",
-            "Ekip rolleri ve izinleri",
-            "Özel katılım süreci",
-            "API erişimi",
-            "SLA ve öncelikli destek"
+            "Ekip rolleri",
+            "Kurulum yardımı",
+            "Doğrudan hat"
           ]
         }
       }
     },
     "cta": {
       "title": "Kataloğunuzu bir deneyime dönüştürün.",
-      "subtitle": "Geleceğe doğru tarama yapan binlerce restoran, mağaza ve stüdyoya katılın.",
+      "subtitle": "QR bas, kataloğu doldur, misafir okutsun.",
       "button": "Ücretsiz kataloğunu oluştur"
     },
     "footer": {
@@ -288,7 +284,7 @@
       "product": "Ürün",
       "company": "Şirket",
       "legal": "Yasal",
-      "features": "Özellikler",
+      "howItWorks": "Nasıl çalışır",
       "pricing": "Fiyatlandırma",
       "useCases": "Kullanım alanları",
       "demo": "Canlı demo",
@@ -553,8 +549,8 @@
         "qrCodes": "Ücretsiz planda {limit} QR kod var. Pro ile daha fazla ekleyebilirsiniz.",
         "featured": "Öne çıkan rozeti Pro’da. Ürünü vurgulamak için yükseltin."
       },
-      "hitHint": "Pro’da sınırsız ürün ve kategori, daha fazla QR ve öne çıkan rozeti var.",
-      "upgradeCta": "Pro’ya bak",
+      "hitHint": "Pro için WhatsApp’tan yazın — planı ben açarım.",
+      "upgradeCta": "Pro için yazın",
       "items": "Ürünler",
       "categories": "Kategoriler",
       "qrCodes": "QR kodlar",
@@ -1066,9 +1062,11 @@
       "eyebrow": "Destek",
       "title": "İletişim",
       "lead": "Arayın veya WhatsApp yazın. Türkçe, Azerbaycan Türkçesi, İngilizce ve Rusça.",
+      "proHint": "Pro veya Kurumsal istiyorsanız buradan yazın — planı ben açarım. Sitede kartla ödeme yok.",
       "phoneLabel": "Direkt hat",
       "hours": "Her gün 09:00–22:00 (Türkiye & Azerbaycan saati).",
-      "call": "Hemen ara"
+      "call": "Hemen ara",
+      "whatsappMessage": "Merhaba Javid, QR-Universe hakkında yazıyorum."
     },
     "careers": {
       "eyebrow": "Ekip",
@@ -1112,6 +1110,10 @@
         "q8": {
           "q": "Kalori, beden veya üretim yılı ekleyebilir miyim?",
           "a": "Evet. Alanlar kategoriye göre gelir: yemekte kalori, giyside beden, ayakkabıda numara, elektronikte yıl ve garanti. Kendi alanınızı da yazabilirsiniz."
+        },
+        "q9": {
+          "q": "Pro nasıl alınır?",
+          "a": "Sitede kartla ödeme yok. WhatsApp’tan yazın — planı ben açarım."
         }
       }
     }

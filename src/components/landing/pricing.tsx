@@ -1,26 +1,23 @@
-"use client";
-
-import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Check, Sparkles } from "lucide-react";
+import { Check, MessageCircle, Sparkles } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TiltCard } from "@/components/landing/tilt-card";
 import { Reveal, RevealGroup, RevealItem } from "@/components/landing/reveal";
+import { whatsappHref } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 const PLAN_KEYS = ["free", "pro", "enterprise"] as const;
-const PLAN_PRICES: Record<(typeof PLAN_KEYS)[number], { monthly: number | null; yearly: number | null }> = {
-  free: { monthly: 0, yearly: 0 },
-  pro: { monthly: 29, yearly: 24 },
-  enterprise: { monthly: null, yearly: null },
+const PLAN_PRICES: Record<(typeof PLAN_KEYS)[number], number | null> = {
+  free: 0,
+  pro: 29,
+  enterprise: null,
 };
 
 export function Pricing() {
   const t = useTranslations("landing.pricing");
-  const [yearly, setYearly] = useState(true);
 
   return (
     <section id="pricing" className="relative mx-auto max-w-6xl px-5 py-24 sm:px-6">
@@ -28,36 +25,14 @@ export function Pricing() {
         <p className="text-sm font-semibold tracking-wide text-accent uppercase">{t("eyebrow")}</p>
         <h2 className="mt-3 font-display text-3xl font-bold tracking-tight sm:text-4xl">{t("title")}</h2>
         <p className="mt-4 text-muted-foreground">{t("subtitle")}</p>
-
-        <div className="mt-8 inline-flex items-center gap-3 rounded-full border border-border bg-muted/40 p-1.5">
-          <button
-            onClick={() => setYearly(false)}
-            className={cn(
-              "rounded-full px-4 py-1.5 text-sm font-medium transition-colors",
-              !yearly ? "bg-primary text-primary-foreground shadow" : "text-muted-foreground",
-            )}
-          >
-            {t("monthly")}
-          </button>
-          <button
-            onClick={() => setYearly(true)}
-            className={cn(
-              "flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-medium transition-colors",
-              yearly ? "bg-primary text-primary-foreground shadow" : "text-muted-foreground",
-            )}
-          >
-            {t("yearly")}
-            <Badge variant="success" className="ml-0.5 py-0">
-              {t("yearlyBadge")}
-            </Badge>
-          </button>
-        </div>
+        <p className="mt-3 text-sm font-medium text-foreground">{t("contactNote")}</p>
       </Reveal>
 
       <RevealGroup className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-3">
         {PLAN_KEYS.map((plan) => {
           const isPopular = plan === "pro";
-          const price = PLAN_PRICES[plan][yearly ? "yearly" : "monthly"];
+          const price = PLAN_PRICES[plan];
+          const ctaIsWhatsApp = plan !== "free";
           return (
             <RevealItem key={plan} className="h-full">
               <TiltCard maxTilt={isPopular ? 9 : 12} className={cn("h-full", isPopular && "lg:-translate-y-3")}>
@@ -88,7 +63,14 @@ export function Pricing() {
                   </div>
 
                   <Button variant={isPopular ? "glow" : "outline"} className="mt-6 w-full" asChild>
-                    <Link href={plan === "enterprise" ? "/contact" : "/signup"}>{t(`plans.${plan}.cta`)}</Link>
+                    {ctaIsWhatsApp ? (
+                      <a href={whatsappHref(t("whatsappMessage"))} target="_blank" rel="noreferrer">
+                        <MessageCircle className="size-4" />
+                        {t(`plans.${plan}.cta`)}
+                      </a>
+                    ) : (
+                      <Link href="/signup">{t(`plans.${plan}.cta`)}</Link>
+                    )}
                   </Button>
 
                   <ul className="mt-7 space-y-3 text-sm">

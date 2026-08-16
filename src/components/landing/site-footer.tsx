@@ -12,9 +12,7 @@ export function SiteFooter() {
     {
       title: t("product"),
       links: [
-        { label: t("features"), href: "/#features" },
-        { label: t("useCases"), href: "/#use-cases" },
-        { label: t("demo"), href: "/#demo" },
+        { label: t("howItWorks"), href: "/#how-it-works" },
         { label: t("pricing"), href: "/#pricing" },
         { label: t("faq"), href: "/#faq" },
       ],
@@ -23,7 +21,6 @@ export function SiteFooter() {
       title: t("company"),
       links: [
         { label: t("about"), href: "/about" },
-        { label: t("careers"), href: "/careers" },
         { label: t("contact"), href: "/contact" },
       ],
     },

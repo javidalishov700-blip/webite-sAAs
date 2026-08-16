@@ -79,7 +79,7 @@
       "titleLine1": "Your business,",
       "titleHighlight": "in a scan.",
       "subtitle": "QR-Universe turns any menu, catalog, or price list into a living, breathing mobile experience — for restaurants, retail, electronics and services. No app to install, no printing ever again.",
-      "ctaPrimary": "Start free — no card needed",
+      "ctaPrimary": "Start free",
       "ctaSecondary": "Watch it work",
       "badgeScans": "scans this month",
       "badgeLive": "Live",
@@ -231,64 +231,60 @@
     },
     "pricing": {
       "eyebrow": "Simple pricing",
-      "title": "Plans that grow with you",
-      "subtitle": "Start free with a small catalog. Upgrade to Pro for unlimited products and categories.",
-      "monthly": "Monthly",
-      "yearly": "Yearly",
-      "yearlyBadge": "2 months free",
-      "mostPopular": "Most popular",
+      "title": "Start free. Message me for Pro.",
+      "subtitle": "A small catalog is free. Full menu is Pro — we agree payment together.",
+      "contactNote": "No card checkout on the site. Want Pro or Enterprise? WhatsApp me.",
+      "whatsappMessage": "Hi Javid, I want QR-Universe Pro.",
+      "mostPopular": "Growing menu",
       "perMonth": "/month",
-      "custom": "Custom",
+      "custom": "Let’s talk",
       "plans": {
         "free": {
           "name": "Free",
-          "description": "For solo owners just getting started.",
-          "cta": "Start for free",
+          "description": "For a small catalog.",
+          "cta": "Start free",
           "features": [
             "4 categories and 15 products",
             "2 QR codes",
-            "Live catalog on guest phones",
-            "Community support"
+            "Live catalog on guest phones"
           ]
         },
         "pro": {
           "name": "Pro",
-          "description": "For growing businesses with multiple categories.",
-          "cta": "Start free trial",
+          "description": "Full menu. I turn the plan on.",
+          "cta": "WhatsApp me",
           "features": [
             "Unlimited products and categories",
             "Up to 20 branded QR codes",
-            "Featured items on the catalog",
-            "Full QR Studio customization",
-            "Scan analytics dashboard",
-            "Priority support"
+            "Featured item badge",
+            "Scan analytics",
+            "Direct support"
           ]
         },
         "enterprise": {
           "name": "Enterprise",
-          "description": "For multi-location brands & franchises.",
-          "cta": "Talk to sales",
+          "description": "Several locations. We agree together.",
+          "cta": "WhatsApp me",
           "features": [
             "Unlimited locations",
-            "Team roles & permissions",
-            "Dedicated onboarding",
-            "API access",
-            "SLA & priority support"
+            "Team roles",
+            "Hands-on setup",
+            "Direct line"
           ]
         }
       }
     },
     "cta": {
       "title": "Turn your catalog into an experience.",
-      "subtitle": "Join thousands of restaurants, stores and studios already scanning their way into the future.",
+      "subtitle": "Print a QR, fill the catalog, guests scan.",
       "button": "Create your free catalog"
     },
     "footer": {
-      "description": "The multi-tenant platform for interactive, QR-native digital catalogs — built for restaurants, retail, electronics and services.",
+      "description": "QR-native digital catalogs for restaurants, shops and services.",
       "product": "Product",
       "company": "Company",
       "legal": "Legal",
-      "features": "Features",
+      "howItWorks": "How it works",
       "pricing": "Pricing",
       "useCases": "Use cases",
       "demo": "Live demo",
@@ -553,8 +549,8 @@
         "qrCodes": "Free includes {limit} QR codes. Upgrade to Pro to add more.",
         "featured": "The Featured badge is a Pro extra. Upgrade to highlight products."
       },
-      "hitHint": "Pro unlocks unlimited products and categories, more QR codes, and featured items.",
-      "upgradeCta": "See Pro",
+      "hitHint": "Message on WhatsApp for Pro — I’ll turn the plan on.",
+      "upgradeCta": "Ask for Pro",
       "items": "Products",
       "categories": "Categories",
       "qrCodes": "QR codes",
@@ -995,7 +991,7 @@
         {
           "heading": "5. Plans, availability and liability",
           "body": [
-            "Free, Pro and Enterprise describe current entitlements. Paid plans, when offered, are billed as stated at checkout.",
+            "Free, Pro and Enterprise describe current entitlements. Paid plans are arranged with us directly — there is no card checkout on the site.",
             "The service is provided as-is. We aim for high availability but do not warrant uninterrupted QR scans. To the fullest extent permitted by law we are not liable for lost profits or issues on the guest’s device.",
             "Nothing limits liability for fraud, death or personal injury caused by negligence, or any liability that cannot be excluded by law."
           ]
@@ -1066,9 +1062,11 @@
       "eyebrow": "Support",
       "title": "Contact",
       "lead": "Call or WhatsApp. We answer in Turkish, Azerbaijani, English and Russian.",
+      "proHint": "Want Pro or Enterprise? Message here — I’ll turn the plan on. There is no card checkout on the site.",
       "phoneLabel": "Direct line",
       "hours": "Every day, 09:00–22:00 (GMT+4 / Türkiye & Azerbaijan).",
-      "call": "Call now"
+      "call": "Call now",
+      "whatsappMessage": "Hi Javid, I’m writing about QR-Universe."
     },
     "careers": {
       "eyebrow": "Team",
@@ -1112,6 +1110,10 @@
         "q8": {
           "q": "Can I add calories, sizes or a model year?",
           "a": "Yes. Product fields follow the category: calories for food, clothing and shoe sizes, year and warranty for electronics. You can also type your own."
+        },
+        "q9": {
+          "q": "How do I get Pro?",
+          "a": "There is no card checkout on the site. WhatsApp me and I’ll turn Pro on."
         }
       }
     }

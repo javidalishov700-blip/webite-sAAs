@@ -27,9 +27,9 @@ export function PlanUsageBanner({ className }: { className?: string }) {
           qr: formatPlanUsage(usage.qrCodes.used, usage.qrCodes.limit),
         })}
       </p>
-      <Link href="/admin/settings" className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-primary hover:underline">
+      <Link href="/contact" className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-primary hover:underline">
         <Sparkles className="size-3.5" />
-        {t("upgradeCta")}
+        {t("contactCta")}
       </Link>
     </div>
   );

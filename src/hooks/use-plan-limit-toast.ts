@@ -14,8 +14,8 @@ export function usePlanLimitToast() {
     toast.error(t(`hit.${resource}`, { limit: limit ?? 0 }), {
       description: t("hitHint"),
       action: {
-        label: t("upgradeCta"),
-        onClick: () => router.push("/admin/settings"),
+        label: t("contactCta"),
+        onClick: () => router.push("/contact"),
       },
     });
   }

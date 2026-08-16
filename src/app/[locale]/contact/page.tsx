@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Phone, MessageCircle } from "lucide-react";
 import { MarketingChrome } from "@/components/landing/marketing-chrome";
 import { Button } from "@/components/ui/button";
-import { SITE, telHref } from "@/lib/site";
+import { SITE, telHref, whatsappHref } from "@/lib/site";
 
 export async function generateMetadata({
   params,
@@ -26,6 +26,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
         <p className="text-sm font-semibold tracking-wide text-accent uppercase">{t("eyebrow")}</p>
         <h1 className="mt-3 font-display text-4xl font-bold tracking-tight">{t("title")}</h1>
         <p className="mt-4 text-lg text-muted-foreground">{t("lead")}</p>
+        <p className="mt-3 text-base text-foreground">{t("proHint")}</p>
 
         <div className="glass-card glow-border mt-10 space-y-6 rounded-3xl p-8">
           <div>
@@ -37,15 +38,15 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Button variant="glow" size="lg" asChild>
-              <a href={telHref()}>
-                <Phone className="size-4" />
-                {t("call")}
+              <a href={whatsappHref(t("whatsappMessage"))} target="_blank" rel="noreferrer">
+                <MessageCircle className="size-4" />
+                WhatsApp
               </a>
             </Button>
             <Button variant="outline" size="lg" asChild>
-              <a href={SITE.whatsapp} target="_blank" rel="noreferrer">
-                <MessageCircle className="size-4" />
-                WhatsApp
+              <a href={telHref()}>
+                <Phone className="size-4" />
+                {t("call")}
               </a>
             </Button>
           </div>

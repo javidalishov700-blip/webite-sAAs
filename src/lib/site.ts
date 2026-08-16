@@ -23,3 +23,9 @@ export function appBaseUrl(): string {
 export function telHref(phone = SITE.phone): string {
   return `tel:${phone.replace(/[^\d+]/g, "")}`;
 }
+
+export function whatsappHref(text?: string): string {
+  const base = SITE.whatsapp.split("?")[0];
+  if (!text?.trim()) return SITE.whatsapp;
+  return `${base}?text=${encodeURIComponent(text.trim())}`;
+}
