@@ -53,6 +53,15 @@ export async function sendMail(payload: MailPayload): Promise<{ sent: boolean; e
   return { sent: true };
 }
 
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 function wrapHtml(title: string, body: string, ctaLabel: string, url: string): string {
   return `<!doctype html>
 <html><body style="font-family:system-ui,sans-serif;background:#0b0b14;color:#f5f5f7;padding:24px">
@@ -136,5 +145,23 @@ export function resetMail(locale: AppLocale, url: string): Omit<MailPayload, "to
     subject: copy.resetSubject,
     html: wrapHtml(copy.resetTitle, copy.resetBody, copy.resetCta, url),
     text: `${copy.resetTitle}\n\n${copy.resetBody}\n\n${url}`,
+  };
+}
+
+/// Sent to platform admins (never to the signing-up user) so they know to activate a plan.
+export function newSignupMail(payload: {
+  companyName: string;
+  ownerName: string;
+  ownerEmail: string;
+  opsUrl: string;
+}): Omit<MailPayload, "to"> {
+  const companyName = escapeHtml(payload.companyName);
+  const ownerName = escapeHtml(payload.ownerName);
+  const ownerEmail = escapeHtml(payload.ownerEmail);
+  const body = `<strong>${companyName}</strong> just signed up, owner ${ownerName} (${ownerEmail}). Open Control to review the workspace and activate a plan.`;
+  return {
+    subject: `New signup: ${payload.companyName}`,
+    html: wrapHtml("New workspace signed up", body, "Open Control", payload.opsUrl),
+    text: `${payload.companyName} just signed up.\nOwner: ${payload.ownerName} (${payload.ownerEmail})\n\n${payload.opsUrl}`,
   };
 }

@@ -1,7 +1,9 @@
 import "server-only";
-import { sendMail, verificationMail, resetMail } from "@/lib/mailer";
+import { sendMail, verificationMail, resetMail, newSignupMail } from "@/lib/mailer";
 import { issueAuthToken, RESET_TTL_MS, VERIFY_TTL_MS } from "@/lib/auth/tokens";
 import { appBaseUrl } from "@/lib/site";
+import { platformAdminEmails } from "@/lib/platform-admin";
+import { DEFAULT_LOCALE } from "@/lib/constants";
 import type { AppLocale } from "@/lib/data/types";
 
 function localeOrEn(locale?: string | null): AppLocale {
@@ -29,4 +31,19 @@ export async function sendPasswordResetLink(user: { id: string; email: string },
     console.info(`[auth] reset link for ${user.email}: ${url}`);
   }
   return sent;
+}
+
+/// Lets the owner activate a plan as soon as a new workspace registers, without polling Control.
+export async function sendSignupAlert(details: { companyName: string; ownerName: string; ownerEmail: string }) {
+  const opsUrl = `${appBaseUrl()}/${DEFAULT_LOCALE}/admin/ops`;
+  const mail = newSignupMail({ ...details, opsUrl });
+  await Promise.all(
+    platformAdminEmails().map(async (to) => {
+      try {
+        await sendMail({ to, ...mail });
+      } catch (error) {
+        console.error("[auth] signup alert failed", to, error);
+      }
+    }),
+  );
 }

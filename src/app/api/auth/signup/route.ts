@@ -8,7 +8,7 @@ import {
 } from "@/lib/data/repositories/users";
 import { createCompany } from "@/lib/data/repositories/companies";
 import { hashPassword } from "@/lib/auth/password";
-import { sendVerificationLink } from "@/lib/auth/email-flows";
+import { sendVerificationLink, sendSignupAlert } from "@/lib/auth/email-flows";
 import { getRequestIp } from "@/lib/request-meta";
 import { RATE, rateLimit } from "@/lib/rate-limit";
 
@@ -49,6 +49,7 @@ export async function POST(request: NextRequest) {
     });
 
     await sendVerificationLink({ id: user.id, email: user.email }, locale);
+    await sendSignupAlert({ companyName: company.name, ownerName: user.name, ownerEmail: user.email });
 
     return NextResponse.json({ ok: true, needsVerification: true });
   } catch (error) {
