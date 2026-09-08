@@ -35,7 +35,7 @@ export function Hero() {
   ] as const;
 
   return (
-    <section className="relative flex min-h-[100svh] items-center overflow-hidden pt-28 pb-16 sm:pt-32">
+    <section className="relative flex items-start overflow-hidden pt-24 pb-16 sm:min-h-[100svh] sm:items-center sm:pt-32">
       <div className="mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-10 px-5 sm:px-6 lg:grid-cols-2 lg:gap-6">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -88,7 +88,7 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, ease: "easeOut", delay: 0.15 }}
-          className="relative order-first h-[280px] sm:h-[380px] lg:order-last lg:h-[560px]"
+          className="relative order-first h-[170px] sm:h-[380px] lg:order-last lg:h-[560px]"
         >
           <Hero3D />
           <ActiveUsersBadge className="glass animate-float absolute top-6 right-2 flex items-center gap-2 rounded-2xl px-3 py-2 text-xs font-medium sm:right-6" />
