@@ -31,7 +31,7 @@ export function CookieBanner() {
   }
 
   return (
-    <div className="glass fixed inset-x-3 bottom-3 z-50 mx-auto max-w-3xl rounded-2xl p-4 shadow-2xl sm:inset-x-6 sm:p-5">
+    <div className="glass fixed inset-x-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-50 mx-auto max-w-3xl rounded-2xl p-4 shadow-2xl sm:inset-x-6 sm:p-5">
       <p className="text-sm leading-relaxed text-foreground/90">{t("text")}</p>
       <div className="mt-3 flex flex-wrap items-center gap-2">
         <Button size="sm" variant="glow" onClick={accept}>

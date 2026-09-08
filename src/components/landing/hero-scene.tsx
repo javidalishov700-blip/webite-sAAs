@@ -5,6 +5,8 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, Float, Lightformer, RoundedBox, Sparkles } from "@react-three/drei";
 import * as THREE from "three";
 
+type Cell = { x: number; y: number; delay: number; accent: boolean };
+
 const GRID_SIZE = 11;
 const CELL = 0.34;
 const FINDER = 3;
@@ -43,19 +45,11 @@ function buildPattern(): boolean[][] {
 
 function QrModules({ hovering }: { hovering: MutableRefObject<boolean> }) {
   const groupRef = useRef<THREE.Group>(null);
+  const cellRefs = useRef<(THREE.Mesh | null)[]>([]);
   const pattern = useMemo(buildPattern, []);
 
-  useFrame((state) => {
-    if (!groupRef.current) return;
-    const over = hovering.current;
-    const targetY = over ? state.pointer.x * 0.55 : 0;
-    const targetX = over ? -state.pointer.y * 0.32 : 0;
-    groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetY, 0.1);
-    groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, targetX, 0.1);
-  });
-
   const cells = useMemo(() => {
-    const out: { x: number; y: number; delay: number; accent: boolean }[] = [];
+    const out: Cell[] = [];
     const offset = (GRID_SIZE * CELL) / 2;
     for (let y = 0; y < GRID_SIZE; y++) {
       for (let x = 0; x < GRID_SIZE; x++) {
@@ -74,6 +68,27 @@ function QrModules({ hovering }: { hovering: MutableRefObject<boolean> }) {
     }
     return out;
   }, [pattern]);
+
+  // One useFrame call for the whole grid instead of a <Float> per cell (each
+  // ran its own useFrame): ~50 subscriptions collapsed to 1 keeps this
+  // scene cheap on low-power mobile GPUs.
+  useFrame((state) => {
+    if (groupRef.current) {
+      const over = hovering.current;
+      const targetY = over ? state.pointer.x * 0.55 : 0;
+      const targetX = over ? -state.pointer.y * 0.32 : 0;
+      groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetY, 0.1);
+      groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, targetX, 0.1);
+    }
+
+    const t = state.clock.elapsedTime;
+    for (let i = 0; i < cells.length; i++) {
+      const mesh = cellRefs.current[i];
+      if (!mesh) continue;
+      const cell = cells[i];
+      mesh.position.y = cell.y + Math.sin(t * 1.6 + cell.delay * 6) * 0.03;
+    }
+  });
 
   return (
     <group ref={groupRef}>
@@ -104,25 +119,27 @@ function QrModules({ hovering }: { hovering: MutableRefObject<boolean> }) {
         />
       </RoundedBox>
       {cells.map((cell, i) => (
-        <Float key={i} speed={2} floatIntensity={0.35} rotationIntensity={0.08} floatingRange={[-0.03, 0.03]}>
-          <RoundedBox
-            args={[CELL * 0.82, CELL * 0.82, cell.accent ? 0.36 : 0.22]}
-            radius={0.05}
-            smoothness={2}
-            position={[cell.x, cell.y, cell.accent ? 0.05 : 0]}
-          >
-            <meshPhysicalMaterial
-              color={cell.accent ? "#00e5ff" : "#8f79ff"}
-              emissive={cell.accent ? "#00e5ff" : "#7c5cff"}
-              emissiveIntensity={cell.accent ? 1.1 : 0.55}
-              metalness={0.4}
-              roughness={0.3}
-              clearcoat={0.6}
-              clearcoatRoughness={0.25}
-              envMapIntensity={1}
-            />
-          </RoundedBox>
-        </Float>
+        <RoundedBox
+          key={i}
+          ref={(el) => {
+            cellRefs.current[i] = el;
+          }}
+          args={[CELL * 0.82, CELL * 0.82, cell.accent ? 0.36 : 0.22]}
+          radius={0.05}
+          smoothness={2}
+          position={[cell.x, cell.y, cell.accent ? 0.05 : 0]}
+        >
+          <meshPhysicalMaterial
+            color={cell.accent ? "#00e5ff" : "#8f79ff"}
+            emissive={cell.accent ? "#00e5ff" : "#7c5cff"}
+            emissiveIntensity={cell.accent ? 1.1 : 0.55}
+            metalness={0.4}
+            roughness={0.3}
+            clearcoat={0.6}
+            clearcoatRoughness={0.25}
+            envMapIntensity={1}
+          />
+        </RoundedBox>
       ))}
       <Sparkles count={45} scale={[6, 6, 3]} size={1.8} speed={0.3} opacity={0.7} color="#c9bfff" noise={0.6} />
     </group>
@@ -158,7 +175,7 @@ export default function HeroScene() {
   return (
     <Canvas
       dpr={[1, 1.6]}
-      gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+      gl={{ antialias: true, alpha: true, powerPreference: "default" }}
       camera={{ position: [0, 0, 7.2], fov: 42 }}
       className="!touch-none"
       onPointerEnter={() => {

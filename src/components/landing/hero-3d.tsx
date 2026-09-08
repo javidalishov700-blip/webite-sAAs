@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { ErrorBoundary } from "@/components/error-boundary";
+import { usePrefersReducedMotion } from "@/hooks/use-media-query";
 
 const HeroScene = dynamic(() => import("@/components/landing/hero-scene"), {
   ssr: false,
@@ -17,11 +18,17 @@ function GlowFallback() {
 }
 
 export function Hero3D() {
+  const prefersReducedMotion = usePrefersReducedMotion();
+
   return (
     <div className="relative size-full">
-      <ErrorBoundary fallback={<GlowFallback />}>
-        <HeroScene />
-      </ErrorBoundary>
+      {prefersReducedMotion ? (
+        <GlowFallback />
+      ) : (
+        <ErrorBoundary fallback={<GlowFallback />}>
+          <HeroScene />
+        </ErrorBoundary>
+      )}
       {/* Holographic scanner sweep — pure CSS, no extra WebGL cost */}
       <div
         aria-hidden
