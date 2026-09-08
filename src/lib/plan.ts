@@ -6,7 +6,7 @@ export const PLAN_LIMITS: Record<
   Plan,
   { items: number | null; categories: number | null; qrCodes: number | null }
 > = {
-  FREE: { items: 15, categories: 4, qrCodes: 2 },
+  FREE: { items: 5, categories: 1, qrCodes: 2 },
   PRO: { items: null, categories: null, qrCodes: 20 },
   ENTERPRISE: { items: null, categories: null, qrCodes: null },
 };
