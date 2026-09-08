@@ -145,6 +145,7 @@
   }
 
   html {
+    @apply bg-background;
     color-scheme: light dark;
     scroll-behavior: auto;
   }
