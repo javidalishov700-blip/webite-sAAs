@@ -1,4 +1,4 @@
-import type { Viewport } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Outfit, JetBrains_Mono } from "next/font/google";
 import "@/app/globals.css";
 
@@ -25,6 +25,37 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
+};
+
+// Locale-independent, so it lives on the synchronous root; [locale]/layout.tsx
+// (async — it awaits params) only overrides title/description with the
+// translated copy. Next merges parent + child metadata.
+export const metadata: Metadata = {
+  title: {
+    default: "QR-Universe — Your business, in a scan",
+    template: "%s · QR-Universe",
+  },
+  manifest: "/manifest.webmanifest",
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
+  appleWebApp: {
+    // `capable` only emits the new unprefixed `mobile-web-app-capable` tag —
+    // iOS itself still keys its home-screen standalone mode (which is what
+    // lets black-translucent draw page content under the status bar / Dynamic
+    // Island) off the legacy apple-prefixed one, so it has to be added by hand.
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "QR-Universe",
+  },
+  other: {
+    "apple-mobile-web-app-capable": "yes",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
