@@ -21,7 +21,13 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#06060b",
+  // Array form (not a single string) is the format iOS Safari's chrome-tint
+  // heuristic actually reads reliably; values match --background in
+  // globals.css for each color-scheme.
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f6f6fb" },
+    { media: "(prefers-color-scheme: dark)", color: "#06060b" },
+  ],
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
