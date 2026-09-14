@@ -342,10 +342,13 @@
     },
     "checkEmail": {
       "title": "Check your email",
-      "body": "We sent a verification link. Your catalog stays offline until you confirm this address — so nobody else can register as you.",
+      "body": "We sent a 6-digit code. Your catalog stays offline until you confirm this address — so nobody else can register as you.",
+      "codePlaceholder": "123456",
+      "verifyButton": "Verify",
+      "invalidCode": "That code is wrong or expired.",
       "emailPlaceholder": "you@company.com",
-      "resend": "Send the link again",
-      "resent": "If that email has a pending account, a new link is on the way.",
+      "resend": "Resend code",
+      "resent": "If that email has a pending account, a new code is on the way.",
       "noMail": "No email? WhatsApp us and we will verify you from Control.",
       "whatsapp": "WhatsApp support",
       "backToLogin": "Back to log in"

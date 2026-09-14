@@ -4,8 +4,8 @@ import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { motion } from "motion/react";
-import { MailCheck } from "lucide-react";
-import { Link } from "@/i18n/navigation";
+import { AlertCircle, MailCheck } from "lucide-react";
+import { useRouter, Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -15,19 +15,37 @@ import { SITE } from "@/lib/site";
 function CheckEmailForm() {
   const t = useTranslations("auth.checkEmail");
   const locale = useLocale();
+  const router = useRouter();
   const searchParams = useSearchParams();
   const preset = searchParams.get("email") ?? "";
   const [email, setEmail] = useState(preset);
+  const [code, setCode] = useState("");
+  const [verifying, setVerifying] = useState(false);
+  const [codeError, setCodeError] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [resending, setResending] = useState(false);
+
+  async function verify() {
+    setCodeError(null);
+    setVerifying(true);
+    try {
+      await api.post("/api/auth/verify", { code });
+      router.push("/onboarding");
+      router.refresh();
+    } catch {
+      setCodeError(t("invalidCode"));
+    } finally {
+      setVerifying(false);
+    }
+  }
 
   async function resend() {
-    setLoading(true);
+    setResending(true);
     try {
       await api.post("/api/auth/resend", { email: email.trim() || preset, locale });
       setSent(true);
     } finally {
-      setLoading(false);
+      setResending(false);
     }
   }
 
@@ -43,7 +61,34 @@ function CheckEmailForm() {
         <p className="mt-2 text-sm text-muted-foreground">{t("body")}</p>
         {preset ? <p className="mt-2 font-medium text-sm">{preset}</p> : null}
 
-        <div className="mt-6 space-y-3">
+        <form
+          className="mt-6 space-y-3"
+          onSubmit={(e) => {
+            e.preventDefault();
+            void verify();
+          }}
+        >
+          <Input
+            inputMode="numeric"
+            autoComplete="one-time-code"
+            maxLength={6}
+            placeholder={t("codePlaceholder")}
+            value={code}
+            onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
+            className="text-center text-lg tracking-[0.5em]"
+          />
+          {codeError ? (
+            <div className="flex items-center gap-2 rounded-xl border border-destructive/30 bg-destructive/10 px-3 py-2.5 text-sm text-destructive">
+              <AlertCircle className="size-4 shrink-0" />
+              {codeError}
+            </div>
+          ) : null}
+          <Button type="submit" variant="glow" className="w-full" loading={verifying} disabled={code.length !== 6}>
+            {t("verifyButton")}
+          </Button>
+        </form>
+
+        <div className="mt-6 space-y-3 border-t border-border/60 pt-6">
           {!preset ? (
             <Input
               type="email"
@@ -52,7 +97,7 @@ function CheckEmailForm() {
               placeholder={t("emailPlaceholder")}
             />
           ) : null}
-          <Button variant="glow" className="w-full" loading={loading} onClick={() => void resend()}>
+          <Button variant="outline" className="w-full" loading={resending} onClick={() => void resend()}>
             {t("resend")}
           </Button>
           {sent ? <p className="text-center text-xs text-muted-foreground">{t("resent")}</p> : null}

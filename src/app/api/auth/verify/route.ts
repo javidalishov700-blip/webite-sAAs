@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { verifyTokenSchema } from "@/lib/validators/auth";
+import { verifyCodeSchema } from "@/lib/validators/auth";
 import { consumeAuthToken } from "@/lib/auth/tokens";
 import { findUserById, getPrimaryMembership, markEmailVerified } from "@/lib/data/repositories/users";
 import { updateCompany } from "@/lib/data/repositories/companies";
@@ -16,13 +16,13 @@ export async function POST(request: NextRequest) {
   }
 
   const body = await request.json().catch(() => null);
-  const parsed = verifyTokenSchema.safeParse(body);
+  const parsed = verifyCodeSchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json({ error: "invalid" }, { status: 400 });
   }
 
   try {
-    const userId = await consumeAuthToken(parsed.data.token, "EMAIL_VERIFY");
+    const userId = await consumeAuthToken(parsed.data.code, "EMAIL_VERIFY");
     if (!userId) {
       return NextResponse.json({ error: "invalid" }, { status: 400 });
     }

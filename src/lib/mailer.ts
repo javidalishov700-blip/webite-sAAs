@@ -78,51 +78,61 @@ function wrapHtml(title: string, body: string, ctaLabel: string, url: string): s
 </body></html>`;
 }
 
+function wrapCodeHtml(title: string, body: string, code: string): string {
+  return `<!doctype html>
+<html><body style="font-family:system-ui,sans-serif;background:#0b0b14;color:#f5f5f7;padding:24px">
+  <table width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;margin:0 auto;background:#161622;border-radius:16px;padding:28px">
+    <tr><td>
+      <p style="font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#a78bfa;margin:0 0 12px">QR-Universe</p>
+      <h1 style="font-size:22px;margin:0 0 16px">${title}</h1>
+      <p style="line-height:1.55;color:#d4d4d8">${body}</p>
+      <p style="margin:28px 0;text-align:center;font-size:34px;font-weight:700;letter-spacing:.3em;color:#ffffff;background:#0b0b14;border-radius:12px;padding:18px 12px">${code}</p>
+      <p style="font-size:12px;color:#71717a;margin-top:24px">WhatsApp: ${SITE.phoneDisplay}</p>
+    </td></tr>
+  </table>
+</body></html>`;
+}
+
 const COPY: Record<AppLocale, {
   verifySubject: string;
   verifyTitle: string;
   verifyBody: string;
-  verifyCta: string;
   resetSubject: string;
   resetTitle: string;
   resetBody: string;
   resetCta: string;
 }> = {
   en: {
-    verifySubject: "Confirm your QR-Universe email",
+    verifySubject: "Your QR-Universe verification code",
     verifyTitle: "Verify your email",
-    verifyBody: "Thanks for signing up. Confirm this address to activate your catalog. Nobody else can take this account.",
-    verifyCta: "Verify email",
+    verifyBody: "Thanks for signing up. Enter this code to activate your catalog. Nobody else can take this account.",
     resetSubject: "Reset your QR-Universe password",
     resetTitle: "Reset your password",
     resetBody: "Use this link to choose a new password. If you did not ask for this, ignore the email.",
     resetCta: "Choose a new password",
   },
   az: {
-    verifySubject: "QR-Universe e-poçtunu təsdiqlə",
+    verifySubject: "QR-Universe təsdiq kodun",
     verifyTitle: "E-poçtu təsdiqlə",
-    verifyBody: "Qeydiyyat üçün təşəkkürlər. Kataloqunu aktiv etmək üçün bu ünvanı təsdiqlə. Başqa heç kim bu hesabı ələ keçirə bilməz.",
-    verifyCta: "E-poçtu təsdiqlə",
+    verifyBody: "Qeydiyyat üçün təşəkkürlər. Kataloqunu aktiv etmək üçün bu kodu daxil et. Başqa heç kim bu hesabı ələ keçirə bilməz.",
     resetSubject: "QR-Universe şifrəsini sıfırla",
     resetTitle: "Şifrəni sıfırla",
     resetBody: "Yeni şifrə seçmək üçün bu linkə kliklə. Sən istəməmisənsə, bu məktubu nəzərə alma.",
     resetCta: "Yeni şifrə seç",
   },
   tr: {
-    verifySubject: "QR-Universe e-postanı doğrula",
+    verifySubject: "QR-Universe doğrulama kodun",
     verifyTitle: "E-postanı doğrula",
-    verifyBody: "Kayıt için teşekkürler. Kataloğunu açmak için bu adresi doğrula. Başka kimse bu hesabı alamaz.",
-    verifyCta: "E-postayı doğrula",
+    verifyBody: "Kayıt için teşekkürler. Kataloğunu açmak için bu kodu gir. Başka kimse bu hesabı alamaz.",
     resetSubject: "QR-Universe şifreni sıfırla",
     resetTitle: "Şifreyi sıfırla",
     resetBody: "Yeni şifre seçmek için bu bağlantıya tıkla. Sen istemediysen bu maili yok say.",
     resetCta: "Yeni şifre seç",
   },
   ru: {
-    verifySubject: "Подтвердите email QR-Universe",
+    verifySubject: "Код подтверждения QR-Universe",
     verifyTitle: "Подтвердите email",
-    verifyBody: "Спасибо за регистрацию. Подтвердите адрес, чтобы открыть каталог. Никто другой не сможет забрать этот аккаунт.",
-    verifyCta: "Подтвердить email",
+    verifyBody: "Спасибо за регистрацию. Введите этот код, чтобы открыть каталог. Никто другой не сможет забрать этот аккаунт.",
     resetSubject: "Сброс пароля QR-Universe",
     resetTitle: "Сброс пароля",
     resetBody: "По этой ссылке можно задать новый пароль. Если вы не запрашивали сброс — просто игнорируйте письмо.",
@@ -130,12 +140,12 @@ const COPY: Record<AppLocale, {
   },
 };
 
-export function verificationMail(locale: AppLocale, url: string): Omit<MailPayload, "to"> {
+export function verificationMail(locale: AppLocale, code: string): Omit<MailPayload, "to"> {
   const copy = COPY[locale] ?? COPY.en;
   return {
     subject: copy.verifySubject,
-    html: wrapHtml(copy.verifyTitle, copy.verifyBody, copy.verifyCta, url),
-    text: `${copy.verifyTitle}\n\n${copy.verifyBody}\n\n${url}`,
+    html: wrapCodeHtml(copy.verifyTitle, copy.verifyBody, code),
+    text: `${copy.verifyTitle}\n\n${copy.verifyBody}\n\n${code}`,
   };
 }
 

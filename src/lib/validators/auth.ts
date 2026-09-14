@@ -28,8 +28,8 @@ export const emailLocaleSchema = z.object({
 });
 export type EmailLocaleInput = z.infer<typeof emailLocaleSchema>;
 
-export const verifyTokenSchema = z.object({
-  token: z.string().min(16).max(128),
+export const verifyCodeSchema = z.object({
+  code: z.string().trim().regex(/^\d{6}$/, "Enter the 6-digit code"),
 });
 
 export const resetPasswordSchema = z.object({

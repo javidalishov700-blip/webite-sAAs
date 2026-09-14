@@ -342,10 +342,13 @@
     },
     "checkEmail": {
       "title": "E-poçtuna bax",
-      "body": "Təsdiq linki göndərdik. Kataloq e-poçt təsdiqlənənə qədər gizli qalır — başqa heç kim sənin adınla qeydiyyatdan keçə bilməz.",
+      "body": "6 rəqəmli kod göndərdik. Kataloq e-poçt təsdiqlənənə qədər gizli qalır — başqa heç kim sənin adınla qeydiyyatdan keçə bilməz.",
+      "codePlaceholder": "123456",
+      "verifyButton": "Təsdiqlə",
+      "invalidCode": "Kod yanlışdır və ya vaxtı bitib.",
       "emailPlaceholder": "you@company.com",
-      "resend": "Linki yenidən göndər",
-      "resent": "Bu e-poçtda gözləyən hesab varsa, yeni link yoldadır.",
+      "resend": "Kodu yenidən göndər",
+      "resent": "Bu e-poçtda gözləyən hesab varsa, yeni kod yoldadır.",
       "noMail": "Məktub gəlmədi? WhatsApp yaz, İdarə panelindən təsdiqləyəcəyəm.",
       "whatsapp": "WhatsApp dəstək",
       "backToLogin": "Girişə qayıt"

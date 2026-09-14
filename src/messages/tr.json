@@ -342,10 +342,13 @@
     },
     "checkEmail": {
       "title": "E-postanı kontrol et",
-      "body": "Doğrulama bağlantısı gönderdik. Katalog e-posta onaylanana kadar gizli kalır — başka kimse senin adınla kayıt olamaz.",
+      "body": "6 haneli kod gönderdik. Katalog e-posta onaylanana kadar gizli kalır — başka kimse senin adınla kayıt olamaz.",
+      "codePlaceholder": "123456",
+      "verifyButton": "Doğrula",
+      "invalidCode": "Kod yanlış veya süresi dolmuş.",
       "emailPlaceholder": "you@company.com",
-      "resend": "Bağlantıyı tekrar gönder",
-      "resent": "Bu e-postada bekleyen hesap varsa yeni bağlantı yolda.",
+      "resend": "Kodu tekrar gönder",
+      "resent": "Bu e-postada bekleyen hesap varsa yeni kod yolda.",
       "noMail": "Mail gelmedi mi? WhatsApp yaz, Kontrol panelinden doğrularım.",
       "whatsapp": "WhatsApp destek",
       "backToLogin": "Girişe dön"
