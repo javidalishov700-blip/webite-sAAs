@@ -271,7 +271,7 @@ export default function ProductsPage() {
                           {item.isFeatured && <Star className="size-3.5 shrink-0 fill-warning text-warning" />}
                         </p>
                         {item.stockCount === 0 && (
-                          <p className="text-xs text-destructive">Out of stock</p>
+                          <p className="text-xs text-destructive">{t("form.sizeOutOfStock")}</p>
                         )}
                       </div>
                     </div>

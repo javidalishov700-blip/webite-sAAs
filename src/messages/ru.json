@@ -428,8 +428,9 @@
         "Vercel → webite-s-a-as → Settings → Environment Variables. Добавьте RESEND_API_KEY (ключ re_…) для Production и Preview.",
         "EMAIL_FROM = QR-Universe <beth.t@example.com> для теста. Письмо придёт только на email аккаунта Resend.",
         "Чтобы писать всем клиентам: Resend → Domains → свой домен, DNS, затем EMAIL_FROM = QR-Universe <noreply@ваш-домен.com>.",
-        "Redeploy. Нажмите тест ниже. Если письмо пришло, ссылки подтверждения при регистрации уходят сами."
+        "Redeploy. Нажмите тест ниже. Если письмо пришло, коды подтверждения при регистрации уходят сами."
       ],
+      "mailDone": "Настроено и работает — коды подтверждения и письма для сброса пароля уходят с вашего домена автоматически.",
       "mailTest": "Отправить тест себе",
       "mailTestOk": "Проверьте входящие и спам.",
       "mailTestFail": "Resend отклонил отправку. Проверьте ключ, EMAIL_FROM и домен — или beth.t@example.com только на свой ящик.",

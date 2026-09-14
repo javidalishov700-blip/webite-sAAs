@@ -179,11 +179,15 @@ export function OpsConsole() {
               <span className="ml-2 font-mono text-xs text-muted-foreground">{mail.status.data.from}</span>
             ) : null}
           </p>
-          <ol className="list-decimal space-y-1.5 pl-4 text-muted-foreground">
-            {(t.raw("mailSteps") as string[]).map((step) => (
-              <li key={step.slice(0, 40)}>{step}</li>
-            ))}
-          </ol>
+          {mail.status.data?.configured && !mail.status.data.usingOnboardingDomain ? (
+            <p>{t("mailDone")}</p>
+          ) : (
+            <ol className="list-decimal space-y-1.5 pl-4 text-muted-foreground">
+              {(t.raw("mailSteps") as string[]).map((step) => (
+                <li key={step.slice(0, 40)}>{step}</li>
+              ))}
+            </ol>
+          )}
           <Button
             size="sm"
             variant="outline"

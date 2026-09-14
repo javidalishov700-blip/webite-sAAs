@@ -428,8 +428,9 @@
         "Vercel → webite-s-a-as → Settings → Environment Variables. Add RESEND_API_KEY (the re_… key) for Production + Preview.",
         "Add EMAIL_FROM = QR-Universe <beth.t@example.com> for a test. This only delivers to your Resend account email.",
         "To mail every customer: Resend → Domains → add your domain, paste the DNS records, then set EMAIL_FROM = QR-Universe <noreply@your-domain.com>.",
-        "Redeploy. Press the test button below. You should get a mail. After that, signup verification links go out automatically."
+        "Redeploy. Press the test button below. You should get a mail. After that, signup verification codes go out automatically."
       ],
+      "mailDone": "Set up and working — verification codes and password reset emails go out from your own domain automatically.",
       "mailTest": "Send a test email to me",
       "mailTestOk": "Check your inbox (and spam).",
       "mailTestFail": "Resend rejected the send. Check the API key, EMAIL_FROM, and that the domain is verified — or use beth.t@example.com to your own inbox only.",

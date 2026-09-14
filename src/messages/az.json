@@ -428,8 +428,9 @@
         "Vercel → webite-s-a-as → Settings → Environment Variables. Production + Preview üçün RESEND_API_KEY (re_… açar) əlavə et.",
         "EMAIL_FROM = QR-Universe <beth.t@example.com> yaz — test üçün. Yalnız Resend hesabının öz e-poçtuna gedir.",
         "Bütün müştərilərə mail üçün: Resend → Domains → öz domainini əlavə et, DNS yaz, sonra EMAIL_FROM = QR-Universe <noreply@domainin.com>.",
-        "Redeploy et. Aşağıdakı test düyməsinə bas. Mail gəlsə, qeydiyyat təsdiq linkləri avtomatik gedəcək."
+        "Redeploy et. Aşağıdakı test düyməsinə bas. Mail gəlsə, qeydiyyat təsdiq kodları avtomatik gedəcək."
       ],
+      "mailDone": "Quraşdırılıb və işləyir — təsdiq kodları və şifrə sıfırlama məktubları öz domainindən avtomatik gedir.",
       "mailTest": "Özümə test maili göndər",
       "mailTestOk": "Inbox və spam-ə bax.",
       "mailTestFail": "Resend göndərmədi. API açarı, EMAIL_FROM və domain təsdiqini yoxla — və ya beth.t@example.com yalnız öz inbox-un üçün.",
