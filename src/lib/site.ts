@@ -1,4 +1,4 @@
-export const PRODUCTION_SITE_URL = "https://webite-s-a-as.vercel.app";
+export const PRODUCTION_SITE_URL = "https://qruniverse.net";
 
 export const SITE = {
   name: "QR-Universe",

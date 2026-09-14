@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 const PLAN_KEYS = ["free", "pro", "enterprise"] as const;
 const PLAN_PRICES: Record<(typeof PLAN_KEYS)[number], number | null> = {
   free: 0,
-  pro: 30,
+  pro: 5,
   enterprise: null,
 };
 
