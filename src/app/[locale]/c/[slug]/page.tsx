@@ -5,7 +5,8 @@ import { loadPublicCatalog } from "@/lib/data/load-public-catalog";
 import { CatalogView } from "@/components/catalog/catalog-view";
 import { CatalogScanTracker } from "@/components/catalog/catalog-scan-tracker";
 import { appBaseUrl } from "@/lib/site";
-import { LOCALES } from "@/lib/constants";
+import { DEFAULT_LOCALE, LOCALES } from "@/lib/constants";
+import { localizedPath } from "@/lib/catalog-url";
 import type { CompanyPublicView } from "@/lib/data/types";
 
 const SCHEMA_TYPE_BY_INDUSTRY: Partial<Record<CompanyPublicView["industry"], string>> = {
@@ -66,8 +67,11 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
     // Each locale is real, distinct content (not a duplicate) — self-canonical
     // plus hreflang alternates is the correct pattern here, not one shared canonical.
     alternates: {
-      canonical: `${origin}/${locale}/c/${slug}`,
-      languages: Object.fromEntries(catalogLocales.map((l) => [l, `${origin}/${l}/c/${slug}`])),
+      canonical: `${origin}${localizedPath(locale, `/c/${slug}`)}`,
+      languages: {
+        ...Object.fromEntries(catalogLocales.map((l) => [l, `${origin}${localizedPath(l, `/c/${slug}`)}`])),
+        "x-default": `${origin}${localizedPath(DEFAULT_LOCALE, `/c/${slug}`)}`,
+      },
     },
     openGraph: {
       title: company.name,
@@ -105,7 +109,7 @@ export default async function PublicCatalogPage({ params, searchParams }: PagePr
     image: company.coverUrl ?? company.logoUrl ?? undefined,
     address: company.address ? { "@type": "PostalAddress", streetAddress: company.address } : undefined,
     telephone: company.phone ?? undefined,
-    url: `${appBaseUrl()}/${locale}/c/${company.slug}`,
+    url: `${appBaseUrl()}${localizedPath(locale, `/c/${company.slug}`)}`,
   };
 
   return (

@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { initials } from "@/lib/utils";
 import { api } from "@/lib/api-client";
+import { catalogPath } from "@/lib/catalog-url";
 import type { SessionUser } from "@/lib/data/types";
 
 export function UserMenu({ user }: { user: SessionUser }) {
@@ -44,7 +45,7 @@ export function UserMenu({ user }: { user: SessionUser }) {
         <DropdownMenuLabel className="truncate">{user.email}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <a href={`/${locale}/c/${user.companySlug}`} target="_blank" rel="noreferrer">
+          <a href={catalogPath(user.companySlug, locale)} target="_blank" rel="noreferrer">
             <ExternalLink className="size-4" />
             {t("viewCatalog")}
           </a>

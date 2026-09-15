@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Outfit, JetBrains_Mono } from "next/font/google";
+import { getLocale } from "next-intl/server";
 import { appBaseUrl } from "@/lib/site";
 import "@/app/globals.css";
 
@@ -68,9 +69,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  // The root layout can't read the [locale] route param directly (it wraps
+  // every locale), so the initial server-rendered lang comes from next-intl's
+  // own middleware-detected locale instead — otherwise every non-English
+  // page served its first byte tagged as English. DocumentLocale (in
+  // providers.tsx) covers the client-side-navigation case this can't reach.
+  const locale = await getLocale();
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body className={`${inter.variable} ${outfit.variable} ${jetbrainsMono.variable} font-sans`} suppressHydrationWarning>
         {children}
       </body>

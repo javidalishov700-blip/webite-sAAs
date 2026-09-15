@@ -4,6 +4,7 @@ import { issueAuthToken, generateNumericCode, RESET_TTL_MS, VERIFY_TTL_MS } from
 import { appBaseUrl } from "@/lib/site";
 import { platformAdminEmails } from "@/lib/platform-admin";
 import { DEFAULT_LOCALE } from "@/lib/constants";
+import { localizedPath } from "@/lib/catalog-url";
 import type { AppLocale } from "@/lib/data/types";
 
 function localeOrEn(locale?: string | null): AppLocale {
@@ -24,7 +25,7 @@ export async function sendVerificationCode(user: { id: string; email: string }, 
 export async function sendPasswordResetLink(user: { id: string; email: string }, locale?: string | null) {
   const loc = localeOrEn(locale);
   const raw = await issueAuthToken(user.id, "PASSWORD_RESET", RESET_TTL_MS);
-  const url = `${appBaseUrl()}/${loc}/reset?token=${encodeURIComponent(raw)}`;
+  const url = `${appBaseUrl()}${localizedPath(loc, "/reset")}?token=${encodeURIComponent(raw)}`;
   const sent = await sendMail({ to: user.email, ...resetMail(loc, url) });
   if (!sent.sent && process.env.NODE_ENV !== "production") {
     console.info(`[auth] reset link for ${user.email}: ${url}`);
@@ -34,7 +35,7 @@ export async function sendPasswordResetLink(user: { id: string; email: string },
 
 /// Lets the owner activate a plan as soon as a new workspace registers, without polling Control.
 export async function sendSignupAlert(details: { companyName: string; ownerName: string; ownerEmail: string }) {
-  const opsUrl = `${appBaseUrl()}/${DEFAULT_LOCALE}/admin/ops`;
+  const opsUrl = `${appBaseUrl()}${localizedPath(DEFAULT_LOCALE, "/admin/ops")}`;
   const mail = newSignupMail({ ...details, opsUrl });
   await Promise.all(
     platformAdminEmails().map(async (to) => {

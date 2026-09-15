@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
 import { getSessionUserId } from "@/lib/auth/session";
 import { hydrateSessionUser } from "@/lib/data/repositories/users";
+import { localizedPath } from "@/lib/catalog-url";
 import type { SessionUser } from "@/lib/data/types";
 
 /** Returns the current session user, or `null` if not authenticated. Never redirects. */
@@ -16,10 +17,10 @@ export async function getCurrentUser(): Promise<SessionUser | null> {
 export async function requireUser(locale: string): Promise<SessionUser> {
   const user = await getCurrentUser();
   if (!user) {
-    redirect(`/${locale}/login`);
+    redirect(localizedPath(locale, "/login"));
   }
   if (!user.emailVerified && !user.isPlatformAdmin) {
-    redirect(`/${locale}/check-email`);
+    redirect(localizedPath(locale, "/check-email"));
   }
   return user;
 }

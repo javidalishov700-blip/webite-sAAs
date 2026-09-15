@@ -3,6 +3,7 @@ import createIntlMiddleware from "next-intl/middleware";
 import { routing } from "@/i18n/routing";
 import { verifySessionToken } from "@/lib/auth/jwt";
 import { SESSION_COOKIE_NAME } from "@/lib/constants";
+import { localizedPath } from "@/lib/catalog-url";
 
 const intlMiddleware = createIntlMiddleware(routing);
 
@@ -26,7 +27,7 @@ export default async function middleware(request: NextRequest) {
 
     if (PROTECTED_SEGMENTS.has(firstSegment) && !session) {
       const url = request.nextUrl.clone();
-      url.pathname = `/${locale}/login`;
+      url.pathname = localizedPath(locale, "/login");
       url.search = "";
       url.searchParams.set("next", pathname);
       return NextResponse.redirect(url);
@@ -34,7 +35,7 @@ export default async function middleware(request: NextRequest) {
 
     if (AUTH_ONLY_SEGMENTS.has(firstSegment) && session) {
       const url = request.nextUrl.clone();
-      url.pathname = `/${locale}/admin`;
+      url.pathname = localizedPath(locale, "/admin");
       url.search = "";
       return NextResponse.redirect(url);
     }

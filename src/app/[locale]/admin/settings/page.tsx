@@ -18,7 +18,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useCompany, useDeleteCompany, useUpdateCompany } from "@/hooks/use-company";
 import { Switch } from "@/components/ui/switch";
 import { Link, useRouter } from "@/i18n/navigation";
-import { catalogAbsoluteUrl } from "@/lib/catalog-url";
+import { catalogAbsoluteUrl, catalogPath } from "@/lib/catalog-url";
 import { CURRENCIES, LOCALES, LOCALE_META } from "@/lib/constants";
 import { PLAN_LIMITS, formatPlanUsage, isPaidPlan } from "@/lib/plan";
 import { usePlanUsage } from "@/hooks/use-plan-usage";
@@ -310,7 +310,7 @@ export default function SettingsPage() {
                 </Badge>
                 <div>
                   <p className="text-sm font-medium">{t("publicUrlLabel")}</p>
-                  <a href={`/${locale}/c/${company.slug}`} target="_blank" rel="noreferrer" className="flex items-center gap-1 font-mono text-xs text-primary hover:underline">
+                  <a href={catalogPath(company.slug, locale)} target="_blank" rel="noreferrer" className="flex items-center gap-1 font-mono text-xs text-primary hover:underline">
                     {publicUrl.replace(/^https?:\/\//, "")}
                     <ExternalLink className="size-3" />
                   </a>

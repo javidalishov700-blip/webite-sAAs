@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { LOCALES } from "@/lib/constants";
 import { SITE } from "@/lib/site";
+import { localizedPath } from "@/lib/catalog-url";
 import { listPublishedCompanySlugs } from "@/lib/data/repositories/companies";
 
 const PATHS = ["", "/about", "/contact", "/faq", "/privacy", "/terms", "/cookies", "/careers", "/login", "/signup"];
@@ -10,7 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
   const staticEntries = LOCALES.flatMap((locale) =>
     PATHS.map((path) => ({
-      url: `${origin}/${locale}${path}`,
+      url: `${origin}${localizedPath(locale, path)}`,
       lastModified: now,
       changeFrequency: (path === "" ? "weekly" : "monthly") as "weekly" | "monthly",
       priority: path === "" ? 1 : 0.6,
@@ -23,7 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const catalogEntries = companies.flatMap((company) => {
     const locales = company.supportedLocales.length ? company.supportedLocales : LOCALES;
     return locales.map((locale) => ({
-      url: `${origin}/${locale}/c/${company.slug}`,
+      url: `${origin}${localizedPath(locale, `/c/${company.slug}`)}`,
       lastModified: company.updatedAt,
       changeFrequency: "weekly" as const,
       priority: 0.8,
