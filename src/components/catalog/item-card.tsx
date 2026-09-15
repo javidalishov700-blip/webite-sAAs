@@ -35,7 +35,7 @@ export function ItemCard({ item, onSelect, locale }: ItemCardProps) {
             className="object-cover"
           />
         ) : (
-          <div className="flex size-full items-center justify-center text-muted-foreground">
+          <div className="flex size-full items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10 text-primary/50">
             <ImageOff className="size-6" />
           </div>
         )}

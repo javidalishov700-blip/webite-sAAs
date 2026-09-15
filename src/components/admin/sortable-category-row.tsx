@@ -35,30 +35,8 @@ export function SortableCategoryRow({
   const Icon = getCategoryIcon(category.icon);
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: category.id });
 
-  return (
-    <Card
-      ref={setNodeRef}
-      style={{ transform: CSS.Transform.toString(transform), transition }}
-      className={cn("flex flex-wrap items-center gap-3 p-3.5 sm:p-4", isDragging && "z-10 opacity-70 shadow-2xl")}
-    >
-      <button
-        {...attributes}
-        {...listeners}
-        className="flex size-8 shrink-0 cursor-grab touch-none items-center justify-center rounded-lg text-muted-foreground hover:bg-muted active:cursor-grabbing"
-        aria-label={t("dragHint")}
-      >
-        <GripVertical className="size-4" />
-      </button>
-
-      <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary/15 to-accent/15 text-primary">
-        <Icon className="size-5" />
-      </div>
-
-      <div className="min-w-0 flex-1">
-        <p className="truncate font-medium">{category.name}</p>
-        <p className="text-xs text-muted-foreground">{t("itemsCount", { count: itemCount })}</p>
-      </div>
-
+  const actions = (
+    <>
       {!category.isVisible && (
         <Badge variant="muted" className="hidden sm:inline-flex">
           {tc("hidden")}
@@ -90,6 +68,39 @@ export function SortableCategoryRow({
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+    </>
+  );
+
+  return (
+    <Card
+      ref={setNodeRef}
+      style={{ transform: CSS.Transform.toString(transform), transition }}
+      className={cn("p-3.5 sm:p-4", isDragging && "z-10 opacity-70 shadow-2xl")}
+    >
+      <div className="flex items-center gap-3">
+        <button
+          {...attributes}
+          {...listeners}
+          className="flex size-8 shrink-0 cursor-grab touch-none items-center justify-center rounded-lg text-muted-foreground hover:bg-muted active:cursor-grabbing"
+          aria-label={t("dragHint")}
+        >
+          <GripVertical className="size-4" />
+        </button>
+
+        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary/15 to-accent/15 text-primary">
+          <Icon className="size-5" />
+        </div>
+
+        <div className="min-w-0 flex-1">
+          <p className="truncate font-medium">{category.name}</p>
+          <p className="text-xs text-muted-foreground">{t("itemsCount", { count: itemCount })}</p>
+        </div>
+
+        {/* Same-row layout only fits once the name has room to breathe. */}
+        <div className="hidden shrink-0 items-center gap-3 sm:flex">{actions}</div>
+      </div>
+
+      <div className="mt-3 flex items-center justify-end gap-3 sm:hidden">{actions}</div>
     </Card>
   );
 }
