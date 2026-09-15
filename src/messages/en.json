@@ -234,9 +234,15 @@
       "title": "Start free. Message me for Pro.",
       "subtitle": "A small catalog is free. Full menu is Pro — we agree payment together.",
       "contactNote": "No card checkout on the site. Want Pro or Enterprise? WhatsApp me.",
-      "whatsappMessage": "Hi, I want QR-Universe Pro.",
+      "billingMonthly": "Monthly",
+      "billingYearly": "Yearly",
+      "yearlyBadge": "+1 month free",
+      "proWhatsappMonthly": "Hi, I want QR-Universe Pro — monthly.",
+      "proWhatsappYearly": "Hi, I want QR-Universe Pro — yearly, with the free month.",
+      "enterpriseWhatsapp": "Hi, I want QR-Universe Enterprise.",
       "mostPopular": "Growing menu",
       "perMonth": "/month",
+      "perYear": "/year",
       "custom": "Let’s talk",
       "plans": {
         "free": {

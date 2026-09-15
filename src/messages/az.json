@@ -234,9 +234,15 @@
       "title": "Pulsuz başlayın. Pro lazımdırsa yazın.",
       "subtitle": "Kiçik kataloq pulsuzdur. Limitsiz menyu üçün Pro — ödənişi mənimlə razılaşırıq.",
       "contactNote": "Saytda kart yoxdur. Pro və ya Korporativ istəyənlər WhatsApp-dan yazsın.",
-      "whatsappMessage": "Salam, QR-Universe Pro almaq istəyirəm.",
+      "billingMonthly": "Aylıq",
+      "billingYearly": "İllik",
+      "yearlyBadge": "+1 ay hədiyyə",
+      "proWhatsappMonthly": "Salam, QR-Universe Pro almaq istəyirəm — aylıq.",
+      "proWhatsappYearly": "Salam, QR-Universe Pro almaq istəyirəm — illik, 1 ay hədiyyə ilə.",
+      "enterpriseWhatsapp": "Salam, QR-Universe Korporativ almaq istəyirəm.",
       "mostPopular": "Böyüyən menyu",
       "perMonth": "/ay",
+      "perYear": "/il",
       "custom": "Razılaşma",
       "plans": {
         "free": {

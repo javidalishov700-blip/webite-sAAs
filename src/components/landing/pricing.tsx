@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Check, MessageCircle, Sparkles } from "lucide-react";
 import { Link } from "@/i18n/navigation";
@@ -10,14 +13,16 @@ import { whatsappHref } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 const PLAN_KEYS = ["free", "pro", "enterprise"] as const;
-const PLAN_PRICES: Record<(typeof PLAN_KEYS)[number], number | null> = {
+const OTHER_PRICES: Record<"free" | "enterprise", number | null> = {
   free: 0,
-  pro: 5,
   enterprise: null,
 };
+const PRO_PRICE = { monthly: 5.99, yearly: 60 } as const;
+type Billing = keyof typeof PRO_PRICE;
 
 export function Pricing() {
   const t = useTranslations("landing.pricing");
+  const [billing, setBilling] = useState<Billing>("monthly");
 
   return (
     <section id="pricing" className="relative mx-auto max-w-6xl px-5 py-24 sm:px-6">
@@ -28,11 +33,42 @@ export function Pricing() {
         <p className="mt-3 text-sm font-medium text-foreground">{t("contactNote")}</p>
       </Reveal>
 
-      <RevealGroup className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-3">
+      <Reveal className="mt-8 flex justify-center">
+        <div className="inline-flex items-center gap-1 rounded-full border border-border/70 bg-muted/30 p-1">
+          {(["monthly", "yearly"] as const).map((option) => (
+            <button
+              key={option}
+              type="button"
+              onClick={() => setBilling(option)}
+              className={cn(
+                "flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-medium transition-colors",
+                billing === option
+                  ? "bg-primary text-primary-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground",
+              )}
+            >
+              {t(option === "monthly" ? "billingMonthly" : "billingYearly")}
+              {option === "yearly" && (
+                <span className="rounded-full bg-success/15 px-2 py-0.5 text-[10px] font-semibold text-success">
+                  {t("yearlyBadge")}
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+      </Reveal>
+
+      <RevealGroup className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
         {PLAN_KEYS.map((plan) => {
           const isPopular = plan === "pro";
-          const price = PLAN_PRICES[plan];
+          const price = plan === "pro" ? PRO_PRICE[billing] : OTHER_PRICES[plan];
           const ctaIsWhatsApp = plan !== "free";
+          const whatsappMessage =
+            plan === "enterprise"
+              ? t("enterpriseWhatsapp")
+              : billing === "monthly"
+                ? t("proWhatsappMonthly")
+                : t("proWhatsappYearly");
           return (
             <RevealItem key={plan} className="h-full">
               <TiltCard maxTilt={isPopular ? 9 : 12} className={cn("h-full", isPopular && "lg:-translate-y-3")}>
@@ -57,14 +93,19 @@ export function Pricing() {
                     ) : (
                       <>
                         <span className="font-display text-4xl font-bold">${price}</span>
-                        <span className="text-sm text-muted-foreground">{t("perMonth")}</span>
+                        <span className="text-sm text-muted-foreground">
+                          {plan === "pro" && billing === "yearly" ? t("perYear") : t("perMonth")}
+                        </span>
                       </>
                     )}
                   </div>
+                  {plan === "pro" && billing === "yearly" && (
+                    <p className="mt-1 text-xs font-medium text-success">{t("yearlyBadge")}</p>
+                  )}
 
                   <Button variant={isPopular ? "glow" : "outline"} className="mt-6 w-full" asChild>
                     {ctaIsWhatsApp ? (
-                      <a href={whatsappHref(t("whatsappMessage"))} target="_blank" rel="noreferrer">
+                      <a href={whatsappHref(whatsappMessage)} target="_blank" rel="noreferrer">
                         <MessageCircle className="size-4" />
                         {t(`plans.${plan}.cta`)}
                       </a>

@@ -234,9 +234,15 @@
       "title": "Ücretsiz başla. Pro için yaz.",
       "subtitle": "Küçük katalog ücretsiz. Tam menü Pro — ödemeyi birlikte konuşuruz.",
       "contactNote": "Sitede kartla ödeme yok. Pro veya Kurumsal isteyen WhatsApp’tan yazsın.",
-      "whatsappMessage": "Merhaba, QR-Universe Pro almak istiyorum.",
+      "billingMonthly": "Aylık",
+      "billingYearly": "Yıllık",
+      "yearlyBadge": "+1 ay hediye",
+      "proWhatsappMonthly": "Merhaba, QR-Universe Pro almak istiyorum — aylık.",
+      "proWhatsappYearly": "Merhaba, QR-Universe Pro almak istiyorum — yıllık, 1 ay hediyeli.",
+      "enterpriseWhatsapp": "Merhaba, QR-Universe Kurumsal almak istiyorum.",
       "mostPopular": "Büyüyen menü",
       "perMonth": "/ay",
+      "perYear": "/yıl",
       "custom": "Konuşalım",
       "plans": {
         "free": {

@@ -234,9 +234,15 @@
       "title": "Начните бесплатно. Pro — напишите мне.",
       "subtitle": "Небольшой каталог бесплатный. Полное меню — Pro, оплату согласуем вместе.",
       "contactNote": "Оплаты картой на сайте нет. Нужен Pro или корпоративный — напишите в WhatsApp.",
-      "whatsappMessage": "Здравствуйте, хочу QR-Universe Pro.",
+      "billingMonthly": "Помесячно",
+      "billingYearly": "Год",
+      "yearlyBadge": "+1 месяц в подарок",
+      "proWhatsappMonthly": "Здравствуйте, хочу QR-Universe Pro — помесячно.",
+      "proWhatsappYearly": "Здравствуйте, хочу QR-Universe Pro — годовой тариф, с бесплатным месяцем.",
+      "enterpriseWhatsapp": "Здравствуйте, хочу QR-Universe корпоративный тариф.",
       "mostPopular": "Растущее меню",
       "perMonth": "/мес",
+      "perYear": "/год",
       "custom": "Договорённость",
       "plans": {
         "free": {
