@@ -34,6 +34,12 @@ export async function GET(request: NextRequest, { params }: Params) {
   if (!company || company.bannedAt) {
     return sendTo(request, qrClosedPath(company?.defaultLocale ?? DEFAULT_LOCALE, company?.bannedAt ? "banned" : "missing"));
   }
+  // The Settings "Catalog is public" toggle has to actually stop the main
+  // traffic path — a printed QR sticker doesn't stop working just because
+  // scans never hit the catalog page's own (separate) publish check.
+  if (!company.isPublished) {
+    return sendTo(request, qrClosedPath(company.defaultLocale, "unpublished"));
+  }
   if (!qr.isActive) {
     return sendTo(request, qrClosedPath(company.defaultLocale, "paused"));
   }

@@ -890,6 +890,7 @@
       "title": "This QR did not open",
       "missing": "The code was not found or was deleted. Download a new one from QR Studio.",
       "paused": "This QR is paused. Turn it back on in Studio.",
+      "unpublished": "This catalog isn't public right now.",
       "banned": "This catalog is closed.",
       "home": "Back home"
     },

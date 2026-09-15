@@ -14,7 +14,7 @@ import { QrCanvas, type QrCanvasHandle } from "@/components/admin/qr-canvas";
 import { useCompany, useUpdateCompany } from "@/hooks/use-company";
 import { useCreateQrCode, useQrCodes } from "@/hooks/use-qr-codes";
 import { cn } from "@/lib/utils";
-import { qrGoAbsoluteUrl } from "@/lib/catalog-url";
+import { catalogPath, qrGoAbsoluteUrl } from "@/lib/catalog-url";
 import { IndustryPicker } from "@/components/industry-picker";
 import type { Industry } from "@/lib/data/types";
 
@@ -49,8 +49,10 @@ export default function OnboardingPage() {
   }, [company]);
 
   const origin = typeof window !== "undefined" ? window.location.origin : "";
-  const catalogHref = company ? `/c/${company.slug}` : "";
-  const catalogUrl = company ? `${origin}/${company.defaultLocale}/c/${company.slug}` : "";
+  // The company's own default locale, not the visitor's — this is "your
+  // catalog," it should open in the language you built it in.
+  const catalogHref = company ? catalogPath(company.slug, company.defaultLocale) : "";
+  const catalogUrl = company ? `${origin}${catalogHref}` : "";
   const existingQr = qrCodes?.[0];
   const qrPayload = existingQr ? qrGoAbsoluteUrl(origin, existingQr.id) : catalogUrl;
 

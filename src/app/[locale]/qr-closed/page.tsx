@@ -9,8 +9,8 @@ interface PageProps {
 
 export const dynamic = "force-dynamic";
 
-function reasonKey(reason?: string): "missing" | "paused" | "banned" {
-  if (reason === "paused" || reason === "banned") return reason;
+function reasonKey(reason?: string): "missing" | "paused" | "banned" | "unpublished" {
+  if (reason === "paused" || reason === "banned" || reason === "unpublished") return reason;
   return "missing";
 }
 

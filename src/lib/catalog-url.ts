@@ -44,7 +44,7 @@ export function qrGoAbsoluteUrl(origin: string, qrId: string): string {
   return `${origin.replace(/\/$/, "")}${qrGoPath(qrId)}`;
 }
 
-export function qrClosedPath(locale: string, reason: "missing" | "paused" | "banned"): string {
+export function qrClosedPath(locale: string, reason: "missing" | "paused" | "banned" | "unpublished"): string {
   return `${localizedPath(locale, "/qr-closed")}?reason=${reason}`;
 }
 

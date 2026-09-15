@@ -890,6 +890,7 @@
       "title": "Bu QR açılmadı",
       "missing": "Kod tapılmadı və ya silinib. QR Studiyadan yenisini endirin.",
       "paused": "Bu QR dayandırılıb. Studiyada yenidən açın.",
+      "unpublished": "Bu kataloq hazırda ictimai deyil.",
       "banned": "Bu kataloq bağlanıb.",
       "home": "Ana səhifə"
     },

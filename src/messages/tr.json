@@ -890,6 +890,7 @@
       "title": "Bu QR açılamadı",
       "missing": "Kod bulunamadı veya silinmiş. QR Stüdyo’dan yenisini indir.",
       "paused": "Bu QR durdurulmuş. Stüdyo’dan tekrar aç.",
+      "unpublished": "Bu katalog şu anda herkese açık değil.",
       "banned": "Bu katalog kapatılmış.",
       "home": "Ana sayfa"
     },
