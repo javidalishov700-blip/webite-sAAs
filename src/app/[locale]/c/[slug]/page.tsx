@@ -4,7 +4,18 @@ import { getStaticLiveDemoCatalog, PUBLIC_SHOWCASE_SLUG } from "@/lib/data/publi
 import { loadPublicCatalog } from "@/lib/data/load-public-catalog";
 import { CatalogView } from "@/components/catalog/catalog-view";
 import { CatalogScanTracker } from "@/components/catalog/catalog-scan-tracker";
+import { appBaseUrl } from "@/lib/site";
+import { LOCALES } from "@/lib/constants";
 import type { CompanyPublicView } from "@/lib/data/types";
+
+const SCHEMA_TYPE_BY_INDUSTRY: Partial<Record<CompanyPublicView["industry"], string>> = {
+  RESTAURANT: "Restaurant",
+  GROCERY: "GroceryStore",
+  RETAIL: "Store",
+  ELECTRONICS: "ElectronicsStore",
+  HARDWARE: "HardwareStore",
+  HOME: "HomeGoodsStore",
+};
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -39,17 +50,37 @@ async function catalogForSlug(
 }
 
 export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const query = await searchParams;
   const company = await catalogForSlug(slug, query.preview === "1", query.qr ?? null);
   if (!company) return { title: "Catalog not found" };
+
+  const description = company.description ?? `Browse the ${company.name} digital catalog, powered by QR-Universe.`;
+  const image = company.coverUrl ?? company.logoUrl ?? undefined;
+  const origin = appBaseUrl();
+  const catalogLocales = company.supportedLocales.length ? company.supportedLocales : LOCALES;
+
   return {
     title: company.name,
-    description: company.description ?? `Browse the ${company.name} digital catalog, powered by QR-Universe.`,
+    description,
+    // Each locale is real, distinct content (not a duplicate) — self-canonical
+    // plus hreflang alternates is the correct pattern here, not one shared canonical.
+    alternates: {
+      canonical: `${origin}/${locale}/c/${slug}`,
+      languages: Object.fromEntries(catalogLocales.map((l) => [l, `${origin}/${l}/c/${slug}`])),
+    },
     openGraph: {
       title: company.name,
-      description: company.description ?? undefined,
-      images: company.coverUrl ? [company.coverUrl] : undefined,
+      description,
+      type: "website",
+      locale,
+      images: image ? [image] : undefined,
+    },
+    twitter: {
+      card: image ? "summary_large_image" : "summary",
+      title: company.name,
+      description,
+      images: image ? [image] : undefined,
     },
     appleWebApp: {
       capable: true,
@@ -66,9 +97,21 @@ export default async function PublicCatalogPage({ params, searchParams }: PagePr
   const company = await catalogForSlug(slug, preview, query.qr ?? null);
   if (!company) notFound();
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": SCHEMA_TYPE_BY_INDUSTRY[company.industry] ?? "LocalBusiness",
+    name: company.name,
+    description: company.description ?? undefined,
+    image: company.coverUrl ?? company.logoUrl ?? undefined,
+    address: company.address ? { "@type": "PostalAddress", streetAddress: company.address } : undefined,
+    telephone: company.phone ?? undefined,
+    url: `${appBaseUrl()}/${locale}/c/${company.slug}`,
+  };
+
   return (
     <div className="relative min-h-[100svh] bg-background">
       <div className="pointer-events-none fixed inset-0 -z-10 bg-background" />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {!preview ? (
         <CatalogScanTracker
           slug={company.slug}

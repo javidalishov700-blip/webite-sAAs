@@ -15,6 +15,16 @@ export async function getCompanyBySlug(slug: string): Promise<Company | undefine
   return row ? mapCompany(row) : undefined;
 }
 
+/** Lean listing for the sitemap — every publicly-reachable catalog, nothing else. */
+export async function listPublishedCompanySlugs(): Promise<
+  { slug: string; updatedAt: Date; supportedLocales: string[] }[]
+> {
+  return prisma.company.findMany({
+    where: { isPublished: true, bannedAt: null },
+    select: { slug: true, updatedAt: true, supportedLocales: true },
+  });
+}
+
 export async function isSlugTaken(slug: string): Promise<boolean> {
   const count = await prisma.company.count({
     where: { slug: { equals: slug, mode: "insensitive" } },

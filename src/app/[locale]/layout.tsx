@@ -16,8 +16,26 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "landing.hero" });
+  const description = t("subtitle");
   return {
-    description: t("subtitle"),
+    description,
+    // Full openGraph/twitter objects live here (not split with the root
+    // layout) because a child segment's openGraph replaces the parent's
+    // wholesale rather than merging key by key.
+    openGraph: {
+      title: "QR-Universe",
+      description,
+      siteName: "QR-Universe",
+      type: "website",
+      locale,
+      images: ["/icon-512.png"],
+    },
+    twitter: {
+      card: "summary",
+      title: "QR-Universe",
+      description,
+      images: ["/icon-512.png"],
+    },
   };
 }
 

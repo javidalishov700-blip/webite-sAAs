@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Outfit, JetBrains_Mono } from "next/font/google";
+import { appBaseUrl } from "@/lib/site";
 import "@/app/globals.css";
 
 const inter = Inter({
@@ -37,6 +38,9 @@ export const viewport: Viewport = {
 // (async — it awaits params) only overrides title/description with the
 // translated copy. Next merges parent + child metadata.
 export const metadata: Metadata = {
+  // Required for OG/Twitter image URLs to resolve to the real domain instead
+  // of localhost when a route only passes a relative path.
+  metadataBase: new URL(appBaseUrl()),
   title: {
     default: "QR-Universe — Your business, in a scan",
     template: "%s · QR-Universe",
