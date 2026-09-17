@@ -15,9 +15,10 @@ interface ItemSheetProps {
   onOpenChange: (open: boolean) => void;
   locale: string;
   accentColor: string;
+  fractionDigits?: number;
 }
 
-export function ItemSheet({ item, onOpenChange, locale, accentColor }: ItemSheetProps) {
+export function ItemSheet({ item, onOpenChange, locale, accentColor, fractionDigits }: ItemSheetProps) {
   const t = useTranslations("catalog");
   const outOfStock = item?.stockCount === 0;
   const calories = item ? getCalorieLabel(item.attributes) : null;
@@ -56,11 +57,11 @@ export function ItemSheet({ item, onOpenChange, locale, accentColor }: ItemSheet
                 <DrawerTitle className="text-xl">{item.title}</DrawerTitle>
                 <div className="mt-2 flex items-center gap-2">
                   <span className="font-display text-2xl font-bold" style={{ color: accentColor }}>
-                    {formatCurrency(item.price, item.currency, locale)}
+                    {formatCurrency(item.price, item.currency, locale, fractionDigits)}
                   </span>
                   {item.compareAtPrice && item.compareAtPrice > item.price && (
                     <span className="text-sm text-muted-foreground line-through">
-                      {formatCurrency(item.compareAtPrice, item.currency, locale)}
+                      {formatCurrency(item.compareAtPrice, item.currency, locale, fractionDigits)}
                     </span>
                   )}
                   {outOfStock ? (

@@ -28,7 +28,7 @@ export function CategoryNav({ categories, activeId, onSelect, accentColor }: Cat
     <div
       ref={containerRef}
       data-no-scrollbar
-      className="flex snap-x gap-2 overflow-x-auto overscroll-x-contain px-4 py-2.5 [touch-action:pan-x]"
+      className="flex snap-x gap-2 overflow-x-auto overscroll-x-contain px-4 pt-0.5 pb-2.5 [touch-action:pan-x]"
     >
       {categories.map((category) => {
         const Icon = getCategoryIcon(category.icon);
@@ -40,7 +40,7 @@ export function CategoryNav({ categories, activeId, onSelect, accentColor }: Cat
             ref={active ? activeRef : undefined}
             onClick={() => onSelect(category.id)}
             className={cn(
-              "flex shrink-0 snap-start items-center gap-1.5 rounded-full border px-3.5 py-2 text-sm font-medium whitespace-nowrap",
+              "flex shrink-0 snap-start items-center gap-1.5 rounded-full border px-3 py-1.5 text-[13px] font-medium whitespace-nowrap",
               active ? "border-transparent text-white shadow-md" : "border-border/70 bg-muted/30 text-muted-foreground",
             )}
             style={active ? { backgroundColor: accentColor } : undefined}

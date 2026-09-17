@@ -6,17 +6,30 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatCurrency(amount: number, currency: string, locale = "en-US") {
-  try {
-    return new Intl.NumberFormat(locale, {
-      style: "currency",
-      currency,
-      maximumFractionDigits: amount % 1 === 0 ? 0 : 2,
-    }).format(amount);
-  } catch {
-    const symbol = CURRENCY_SYMBOL[currency] ?? currency;
-    return `${symbol}${amount.toFixed(2)}`;
-  }
+// Intl's currency patterns are not portable: the same price came out "8,50 ₼"
+// on the server (Node, full ICU) and "AZN 8.50" in a browser whose ICU has no
+// az data, so a card rendered on the server disagreed with the sheet rendered
+// after hydration. Prices are the one thing on a menu that must look identical
+// everywhere, so they are composed from these tables instead.
+const DECIMAL_MARK: Record<string, { decimal: string; group: string }> = {
+  az: { decimal: ",", group: " " },
+  tr: { decimal: ",", group: "." },
+  ru: { decimal: ",", group: " " },
+  en: { decimal: ".", group: "," },
+};
+
+/**
+ * @param fractionDigits pinned by the caller so every price in one list shares
+ * a shape; falls back to "decimals only when the amount has them".
+ */
+export function formatCurrency(amount: number, currency: string, locale = "en-US", fractionDigits?: number) {
+  const digits = fractionDigits ?? (Number.isInteger(amount) ? 0 : 2);
+  const marks = DECIMAL_MARK[locale.slice(0, 2).toLowerCase()] ?? DECIMAL_MARK.en;
+  const [whole, fraction] = Math.abs(amount).toFixed(digits).split(".");
+  const grouped = whole.replace(/\B(?=(\d{3})+(?!\d))/g, marks.group);
+  const number = fraction ? `${grouped}${marks.decimal}${fraction}` : grouped;
+  const symbol = CURRENCY_SYMBOL[currency] ?? currency;
+  return `${amount < 0 ? "-" : ""}${number}\u00a0${symbol}`;
 }
 
 export function formatCompactNumber(value: number, locale = "en-US") {

@@ -44,6 +44,18 @@ export function CatalogView({
     return offset;
   }
 
+  // One shape for every price in the catalog: a column mixing "11 ₼" with
+  // "12,90 ₼" reads as a mistake even though both are correct.
+  const priceFractionDigits = useMemo(
+    () =>
+      company.categories.some((category) =>
+        category.items.some((item) => !Number.isInteger(item.price) || !Number.isInteger(item.compareAtPrice ?? 0)),
+      )
+        ? 2
+        : 0,
+    [company.categories],
+  );
+
   const normalizedSearch = search.trim().toLowerCase();
 
   const searchResults = useMemo(() => {
@@ -162,7 +174,13 @@ export function CatalogView({
           ) : (
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
               {searchResults.map((item) => (
-                <ItemCard key={item.id} item={item} locale={locale} onSelect={() => handleSelectItem(item)} />
+                <ItemCard
+                  key={item.id}
+                  item={item}
+                  locale={locale}
+                  fractionDigits={priceFractionDigits}
+                  onSelect={() => handleSelectItem(item)}
+                />
               ))}
             </div>
           )
@@ -186,7 +204,13 @@ export function CatalogView({
                 ) : (
                   <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                     {category.items.map((item) => (
-                      <ItemCard key={item.id} item={item} locale={locale} onSelect={() => handleSelectItem(item)} />
+                      <ItemCard
+                        key={item.id}
+                        item={item}
+                        locale={locale}
+                        fractionDigits={priceFractionDigits}
+                        onSelect={() => handleSelectItem(item)}
+                      />
                     ))}
                   </div>
                 )}
@@ -206,7 +230,13 @@ export function CatalogView({
 
       <LanguageFab accentColor={company.accentColor} locales={company.supportedLocales} />
 
-      <ItemSheet item={selectedItem} onOpenChange={(open) => !open && setSelectedItem(null)} locale={locale} accentColor={company.accentColor} />
+      <ItemSheet
+        item={selectedItem}
+        onOpenChange={(open) => !open && setSelectedItem(null)}
+        locale={locale}
+        accentColor={company.accentColor}
+        fractionDigits={priceFractionDigits}
+      />
     </div>
   );
 }

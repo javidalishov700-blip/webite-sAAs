@@ -4,19 +4,22 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { ImageOff, Star } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
-import { getCalorieLabel } from "@/lib/calories";
 import type { ItemWithAttributes } from "@/lib/data/types";
 
 interface ItemCardProps {
   item: ItemWithAttributes;
   onSelect: () => void;
   locale: string;
+  fractionDigits?: number;
 }
 
-export function ItemCard({ item, onSelect, locale }: ItemCardProps) {
+export function ItemCard({ item, onSelect, locale, fractionDigits }: ItemCardProps) {
   const t = useTranslations("catalog");
   const outOfStock = item.stockCount === 0;
-  const calories = getCalorieLabel(item.attributes);
+  const lowStock =
+    !outOfStock && typeof item.stockCount === "number" && item.stockCount > 0 && item.stockCount <= 5
+      ? item.stockCount
+      : null;
 
   return (
     <button
@@ -39,36 +42,32 @@ export function ItemCard({ item, onSelect, locale }: ItemCardProps) {
             <ImageOff className="size-6" />
           </div>
         )}
-        {item.isFeatured && (
-          <span className="absolute top-2 left-2 flex items-center gap-1 rounded-full bg-black/60 px-2 py-1 text-[10px] font-medium text-white">
-            <Star className="size-2.5 fill-warning text-warning" />
-            {t("featured")}
-          </span>
-        )}
-        {outOfStock && (
+        {/* One badge at most: a grid of photos each carrying three pills reads as noise. */}
+        {outOfStock ? (
           <div className="absolute inset-0 flex items-center justify-center bg-black/55">
             <span className="rounded-full bg-white/10 px-2.5 py-1 text-xs font-medium text-white">{t("outOfStock")}</span>
           </div>
-        )}
-        {calories && (
-          <span className="absolute bottom-2 left-2 rounded-full bg-black/70 px-2 py-0.5 text-[10px] font-medium text-white backdrop-blur-sm">
-            {calories}
+        ) : lowStock ? (
+          <span className="absolute top-2 left-2 rounded-full bg-warning/90 px-2 py-0.5 text-[10px] font-medium text-warning-foreground">
+            {t("onlyLeft", { count: lowStock })}
           </span>
-        )}
-        {!outOfStock && typeof item.stockCount === "number" && item.stockCount > 0 && item.stockCount <= 5 && (
-          <span className="absolute right-2 bottom-2 rounded-full bg-warning/90 px-2 py-0.5 text-[10px] font-medium text-warning-foreground">
-            {t("onlyLeft", { count: item.stockCount })}
+        ) : item.isFeatured ? (
+          <span className="absolute top-2 left-2 flex size-6 items-center justify-center rounded-full bg-black/60">
+            <Star className="size-3 fill-warning text-warning" />
           </span>
-        )}
+        ) : null}
       </div>
-      <div className="flex flex-1 flex-col gap-1 p-3">
-        <p className="line-clamp-1 text-sm font-medium">{item.title}</p>
-        {item.description && <p className="line-clamp-1 text-xs text-muted-foreground">{item.description}</p>}
-        <div className="mt-auto flex items-baseline gap-1.5 pt-1.5">
-          <span className="font-display text-sm font-semibold">{formatCurrency(item.price, item.currency, locale)}</span>
+      {/* Title over two lines and no teaser text: the name is what the guest is
+          looking for, and a clamped half-sentence under it only added noise. */}
+      <div className="flex flex-1 flex-col gap-1.5 p-3">
+        <p className="line-clamp-2 text-sm leading-snug font-medium">{item.title}</p>
+        <div className="mt-auto flex items-baseline gap-1.5">
+          <span className="font-display text-sm font-semibold">
+            {formatCurrency(item.price, item.currency, locale, fractionDigits)}
+          </span>
           {item.compareAtPrice && item.compareAtPrice > item.price && (
             <span className="text-xs text-muted-foreground line-through">
-              {formatCurrency(item.compareAtPrice, item.currency, locale)}
+              {formatCurrency(item.compareAtPrice, item.currency, locale, fractionDigits)}
             </span>
           )}
         </div>
