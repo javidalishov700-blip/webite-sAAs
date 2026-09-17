@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import { MessageCircle, PlayCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Reveal, RevealGroup, RevealItem } from "@/components/landing/reveal";
@@ -7,6 +7,9 @@ import { whatsappHref } from "@/lib/site";
 import { youtubeEmbedUrl } from "@/lib/video";
 
 type Step = { title: string; body: string };
+
+const TUTORIAL_VIDEO = "/istifade-qaydasi.mp4";
+const TUTORIAL_POSTER = "/istifade-qaydasi.jpg";
 
 export function UsageGuide() {
   const t = useTranslations("pages.guide");
@@ -21,9 +24,9 @@ export function UsageGuide() {
         <p className="mt-4 text-muted-foreground">{t("subtitle")}</p>
       </Reveal>
 
-      {videoUrl ? (
-        <Reveal className="mt-12">
-          <div className="glow-ring overflow-hidden rounded-3xl border border-border/80 bg-[#07070f] shadow-2xl">
+      <Reveal className="mt-12">
+        <div className="glow-ring overflow-hidden rounded-3xl border border-border/80 bg-[#07070f] shadow-2xl">
+          {videoUrl ? (
             <div className="relative aspect-video">
               <iframe
                 src={videoUrl}
@@ -34,16 +37,22 @@ export function UsageGuide() {
                 className="absolute inset-0 size-full"
               />
             </div>
-          </div>
-        </Reveal>
-      ) : (
-        <Reveal className="mt-12">
-          <div className="flex items-center gap-3 rounded-2xl border border-dashed border-border/80 bg-muted/20 px-5 py-4 text-sm text-muted-foreground">
-            <PlayCircle className="size-5 shrink-0 text-muted-foreground/70" />
-            {t("videoSoon")}
-          </div>
-        </Reveal>
-      )}
+          ) : (
+            // Self-hosted fallback so the walkthrough plays with no setup; the env
+            // var above takes over once the same recording is on YouTube.
+            <video
+              src={TUTORIAL_VIDEO}
+              poster={TUTORIAL_POSTER}
+              title={t("videoTitle")}
+              controls
+              playsInline
+              preload="none"
+              className="block w-full bg-[#07070f]"
+            />
+          )}
+        </div>
+        <p className="mt-3 text-center text-xs text-muted-foreground">{t("videoNote")}</p>
+      </Reveal>
 
       <RevealGroup className="mt-12 space-y-4" stagger={0.06}>
         {steps.map((step, i) => (
