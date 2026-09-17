@@ -303,7 +303,8 @@
       "rights": "Bütün hüquqlar qorunur.",
       "faq": "SSS",
       "cookies": "Kukilər",
-      "reachUs": "Əlaqə:"
+      "reachUs": "Əlaqə:",
+      "guide": "İstifadə qaydası"
     }
   },
   "auth": {
@@ -415,7 +416,8 @@
       "settings": "Ayarlar",
       "ops": "İdarə",
       "viewCatalog": "Açıq kataloqa bax",
-      "backToSite": "Sayta qayıt"
+      "backToSite": "Sayta qayıt",
+      "guide": "İstifadə qaydası"
     },
     "banned": {
       "title": "İş sahəsi ban edilib",
@@ -1127,6 +1129,48 @@
           "a": "Saytda kartla ödəniş yoxdur. WhatsApp-dan yazın — planı mən açacağam."
         }
       }
+    },
+    "guide": {
+      "eyebrow": "İstifadə qaydası",
+      "title": "5 dəqiqəyə kataloqunu qur",
+      "subtitle": "Qeydiyyatdan çap olunmuş QR koda qədər — addım-addım.",
+      "videoTitle": "Video təlimat",
+      "videoSoon": "Video təlimat tezliklə. Aşağıdakı addımlar hər şeyi izah edir.",
+      "steps": [
+        {
+          "title": "Qeydiyyatdan keç",
+          "body": "«Pulsuz başla» düyməsinə bas. Ad, e-poçt, şifrə və biznesinin adını yaz. Kart tələb olunmur."
+        },
+        {
+          "title": "E-poçtuna gələn kodu yaz",
+          "body": "Sənə 6 rəqəmli kod göndəririk. Onu saytdakı xanaya yaz. Məktub görünmürsə, spam qovluğunu yoxla."
+        },
+        {
+          "title": "Biznesini tanıt",
+          "body": "Loqonu yüklə, rəngini seç və sahəni göstər (restoran, geyim, elektronika...). Kataloqun bu görünüşü alır."
+        },
+        {
+          "title": "Kateqoriya yarat",
+          "body": "«Kateqoriyalar» bölməsinə keç: «Əsas yeməklər», «İçkilər», «Desertlər»... Bunlar müştərinin gördüyü başlıqlardır."
+        },
+        {
+          "title": "Məhsul əlavə et",
+          "body": "«Məhsullar» → «Məhsul əlavə et». Şəkil, ad, qiymət yaz və yadda saxla. Şəkli yükləyəndə kəsmə pəncərəsi açılır ki, hamsı eyni ölçüdə olsun."
+        },
+        {
+          "title": "QR kodunu yüklə və çap et",
+          "body": "«QR Studiya»ya keç, rəngini seç və PNG ya SVG olaraq yüklə. Çap edib masaya, rəfə və ya vitrinə yapışdır."
+        },
+        {
+          "title": "İstədiyin an dəyiş",
+          "body": "Qiyməti dəyişdin — QR-ı yenidən çap etməyə ehtiyac yoxdur. Skan edən növbəti müştəri dərhal yeni qiyməti görür."
+        }
+      ],
+      "helpTitle": "İlişib qaldın?",
+      "helpBody": "WhatsApp-dan yaz — addımları birlikdə keçək.",
+      "helpCta": "WhatsApp-dan yaz",
+      "startCta": "Pulsuz başla",
+      "whatsappMessage": "Salam, QR-Universe-i necə istifadə edəcəyimi öyrənmək istəyirəm."
     }
   },
   "attributes": {

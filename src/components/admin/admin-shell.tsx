@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { ArrowLeft, Menu, QrCode } from "lucide-react";
+import { ArrowLeft, BookOpen, Menu, QrCode } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { SidebarNav } from "@/components/admin/sidebar-nav";
 import { UserMenu } from "@/components/admin/user-menu";
@@ -31,6 +31,12 @@ export function AdminShell({ user, children }: { user: SessionUser; children: Re
           </Link>
           <SidebarNav isPlatformAdmin={user.isPlatformAdmin} />
           <div className="mt-auto space-y-2 pt-4">
+            <Button variant="ghost" size="sm" className="w-full justify-start gap-2.5 text-muted-foreground" asChild>
+              <Link href="/guide">
+                <BookOpen className="size-4" />
+                {t("guide")}
+              </Link>
+            </Button>
             <Button variant="ghost" size="sm" className="w-full justify-start gap-2.5 text-muted-foreground" asChild>
               <Link href="/">
                 <ArrowLeft className="size-4" />
@@ -71,6 +77,12 @@ export function AdminShell({ user, children }: { user: SessionUser; children: Re
           </Link>
           <SidebarNav isPlatformAdmin={user.isPlatformAdmin} onNavigate={() => setMobileOpen(false)} />
           <div className="mt-auto space-y-2 pt-4">
+            <Button variant="ghost" size="sm" className="w-full justify-start gap-2.5 text-muted-foreground" asChild>
+              <Link href="/guide">
+                <BookOpen className="size-4" />
+                {t("guide")}
+              </Link>
+            </Button>
             <Button variant="ghost" size="sm" className="w-full justify-start gap-2.5 text-muted-foreground" asChild>
               <Link href="/">
                 <ArrowLeft className="size-4" />

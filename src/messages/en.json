@@ -303,7 +303,8 @@
       "rights": "All rights reserved.",
       "faq": "FAQ",
       "cookies": "Cookies",
-      "reachUs": "Reach us:"
+      "reachUs": "Reach us:",
+      "guide": "How to use it"
     }
   },
   "auth": {
@@ -415,7 +416,8 @@
       "settings": "Settings",
       "ops": "Control",
       "viewCatalog": "View public catalog",
-      "backToSite": "Back to website"
+      "backToSite": "Back to website",
+      "guide": "How to use it"
     },
     "banned": {
       "title": "Workspace banned",
@@ -1127,6 +1129,48 @@
           "a": "There is no card checkout on the site. WhatsApp me and I’ll turn Pro on."
         }
       }
+    },
+    "guide": {
+      "eyebrow": "How to use it",
+      "title": "Build your catalog in 5 minutes",
+      "subtitle": "From sign-up to a printed QR code — step by step.",
+      "videoTitle": "Video walkthrough",
+      "videoSoon": "Video walkthrough coming soon. The steps below cover everything.",
+      "steps": [
+        {
+          "title": "Create your account",
+          "body": "Hit “Start free”. Name, email, password and your business name. No card needed."
+        },
+        {
+          "title": "Enter the code from your email",
+          "body": "We send a 6-digit code. Type it on the site. If you don't see the mail, check your spam folder."
+        },
+        {
+          "title": "Set up your business",
+          "body": "Upload your logo, pick your colour and choose your industry (restaurant, clothing, electronics...). Your catalog takes that look."
+        },
+        {
+          "title": "Create a category",
+          "body": "Go to Categories: “Mains”, “Drinks”, “Desserts”... These are the headings your guests see."
+        },
+        {
+          "title": "Add a product",
+          "body": "Products → Add product. Photo, name, price, then save. Uploading a photo opens a crop window so every item comes out the same size."
+        },
+        {
+          "title": "Download and print your QR",
+          "body": "Open QR Studio, pick your colour and download PNG or SVG. Print it and stick it on the table, shelf or window."
+        },
+        {
+          "title": "Change anything, anytime",
+          "body": "Change a price and you never reprint the QR. The next person who scans sees the new price straight away."
+        }
+      ],
+      "helpTitle": "Stuck somewhere?",
+      "helpBody": "Message me on WhatsApp and we'll walk through it together.",
+      "helpCta": "Message on WhatsApp",
+      "startCta": "Start free",
+      "whatsappMessage": "Hi, I'd like help using QR-Universe."
     }
   },
   "attributes": {

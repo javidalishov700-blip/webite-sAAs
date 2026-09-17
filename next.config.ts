@@ -27,6 +27,9 @@ const CONTENT_SECURITY_POLICY = [
   "form-action 'self'",
   // 'self', not 'none': /admin/preview embeds the live catalog in an iframe.
   "frame-ancestors 'self'",
+  // /guide embeds the tutorial video; nocookie so the "no advertising
+  // trackers" line in the cookie banner stays true.
+  "frame-src 'self' https://www.youtube-nocookie.com",
   "upgrade-insecure-requests",
 ].join("; ");
 

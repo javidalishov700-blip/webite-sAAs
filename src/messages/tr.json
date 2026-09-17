@@ -303,7 +303,8 @@
       "rights": "Tüm hakları saklıdır.",
       "faq": "SSS",
       "cookies": "Çerezler",
-      "reachUs": "Bize ulaşın:"
+      "reachUs": "Bize ulaşın:",
+      "guide": "Kullanım kılavuzu"
     }
   },
   "auth": {
@@ -415,7 +416,8 @@
       "settings": "Ayarlar",
       "ops": "Kontrol",
       "viewCatalog": "Genel kataloğu görüntüle",
-      "backToSite": "Siteye dön"
+      "backToSite": "Siteye dön",
+      "guide": "Kullanım kılavuzu"
     },
     "banned": {
       "title": "Çalışma alanı yasaklandı",
@@ -1127,6 +1129,48 @@
           "a": "Sitede kartla ödeme yok. WhatsApp’tan yazın — planı ben açarım."
         }
       }
+    },
+    "guide": {
+      "eyebrow": "Kullanım kılavuzu",
+      "title": "5 dakikada kataloğunu kur",
+      "subtitle": "Kayıttan basılı QR koda kadar — adım adım.",
+      "videoTitle": "Video anlatım",
+      "videoSoon": "Video anlatım çok yakında. Aşağıdaki adımlar her şeyi anlatıyor.",
+      "steps": [
+        {
+          "title": "Kayıt ol",
+          "body": "“Ücretsiz başla”a bas. Ad, e-posta, şifre ve işletme adın. Kart gerekmiyor."
+        },
+        {
+          "title": "E-postana gelen kodu gir",
+          "body": "Sana 6 haneli bir kod gönderiyoruz. Onu sitedeki kutuya yaz. Mail görünmüyorsa spam klasörüne bak."
+        },
+        {
+          "title": "İşletmeni tanıt",
+          "body": "Logonu yükle, rengini seç ve sektörünü belirt (restoran, giyim, elektronik...). Katalog bu görünümü alır."
+        },
+        {
+          "title": "Kategori oluştur",
+          "body": "Kategoriler bölümüne geç: “Ana yemekler”, “İçecekler”, “Tatlılar”... Bunlar müşterinin gördüğü başlıklar."
+        },
+        {
+          "title": "Ürün ekle",
+          "body": "Ürünler → Ürün ekle. Fotoğraf, ad, fiyat yaz ve kaydet. Fotoğraf yüklerken kırpma penceresi açılır, hepsi aynı boyutta olur."
+        },
+        {
+          "title": "QR kodunu indir ve bastır",
+          "body": "QR Stüdyo'ya geç, rengini seç, PNG ya da SVG indir. Bastırıp masaya, rafa veya vitrine yapıştır."
+        },
+        {
+          "title": "İstediğin an değiştir",
+          "body": "Fiyatı değiştirdin — QR'ı yeniden bastırmana gerek yok. Sonraki tarayan kişi yeni fiyatı hemen görür."
+        }
+      ],
+      "helpTitle": "Takıldığın yer mi var?",
+      "helpBody": "WhatsApp'tan yaz, adımları birlikte geçelim.",
+      "helpCta": "WhatsApp'tan yaz",
+      "startCta": "Ücretsiz başla",
+      "whatsappMessage": "Merhaba, QR-Universe'ü nasıl kullanacağım konusunda yardım istiyorum."
     }
   },
   "attributes": {
