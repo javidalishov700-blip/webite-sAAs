@@ -4,17 +4,13 @@ import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Reveal, RevealGroup, RevealItem } from "@/components/landing/reveal";
 import { whatsappHref } from "@/lib/site";
-import { youtubeEmbedUrl } from "@/lib/video";
+import { TutorialPlayer } from "@/components/landing/tutorial-player";
 
 type Step = { title: string; body: string };
-
-const TUTORIAL_VIDEO = "/istifade-qaydasi.mp4";
-const TUTORIAL_POSTER = "/istifade-qaydasi.jpg";
 
 export function UsageGuide() {
   const t = useTranslations("pages.guide");
   const steps = t.raw("steps") as Step[];
-  const videoUrl = youtubeEmbedUrl(process.env.NEXT_PUBLIC_TUTORIAL_VIDEO_URL);
 
   return (
     <section className="relative mx-auto max-w-4xl px-5 py-20 sm:px-6">
@@ -25,32 +21,7 @@ export function UsageGuide() {
       </Reveal>
 
       <Reveal className="mt-12">
-        <div className="glow-ring overflow-hidden rounded-3xl border border-border/80 bg-[#07070f] shadow-2xl">
-          {videoUrl ? (
-            <div className="relative aspect-video">
-              <iframe
-                src={videoUrl}
-                title={t("videoTitle")}
-                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                loading="lazy"
-                className="absolute inset-0 size-full"
-              />
-            </div>
-          ) : (
-            // Self-hosted fallback so the walkthrough plays with no setup; the env
-            // var above takes over once the same recording is on YouTube.
-            <video
-              src={TUTORIAL_VIDEO}
-              poster={TUTORIAL_POSTER}
-              title={t("videoTitle")}
-              controls
-              playsInline
-              preload="none"
-              className="block w-full bg-[#07070f]"
-            />
-          )}
-        </div>
+        <TutorialPlayer />
         <p className="mt-3 text-center text-xs text-muted-foreground">{t("videoNote")}</p>
       </Reveal>
 

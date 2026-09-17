@@ -13,6 +13,7 @@ import { Drawer, DrawerContent } from "@/components/ui/drawer";
 
 const HASH_ITEMS = [
   { hash: "how-it-works", key: "howItWorks" },
+  { hash: "guide", key: "guide" },
   { hash: "pricing", key: "pricing" },
 ] as const;
 

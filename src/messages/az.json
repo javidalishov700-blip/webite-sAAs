@@ -68,6 +68,7 @@
       "useCases": "İstifadə ssenariləri",
       "demo": "Canlı demo",
       "howItWorks": "Necə işləyir",
+      "guide": "İstifadə qaydası",
       "pricing": "Qiymətlər",
       "login": "Daxil ol",
       "getStarted": "Pulsuz başla",
@@ -1136,6 +1137,7 @@
       "subtitle": "Qeydiyyatdan çap olunmuş QR koda qədər — addım-addım.",
       "videoTitle": "Video təlimat",
       "videoNote": "Video 2 dəqiqədən qısadır — qeydiyyatdan çap olunmuş QR koda qədər.",
+      "allSteps": "Bütün addımları oxu",
       "steps": [
         {
           "title": "Qeydiyyatdan keç",

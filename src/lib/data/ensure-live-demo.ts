@@ -60,6 +60,9 @@ export async function ensureLiveDemoCatalog(): Promise<void> {
               isVisible: true,
               isFeatured: "featured" in item ? Boolean(item.featured) : false,
               position: ii,
+              attributes: {
+                create: [{ key: "calories", value: String(item.kcal), type: "NUMBER", unit: "kcal", position: 0 }],
+              },
             },
           });
         }

@@ -41,7 +41,7 @@ export function CategoryNav({ categories, activeId, onSelect, accentColor }: Cat
             onClick={() => onSelect(category.id)}
             className={cn(
               "flex shrink-0 snap-start items-center gap-1.5 rounded-full border px-3 py-1.5 text-[13px] font-medium whitespace-nowrap",
-              active ? "border-transparent text-white shadow-md" : "border-border/70 bg-muted/30 text-muted-foreground",
+              active ? "border-transparent text-white" : "border-border/60 bg-muted/25 text-muted-foreground",
             )}
             style={active ? { backgroundColor: accentColor } : undefined}
           >

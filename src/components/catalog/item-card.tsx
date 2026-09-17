@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { ImageOff, Star } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
+import { getCalorieLabel } from "@/lib/calories";
 import type { ItemWithAttributes } from "@/lib/data/types";
 
 interface ItemCardProps {
@@ -16,6 +17,9 @@ interface ItemCardProps {
 export function ItemCard({ item, onSelect, locale, fractionDigits }: ItemCardProps) {
   const t = useTranslations("catalog");
   const outOfStock = item.stockCount === 0;
+  // Restaurants want the calorie figure on the card; it sits in the price row
+  // rather than as a fourth pill over the photo.
+  const calories = getCalorieLabel(item.attributes);
   const lowStock =
     !outOfStock && typeof item.stockCount === "number" && item.stockCount > 0 && item.stockCount <= 5
       ? item.stockCount
@@ -25,7 +29,7 @@ export function ItemCard({ item, onSelect, locale, fractionDigits }: ItemCardPro
     <button
       type="button"
       onClick={onSelect}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-card text-left shadow-sm active:scale-[0.98]"
+      className="group flex flex-col overflow-hidden rounded-[1.25rem] border border-border/50 bg-card text-left transition-transform active:scale-[0.98]"
     >
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-muted">
         {item.images[0] ? (
@@ -59,10 +63,10 @@ export function ItemCard({ item, onSelect, locale, fractionDigits }: ItemCardPro
       </div>
       {/* Title over two lines and no teaser text: the name is what the guest is
           looking for, and a clamped half-sentence under it only added noise. */}
-      <div className="flex flex-1 flex-col gap-1.5 p-3">
-        <p className="line-clamp-2 text-sm leading-snug font-medium">{item.title}</p>
+      <div className="flex flex-1 flex-col gap-1.5 px-3 pt-2.5 pb-3">
+        <p className="line-clamp-2 text-sm leading-snug font-medium text-foreground/95">{item.title}</p>
         <div className="mt-auto flex items-baseline gap-1.5">
-          <span className="font-display text-sm font-semibold">
+          <span className="font-display text-[15px] font-semibold">
             {formatCurrency(item.price, item.currency, locale, fractionDigits)}
           </span>
           {item.compareAtPrice && item.compareAtPrice > item.price && (
@@ -70,6 +74,7 @@ export function ItemCard({ item, onSelect, locale, fractionDigits }: ItemCardPro
               {formatCurrency(item.compareAtPrice, item.currency, locale, fractionDigits)}
             </span>
           )}
+          {calories && <span className="ml-auto shrink-0 text-[11px] text-muted-foreground">{calories}</span>}
         </div>
       </div>
     </button>

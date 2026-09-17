@@ -68,6 +68,7 @@
       "useCases": "Kullanım alanları",
       "demo": "Canlı demo",
       "howItWorks": "Nasıl çalışır",
+      "guide": "Kullanım kılavuzu",
       "pricing": "Fiyatlandırma",
       "login": "Giriş yap",
       "getStarted": "Ücretsiz başla",
@@ -1136,6 +1137,7 @@
       "subtitle": "Kayıttan basılı QR koda kadar — adım adım.",
       "videoTitle": "Video anlatım",
       "videoNote": "İki dakikadan kısa: kayıttan basılı QR koda kadar. Alt yazılar Azerbaycanca.",
+      "allSteps": "Tüm adımları oku",
       "steps": [
         {
           "title": "Kayıt ol",

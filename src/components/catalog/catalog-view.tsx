@@ -10,6 +10,7 @@ import { ItemSheet } from "@/components/catalog/item-sheet";
 import { LanguageFab } from "@/components/catalog/language-fab";
 import { ReportAbuse } from "@/components/catalog/report-abuse";
 import { EmptyState } from "@/components/ui/empty-state";
+import { getCategoryIcon } from "@/lib/category-icons";
 import type { CompanyPublicView, ItemWithAttributes } from "@/lib/data/types";
 
 export function CatalogView({
@@ -186,7 +187,9 @@ export function CatalogView({
           )
         ) : (
           <div className="space-y-8">
-            {company.categories.map((category) => (
+            {company.categories.map((category) => {
+              const Icon = getCategoryIcon(category.icon);
+              return (
               <section
                 key={category.id}
                 data-category-id={category.id}
@@ -196,7 +199,8 @@ export function CatalogView({
                 }}
                 className="scroll-mt-[var(--catalog-chrome,14.5rem)]"
               >
-                <h2 className="mb-3 scroll-mt-[var(--catalog-chrome,14.5rem)] font-display text-lg font-semibold">
+                <h2 className="mb-3 flex scroll-mt-[var(--catalog-chrome,14.5rem)] items-center gap-2 font-display text-lg font-semibold tracking-tight">
+                  <Icon className="size-4 shrink-0" style={{ color: company.accentColor }} />
                   {category.name}
                 </h2>
                 {category.items.length === 0 ? (
@@ -215,7 +219,8 @@ export function CatalogView({
                   </div>
                 )}
               </section>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

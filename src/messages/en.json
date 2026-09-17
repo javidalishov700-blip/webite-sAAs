@@ -68,6 +68,7 @@
       "useCases": "Use cases",
       "demo": "Live demo",
       "howItWorks": "How it works",
+      "guide": "Walkthrough",
       "pricing": "Pricing",
       "login": "Log in",
       "getStarted": "Get started free",
@@ -1136,6 +1137,7 @@
       "subtitle": "From sign-up to a printed QR code — step by step.",
       "videoTitle": "Video walkthrough",
       "videoNote": "Under two minutes, from sign-up to a printed QR code. Captions are in Azerbaijani.",
+      "allSteps": "Read every step",
       "steps": [
         {
           "title": "Create your account",
