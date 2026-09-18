@@ -20,6 +20,15 @@ export function appBaseUrl(): string {
   return SITE.url.replace(/\/$/, "");
 }
 
+/** Bare host for stamping on downloads and printed cards, e.g. "qruniverse.net". */
+export function siteHost(): string {
+  try {
+    return new URL(appBaseUrl()).host.replace(/^www\./, "");
+  } catch {
+    return new URL(PRODUCTION_SITE_URL).host;
+  }
+}
+
 export function telHref(phone = SITE.phone): string {
   return `tel:${phone.replace(/[^\d+]/g, "")}`;
 }

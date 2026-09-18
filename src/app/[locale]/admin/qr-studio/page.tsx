@@ -35,7 +35,7 @@ import { PlanUsageBanner } from "@/components/admin/plan-usage-banner";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { catalogAbsoluteUrl, catalogPreviewPath, qrGoAbsoluteUrl } from "@/lib/catalog-url";
-import { appBaseUrl } from "@/lib/site";
+import { appBaseUrl, siteHost } from "@/lib/site";
 import { ApiError } from "@/lib/api-client";
 import type { QrDotStyle } from "@/lib/data/types";
 
@@ -327,11 +327,11 @@ export default function QrStudioPage() {
                     />
                   </div>
                   <div className="flex w-full gap-2">
-                    <Button variant="outline" className="flex-1" onClick={() => qrRef.current?.download("png", draft.name)}>
+                    <Button variant="outline" className="flex-1" onClick={() => qrRef.current?.download("png", draft.name, siteHost())}>
                       <Download className="size-3.5" />
                       {t("downloadPng")}
                     </Button>
-                    <Button variant="outline" className="flex-1" onClick={() => qrRef.current?.download("svg", draft.name)}>
+                    <Button variant="outline" className="flex-1" onClick={() => qrRef.current?.download("svg", draft.name, siteHost())}>
                       <Download className="size-3.5" />
                       {t("downloadSvg")}
                     </Button>

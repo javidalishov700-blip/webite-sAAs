@@ -2,9 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { ArrowLeft, Printer, QrCode as QrCodeIcon } from "lucide-react";
+import { AlertTriangle, ArrowLeft, Printer, QrCode as QrCodeIcon, RotateCcw } from "lucide-react";
 import { PageHeader } from "@/components/admin/page-header";
-import { QrPrintSheet, type PrintLayout } from "@/components/admin/qr-print-sheet";
+import {
+  QrPrintSheet,
+  contrastRatio,
+  printSafeColors,
+  type PrintLayout,
+} from "@/components/admin/qr-print-sheet";
+import { ColorPicker } from "@/components/admin/color-picker";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -29,6 +35,7 @@ export default function QrPrintPage() {
   const [layout, setLayout] = useState<PrintLayout>("cards");
   const [headline, setHeadline] = useState("");
   const [hint, setHint] = useState("");
+  const [colors, setColors] = useState<{ dots: string; card: string } | null>(null);
 
   // Defaults come from the translations, so they are wrong in no language.
   useEffect(() => {
@@ -37,6 +44,12 @@ export default function QrPrintPage() {
   }, [t]);
 
   const selected = qrCodes?.find((q) => q.id === selectedId) ?? qrCodes?.[0] ?? null;
+
+  // Start from something that prints and scans; the owner takes it from there.
+  useEffect(() => {
+    if (selected) setColors(printSafeColors(selected));
+  }, [selected?.id]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const origin = appBaseUrl();
   const payload = selected
     ? qrGoAbsoluteUrl(origin, selected.id)
@@ -67,6 +80,9 @@ export default function QrPrintPage() {
       </div>
     );
   }
+
+  const palette = colors ?? printSafeColors(selected);
+  const unreadable = contrastRatio(palette.dots, palette.card) < 3;
 
   return (
     <div>
@@ -122,6 +138,36 @@ export default function QrPrintPage() {
               <Label htmlFor="print-hint">{t("hintLabel")}</Label>
               <Input id="print-hint" value={hint} onChange={(e) => setHint(e.target.value)} maxLength={40} />
             </div>
+
+            {palette ? (
+              <>
+                <div className="space-y-1.5 sm:col-span-2">
+                  <Label>{t("dotsColorLabel")}</Label>
+                  <ColorPicker value={palette.dots} onChange={(dots) => setColors({ ...palette, dots })} />
+                </div>
+                <div className="space-y-1.5 sm:col-span-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <Label>{t("cardColorLabel")}</Label>
+                    <button
+                      type="button"
+                      onClick={() => setColors(printSafeColors(selected))}
+                      className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
+                    >
+                      <RotateCcw className="size-3" />
+                      {t("resetColors")}
+                    </button>
+                  </div>
+                  <ColorPicker value={palette.card} onChange={(card) => setColors({ ...palette, card })} />
+                </div>
+              </>
+            ) : null}
+
+            {unreadable ? (
+              <p className="flex items-start gap-2 text-xs text-warning sm:col-span-2 lg:col-span-4">
+                <AlertTriangle className="mt-px size-3.5 shrink-0" />
+                {t("lowContrast")}
+              </p>
+            ) : null}
             <p className="text-xs text-muted-foreground sm:col-span-2 lg:col-span-4">{t("tip")}</p>
           </CardContent>
         </Card>
@@ -134,6 +180,8 @@ export default function QrPrintPage() {
             qr={selected}
             payload={payload}
             accentColor={company?.accentColor ?? "#7C5CFF"}
+            dotsColor={palette.dots}
+            cardColor={palette.card}
             headline={headline}
             hint={hint}
             venue={company?.name ?? ""}
