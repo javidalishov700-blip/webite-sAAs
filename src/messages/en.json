@@ -748,6 +748,27 @@
       "openPagePreview": "Open full phone preview",
       "downloadPng": "Download PNG",
       "downloadSvg": "Download SVG",
+      "print": {
+        "open": "Print template",
+        "title": "Print template",
+        "subtitle": "Lay out QR cards for your tables and print them.",
+        "qrLabel": "Which QR code",
+        "layoutLabel": "Template",
+        "layouts": {
+          "cards": "Table card — 6 per A4",
+          "tent": "Table tent — folded",
+          "poster": "Window poster — A4"
+        },
+        "headlineLabel": "Headline",
+        "headlineDefault": "Our menu",
+        "hintLabel": "Sub-line",
+        "hintDefault": "Scan with your camera",
+        "print": "Print",
+        "tip": "In the print dialog turn on background graphics and set margins to none.",
+        "foldHere": "Fold here",
+        "cutHere": "Cut line",
+        "needQr": "Create a QR code in QR Studio first."
+      },
       "scans": "{count} scans",
       "paused": "Paused — scans are off",
       "activeLabel": "QR is active",

@@ -748,6 +748,27 @@
       "openPagePreview": "Büyük telefon önizlemesini aç",
       "downloadPng": "PNG indir",
       "downloadSvg": "SVG indir",
+      "print": {
+        "open": "Yazdırma şablonu",
+        "title": "Yazdırma şablonu",
+        "subtitle": "Masalara koymak için QR kartlarını hazırla ve yazdır.",
+        "qrLabel": "Hangi QR kod",
+        "layoutLabel": "Şablon",
+        "layouts": {
+          "cards": "Masa kartı — A4'te 6 adet",
+          "tent": "Masa standı — katlanır",
+          "poster": "Vitrin afişi — A4"
+        },
+        "headlineLabel": "Başlık",
+        "headlineDefault": "Menümüz",
+        "hintLabel": "Alt yazı",
+        "hintDefault": "Kamerayla okutun",
+        "print": "Yazdır",
+        "tip": "Yazdırma penceresinde arka plan grafiklerini aç ve kenar boşluklarını «yok» yap.",
+        "foldHere": "Buradan katlayın",
+        "cutHere": "Kesim çizgisi",
+        "needQr": "Önce QR Stüdyo'da bir QR kod oluştur."
+      },
       "scans": "{count} tarama",
       "paused": "Durduruldu — tarama çalışmaz",
       "activeLabel": "QR aktif",

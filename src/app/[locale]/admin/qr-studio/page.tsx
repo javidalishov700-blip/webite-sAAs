@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Download, Plus, QrCode as QrCodeIcon, Smartphone, Trash2 } from "lucide-react";
+import { Download, Plus, Printer, QrCode as QrCodeIcon, Smartphone, Trash2 } from "lucide-react";
 import { PageHeader } from "@/components/admin/page-header";
 import { QrCanvas, type QrCanvasHandle } from "@/components/admin/qr-canvas";
 import { CatalogPhonePreview } from "@/components/admin/catalog-phone-preview";
@@ -130,10 +130,18 @@ export default function QrStudioPage() {
         title={t("title")}
         subtitle={t("subtitle")}
         actions={
-          <Button variant="glow" onClick={handleCreate} loading={createQr.isPending}>
-            <Plus className="size-4" />
-            {t("newCode")}
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="outline" asChild>
+              <Link href="/admin/qr-studio/print">
+                <Printer className="size-4" />
+                {t("print.open")}
+              </Link>
+            </Button>
+            <Button variant="glow" onClick={handleCreate} loading={createQr.isPending}>
+              <Plus className="size-4" />
+              {t("newCode")}
+            </Button>
+          </div>
         }
       />
 

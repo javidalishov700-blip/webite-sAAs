@@ -748,6 +748,27 @@
       "openPagePreview": "Böyük telefon önizləməsini aç",
       "downloadPng": "PNG endir",
       "downloadSvg": "SVG endir",
+      "print": {
+        "open": "Çap şablonu",
+        "title": "Çap şablonu",
+        "subtitle": "Masalara qoymaq üçün QR kartlarını hazırla və çap et.",
+        "qrLabel": "Hansı QR kod",
+        "layoutLabel": "Şablon",
+        "layouts": {
+          "cards": "Masa kartı — A4-də 6 ədəd",
+          "tent": "Masa stendi — qatlanan",
+          "poster": "Vitrin afişası — A4"
+        },
+        "headlineLabel": "Başlıq",
+        "headlineDefault": "Menyumuz",
+        "hintLabel": "Alt yazı",
+        "hintDefault": "Kamera ilə skan edin",
+        "print": "Çap et",
+        "tip": "Çap pəncərəsində «Arxa fon qrafikası» seçimini aktiv et və kənar boşluqları «Yoxdur» seç.",
+        "foldHere": "Bura qatlayın",
+        "cutHere": "Kəsmə xətti",
+        "needQr": "Əvvəlcə QR Studiyada bir QR kod yarat."
+      },
       "scans": "{count} skan",
       "paused": "Dayanıb — skan işləmir",
       "activeLabel": "QR aktivdir",
