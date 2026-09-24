@@ -1,39 +1,15 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { motion } from "motion/react";
 import { ArrowRight, ChevronDown, PlayCircle } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Hero3D } from "@/components/landing/hero-3d";
 import { ActiveUsersBadge } from "@/components/landing/active-users";
-import { api } from "@/lib/api-client";
-import { formatCompactNumber } from "@/lib/utils";
-
-interface PublicStats {
-  scans: number;
-  catalogs: number;
-  languages: number;
-  online: number;
-}
 
 export function Hero() {
   const t = useTranslations("landing.hero");
-  const locale = useLocale();
-  const { data: stats } = useQuery({
-    queryKey: ["public-stats"],
-    queryFn: () => api.get<PublicStats>("/api/stats"),
-    refetchInterval: 20_000,
-    staleTime: 10_000,
-  });
-
-  const statItems = [
-    { value: stats ? formatCompactNumber(stats.scans, locale) : "—", label: t("statScansLabel") },
-    { value: stats ? formatCompactNumber(stats.catalogs, locale) : "—", label: t("statBusinessesLabel") },
-    { value: stats ? String(stats.languages) : "4", label: t("statCountriesLabel") },
-  ] as const;
-
   return (
     <section className="relative flex items-start overflow-hidden pt-24 pb-16 sm:min-h-[100svh] sm:items-center sm:pt-32">
       <div className="mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-10 px-5 sm:px-6 lg:grid-cols-2 lg:gap-6">
@@ -72,15 +48,6 @@ export function Hero() {
                 {t("ctaSecondary")}
               </a>
             </Button>
-          </div>
-
-          <div className="mt-10 grid w-full grid-cols-3 gap-4 border-t border-border/70 pt-6">
-            {statItems.map((item) => (
-              <div key={item.label}>
-                <p className="font-display text-xl font-bold sm:text-2xl">{item.value}</p>
-                <p className="text-xs text-muted-foreground sm:text-sm">{item.label}</p>
-              </div>
-            ))}
           </div>
         </motion.div>
 

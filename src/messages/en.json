@@ -556,7 +556,10 @@
       "addProduct": "Add a product",
       "addCategory": "Add a category",
       "openPreview": "See it on a phone",
-      "openQrStudio": "Open QR Studio"
+      "openQrStudio": "Open QR Studio",
+      "noScansTitle": "Nobody has scanned yet",
+      "noScansBody": "Print the QR code and put it on a table. After the first scan this is where the numbers appear: how many people looked, which dish they opened most, which language they read it in.",
+      "noScansCta": "Get my QR code"
     },
     "plan": {
       "hit": {
@@ -1120,6 +1123,7 @@
       "eyebrow": "FAQ",
       "title": "Questions, answered",
       "subtitle": "How QR-Universe works for real businesses.",
+      "seeAll": "All questions",
       "items": {
         "q1": {
           "q": "Do customers need an app?",

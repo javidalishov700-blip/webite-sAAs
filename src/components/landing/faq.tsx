@@ -3,14 +3,17 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { ChevronDown } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 import { Reveal } from "@/components/landing/reveal";
 import { cn } from "@/lib/utils";
 
-const KEYS = ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9"] as const;
+const ALL_KEYS = ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9"] as const;
+// Nine open questions on a home page is a wall; the rest live on /faq.
+const KEYS = ALL_KEYS.slice(0, 5);
 
 export function Faq() {
   const t = useTranslations("pages.faq");
-  const [open, setOpen] = useState<(typeof KEYS)[number] | null>("q1");
+  const [open, setOpen] = useState<(typeof ALL_KEYS)[number] | null>("q1");
 
   return (
     <section id="faq" className="relative mx-auto max-w-6xl scroll-mt-28 px-5 py-24 sm:px-6">
@@ -42,6 +45,11 @@ export function Faq() {
           );
         })}
       </div>
+      <Reveal className="mt-8 text-center text-sm">
+        <Link href="/faq" className="font-medium text-accent underline-offset-4 hover:underline">
+          {t("seeAll")} →
+        </Link>
+      </Reveal>
     </section>
   );
 }

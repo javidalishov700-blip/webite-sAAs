@@ -556,7 +556,10 @@
       "addProduct": "Ürün ekle",
       "addCategory": "Kategori ekle",
       "openPreview": "Telefonda gör",
-      "openQrStudio": "QR Stüdyosunu aç"
+      "openQrStudio": "QR Stüdyosunu aç",
+      "noScansTitle": "Henüz kimse okutmadı",
+      "noScansBody": "QR kodu bastırıp masaya koyun. İlk okutmadan sonra istatistikler burada görünecek: kaç kişi baktı, hangi ürüne çok bakıldı, hangi dilde açtılar.",
+      "noScansCta": "QR kodumu al"
     },
     "plan": {
       "hit": {
@@ -1120,6 +1123,7 @@
       "eyebrow": "SSS",
       "title": "Sık sorulanlar",
       "subtitle": "QR-Universe gerçek işletmelerde nasıl çalışır.",
+      "seeAll": "Tüm sorular",
       "items": {
         "q1": {
           "q": "Müşteri uygulama indirir mi?",

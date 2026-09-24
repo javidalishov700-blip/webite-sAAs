@@ -556,7 +556,10 @@
       "addProduct": "Məhsul əlavə et",
       "addCategory": "Kateqoriya əlavə et",
       "openPreview": "Telefonda bax",
-      "openQrStudio": "QR Studiyanı aç"
+      "openQrStudio": "QR Studiyanı aç",
+      "noScansTitle": "Hələ heç kim skan etməyib",
+      "noScansBody": "QR kodunu çap edib masaya qoyun. İlk skandan sonra burada statistika görünəcək: neçə nəfər baxıb, hansı məhsul çox baxılıb, hansı dildə açıblar.",
+      "noScansCta": "QR kodumu götür"
     },
     "plan": {
       "hit": {
@@ -1120,6 +1123,7 @@
       "eyebrow": "SSS",
       "title": "Tez-tez soruşulanlar",
       "subtitle": "Biznesdə necə işləyir.",
+      "seeAll": "Bütün suallar",
       "items": {
         "q1": {
           "q": "Müştəri tətbiq yükləyir?",
