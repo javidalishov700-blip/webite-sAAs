@@ -91,7 +91,18 @@
       "statCountries": "42",
       "statCountriesLabel": "языка",
       "scrollHint": "Прокрутите, чтобы узнать больше",
-      "onlineNow": "сейчас онлайн"
+      "onlineNow": "сейчас онлайн",
+      "preview": {
+        "address": "ул. Низами 12, Баку",
+        "chips": [
+          "Основные",
+          "Салаты",
+          "Напитки"
+        ],
+        "drinks": "Напитки",
+        "cardTitle": "Наше меню",
+        "cardHint": "Наведите камеру"
+      }
     },
     "logos": {
       "title": "Нам доверяют современные быстрорастущие команды"
@@ -1209,7 +1220,8 @@
       "helpBody": "Напишите в WhatsApp — пройдём шаги вместе.",
       "helpCta": "Написать в WhatsApp",
       "startCta": "Начать бесплатно",
-      "whatsappMessage": "Здравствуйте, нужна помощь с использованием QR-Universe."
+      "whatsappMessage": "Здравствуйте, нужна помощь с использованием QR-Universe.",
+      "liveDemo": "Открыть живой демо-каталог"
     },
     "services": {
       "eyebrow": "УСЛУГА",

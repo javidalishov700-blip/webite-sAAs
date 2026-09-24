@@ -1,6 +1,6 @@
 export function AmbientBackground({ className }: { className?: string }) {
   return (
-    <div className={"pointer-events-none absolute inset-0 -z-10 overflow-hidden " + (className ?? "")}>
+    <div className={"pointer-events-none absolute inset-0 -z-10 hidden overflow-hidden dark:block " + (className ?? "")}>
       <div className="absolute inset-0 grid-mask" />
       <div className="animate-aurora absolute -top-40 left-1/2 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full bg-primary/25 blur-[120px]" />
       <div className="animate-float-slow absolute top-1/3 -left-24 h-80 w-80 rounded-full bg-accent/20 blur-[100px]" />

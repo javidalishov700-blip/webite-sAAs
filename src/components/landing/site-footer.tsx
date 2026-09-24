@@ -12,7 +12,6 @@ export function SiteFooter() {
     {
       title: t("product"),
       links: [
-        { label: t("howItWorks"), href: "/#how-it-works" },
         { label: t("guide"), href: "/guide" },
         { label: t("services"), href: "/services" },
         { label: t("pricing"), href: "/#pricing" },

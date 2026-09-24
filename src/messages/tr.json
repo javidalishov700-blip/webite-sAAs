@@ -91,7 +91,18 @@
       "statCountries": "42",
       "statCountriesLabel": "dil",
       "scrollHint": "Keşfetmek için kaydırın",
-      "onlineNow": "çevrimiçi"
+      "onlineNow": "çevrimiçi",
+      "preview": {
+        "address": "Nizami Cad. 12, Bakü",
+        "chips": [
+          "Ana yemekler",
+          "Salatalar",
+          "İçecekler"
+        ],
+        "drinks": "İçecekler",
+        "cardTitle": "Menümüz",
+        "cardHint": "Kamerayla okutun"
+      }
     },
     "logos": {
       "title": "Hızla büyüyen modern ekipler tarafından tercih ediliyor"
@@ -1209,7 +1220,8 @@
       "helpBody": "WhatsApp'tan yaz, adımları birlikte geçelim.",
       "helpCta": "WhatsApp'tan yaz",
       "startCta": "Ücretsiz başla",
-      "whatsappMessage": "Merhaba, QR-Universe'ü nasıl kullanacağım konusunda yardım istiyorum."
+      "whatsappMessage": "Merhaba, QR-Universe'ü nasıl kullanacağım konusunda yardım istiyorum.",
+      "liveDemo": "Canlı demo kataloğu aç"
     },
     "services": {
       "eyebrow": "HİZMET",

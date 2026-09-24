@@ -18,7 +18,7 @@ export function Faq() {
   return (
     <section id="faq" className="relative mx-auto max-w-6xl scroll-mt-28 px-5 py-24 sm:px-6">
       <Reveal className="max-w-2xl">
-        <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">{t("title")}</h2>
+        <h2 className="font-serif text-3xl font-semibold tracking-[-0.01em] sm:text-4xl">{t("title")}</h2>
         <p className="mt-4 text-muted-foreground">{t("subtitle")}</p>
       </Reveal>
       <div className="mx-auto mt-12 max-w-3xl space-y-3">

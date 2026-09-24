@@ -91,7 +91,18 @@
       "statCountries": "42",
       "statCountriesLabel": "dil",
       "scrollHint": "Kəşf etmək üçün aşağı sürüşdürün",
-      "onlineNow": "indi onlayn"
+      "onlineNow": "indi onlayn",
+      "preview": {
+        "address": "Nizami küç. 12, Bakı",
+        "chips": [
+          "Əsas yeməklər",
+          "Salatlar",
+          "İçkilər"
+        ],
+        "drinks": "İçkilər",
+        "cardTitle": "Menyumuz",
+        "cardHint": "Kamera ilə skan edin"
+      }
     },
     "logos": {
       "title": "Sürətlə böyüyən müasir komandaların etibar etdiyi platforma"
@@ -1209,7 +1220,8 @@
       "helpBody": "WhatsApp-dan yaz — addımları birlikdə keçək.",
       "helpCta": "WhatsApp-dan yaz",
       "startCta": "Pulsuz başla",
-      "whatsappMessage": "Salam, QR-Universe-i necə istifadə edəcəyimi öyrənmək istəyirəm."
+      "whatsappMessage": "Salam, QR-Universe-i necə istifadə edəcəyimi öyrənmək istəyirəm.",
+      "liveDemo": "Canlı demo kataloqa bax"
     },
     "services": {
       "eyebrow": "XİDMƏT",

@@ -15,7 +15,7 @@ export function ServicePackages() {
   return (
     <section className="relative mx-auto max-w-6xl px-5 py-20 sm:px-6">
       <Reveal className="mx-auto max-w-2xl text-center">
-        <h1 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">{t("title")}</h1>
+        <h1 className="font-serif text-3xl font-semibold tracking-[-0.01em] sm:text-4xl">{t("title")}</h1>
         <p className="mt-4 text-muted-foreground">{t("subtitle")}</p>
       </Reveal>
 

@@ -17,7 +17,7 @@ export function CtaBand() {
       >
         <div className="pointer-events-none absolute inset-0 grid-mask opacity-60" />
         <div className="animate-aurora pointer-events-none absolute top-1/2 left-1/2 -z-0 size-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent-2/20 blur-[100px]" />
-        <h2 className="relative font-display text-3xl font-bold tracking-tight sm:text-4xl">{t("title")}</h2>
+        <h2 className="relative font-serif text-3xl font-semibold tracking-[-0.01em] sm:text-4xl">{t("title")}</h2>
         <p className="relative mx-auto mt-4 max-w-xl text-muted-foreground">{t("subtitle")}</p>
         <Button variant="glow" size="lg" className="relative mt-8" asChild>
           <Link href="/signup">

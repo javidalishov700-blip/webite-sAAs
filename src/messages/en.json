@@ -91,7 +91,18 @@
       "statCountries": "42",
       "statCountriesLabel": "languages",
       "scrollHint": "Scroll to explore",
-      "onlineNow": "online now"
+      "onlineNow": "online now",
+      "preview": {
+        "address": "12 Nizami St, Baku",
+        "chips": [
+          "Mains",
+          "Salads",
+          "Drinks"
+        ],
+        "drinks": "Drinks",
+        "cardTitle": "Our menu",
+        "cardHint": "Scan with your camera"
+      }
     },
     "logos": {
       "title": "Trusted by modern, fast-moving teams"
@@ -1209,7 +1220,8 @@
       "helpBody": "Message me on WhatsApp and we'll walk through it together.",
       "helpCta": "Message on WhatsApp",
       "startCta": "Start free",
-      "whatsappMessage": "Hi, I'd like help using QR-Universe."
+      "whatsappMessage": "Hi, I'd like help using QR-Universe.",
+      "liveDemo": "Open the live demo catalog"
     },
     "services": {
       "eyebrow": "SERVICE",

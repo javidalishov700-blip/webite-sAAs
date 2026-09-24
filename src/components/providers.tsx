@@ -44,7 +44,7 @@ export function Providers({ children, locale }: { children: React.ReactNode; loc
   );
 
   return (
-    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+    <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
       <QueryClientProvider client={queryClient}>
         <DocumentLocale locale={locale} />
         {children}

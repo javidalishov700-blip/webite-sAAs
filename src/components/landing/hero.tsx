@@ -5,8 +5,7 @@ import { motion } from "motion/react";
 import { ArrowRight, ChevronDown, PlayCircle } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
-import { Hero3D } from "@/components/landing/hero-3d";
-import { ActiveUsersBadge } from "@/components/landing/active-users";
+import { HeroVisual } from "@/components/landing/hero-visual";
 
 export function Hero() {
   const t = useTranslations("landing.hero");
@@ -19,18 +18,12 @@ export function Hero() {
           transition={{ duration: 0.7, ease: "easeOut" }}
           className="flex flex-col items-start"
         >
-          <div className="glass mb-6 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-medium text-muted-foreground">
-            <span className="relative flex size-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
-              <span className="relative inline-flex size-2 rounded-full bg-accent" />
-            </span>
-            {t("eyebrow")}
-          </div>
+          <p className="mb-5 text-sm font-medium text-muted-foreground">{t("eyebrow")}</p>
 
-          <h1 className="font-display text-4xl leading-[1.05] font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl">
+          <h1 className="font-serif text-[2.6rem] leading-[1.08] font-semibold tracking-[-0.01em] text-balance sm:text-6xl lg:text-[4.25rem]">
             {t("titleLine1")}
             <br />
-            <span className="text-gradient animate-gradient-x bg-[length:200%_auto]">{t("titleHighlight")}</span>
+            <span className="text-primary italic">{t("titleHighlight")}</span>
           </h1>
 
           <p className="mt-5 max-w-lg text-base leading-relaxed text-muted-foreground sm:text-lg">{t("subtitle")}</p>
@@ -43,7 +36,7 @@ export function Hero() {
               </Link>
             </Button>
             <Button variant="glass" size="lg" asChild>
-              <a href="#how-it-works">
+              <a href="#guide">
                 <PlayCircle className="size-4.5" />
                 {t("ctaSecondary")}
               </a>
@@ -55,10 +48,9 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, ease: "easeOut", delay: 0.15 }}
-          className="relative order-first h-[170px] sm:h-[380px] lg:order-last lg:h-[560px]"
+          className="relative order-last h-[520px] sm:h-[560px] lg:h-[600px]"
         >
-          <Hero3D />
-          <ActiveUsersBadge className="glass animate-float absolute top-6 right-2 flex items-center gap-2 rounded-2xl px-3 py-2 text-xs font-medium sm:right-6" />
+          <HeroVisual />
         </motion.div>
       </div>
 

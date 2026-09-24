@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Outfit, JetBrains_Mono } from "next/font/google";
+import { Inter, Inter_Tight, Playfair_Display, JetBrains_Mono } from "next/font/google";
 import { getLocale } from "next-intl/server";
 import { appBaseUrl } from "@/lib/site";
 import "@/app/globals.css";
@@ -10,9 +10,21 @@ const inter = Inter({
   display: "swap",
 });
 
-const outfit = Outfit({
-  subsets: ["latin", "latin-ext"],
-  variable: "--font-outfit",
+// Outfit, the previous heading face, has no "ə"/"Ə" and no Cyrillic, so every
+// Azerbaijani heading drew its schwa from a fallback font and Russian headings
+// fell back entirely. Both faces here were checked glyph by glyph for ə Ə ğ İ Ж.
+const interTight = Inter_Tight({
+  subsets: ["latin", "latin-ext", "cyrillic"],
+  variable: "--font-inter-tight",
+  display: "swap",
+});
+
+/** Marketing headlines only — the product UI stays on the sans faces. */
+const playfair = Playfair_Display({
+  subsets: ["latin", "latin-ext", "cyrillic"],
+  weight: ["500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-playfair",
   display: "swap",
 });
 
@@ -78,7 +90,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const locale = await getLocale();
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={`${inter.variable} ${outfit.variable} ${jetbrainsMono.variable} font-sans`} suppressHydrationWarning>
+      <body className={`${inter.variable} ${interTight.variable} ${playfair.variable} ${jetbrainsMono.variable} font-sans`} suppressHydrationWarning>
         {children}
       </body>
     </html>
