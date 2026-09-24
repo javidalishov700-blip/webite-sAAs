@@ -656,7 +656,9 @@
       "created": "Kateqoriya yaradıldı",
       "updated": "Kateqoriya yeniləndi",
       "deleted": "Kateqoriya silindi",
-      "reordered": "Ardıcıllıq saxlanıldı"
+      "reordered": "Ardıcıllıq saxlanıldı",
+      "nameLabel": "Kateqoriyanın adı",
+      "changeIcon": "İkonu dəyiş"
     },
     "products": {
       "title": "Məhsullar",
@@ -722,7 +724,10 @@
         "listChipPlaceholder": "Yazıb Enter basın",
         "noAttributes": "Hələ atribut yoxdur.",
         "submitCreate": "Məhsul yarat",
-        "submitEdit": "Məhsulu saxla"
+        "submitEdit": "Məhsulu saxla",
+        "newCategory": "Yeni kateqoriya",
+        "moreDetails": "Ətraflı tənzimləmələr",
+        "lessDetails": "Ətraflı tənzimləmələri gizlə"
       },
       "created": "Məhsul yaradıldı",
       "updated": "Məhsul yeniləndi",

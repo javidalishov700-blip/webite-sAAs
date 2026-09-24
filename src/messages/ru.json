@@ -656,7 +656,9 @@
       "created": "Категория создана",
       "updated": "Категория обновлена",
       "deleted": "Категория удалена",
-      "reordered": "Порядок сохранён"
+      "reordered": "Порядок сохранён",
+      "nameLabel": "Название категории",
+      "changeIcon": "Сменить значок"
     },
     "products": {
       "title": "Товары",
@@ -722,7 +724,10 @@
         "listChipPlaceholder": "Введите и нажмите Enter",
         "noAttributes": "Атрибутов пока нет.",
         "submitCreate": "Создать товар",
-        "submitEdit": "Сохранить товар"
+        "submitEdit": "Сохранить товар",
+        "newCategory": "Новая категория",
+        "moreDetails": "Дополнительно",
+        "lessDetails": "Скрыть дополнительное"
       },
       "created": "Товар создан",
       "updated": "Товар обновлён",

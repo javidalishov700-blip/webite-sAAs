@@ -656,7 +656,9 @@
       "created": "Kategori oluşturuldu",
       "updated": "Kategori güncellendi",
       "deleted": "Kategori silindi",
-      "reordered": "Sıralama kaydedildi"
+      "reordered": "Sıralama kaydedildi",
+      "nameLabel": "Kategori adı",
+      "changeIcon": "Simgeyi değiştir"
     },
     "products": {
       "title": "Ürünler",
@@ -722,7 +724,10 @@
         "listChipPlaceholder": "Yazıp Enter’a bas",
         "noAttributes": "Henüz özellik yok.",
         "submitCreate": "Ürün oluştur",
-        "submitEdit": "Ürünü kaydet"
+        "submitEdit": "Ürünü kaydet",
+        "newCategory": "Yeni kategori",
+        "moreDetails": "Diğer ayarlar",
+        "lessDetails": "Diğer ayarları gizle"
       },
       "created": "Ürün oluşturuldu",
       "updated": "Ürün güncellendi",

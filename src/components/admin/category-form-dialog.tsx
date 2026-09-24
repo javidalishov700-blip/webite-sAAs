@@ -30,6 +30,7 @@ export function CategoryFormDialog({
   const t = useTranslations("admin.categories");
   const tc = useTranslations("common");
   const [name, setName] = useState("");
+  const [pickingIcon, setPickingIcon] = useState(false);
   const [icon, setIcon] = useState(CATEGORY_ICON_NAMES[0]);
 
   useEffect(() => {
@@ -55,7 +56,7 @@ export function CategoryFormDialog({
           className="space-y-4"
         >
           <div className="space-y-1.5">
-            <Label htmlFor="category-name">{tc("required")}</Label>
+            <Label htmlFor="category-name">{t("nameLabel")}</Label>
             <Input
               id="category-name"
               autoFocus
@@ -63,7 +64,6 @@ export function CategoryFormDialog({
               onChange={(e) => setName(e.target.value)}
               placeholder={t("namePlaceholder")}
             />
-            <p className="text-xs text-muted-foreground">{t("typeYourOwn")}</p>
             {!category && suggestions.length > 0 && (
               <div className="flex flex-wrap gap-1.5 pt-1">
                 {suggestions.map((suggestion) => (
@@ -80,28 +80,48 @@ export function CategoryFormDialog({
             )}
           </div>
 
-          <div className="space-y-1.5">
-            <Label>{t("iconLabel")}</Label>
-            <div className="grid grid-cols-8 gap-1.5 sm:grid-cols-11">
-              {CATEGORY_ICON_NAMES.map((iconName) => {
-                const Icon = getCategoryIcon(iconName);
-                return (
-                  <button
-                    type="button"
-                    key={iconName}
-                    onClick={() => setIcon(iconName)}
-                    className={cn(
-                      "flex size-8 items-center justify-center rounded-lg border transition-colors",
-                      icon === iconName
-                        ? "border-primary bg-primary/15 text-primary"
-                        : "border-border/70 bg-muted/20 text-muted-foreground hover:bg-muted/40",
-                    )}
-                  >
-                    <Icon className="size-4" />
-                  </button>
-                );
-              })}
-            </div>
+          {/* Forty-four icons is a decision nobody wants to make to name a
+              section; the grid opens only if somebody goes looking for it. */}
+          <div className="space-y-2">
+            <button
+              type="button"
+              onClick={() => setPickingIcon((open) => !open)}
+              className="flex items-center gap-2.5 rounded-xl border border-border/70 px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              <span className="flex size-7 items-center justify-center rounded-lg bg-primary/15 text-primary">
+                {(() => {
+                  const Icon = getCategoryIcon(icon);
+                  return <Icon className="size-4" />;
+                })()}
+              </span>
+              {t("changeIcon")}
+            </button>
+
+            {pickingIcon ? (
+              <div className="grid grid-cols-8 gap-1.5 sm:grid-cols-11">
+                {CATEGORY_ICON_NAMES.map((iconName) => {
+                  const Icon = getCategoryIcon(iconName);
+                  return (
+                    <button
+                      type="button"
+                      key={iconName}
+                      onClick={() => {
+                        setIcon(iconName);
+                        setPickingIcon(false);
+                      }}
+                      className={cn(
+                        "flex size-8 items-center justify-center rounded-lg border transition-colors",
+                        icon === iconName
+                          ? "border-primary bg-primary/15 text-primary"
+                          : "border-border/70 bg-muted/20 text-muted-foreground hover:bg-muted/40",
+                      )}
+                    >
+                      <Icon className="size-4" />
+                    </button>
+                  );
+                })}
+              </div>
+            ) : null}
           </div>
 
           <DialogFooter>

@@ -656,7 +656,9 @@
       "created": "Category created",
       "updated": "Category updated",
       "deleted": "Category deleted",
-      "reordered": "Order saved"
+      "reordered": "Order saved",
+      "nameLabel": "Category name",
+      "changeIcon": "Change icon"
     },
     "products": {
       "title": "Products",
@@ -722,7 +724,10 @@
         "listChipPlaceholder": "Add and press Enter",
         "noAttributes": "No attributes yet.",
         "submitCreate": "Create product",
-        "submitEdit": "Save product"
+        "submitEdit": "Save product",
+        "newCategory": "New category",
+        "moreDetails": "More settings",
+        "lessDetails": "Hide more settings"
       },
       "created": "Product created",
       "updated": "Product updated",

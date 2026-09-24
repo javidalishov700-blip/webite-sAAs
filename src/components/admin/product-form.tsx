@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
-import { Check, Star, Eye } from "lucide-react";
+import { Check, ChevronDown, Eye, Plus, Star } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -67,6 +67,8 @@ export function ProductForm({
   const [imageUrl, setImageUrl] = useState<string | null>(item?.images[0] ?? null);
   const [categoryDraft, setCategoryDraft] = useState(startingCategory?.name ?? "");
   const [categoryError, setCategoryError] = useState(false);
+  const [typingCategory, setTypingCategory] = useState(false);
+  const [showMore, setShowMore] = useState(false);
   const [attributes, setAttributes] = useState<AttributeInput[]>(
     item?.attributes.map((a) => ({ key: a.key, value: a.value, type: a.type, unit: a.unit ?? "" })) ?? [],
   );
@@ -159,6 +161,8 @@ export function ProductForm({
   return (
     <form onSubmit={handleSubmit(submit)} className="flex min-h-0 flex-1 flex-col">
       <div className="min-h-0 flex-1 space-y-7 overflow-y-auto px-5 py-5 sm:px-6">
+        {/* Typing a name, suggestion chips and a grid of existing categories were
+            three ways to fill one field. Existing venues pick; new ones type. */}
         <section className="space-y-3 rounded-2xl border border-primary/25 bg-primary/5 p-3.5">
           <div>
             <Label htmlFor="category-name" className="text-sm font-semibold">
@@ -166,77 +170,115 @@ export function ProductForm({
             </Label>
             <p className="mt-0.5 text-xs text-muted-foreground">{t("categoryHint")}</p>
           </div>
-          <Input
-            id="category-name"
-            value={categoryDraft}
-            onChange={(event) => applyCategoryName(event.target.value)}
-            placeholder={t("categoryPlaceholder")}
-            className="h-12 bg-background text-base"
-            autoComplete="off"
-          />
-          {unusedSuggestions.length > 0 && (
-            <div className="flex flex-wrap gap-1.5">
-              {unusedSuggestions.map((name) => (
-                <button
-                  key={name}
-                  type="button"
-                  onClick={() => applyCategoryName(name)}
-                  className="rounded-full border border-dashed border-border bg-background px-2.5 py-1 text-xs text-muted-foreground hover:border-primary/50 hover:text-primary"
-                >
-                  + {name}
-                </button>
-              ))}
+
+          {categories.length > 0 ? (
+            <div className="flex flex-wrap gap-2">
+              {categories.map((category) => {
+                const Icon = getCategoryIcon(category.icon);
+                const selected = categoryId === category.id;
+                return (
+                  <button
+                    key={category.id}
+                    type="button"
+                    role="radio"
+                    aria-checked={selected}
+                    onClick={() => {
+                      setTypingCategory(false);
+                      pickCategory(category);
+                    }}
+                    className={cn(
+                      "flex min-h-11 items-center gap-2 rounded-xl border px-3.5 text-sm font-medium transition-colors",
+                      selected
+                        ? "border-primary bg-primary text-primary-foreground"
+                        : "border-border bg-background hover:border-primary/50",
+                    )}
+                  >
+                    <Icon className="size-4 shrink-0" />
+                    <span className="max-w-40 truncate">{category.name}</span>
+                    {selected ? <Check className="size-4 shrink-0" /> : null}
+                  </button>
+                );
+              })}
+              <button
+                type="button"
+                onClick={() => {
+                  applyCategoryName("");
+                  setTypingCategory(true);
+                }}
+                className={cn(
+                  "flex min-h-11 items-center gap-1.5 rounded-xl border border-dashed px-3.5 text-sm font-medium transition-colors",
+                  typingCategory ? "border-primary text-primary" : "border-border text-muted-foreground hover:border-primary/50",
+                )}
+              >
+                <Plus className="size-4" />
+                {t("newCategory")}
+              </button>
             </div>
-          )}
-          {categories.length > 0 && (
-            <div className="space-y-2">
-              <p className="text-xs font-medium text-muted-foreground">{t("categoryOrPick")}</p>
-              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2" role="radiogroup" aria-label={t("categoryOrPick")}>
-                {categories.map((category) => {
-                  const Icon = getCategoryIcon(category.icon);
-                  const selected = categoryId === category.id;
-                  return (
+          ) : null}
+
+          {categories.length === 0 || typingCategory ? (
+            <>
+              <Input
+                id="category-name"
+                value={categoryDraft}
+                onChange={(event) => applyCategoryName(event.target.value)}
+                placeholder={t("categoryPlaceholder")}
+                className="h-12 bg-background text-base"
+                autoComplete="off"
+                autoFocus={typingCategory}
+              />
+              {unusedSuggestions.length > 0 && (
+                <div className="flex flex-wrap gap-1.5">
+                  {unusedSuggestions.map((name) => (
                     <button
-                      key={category.id}
+                      key={name}
                       type="button"
-                      role="radio"
-                      aria-checked={selected}
-                      onClick={() => pickCategory(category)}
-                      className={cn(
-                        "flex min-h-12 items-center gap-2.5 rounded-xl border px-3.5 py-3 text-left text-sm font-medium transition-colors",
-                        selected
-                          ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                          : "border-border bg-background hover:border-primary/50 hover:bg-primary/10",
-                      )}
+                      onClick={() => applyCategoryName(name)}
+                      className="rounded-full border border-dashed border-border bg-background px-2.5 py-1 text-xs text-muted-foreground hover:border-primary/50 hover:text-primary"
                     >
-                      <Icon className="size-4 shrink-0" />
-                      <span className="min-w-0 flex-1 truncate">{category.name}</span>
-                      {selected ? <Check className="size-4 shrink-0" /> : null}
+                      + {name}
                     </button>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-          {categoryDraft.trim() ? (
-            <p className="text-sm font-medium text-primary">{t("categoryPicked", { name: categoryDraft.trim() })}</p>
-          ) : categoryError ? (
+                  ))}
+                </div>
+              )}
+            </>
+          ) : null}
+
+          {categoryError && !categoryDraft.trim() ? (
             <p className="text-sm text-destructive">{t("categoryRequired")}</p>
           ) : null}
         </section>
 
-        <section className="space-y-4">
-          <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">{t("basics")}</p>
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-[168px_1fr]">
-            <ImageUpload value={imageUrl} onChange={setImageUrl} shape="photo" />
-            <div className="space-y-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="title">{t("titleLabel")}</Label>
-                <Input id="title" placeholder={t("titlePlaceholder")} {...register("title")} />
-                {errors.title && <p className="text-xs text-destructive">{errors.title.message}</p>}
-              </div>
+        <section className="grid grid-cols-1 gap-5 sm:grid-cols-[168px_1fr]">
+          <ImageUpload value={imageUrl} onChange={setImageUrl} shape="photo" />
+          <div className="space-y-4">
+            <div className="space-y-1.5">
+              <Label htmlFor="title">{t("titleLabel")}</Label>
+              <Input id="title" placeholder={t("titlePlaceholder")} {...register("title")} />
+              {errors.title && <p className="text-xs text-destructive">{errors.title.message}</p>}
+            </div>
+            <div className="max-w-40 space-y-1.5">
+              <Label htmlFor="price">{t("priceLabel")}</Label>
+              <Input id="price" type="number" step="0.01" min="0" {...register("price")} />
+              {errors.price && <p className="text-xs text-destructive">{errors.price.message}</p>}
             </div>
           </div>
+        </section>
+
+        {/* Photo, category, name and price get a dish on the menu. Everything
+            else is a setting somebody changes later, if ever. */}
+        <button
+          type="button"
+          onClick={() => setShowMore((open) => !open)}
+          className="flex w-full items-center justify-between rounded-xl border border-border/70 px-4 py-3 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+        >
+          {showMore ? t("lessDetails") : t("moreDetails")}
+          <ChevronDown className={cn("size-4 transition-transform", showMore && "rotate-180")} />
+        </button>
+
+        {showMore ? (
+          <>
+        <section className="space-y-4">
           <div className="space-y-1.5">
             <Label htmlFor="description">{t("descriptionLabel")}</Label>
             <Textarea id="description" placeholder={t("descriptionPlaceholder")} rows={3} {...register("description")} />
@@ -248,11 +290,6 @@ export function ProductForm({
         <section className="space-y-4">
           <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">{t("pricing")}</p>
           <div className="grid grid-cols-3 gap-3">
-            <div className="space-y-1.5">
-              <Label htmlFor="price">{t("priceLabel")}</Label>
-              <Input id="price" type="number" step="0.01" min="0" {...register("price")} />
-              {errors.price && <p className="text-xs text-destructive">{errors.price.message}</p>}
-            </div>
             <div className="space-y-1.5">
               <Label htmlFor="compareAtPrice">{t("compareAtPriceLabel")}</Label>
               <Input id="compareAtPrice" type="number" step="0.01" min="0" {...register("compareAtPrice")} />
@@ -326,6 +363,8 @@ export function ProductForm({
           </div>
           <AttributeEditor industry={industry} categoryName={selectedCategory?.name} value={attributes} onChange={setAttributes} />
         </section>
+          </>
+        ) : null}
       </div>
 
       <div className="flex items-center justify-end gap-2 border-t border-border/70 px-5 py-4 sm:px-6">

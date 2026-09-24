@@ -356,7 +356,6 @@ export default function ProductsPage() {
         <DrawerContent showHandle={false} className="flex h-[100dvh] max-h-[100dvh] w-full max-w-xl flex-col sm:max-w-xl">
           <DrawerHeader className="shrink-0 border-b border-border/70 pb-4">
             <DrawerTitle>{editingItem ? t("form.titleEdit") : t("form.titleNew")}</DrawerTitle>
-            <p className="text-sm text-muted-foreground">{t("form.categoryHint")}</p>
           </DrawerHeader>
           {company ? (
             <ProductForm
