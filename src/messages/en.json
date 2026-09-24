@@ -235,6 +235,8 @@
       "title": "Start free. Message me for Pro.",
       "subtitle": "A small catalog is free. Full menu is Pro — we agree payment together.",
       "contactNote": "No card checkout on the site. Want Pro or Enterprise? WhatsApp me.",
+      "serviceHint": "No time to build it yourself?",
+      "serviceLink": "We can do it — setup service",
       "billingMonthly": "Monthly",
       "billingYearly": "Yearly",
       "yearlyBadge": "+1 month free",
@@ -305,7 +307,8 @@
       "faq": "FAQ",
       "cookies": "Cookies",
       "reachUs": "Reach us:",
-      "guide": "How to use it"
+      "guide": "How to use it",
+      "services": "Setup service"
     }
   },
   "auth": {
@@ -1198,6 +1201,97 @@
       "helpCta": "Message on WhatsApp",
       "startCta": "Start free",
       "whatsappMessage": "Hi, I'd like help using QR-Universe."
+    },
+    "services": {
+      "eyebrow": "SERVICE",
+      "title": "We will build your menu",
+      "subtitle": "No time? Send a photo of your paper menu and we do the rest. One to two days.",
+      "setupTitle": "Setup packages",
+      "setupSubtitle": "A one-off fee. After that it is the monthly subscription.",
+      "oneOff": "one-off",
+      "free": "Free",
+      "popular": "Most chosen",
+      "perMonth": "/mo",
+      "packages": {
+        "self": {
+          "name": "Do it yourself",
+          "tagline": "If you have the time, this is the cheapest way.",
+          "features": [
+            "Sign-up takes two minutes",
+            "You build the catalog",
+            "You download the QR code",
+            "A video walkthrough is on the site"
+          ],
+          "cta": "Start free"
+        },
+        "done": {
+          "name": "Menu done for you",
+          "tagline": "The package most venues pick.",
+          "features": [
+            "We enter up to 50 products",
+            "Logo, colour, categories",
+            "QR code design",
+            "20 printed table cards",
+            "On-site setup and a short walkthrough",
+            "First month of the subscription free"
+          ],
+          "cta": "Order on WhatsApp"
+        },
+        "full": {
+          "name": "Full package",
+          "tagline": "If you have no photos yet.",
+          "features": [
+            "Everything in Menu done for you",
+            "Photos of 20 dishes (phone camera, daylight)",
+            "Table tents on thick card",
+            "Three months of changes included"
+          ],
+          "cta": "Order on WhatsApp"
+        }
+      },
+      "monthlyTitle": "Monthly subscription",
+      "monthlySubtitle": "What keeps the catalog running after setup.",
+      "plans": {
+        "selfManage": {
+          "name": "You manage it",
+          "body": "The panel is yours. Prices, photos, products — you change them all."
+        },
+        "managed": {
+          "name": "We manage it",
+          "body": "Message us on WhatsApp and we make the change within 24 hours. You never open the panel."
+        }
+      },
+      "whyTitle": "Why it pays off",
+      "whyBody": "Printing a paper menu once costs roughly the same as this — and you reprint the lot the moment a price changes. A QR menu is built once; changing a price after that is free and takes effect immediately.",
+      "stepsTitle": "How it works",
+      "steps": [
+        {
+          "title": "Message us",
+          "body": "Tell us the venue name and roughly how many dishes you have."
+        },
+        {
+          "title": "Send the menu",
+          "body": "Photograph your paper menu and send it. Nothing else is needed."
+        },
+        {
+          "title": "We build it",
+          "body": "Within one to two days the catalog is in and the QR code is ready."
+        },
+        {
+          "title": "We bring the cards",
+          "body": "We put the printed cards on the tables and show you how it works."
+        }
+      ],
+      "ctaTitle": "Questions?",
+      "ctaBody": "Message us on WhatsApp and we will price it for your venue.",
+      "ctaButton": "Message on WhatsApp",
+      "note": "Prices apply within the city. Larger menus are quoted separately.",
+      "whatsapp": {
+        "done": "Hello, I am interested in the Menu done for you package.",
+        "full": "Hello, I am interested in the Full package.",
+        "managed": "Hello, I would like you to manage my menu.",
+        "general": "Hello, I have a question about the setup service."
+      }
     }
   },
   "attributes": {

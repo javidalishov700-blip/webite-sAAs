@@ -4,7 +4,7 @@ import { SITE } from "@/lib/site";
 import { localizedPath } from "@/lib/catalog-url";
 import { listPublishedCompanySlugs } from "@/lib/data/repositories/companies";
 
-const PATHS = ["", "/guide", "/about", "/contact", "/faq", "/privacy", "/terms", "/cookies", "/careers", "/login", "/signup"];
+const PATHS = ["", "/guide", "/services", "/about", "/contact", "/faq", "/privacy", "/terms", "/cookies", "/careers", "/login", "/signup"];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const origin = SITE.url.replace(/\/$/, "");

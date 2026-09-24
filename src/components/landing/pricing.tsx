@@ -128,6 +128,14 @@ export function Pricing() {
           );
         })}
       </RevealGroup>
+
+      {/* The people who bounce off this section are the ones with no time. */}
+      <Reveal className="mt-10 text-center text-sm">
+        <span className="text-muted-foreground">{t("serviceHint")} </span>
+        <Link href="/services" className="font-medium text-accent underline-offset-4 hover:underline">
+          {t("serviceLink")} →
+        </Link>
+      </Reveal>
     </section>
   );
 }

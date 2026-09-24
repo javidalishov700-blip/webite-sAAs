@@ -235,6 +235,8 @@
       "title": "Ücretsiz başla. Pro için yaz.",
       "subtitle": "Küçük katalog ücretsiz. Tam menü Pro — ödemeyi birlikte konuşuruz.",
       "contactNote": "Sitede kartla ödeme yok. Pro veya Kurumsal isteyen WhatsApp’tan yazsın.",
+      "serviceHint": "Kendiniz kurmaya vaktiniz yok mu?",
+      "serviceLink": "Biz kuralım — kurulum hizmeti",
       "billingMonthly": "Aylık",
       "billingYearly": "Yıllık",
       "yearlyBadge": "+1 ay hediye",
@@ -305,7 +307,8 @@
       "faq": "SSS",
       "cookies": "Çerezler",
       "reachUs": "Bize ulaşın:",
-      "guide": "Kullanım kılavuzu"
+      "guide": "Kullanım kılavuzu",
+      "services": "Kurulum hizmeti"
     }
   },
   "auth": {
@@ -1198,6 +1201,97 @@
       "helpCta": "WhatsApp'tan yaz",
       "startCta": "Ücretsiz başla",
       "whatsappMessage": "Merhaba, QR-Universe'ü nasıl kullanacağım konusunda yardım istiyorum."
+    },
+    "services": {
+      "eyebrow": "HİZMET",
+      "title": "Menünüzü biz kuralım",
+      "subtitle": "Vaktiniz yoksa kağıt menünün fotoğrafını gönderin, gerisini biz yapalım. Bir iki gün.",
+      "setupTitle": "Kurulum paketleri",
+      "setupSubtitle": "Tek seferlik ödeme. Sonrası aylık abonelik.",
+      "oneOff": "tek seferlik",
+      "free": "Ücretsiz",
+      "popular": "En çok seçilen",
+      "perMonth": "/ay",
+      "packages": {
+        "self": {
+          "name": "Kendin kur",
+          "tagline": "Vaktiniz varsa en ucuz yol bu.",
+          "features": [
+            "Kayıt iki dakika sürer",
+            "Kataloğu kendiniz kurarsınız",
+            "QR kodu kendiniz indirirsiniz",
+            "Sitede video anlatım var"
+          ],
+          "cta": "Ücretsiz başla"
+        },
+        "done": {
+          "name": "Hazır menü",
+          "tagline": "En çok tercih edilen paket.",
+          "features": [
+            "50 ürüne kadar kataloğu biz girelim",
+            "Logo, renk, kategoriler",
+            "QR kod tasarımı",
+            "20 adet basılı masa kartı",
+            "Yerinde kurulum ve kısa anlatım",
+            "İlk ay abonelik ücretsiz"
+          ],
+          "cta": "WhatsApp'tan sipariş et"
+        },
+        "full": {
+          "name": "Tam paket",
+          "tagline": "Henüz fotoğrafınız yoksa.",
+          "features": [
+            "«Hazır menü»deki her şey",
+            "20 yemeğin fotoğrafı (telefon, gün ışığı)",
+            "Kalın kartondan masa standları",
+            "Üç ay değişiklikler dahil"
+          ],
+          "cta": "WhatsApp'tan sipariş et"
+        }
+      },
+      "monthlyTitle": "Aylık abonelik",
+      "monthlySubtitle": "Kurulumdan sonra kataloğun çalışır kalması için.",
+      "plans": {
+        "selfManage": {
+          "name": "Kendiniz yönetin",
+          "body": "Panel sizin. Fiyat, fotoğraf, ürün — hepsini kendiniz değiştirirsiniz."
+        },
+        "managed": {
+          "name": "Biz yönetelim",
+          "body": "WhatsApp'tan yazın, 24 saat içinde biz değiştirelim. Panele girmenize gerek yok."
+        }
+      },
+      "whyTitle": "Neden kârlı",
+      "whyBody": "Kağıt menüyü bir kez bastırmak aşağı yukarı bu kadar tutar — ve fiyat değişince hepsini yeniden bastırırsınız. QR menü bir kez kurulur; sonrasında fiyat değiştirmek ücretsizdir ve anında çalışır.",
+      "stepsTitle": "Nasıl işliyor",
+      "steps": [
+        {
+          "title": "Bize yazın",
+          "body": "Mekânın adını ve yaklaşık kaç yemeğiniz olduğunu söyleyin."
+        },
+        {
+          "title": "Menüyü gönderin",
+          "body": "Kağıt menünün fotoğrafını çekip gönderin. Başka bir şey gerekmiyor."
+        },
+        {
+          "title": "Biz kuralım",
+          "body": "Bir iki gün içinde katalog hazır, QR kod çıkmış olur."
+        },
+        {
+          "title": "Kartları getirelim",
+          "body": "Basılı kartları masalara koyup nasıl çalıştığını gösteririz."
+        }
+      ],
+      "ctaTitle": "Sorunuz mu var?",
+      "ctaBody": "WhatsApp'tan yazın, mekânınıza göre fiyatlayalım.",
+      "ctaButton": "WhatsApp'tan yaz",
+      "note": "Fiyatlar şehir içinde geçerlidir. Büyük menüler ayrıca fiyatlandırılır.",
+      "whatsapp": {
+        "done": "Merhaba, «Hazır menü» paketiyle ilgileniyorum.",
+        "full": "Merhaba, «Tam paket» ile ilgileniyorum.",
+        "managed": "Merhaba, menümü sizin yönetmenizi istiyorum.",
+        "general": "Merhaba, kurulum hizmeti hakkında soracaktım."
+      }
     }
   },
   "attributes": {

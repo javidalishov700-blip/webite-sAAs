@@ -235,6 +235,8 @@
       "title": "Pulsuz başlayın. Pro lazımdırsa yazın.",
       "subtitle": "Kiçik kataloq pulsuzdur. Limitsiz menyu üçün Pro — ödənişi mənimlə razılaşırıq.",
       "contactNote": "Saytda kart yoxdur. Pro və ya Korporativ istəyənlər WhatsApp-dan yazsın.",
+      "serviceHint": "Özünüz qurmağa vaxtınız yoxdur?",
+      "serviceLink": "Biz quraq — qurulma xidməti",
       "billingMonthly": "Aylıq",
       "billingYearly": "İllik",
       "yearlyBadge": "+1 ay hədiyyə",
@@ -305,7 +307,8 @@
       "faq": "SSS",
       "cookies": "Kukilər",
       "reachUs": "Əlaqə:",
-      "guide": "İstifadə qaydası"
+      "guide": "İstifadə qaydası",
+      "services": "Qurulma xidməti"
     }
   },
   "auth": {
@@ -1198,6 +1201,97 @@
       "helpCta": "WhatsApp-dan yaz",
       "startCta": "Pulsuz başla",
       "whatsappMessage": "Salam, QR-Universe-i necə istifadə edəcəyimi öyrənmək istəyirəm."
+    },
+    "services": {
+      "eyebrow": "XİDMƏT",
+      "title": "Menyunuzu biz quraq",
+      "subtitle": "Vaxtınız yoxdursa, kağız menyunun şəklini göndərin — qalanını biz edək. 1-2 gün.",
+      "setupTitle": "Qurulma paketləri",
+      "setupSubtitle": "Birdəfəlik ödəniş. Sonrası aylıq abunədir.",
+      "oneOff": "birdəfəlik",
+      "free": "Pulsuz",
+      "popular": "Ən çox seçilən",
+      "perMonth": "/ay",
+      "packages": {
+        "self": {
+          "name": "Özün qur",
+          "tagline": "Vaxtınız varsa — ən ucuz yol budur.",
+          "features": [
+            "Qeydiyyat 2 dəqiqə çəkir",
+            "Kataloqu özünüz qurursunuz",
+            "QR kodu özünüz yükləyirsiniz",
+            "Video təlimat saytda var"
+          ],
+          "cta": "Pulsuz başla"
+        },
+        "done": {
+          "name": "Hazır menyu",
+          "tagline": "Ən çox seçilən paket.",
+          "features": [
+            "50 məhsula qədər kataloqu biz quraq",
+            "Loqo, rəng, kateqoriyalar",
+            "QR kodun dizaynı",
+            "20 ədəd çap olunmuş masa kartı",
+            "Yerində quraşdırma və öyrətmə",
+            "İlk ay abunə pulsuz"
+          ],
+          "cta": "WhatsApp-dan sifariş et"
+        },
+        "full": {
+          "name": "Tam paket",
+          "tagline": "Şəkilləriniz yoxdursa.",
+          "features": [
+            "«Hazır menyu»dakı hər şey",
+            "20 yeməyin şəkli (telefonla, təbii işıqda)",
+            "Qalın kartondan masa stendləri",
+            "3 ay ərzində dəyişikliklər pulsuz"
+          ],
+          "cta": "WhatsApp-dan sifariş et"
+        }
+      },
+      "monthlyTitle": "Aylıq abunə",
+      "monthlySubtitle": "Qurulmadan sonra kataloq işlək qalsın deyə.",
+      "plans": {
+        "selfManage": {
+          "name": "Özün idarə et",
+          "body": "Panel sizindir. Qiymət, şəkil, məhsul — hamısını özünüz dəyişirsiniz."
+        },
+        "managed": {
+          "name": "Biz idarə edirik",
+          "body": "WhatsApp-a yazın, 24 saat ərzində biz dəyişək. Panelə girmək lazım deyil."
+        }
+      },
+      "whyTitle": "Niyə sərfəlidir",
+      "whyBody": "Kağız menyunu bir dəfə çap etdirmək 100-150 manata başa gəlir — və qiymət dəyişən kimi hamısını yenidən çap etdirirsiniz. QR menyu bir dəfə qurulur; sonra qiyməti dəyişmək pulsuzdur və dərhal işləyir.",
+      "stepsTitle": "Necə işləyir",
+      "steps": [
+        {
+          "title": "WhatsApp-a yazın",
+          "body": "Məkanın adını və təxminən neçə yeməyiniz olduğunu yazın."
+        },
+        {
+          "title": "Menyunu göndərin",
+          "body": "Kağız menyunun şəklini çəkib göndərin. Başqa heç nə lazım deyil."
+        },
+        {
+          "title": "Biz quraq",
+          "body": "1-2 gün ərzində kataloqu qururuq, QR kodu hazırlayırıq."
+        },
+        {
+          "title": "Kartları gətirək",
+          "body": "Çap olunmuş kartları masalara qoyub işləyişini göstəririk."
+        }
+      ],
+      "ctaTitle": "Sualınız var?",
+      "ctaBody": "WhatsApp-dan yazın — qiyməti məkanınıza görə dəqiqləşdirək.",
+      "ctaButton": "WhatsApp-dan yaz",
+      "note": "Qiymətlər Bakı daxilində keçərlidir. Böyük menyular üçün qiymət ayrıca razılaşdırılır.",
+      "whatsapp": {
+        "done": "Salam, «Hazır menyu» paketi ilə maraqlanıram.",
+        "full": "Salam, «Tam paket» ilə maraqlanıram.",
+        "managed": "Salam, menyumu sizin idarə etməyinizi istəyirəm.",
+        "general": "Salam, qurulma xidməti barədə soruşmaq istəyirəm."
+      }
     }
   },
   "attributes": {
