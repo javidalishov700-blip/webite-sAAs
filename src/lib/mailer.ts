@@ -100,43 +100,38 @@ const COPY: Record<AppLocale, {
   resetSubject: string;
   resetTitle: string;
   resetBody: string;
-  resetCta: string;
 }> = {
   en: {
     verifySubject: "Your QR-Universe verification code",
     verifyTitle: "Verify your email",
     verifyBody: "Thanks for signing up. Enter this code to activate your catalog. Nobody else can take this account.",
-    resetSubject: "Reset your QR-Universe password",
+    resetSubject: "Your QR-Universe password reset code",
     resetTitle: "Reset your password",
-    resetBody: "Use this link to choose a new password. If you did not ask for this, ignore the email.",
-    resetCta: "Choose a new password",
+    resetBody: "Type this code on the site to choose a new password. It works for 15 minutes. If you did not ask for this, ignore the email.",
   },
   az: {
     verifySubject: "QR-Universe təsdiq kodun",
     verifyTitle: "E-poçtu təsdiqlə",
     verifyBody: "Qeydiyyat üçün təşəkkürlər. Kataloqunu aktiv etmək üçün bu kodu daxil et. Başqa heç kim bu hesabı ələ keçirə bilməz.",
-    resetSubject: "QR-Universe şifrəsini sıfırla",
+    resetSubject: "QR-Universe şifrə sıfırlama kodun",
     resetTitle: "Şifrəni sıfırla",
-    resetBody: "Yeni şifrə seçmək üçün bu linkə kliklə. Sən istəməmisənsə, bu məktubu nəzərə alma.",
-    resetCta: "Yeni şifrə seç",
+    resetBody: "Yeni şifrə seçmək üçün bu kodu saytda yaz. Kod 15 dəqiqə etibarlıdır. Sən istəməmisənsə, bu məktubu nəzərə alma.",
   },
   tr: {
     verifySubject: "QR-Universe doğrulama kodun",
     verifyTitle: "E-postanı doğrula",
     verifyBody: "Kayıt için teşekkürler. Kataloğunu açmak için bu kodu gir. Başka kimse bu hesabı alamaz.",
-    resetSubject: "QR-Universe şifreni sıfırla",
+    resetSubject: "QR-Universe şifre sıfırlama kodun",
     resetTitle: "Şifreyi sıfırla",
-    resetBody: "Yeni şifre seçmek için bu bağlantıya tıkla. Sen istemediysen bu maili yok say.",
-    resetCta: "Yeni şifre seç",
+    resetBody: "Yeni şifre seçmek için bu kodu sitede yaz. Kod 15 dakika geçerli. Sen istemediysen bu maili yok say.",
   },
   ru: {
     verifySubject: "Код подтверждения QR-Universe",
     verifyTitle: "Подтвердите email",
     verifyBody: "Спасибо за регистрацию. Введите этот код, чтобы открыть каталог. Никто другой не сможет забрать этот аккаунт.",
-    resetSubject: "Сброс пароля QR-Universe",
+    resetSubject: "Код для сброса пароля QR-Universe",
     resetTitle: "Сброс пароля",
-    resetBody: "По этой ссылке можно задать новый пароль. Если вы не запрашивали сброс — просто игнорируйте письмо.",
-    resetCta: "Выбрать новый пароль",
+    resetBody: "Введите этот код на сайте, чтобы задать новый пароль. Он действует 15 минут. Если вы не запрашивали сброс — просто игнорируйте письмо.",
   },
 };
 
@@ -149,12 +144,12 @@ export function verificationMail(locale: AppLocale, code: string): Omit<MailPayl
   };
 }
 
-export function resetMail(locale: AppLocale, url: string): Omit<MailPayload, "to"> {
+export function resetCodeMail(locale: AppLocale, code: string): Omit<MailPayload, "to"> {
   const copy = COPY[locale] ?? COPY.en;
   return {
     subject: copy.resetSubject,
-    html: wrapHtml(copy.resetTitle, copy.resetBody, copy.resetCta, url),
-    text: `${copy.resetTitle}\n\n${copy.resetBody}\n\n${url}`,
+    html: wrapCodeHtml(copy.resetTitle, copy.resetBody, code),
+    text: `${copy.resetTitle}\n\n${copy.resetBody}\n\n${code}`,
   };
 }
 

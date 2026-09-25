@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { emailLocaleSchema } from "@/lib/validators/auth";
 import { findUserByEmail } from "@/lib/data/repositories/users";
-import { sendPasswordResetLink } from "@/lib/auth/email-flows";
+import { sendPasswordResetCode } from "@/lib/auth/email-flows";
 import { getRequestIp } from "@/lib/request-meta";
 import { RATE, rateLimit } from "@/lib/rate-limit";
 
@@ -9,8 +9,10 @@ export const runtime = "nodejs";
 
 export async function POST(request: NextRequest) {
   const ip = getRequestIp(request) ?? "unknown";
+  // Saying "too many" reveals nothing about which addresses have accounts, and
+  // pretending to have sent a mail that never goes out is what hid this before.
   if (!rateLimit(`forgot:${ip}`, RATE.forgot.limit, RATE.forgot.windowMs)) {
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ error: "rate_limited" }, { status: 429 });
   }
 
   const body = await request.json().catch(() => null);
@@ -22,7 +24,7 @@ export async function POST(request: NextRequest) {
   try {
     const user = await findUserByEmail(parsed.data.email);
     if (user) {
-      await sendPasswordResetLink({ id: user.id, email: user.email }, parsed.data.locale);
+      await sendPasswordResetCode({ id: user.id, email: user.email }, parsed.data.locale);
     }
     return NextResponse.json({ ok: true });
   } catch (error) {

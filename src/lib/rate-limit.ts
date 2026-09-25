@@ -22,5 +22,7 @@ export const RATE = {
   signup: { limit: 8, windowMs: 60 * 60 * 1000 },
   login: { limit: 12, windowMs: 15 * 60 * 1000 },
   forgot: { limit: 6, windowMs: 60 * 60 * 1000 },
+  // Typing a code is where typos happen; guesses are capped per code as well.
+  resetCode: { limit: 20, windowMs: 60 * 60 * 1000 },
   verify: { limit: 10, windowMs: 60 * 60 * 1000 },
 } as const;

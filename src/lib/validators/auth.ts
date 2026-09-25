@@ -37,6 +37,13 @@ export const resetPasswordSchema = z.object({
   token: z.string().min(16).max(128),
   password: z.string().min(6, "Use at least 6 characters"),
 });
+
+export const resetCodeSchema = z.object({
+  email: z.string().email(),
+  code: z.string().trim().regex(/^\d{6}$/, "Enter the 6-digit code"),
+  password: z.string().min(6, "Use at least 6 characters"),
+});
+export type ResetCodeInput = z.infer<typeof resetCodeSchema>;
 export const changePasswordSchema = z.object({
   currentPassword: z.string().min(1),
   newPassword: z.string().min(6, "Use at least 6 characters"),

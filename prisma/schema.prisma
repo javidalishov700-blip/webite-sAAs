@@ -109,6 +109,8 @@ model AuthToken {
   tokenHash String        @unique
   expiresAt DateTime
   usedAt    DateTime?
+  /// Wrong guesses against a 6-digit code; the code dies at MAX_CODE_ATTEMPTS.
+  attempts  Int           @default(0)
   createdAt DateTime      @default(now())
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)

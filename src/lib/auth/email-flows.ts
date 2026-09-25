@@ -1,6 +1,6 @@
 import "server-only";
-import { sendMail, verificationMail, resetMail, newSignupMail } from "@/lib/mailer";
-import { issueAuthToken, generateNumericCode, RESET_TTL_MS, VERIFY_TTL_MS } from "@/lib/auth/tokens";
+import { sendMail, verificationMail, resetCodeMail, newSignupMail } from "@/lib/mailer";
+import { issueAuthToken, generateNumericCode, RESET_CODE_TTL_MS, VERIFY_TTL_MS } from "@/lib/auth/tokens";
 import { appBaseUrl } from "@/lib/site";
 import { platformAdminEmails } from "@/lib/platform-admin";
 import { DEFAULT_LOCALE } from "@/lib/constants";
@@ -22,13 +22,17 @@ export async function sendVerificationCode(user: { id: string; email: string }, 
   return sent;
 }
 
-export async function sendPasswordResetLink(user: { id: string; email: string }, locale?: string | null) {
+/**
+ * A code, like sign-up, not a link: the sign-up mail was arriving while the
+ * reset mail with a link was not, and a code also works when the mail is read
+ * on a phone and the site is open on a computer.
+ */
+export async function sendPasswordResetCode(user: { id: string; email: string }, locale?: string | null) {
   const loc = localeOrEn(locale);
-  const raw = await issueAuthToken(user.id, "PASSWORD_RESET", RESET_TTL_MS);
-  const url = `${appBaseUrl()}${localizedPath(loc, "/reset")}?token=${encodeURIComponent(raw)}`;
-  const sent = await sendMail({ to: user.email, ...resetMail(loc, url) });
+  const code = await issueAuthToken(user.id, "PASSWORD_RESET", RESET_CODE_TTL_MS, generateNumericCode);
+  const sent = await sendMail({ to: user.email, ...resetCodeMail(loc, code) });
   if (!sent.sent && process.env.NODE_ENV !== "production") {
-    console.info(`[auth] reset link for ${user.email}: ${url}`);
+    console.info(`[auth] reset code for ${user.email}: ${code}`);
   }
   return sent;
 }

@@ -240,11 +240,23 @@
     },
     "forgot": {
       "title": "Forgot password",
-      "subtitle": "Enter your email. If an account exists, we send a reset link.",
+      "subtitle": "Enter your email and we'll send you a 6-digit code.",
       "email": "Email address",
-      "submit": "Send reset link",
-      "sent": "If that email is registered, the reset link is on the way. Check spam too.",
-      "backToLogin": "Back to log in"
+      "submit": "Send code",
+      "codeSent": "We sent a code to {email}. If it isn't there in a minute, check your spam folder.",
+      "code": "6-digit code",
+      "password": "New password",
+      "save": "Save password and sign in",
+      "resend": "Send the code again",
+      "resendIn": "New code in {seconds}s",
+      "resent": "A new code is on its way.",
+      "changeEmail": "Use another email",
+      "invalid": "That code is wrong or has expired.",
+      "locked": "Too many wrong tries, so this code is closed. Ask for a new one.",
+      "rateLimited": "Too many attempts. Try again in a few minutes.",
+      "unavailable": "The service isn't answering right now. Try again shortly.",
+      "banned": "This workspace has been banned.",
+      "backToLogin": "Back to sign in"
     },
     "reset": {
       "title": "Choose a new password",
