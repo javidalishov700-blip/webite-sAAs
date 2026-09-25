@@ -42,7 +42,7 @@ function DrawerContent({
       <DrawerPrimitive.Content
         data-slot="drawer-content"
         className={cn(
-          "fixed inset-x-0 bottom-0 z-50 flex h-auto max-h-[100dvh] flex-col rounded-t-3xl border-t border-white/10 bg-[color-mix(in_oklab,var(--card)_92%,transparent)] backdrop-blur-2xl",
+          "fixed inset-x-0 bottom-0 z-50 flex h-auto max-h-[100dvh] flex-col rounded-t-3xl border-t border-border bg-[color-mix(in_oklab,var(--card)_92%,transparent)] backdrop-blur-2xl",
           "data-[vaul-drawer-direction=right]:inset-y-0 data-[vaul-drawer-direction=right]:right-0 data-[vaul-drawer-direction=right]:mt-0 data-[vaul-drawer-direction=right]:w-full data-[vaul-drawer-direction=right]:max-w-sm data-[vaul-drawer-direction=right]:rounded-l-3xl data-[vaul-drawer-direction=right]:rounded-t-none data-[vaul-drawer-direction=right]:border-l data-[vaul-drawer-direction=right]:border-t-0",
           "data-[vaul-drawer-direction=left]:inset-y-0 data-[vaul-drawer-direction=left]:left-0 data-[vaul-drawer-direction=left]:mt-0 data-[vaul-drawer-direction=left]:w-full data-[vaul-drawer-direction=left]:max-w-sm data-[vaul-drawer-direction=left]:rounded-r-3xl data-[vaul-drawer-direction=left]:rounded-t-none data-[vaul-drawer-direction=left]:border-r data-[vaul-drawer-direction=left]:border-t-0",
           className,

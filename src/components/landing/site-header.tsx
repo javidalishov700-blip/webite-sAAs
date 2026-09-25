@@ -64,7 +64,7 @@ export function SiteHeader() {
       <div
         className={cn(
           "glass relative flex w-full max-w-6xl items-center justify-between gap-3 rounded-2xl px-4 py-2.5 transition-[box-shadow,border-color] duration-300",
-          scrolled && "border-white/15 shadow-lg shadow-black/25",
+          scrolled && "shadow-[0_10px_30px_-14px_rgb(15_15_30/0.25)] dark:border-white/15 dark:shadow-lg dark:shadow-black/25",
         )}
       >
         <Link href="/" className="flex items-center gap-2 font-display text-lg font-semibold tracking-tight">
@@ -128,7 +128,7 @@ export function SiteHeader() {
                 key={item.key}
                 hash={item.hash}
                 onClick={() => setMobileOpen(false)}
-                className="rounded-xl px-3 py-3 text-base text-foreground/90 hover:bg-white/5"
+                className="rounded-xl px-3 py-3 text-base text-foreground/90 hover:bg-muted/70"
               >
                 {t(item.key)}
               </HashLink>
@@ -136,7 +136,7 @@ export function SiteHeader() {
             <Link
               href="/contact"
               onClick={() => setMobileOpen(false)}
-              className="rounded-xl px-3 py-3 text-base text-foreground/90 hover:bg-white/5"
+              className="rounded-xl px-3 py-3 text-base text-foreground/90 hover:bg-muted/70"
             >
               {t("contact")}
             </Link>

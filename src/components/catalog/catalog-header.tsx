@@ -88,7 +88,7 @@ export function CatalogHeader({ company, search, onSearchChange }: CatalogHeader
 
   return (
     <div className="flex items-center gap-3 px-4 pt-3 pb-2.5">
-      <div className="relative size-10 shrink-0 overflow-hidden rounded-2xl bg-muted ring-1 ring-white/10">
+      <div className="relative size-10 shrink-0 overflow-hidden rounded-2xl bg-muted ring-1 ring-black/5 dark:ring-white/10">
         {company.logoUrl ? (
           <Image src={company.logoUrl} alt={company.name} fill unoptimized className="object-cover" />
         ) : (

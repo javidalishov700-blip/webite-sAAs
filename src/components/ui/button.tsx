@@ -17,7 +17,7 @@ export const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground hover:brightness-110",
         ghost: "text-foreground hover:bg-muted",
         link: "text-primary underline-offset-4 hover:underline",
-        glass: "glass text-foreground hover:bg-white/10",
+        glass: "glass text-foreground hover:bg-muted/70 dark:hover:bg-white/10",
       },
       size: {
         default: "h-10 px-4 py-2 has-[>svg]:px-3.5",

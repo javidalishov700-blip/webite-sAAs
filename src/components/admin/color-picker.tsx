@@ -20,7 +20,7 @@ export function ColorPicker({ value, onChange, className }: ColorPickerProps) {
           onClick={() => onChange(color)}
           style={{ backgroundColor: color }}
           className={cn(
-            "size-7 shrink-0 rounded-full border border-white/10 ring-offset-2 ring-offset-background transition-transform hover:scale-110",
+            "size-7 shrink-0 rounded-full border border-black/15 ring-offset-2 dark:border-white/10 ring-offset-background transition-transform hover:scale-110",
             value.toLowerCase() === color.toLowerCase() && "ring-2 ring-primary",
           )}
           aria-label={color}
