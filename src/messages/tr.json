@@ -261,7 +261,12 @@
       "rateLimited": "Çok fazla deneme. Birkaç dakika sonra tekrar dene.",
       "unavailable": "Servis şu an yanıt vermiyor. Biraz sonra tekrar dene.",
       "banned": "Bu çalışma alanı yasaklandı.",
-      "backToLogin": "Girişe dön"
+      "backToLogin": "Girişe dön",
+      "verify": "Kodu doğrula",
+      "verified": "Kod doğrulandı. Şimdi yeni şifreni seç.",
+      "expired": "Doğrulamanın süresi doldu (10 dakika). Yeni kod iste.",
+      "step": "Adım {current}/{total}",
+      "startOver": "Yeni kod iste"
     },
     "reset": {
       "title": "Yeni şifre seç",

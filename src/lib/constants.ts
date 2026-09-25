@@ -25,3 +25,5 @@ export const CURRENCY_SYMBOL: Record<string, string> = {
 };
 
 export const SESSION_COOKIE_NAME = "qru_session";
+/** Short-lived proof that a reset code was accepted; only /api/auth/reset ever sees it. */
+export const RESET_GRANT_COOKIE = "qru_reset";

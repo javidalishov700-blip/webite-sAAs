@@ -261,7 +261,12 @@
       "rateLimited": "Çox cəhd oldu. Bir neçə dəqiqə sonra yenidən yoxlayın.",
       "unavailable": "Xidmət hazırda cavab vermir. Bir az sonra yoxlayın.",
       "banned": "Bu iş sahəsi ban edilib.",
-      "backToLogin": "Girişə qayıt"
+      "backToLogin": "Girişə qayıt",
+      "verify": "Kodu təsdiqlə",
+      "verified": "Kod təsdiqləndi. İndi yeni şifrəni seç.",
+      "expired": "Təsdiqin vaxtı bitdi (10 dəqiqə). Yeni kod istəyin.",
+      "step": "Addım {current}/{total}",
+      "startOver": "Yeni kod istə"
     },
     "reset": {
       "title": "Yeni şifrə seç",

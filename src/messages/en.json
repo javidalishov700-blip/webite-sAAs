@@ -261,7 +261,12 @@
       "rateLimited": "Too many attempts. Try again in a few minutes.",
       "unavailable": "The service isn't answering right now. Try again shortly.",
       "banned": "This workspace has been banned.",
-      "backToLogin": "Back to sign in"
+      "backToLogin": "Back to sign in",
+      "verify": "Verify code",
+      "verified": "Code confirmed. Now choose a new password.",
+      "expired": "The confirmation expired (10 minutes). Ask for a new code.",
+      "step": "Step {current} of {total}",
+      "startOver": "Ask for a new code"
     },
     "reset": {
       "title": "Choose a new password",

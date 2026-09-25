@@ -38,12 +38,16 @@ export const resetPasswordSchema = z.object({
   password: z.string().min(6, "Use at least 6 characters"),
 });
 
-export const resetCodeSchema = z.object({
+/** Step two of a reset: the code alone, checked before any password is asked for. */
+export const verifyResetCodeSchema = z.object({
   email: z.string().email(),
   code: z.string().trim().regex(/^\d{6}$/, "Enter the 6-digit code"),
+});
+
+/** Step three: the code was already accepted; the grant travels in a cookie. */
+export const resetGrantSchema = z.object({
   password: z.string().min(6, "Use at least 6 characters"),
 });
-export type ResetCodeInput = z.infer<typeof resetCodeSchema>;
 export const changePasswordSchema = z.object({
   currentPassword: z.string().min(1),
   newPassword: z.string().min(6, "Use at least 6 characters"),

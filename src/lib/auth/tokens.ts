@@ -10,6 +10,8 @@ export const VERIFY_TTL_MS = 15 * 60 * 1000;
 export const RESET_TTL_MS = 60 * 60 * 1000;
 /** Password reset now sends a code like sign-up does; it lives as long as a sign-up code. */
 export const RESET_CODE_TTL_MS = VERIFY_TTL_MS;
+/** After the code is accepted, the new password has to be chosen within this. */
+export const RESET_GRANT_TTL_MS = 10 * 60 * 1000;
 /** A six-digit code is guessable, so each one survives only a few wrong tries. */
 export const MAX_CODE_ATTEMPTS = 5;
 export const STALE_UNVERIFIED_MS = 48 * 60 * 60 * 1000;
