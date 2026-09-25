@@ -1,7 +1,7 @@
 import "server-only";
 import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
-import { getSessionUserId } from "@/lib/auth/session";
+import { getSessionUserId, refreshSessionCookie } from "@/lib/auth/session";
 import { hydrateSessionUser } from "@/lib/data/repositories/users";
 import { localizedPath } from "@/lib/catalog-url";
 import type { SessionUser } from "@/lib/data/types";
@@ -45,6 +45,8 @@ export async function requireSession(): Promise<{ user: SessionUser | null; resp
   if (!user.emailVerified && !user.isPlatformAdmin) {
     return { user: null, response: NextResponse.json({ error: "unverified" }, { status: 403 }) };
   }
+  // Saving a product counts as activity just like opening a page does.
+  await refreshSessionCookie().catch(() => undefined);
   return { user, response: null };
 }
 

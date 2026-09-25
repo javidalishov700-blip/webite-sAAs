@@ -191,7 +191,10 @@
       "unverified": "Giriş için e-postanı doğrula. Gelen kutusuna bak veya WhatsApp yaz.",
       "forgotLink": "Şifreni mi unuttun?",
       "rateLimited": "Çok fazla deneme. Bir dakika bekle, tekrar dene.",
-      "unavailable": "Veritabanına ulaşılamadı. Biraz sonra tekrar dene."
+      "unavailable": "Veritabanına ulaşılamadı. Biraz sonra tekrar dene.",
+      "remember": "Beni hatırla",
+      "rememberHint": "Bu cihazda 30 gün oturum açık kalsın. İşaretlemezseniz 30 dakika hareketsizlikten sonra çıkış yapılır.",
+      "expired": "30 dakika hareketsiz kaldığınız için güvenlik amacıyla çıkış yapıldı. Tekrar giriş yapın."
     },
     "signup": {
       "title": "Çalışma alanınızı oluşturun",

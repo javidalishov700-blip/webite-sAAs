@@ -31,6 +31,15 @@ export async function apiFetch<T>(url: string, options?: RequestInit): Promise<T
 
   if (!res.ok) {
     const payload = data && typeof data === "object" ? (data as Record<string, unknown>) : undefined;
+    // Only the session guard answers "unauthorized" (a wrong current password
+    // is "invalid"), so from inside the panel this can only mean it timed out.
+    if (res.status === 401 && payload?.error === "unauthorized" && typeof window !== "undefined") {
+      const match = window.location.pathname.match(/^(\/(?:az|ru|tr))?\/admin(?:\/|$)/);
+      if (match) {
+        const next = window.location.pathname + window.location.search;
+        window.location.assign(`${match[1] ?? ""}/login?reason=expired&next=${encodeURIComponent(next)}`);
+      }
+    }
     throw new ApiError((payload?.error as string) ?? `Request failed (${res.status})`, res.status, payload);
   }
   return data as T;

@@ -1,16 +1,17 @@
 "use client";
 
 import { Suspense, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { motion } from "motion/react";
-import { AlertCircle, ArrowRight, LogIn } from "lucide-react";
+import { AlertCircle, ArrowRight, Clock, LogIn } from "lucide-react";
 import { useRouter, Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Card } from "@/components/ui/card";
 import { loginSchema, type LoginInput } from "@/lib/validators/auth";
 import { api, ApiError } from "@/lib/api-client";
@@ -29,11 +30,14 @@ function LoginForm() {
   const searchParams = useSearchParams();
   const [serverError, setServerError] = useState<string | null>(null);
 
+  const expired = searchParams.get("reason") === "expired";
+
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<LoginInput>({ resolver: zodResolver(loginSchema) });
+  } = useForm<LoginInput>({ resolver: zodResolver(loginSchema), defaultValues: { remember: false } });
 
   async function onSubmit(values: LoginInput) {
     setServerError(null);
@@ -74,6 +78,13 @@ function LoginForm() {
         </h1>
         <p className="mt-1.5 text-sm text-muted-foreground">{t("subtitle")}</p>
 
+        {expired ? (
+          <div className="mt-6 flex items-start gap-2.5 rounded-xl border border-primary/25 bg-primary/5 px-3.5 py-3 text-sm text-foreground/90">
+            <Clock className="mt-0.5 size-4 shrink-0 text-primary" />
+            {t("expired")}
+          </div>
+        ) : null}
+
         {/* POST, so a submit that lands before the page is interactive never puts the password in the URL. */}
         <form method="post" onSubmit={handleSubmit(onSubmit)} className="mt-7 space-y-4">
           <div className="space-y-1.5">
@@ -90,6 +101,25 @@ function LoginForm() {
             </div>
             <Input id="password" type="password" autoComplete="current-password" placeholder="••••••••" {...register("password")} />
             {errors.password && <p className="text-xs text-destructive">{errors.password.message}</p>}
+          </div>
+
+          <div className="flex items-start gap-2.5">
+            <Controller
+              control={control}
+              name="remember"
+              render={({ field }) => (
+                <Checkbox
+                  id="remember"
+                  className="mt-0.5"
+                  checked={field.value === true}
+                  onCheckedChange={(checked) => field.onChange(checked === true)}
+                />
+              )}
+            />
+            <label htmlFor="remember" className="cursor-pointer text-sm leading-snug">
+              <span className="font-medium">{t("remember")}</span>
+              <span className="mt-0.5 block text-xs text-muted-foreground">{t("rememberHint")}</span>
+            </label>
           </div>
 
           {serverError && (

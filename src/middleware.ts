@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import createIntlMiddleware from "next-intl/middleware";
 import { routing } from "@/i18n/routing";
-import { verifySessionToken } from "@/lib/auth/jwt";
+import { createSessionToken, needsRefresh, sessionCookieOptions, verifySessionToken } from "@/lib/auth/jwt";
 import { SESSION_COOKIE_NAME } from "@/lib/constants";
 import { localizedPath } from "@/lib/catalog-url";
 
@@ -30,7 +30,11 @@ export default async function middleware(request: NextRequest) {
       url.pathname = localizedPath(locale, "/login");
       url.search = "";
       url.searchParams.set("next", pathname);
-      return NextResponse.redirect(url);
+      // A cookie that no longer verifies is, in practice, a session that idled out.
+      if (token) url.searchParams.set("reason", "expired");
+      const response = NextResponse.redirect(url);
+      if (token) response.cookies.delete(SESSION_COOKIE_NAME);
+      return response;
     }
 
     if (AUTH_ONLY_SEGMENTS.has(firstSegment) && session) {
@@ -38,6 +42,13 @@ export default async function middleware(request: NextRequest) {
       url.pathname = localizedPath(locale, "/admin");
       url.search = "";
       return NextResponse.redirect(url);
+    }
+
+    // Every page an owner opens counts as activity for an unremembered session.
+    if (session && needsRefresh(session)) {
+      const response = intlMiddleware(request);
+      response.cookies.set(SESSION_COOKIE_NAME, await createSessionToken({ userId: session.userId }), sessionCookieOptions(false));
+      return response;
     }
   }
 

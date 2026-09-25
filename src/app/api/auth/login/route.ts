@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const { email, password } = parsed.data;
+    const { email, password, remember } = parsed.data;
     const user = await findUserByEmail(email);
     if (!user) {
       return NextResponse.json({ error: "invalid" }, { status: 401 });
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
       await markEmailVerified(user.id);
     }
 
-    await setSessionCookie(user.id);
+    await setSessionCookie(user.id, remember === true);
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("[login]", error);

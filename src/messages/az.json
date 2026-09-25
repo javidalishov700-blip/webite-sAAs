@@ -191,7 +191,10 @@
       "banned": "Bu iş sahəsi ban edilib. Daxil ola bilməzsiniz.",
       "unverified": "Daxil olmaq üçün e-poçtu təsdiqlə. Inbox-a bax, və ya WhatsApp yaz.",
       "forgotLink": "Şifrəni unutmusan?",
-      "rateLimited": "Çox cəhd. Bir dəqiqə gözləyib yenidən yoxla."
+      "rateLimited": "Çox cəhd. Bir dəqiqə gözləyib yenidən yoxla.",
+      "remember": "Məni xatırla",
+      "rememberHint": "Bu cihazda 30 gün daxil qalın. İşarələməsəniz, 30 dəqiqə heç nə etmədikdə çıxış olunur.",
+      "expired": "30 dəqiqə fəaliyyət olmadığı üçün təhlükəsizlik məqsədilə çıxış edildi. Yenidən daxil olun."
     },
     "signup": {
       "title": "İş sahənizi yaradın",

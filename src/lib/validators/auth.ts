@@ -6,6 +6,7 @@ const localeSchema = z.enum(["en", "ru", "tr", "az"]).optional();
 export const loginSchema = z.object({
   email: z.string().email(),
   password: z.string().min(6),
+  remember: z.boolean().optional(),
 });
 export type LoginInput = z.infer<typeof loginSchema>;
 

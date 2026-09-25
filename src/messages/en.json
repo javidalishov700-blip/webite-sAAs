@@ -191,7 +191,10 @@
       "unverified": "Verify your email before logging in. Check your inbox, or WhatsApp us.",
       "forgotLink": "Forgot password?",
       "rateLimited": "Too many attempts. Wait a minute and try again.",
-      "unavailable": "We could not reach the database. Try again in a moment."
+      "unavailable": "We could not reach the database. Try again in a moment.",
+      "remember": "Remember me",
+      "rememberHint": "Stay signed in on this device for 30 days. Leave it off and you're signed out after 30 minutes without activity.",
+      "expired": "You were signed out after 30 minutes without activity. Please sign in again."
     },
     "signup": {
       "title": "Create your workspace",

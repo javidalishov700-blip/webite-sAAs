@@ -11,11 +11,13 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
 import { AmbientBackground } from "@/components/landing/ambient-background";
+import { useIdleLogout } from "@/hooks/use-idle-logout";
 import type { SessionUser } from "@/lib/data/types";
 
 export function AdminShell({ user, children }: { user: SessionUser; children: React.ReactNode }) {
   const t = useTranslations("admin.sidebar");
   const [mobileOpen, setMobileOpen] = useState(false);
+  useIdleLogout();
 
   return (
     <div className="relative min-h-screen">
