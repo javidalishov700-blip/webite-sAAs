@@ -74,7 +74,8 @@ function LoginForm() {
         </h1>
         <p className="mt-1.5 text-sm text-muted-foreground">{t("subtitle")}</p>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-7 space-y-4">
+        {/* POST, so a submit that lands before the page is interactive never puts the password in the URL. */}
+        <form method="post" onSubmit={handleSubmit(onSubmit)} className="mt-7 space-y-4">
           <div className="space-y-1.5">
             <Label htmlFor="email">{t("email")}</Label>
             <Input id="email" type="email" autoComplete="email" placeholder="you@company.com" {...register("email")} />

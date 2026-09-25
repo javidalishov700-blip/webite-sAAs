@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense } from "react";
-import { Check, Globe } from "lucide-react";
+import { Check, ChevronDown, Globe } from "lucide-react";
 import { useLocaleSwitcher } from "@/hooks/use-locale-switcher";
 import { cn } from "@/lib/utils";
 import {
@@ -24,10 +24,16 @@ function LanguageSwitcherInner({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant={variant} size="sm" className={cn("gap-1.5 px-2.5", className)}>
-          <Globe className="size-4" />
-          <span className="text-sm font-medium">{localeMeta[locale].flag}</span>
-          <span className="hidden text-sm sm:inline">{locale.toUpperCase()}</span>
+        <Button
+          variant={variant}
+          size="sm"
+          className={cn("gap-1.5 rounded-full border border-border px-3", className)}
+          aria-label={localeMeta[locale].nativeLabel}
+        >
+          <Globe className="size-4 text-muted-foreground" />
+          <span className="text-sm font-medium sm:hidden">{locale.toUpperCase()}</span>
+          <span className="hidden text-sm font-medium sm:inline">{localeMeta[locale].nativeLabel}</span>
+          <ChevronDown className="size-3.5 text-muted-foreground" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-44">

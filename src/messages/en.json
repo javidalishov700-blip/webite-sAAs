@@ -76,10 +76,10 @@
       "contact": "Contact"
     },
     "hero": {
-      "eyebrow": "QR-native digital catalogs",
+      "eyebrow": "QR menus for restaurants, cafés and shops",
       "titleLine1": "Your business,",
       "titleHighlight": "in a scan.",
-      "subtitle": "QR-Universe turns any menu, catalog, or price list into a living, breathing mobile experience — for restaurants, retail, electronics and services. No app to install, no printing ever again.",
+      "subtitle": "Type your menu once and put a QR code on the table. Guests point their camera and the menu opens on their phone. When a price changes, you edit it — nothing to reprint.",
       "ctaPrimary": "Start free",
       "ctaSecondary": "Watch it work",
       "badgeScans": "scans this month",
@@ -295,12 +295,12 @@
       }
     },
     "cta": {
-      "title": "Turn your catalog into an experience.",
-      "subtitle": "Print a QR, fill the catalog, guests scan.",
+      "title": "Build it today, have it on the tables tomorrow.",
+      "subtitle": "Start free. No card needed.",
       "button": "Create your free catalog"
     },
     "footer": {
-      "description": "QR-native digital catalogs for restaurants, shops and services.",
+      "description": "QR menus and catalogs for restaurants, cafés and shops.",
       "product": "Product",
       "company": "Company",
       "legal": "Legal",
@@ -874,7 +874,17 @@
       "dangerTitle": "Delete workspace",
       "dangerHint": "Permanently deletes your company, catalog, QR codes, and account. This cannot be undone.",
       "dangerConfirm": "Delete your workspace and account forever?",
-      "dangerAction": "Delete everything"
+      "dangerAction": "Delete everything",
+      "googleTitle": "Google reviews",
+      "googleHint": "Your Google rating shows at the top of the menu, and guests can leave a review in one tap.",
+      "googleUrlLabel": "Google review link",
+      "googleUrlHelp": "In Google Business Profile, tap “Ask for reviews” and copy the link. Your Google Maps page link works too.",
+      "googleRatingLabel": "Rating",
+      "googleCountLabel": "Number of reviews",
+      "googleRatingHelp": "Type them exactly as Google shows them. Leave them empty and the menu only shows “Rate us on Google”.",
+      "googleUrlInvalid": "That isn't a Google link. Paste a g.page, goo.gl or google.com link.",
+      "googleRatingInvalid": "The rating must be between 1 and 5.",
+      "googleCountInvalid": "The number of reviews must be a whole number."
     }
   },
   "catalog": {
@@ -928,7 +938,11 @@
       "error": "Could not send the report. Try again.",
       "rateLimited": "Too many reports from this network. Try later.",
       "whatsapp": "Urgent? Message us on WhatsApp"
-    }
+    },
+    "googleRateUs": "Rate us on Google",
+    "googleRating": "Google rating",
+    "googleRatingWithCount": "Google · {count, plural, one {{shown} review} other {{shown} reviews}}",
+    "googleWrite": "Review"
   },
   "pages": {
     "notFound": {
@@ -1184,7 +1198,7 @@
       "title": "Build your catalog in 5 minutes",
       "subtitle": "From sign-up to a printed QR code — step by step.",
       "videoTitle": "Video walkthrough",
-      "videoNote": "Under two minutes, from sign-up to a printed QR code. Captions are in Azerbaijani.",
+      "videoNote": "Under two minutes, from sign-up to a printed QR code.",
       "allSteps": "Read every step",
       "steps": [
         {
@@ -1201,7 +1215,7 @@
         },
         {
           "title": "Create a category",
-          "body": "Go to Categories: “Mains”, “Drinks”, “Desserts”... These are the headings your guests see."
+          "body": "In the “Add product” form, type the section name: “Mains”, “Drinks”, “Desserts”... It is created when you save. These are the headings your guests see."
         },
         {
           "title": "Add a product",
@@ -1231,7 +1245,7 @@
       "setupSubtitle": "A one-off fee. After that it is the monthly subscription.",
       "oneOff": "one-off",
       "free": "Free",
-      "popular": "Most chosen",
+      "popular": "Our pick",
       "perMonth": "/mo",
       "packages": {
         "self": {
@@ -1247,13 +1261,13 @@
         },
         "done": {
           "name": "Menu done for you",
-          "tagline": "The package most venues pick.",
+          "tagline": "You have the photos; we do the rest.",
           "features": [
             "We enter up to 50 products",
             "Logo, colour, categories",
             "QR code design",
             "20 printed table cards",
-            "On-site setup and a short walkthrough",
+            "Setup and a short walkthrough",
             "First month of the subscription free"
           ],
           "cta": "Order on WhatsApp"
@@ -1263,7 +1277,7 @@
           "tagline": "If you have no photos yet.",
           "features": [
             "Everything in Menu done for you",
-            "Photos of 20 dishes (phone camera, daylight)",
+            "Photos of 20 dishes*",
             "Table tents on thick card",
             "Three months of changes included"
           ],
@@ -1306,7 +1320,7 @@
       "ctaTitle": "Questions?",
       "ctaBody": "Message us on WhatsApp and we will price it for your venue.",
       "ctaButton": "Message on WhatsApp",
-      "note": "Prices apply within the city. Larger menus are quoted separately.",
+      "note": "* We can't do photo shoots and on-site setup in every city — tell us yours on WhatsApp. Where we can't come, you send the photos and we crop and colour-correct them; the table cards come as a print-ready file and the walkthrough is online. Larger menus are quoted separately.",
       "whatsapp": {
         "done": "Hello, I am interested in the Menu done for you package.",
         "full": "Hello, I am interested in the Full package.",

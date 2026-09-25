@@ -29,9 +29,11 @@ export function ItemCard({ item, onSelect, locale, fractionDigits }: ItemCardPro
     <button
       type="button"
       onClick={onSelect}
-      className="group flex flex-col overflow-hidden rounded-[1.25rem] border border-border/50 bg-card text-left transition-transform active:scale-[0.98]"
+      className="group flex flex-col text-left transition-transform active:scale-[0.98]"
     >
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-muted">
+      {/* Square and unboxed: the photo is what sells the dish, and a frame
+          around every card only multiplied the lines on the page. */}
+      <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-muted ring-1 ring-black/5 dark:ring-white/10">
         {item.images[0] ? (
           <Image
             src={item.images[0]}
@@ -39,10 +41,10 @@ export function ItemCard({ item, onSelect, locale, fractionDigits }: ItemCardPro
             fill
             unoptimized
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            className="object-cover"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
         ) : (
-          <div className="flex size-full items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10 text-primary/50">
+          <div className="flex size-full items-center justify-center text-muted-foreground/50">
             <ImageOff className="size-6" />
           </div>
         )}
@@ -63,10 +65,10 @@ export function ItemCard({ item, onSelect, locale, fractionDigits }: ItemCardPro
       </div>
       {/* Title over two lines and no teaser text: the name is what the guest is
           looking for, and a clamped half-sentence under it only added noise. */}
-      <div className="flex flex-1 flex-col gap-1.5 px-3 pt-2.5 pb-3">
-        <p className="line-clamp-2 text-sm leading-snug font-medium text-foreground/95">{item.title}</p>
-        <div className="mt-auto flex items-baseline gap-1.5">
-          <span className="font-display text-[15px] font-semibold">
+      <div className="flex flex-1 flex-col gap-1 px-0.5 pt-2.5">
+        <p className="line-clamp-2 text-[15px] leading-snug font-medium text-foreground">{item.title}</p>
+        <div className="mt-auto flex items-baseline gap-1.5 pt-0.5">
+          <span className="text-[15px] font-semibold">
             {formatCurrency(item.price, item.currency, locale, fractionDigits)}
           </span>
           {item.compareAtPrice && item.compareAtPrice > item.price && (

@@ -10,7 +10,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       <AmbientBackground />
       <header className="flex items-center justify-between px-5 py-5 sm:px-8">
         <Link href="/" className="flex items-center gap-2 font-display text-lg font-semibold tracking-tight">
-          <span className="glow-ring flex size-8 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent text-white">
+          <span className="glow-ring flex size-8 items-center justify-center rounded-xl bg-primary dark:bg-gradient-to-br dark:from-primary dark:to-accent text-white">
             <QrCode className="size-4.5" />
           </span>
           QR-Universe

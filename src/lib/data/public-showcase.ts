@@ -155,6 +155,9 @@ export function getStaticLiveDemoCatalog(): CompanyPublicView {
     address: "Sample venue",
     phone: null,
     website: null,
+    // A sample venue has no Google page and no rating to quote, so the demo
+    // shows only the "rate us" prompt; it opens Google Maps.
+    googleReviewUrl: "https://www.google.com/maps",
     isPublished: true,
     bannedAt: null,
     bannedReason: null,

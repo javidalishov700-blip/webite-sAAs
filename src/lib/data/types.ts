@@ -72,6 +72,9 @@ export interface Company {
   address?: string | null;
   phone?: string | null;
   website?: string | null;
+  googleReviewUrl?: string | null;
+  googleRating?: number | null;
+  googleReviewCount?: number | null;
   isPublished: boolean;
   bannedAt?: string | null;
   bannedReason?: string | null;

@@ -9,8 +9,9 @@ import { ItemCard } from "@/components/catalog/item-card";
 import { ItemSheet } from "@/components/catalog/item-sheet";
 import { LanguageFab } from "@/components/catalog/language-fab";
 import { ReportAbuse } from "@/components/catalog/report-abuse";
+import { GoogleRating } from "@/components/catalog/google-rating";
+import { CategoryHeading } from "@/components/catalog/category-heading";
 import { EmptyState } from "@/components/ui/empty-state";
-import { getCategoryIcon } from "@/lib/category-icons";
 import type { CompanyPublicView, ItemWithAttributes } from "@/lib/data/types";
 
 export function CatalogView({
@@ -30,6 +31,8 @@ export function CatalogView({
   const chromeRef = useRef<HTMLDivElement>(null);
   const chromeHeight = useRef(220);
   const isClickScrolling = useRef(false);
+  // The section the guest last tapped, while the page cannot scroll it to the top.
+  const pinnedId = useRef<string | null>(null);
 
   function applyChromeMetrics() {
     const el = chromeRef.current;
@@ -90,11 +93,24 @@ export function CatalogView({
       ticking = false;
       if (isClickScrolling.current) return;
       const marker = chromeHeight.current + 16;
-      let current = company.categories[0]?.id ?? null;
-      for (const category of company.categories) {
-        const el = sectionRefs.current.get(category.id);
+      const ids = company.categories.map((category) => category.id);
+      let current: string | null = ids[0] ?? null;
+      for (const id of ids) {
+        const el = sectionRefs.current.get(id);
         if (!el) continue;
-        if (el.getBoundingClientRect().top <= marker) current = category.id;
+        if (el.getBoundingClientRect().top <= marker) current = id;
+      }
+      // The last sections are usually too short to reach the marker before the
+      // page runs out, so "Drinks" never lit up. The bottom of the page belongs
+      // to the last section — or to the one just tapped, if it is on screen.
+      const { scrollHeight } = document.documentElement;
+      const scrollable = scrollHeight - window.innerHeight > 4;
+      const atBottom = scrollable && window.scrollY > 0 && window.innerHeight + window.scrollY >= scrollHeight - 4;
+      if (atBottom && ids.length) {
+        const tapped = pinnedId.current ? sectionRefs.current.get(pinnedId.current) : null;
+        current = tapped && tapped.getBoundingClientRect().top < window.innerHeight ? pinnedId.current : ids[ids.length - 1];
+      } else {
+        pinnedId.current = null;
       }
       setActiveCategoryId((prev) => (prev === current ? prev : current));
     };
@@ -112,6 +128,7 @@ export function CatalogView({
 
   function handleSelectCategory(id: string) {
     setActiveCategoryId(id);
+    pinnedId.current = id;
     const section = sectionRefs.current.get(id);
     if (!section) return;
     isClickScrolling.current = true;
@@ -167,13 +184,16 @@ export function CatalogView({
       </div>
 
       <div className="px-4 pt-3">
+        {!searchResults ? (
+          <GoogleRating company={company} locale={locale} accentColor={company.accentColor} className="mb-7" />
+        ) : null}
         {company.categories.length === 0 ? (
           <EmptyState icon={Store} title={t("emptyCatalog")} description={t("emptyCatalogHint")} className="mt-6 border border-border bg-card" />
         ) : searchResults ? (
           searchResults.length === 0 ? (
             <EmptyState icon={SearchX} title={t("noResults", { query: search })} className="mt-6" />
           ) : (
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+            <div className="grid grid-cols-2 gap-x-3 gap-y-6 sm:grid-cols-3">
               {searchResults.map((item) => (
                 <ItemCard
                   key={item.id}
@@ -186,10 +206,8 @@ export function CatalogView({
             </div>
           )
         ) : (
-          <div className="space-y-8">
-            {company.categories.map((category) => {
-              const Icon = getCategoryIcon(category.icon);
-              return (
+          <div className="space-y-10">
+            {company.categories.map((category) => (
               <section
                 key={category.id}
                 data-category-id={category.id}
@@ -199,14 +217,15 @@ export function CatalogView({
                 }}
                 className="scroll-mt-[var(--catalog-chrome,14.5rem)]"
               >
-                <h2 className="mb-3 flex scroll-mt-[var(--catalog-chrome,14.5rem)] items-center gap-2 font-display text-lg font-semibold tracking-tight">
-                  <Icon className="size-4 shrink-0" style={{ color: company.accentColor }} />
-                  {category.name}
-                </h2>
+                <CategoryHeading
+                  name={category.name}
+                  accentColor={company.accentColor}
+                  className="mb-4 scroll-mt-[var(--catalog-chrome,14.5rem)]"
+                />
                 {category.items.length === 0 ? (
                   <p className="text-sm text-muted-foreground">{t("emptyCategory")}</p>
                 ) : (
-                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                  <div className="grid grid-cols-2 gap-x-3 gap-y-6 sm:grid-cols-3">
                     {category.items.map((item) => (
                       <ItemCard
                         key={item.id}
@@ -219,8 +238,7 @@ export function CatalogView({
                   </div>
                 )}
               </section>
-              );
-            })}
+            ))}
           </div>
         )}
       </div>

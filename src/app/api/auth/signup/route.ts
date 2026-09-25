@@ -11,8 +11,18 @@ import { hashPassword } from "@/lib/auth/password";
 import { sendVerificationCode, sendSignupAlert } from "@/lib/auth/email-flows";
 import { getRequestIp } from "@/lib/request-meta";
 import { RATE, rateLimit } from "@/lib/rate-limit";
+import type { AppLocale } from "@/lib/data/types";
 
 export const runtime = "nodejs";
+
+// A café that signs up in Azerbaijani prices in manat and wants its menu to
+// open in Azerbaijani; everything here stays editable in Settings.
+const SIGNUP_DEFAULTS: Record<AppLocale, { currency: string; supportedLocales: AppLocale[] }> = {
+  az: { currency: "AZN", supportedLocales: ["az", "en", "ru"] },
+  tr: { currency: "TRY", supportedLocales: ["tr", "en"] },
+  ru: { currency: "USD", supportedLocales: ["ru", "en"] },
+  en: { currency: "USD", supportedLocales: ["en"] },
+};
 
 export async function POST(request: NextRequest) {
   const ip = getRequestIp(request) ?? "unknown";
@@ -37,7 +47,15 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const company = await createCompany({ name: companyName, industry, isPublished: false });
+    const defaults = SIGNUP_DEFAULTS[locale ?? "en"];
+    const company = await createCompany({
+      name: companyName,
+      industry,
+      isPublished: false,
+      currency: defaults.currency,
+      defaultLocale: locale ?? "en",
+      supportedLocales: defaults.supportedLocales,
+    });
     const passwordHash = await hashPassword(password);
     const user = await createUserWithCompanyMembership({
       name,

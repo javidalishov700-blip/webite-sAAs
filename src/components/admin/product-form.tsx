@@ -259,7 +259,15 @@ export function ProductForm({
             </div>
             <div className="max-w-40 space-y-1.5">
               <Label htmlFor="price">{t("priceLabel")}</Label>
-              <Input id="price" type="number" step="0.01" min="0" {...register("price")} />
+              <Input
+                id="price"
+                type="number"
+                step="0.01"
+                min="0"
+                {...register("price")}
+                // the field starts at 0; typing should replace it, not append to it
+                onFocus={(event) => event.currentTarget.select()}
+              />
               {errors.price && <p className="text-xs text-destructive">{errors.price.message}</p>}
             </div>
           </div>

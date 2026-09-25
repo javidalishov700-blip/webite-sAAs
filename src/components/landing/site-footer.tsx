@@ -4,6 +4,7 @@ import { QrCode } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Reveal, RevealGroup, RevealItem } from "@/components/landing/reveal";
 import { SITE, telHref } from "@/lib/site";
+import { FooterLanguages } from "@/components/landing/footer-languages";
 
 export function SiteFooter() {
   const t = useTranslations("landing.footer");
@@ -38,10 +39,10 @@ export function SiteFooter() {
   return (
     <footer className="relative border-t border-border/70">
       <div className="mx-auto max-w-6xl px-5 py-16 sm:px-6">
-        <RevealGroup className="grid grid-cols-2 gap-10 sm:grid-cols-4" stagger={0.08}>
+        <RevealGroup className="grid grid-cols-2 gap-10 sm:grid-cols-5" stagger={0.08}>
           <RevealItem className="col-span-2">
             <Link href="/" className="flex items-center gap-2 font-display text-lg font-semibold">
-              <span className="flex size-8 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent text-white">
+              <span className="flex size-8 items-center justify-center rounded-xl bg-primary dark:bg-gradient-to-br dark:from-primary dark:to-accent text-white">
                 <QrCode className="size-4.5" />
               </span>
               QR-Universe
@@ -86,7 +87,11 @@ export function SiteFooter() {
           ))}
         </RevealGroup>
 
-        <Reveal className="mt-14 flex flex-col items-start justify-between gap-3 border-t border-border/70 pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center">
+        <div className="mt-12">
+          <FooterLanguages />
+        </div>
+
+        <Reveal className="mt-8 flex flex-col items-start justify-between gap-3 border-t border-border/70 pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center">
           <p>
             © {new Date().getFullYear()} QR-Universe. {t("rights")}
           </p>

@@ -23,6 +23,8 @@ import { CURRENCIES, LOCALES, LOCALE_META } from "@/lib/constants";
 import { PLAN_LIMITS, formatPlanUsage, isPaidPlan } from "@/lib/plan";
 import { usePlanUsage } from "@/hooks/use-plan-usage";
 import { IndustryPicker } from "@/components/industry-picker";
+import { GoogleMark } from "@/components/catalog/google-rating";
+import { isGoogleUrl } from "@/lib/validators/company";
 import { cn } from "@/lib/utils";
 import type { AppLocale, Industry } from "@/lib/data/types";
 import { api, ApiError } from "@/lib/api-client";
@@ -107,6 +109,9 @@ export default function SettingsPage() {
     address: "",
     phone: "",
     website: "",
+    googleReviewUrl: "",
+    googleRating: "",
+    googleReviewCount: "",
     currency: "USD",
     defaultLocale: "en" as AppLocale,
     supportedLocales: ["en"] as AppLocale[],
@@ -123,6 +128,9 @@ export default function SettingsPage() {
         address: company.address ?? "",
         phone: company.phone ?? "",
         website: company.website ?? "",
+        googleReviewUrl: company.googleReviewUrl ?? "",
+        googleRating: company.googleRating != null ? String(company.googleRating) : "",
+        googleReviewCount: company.googleReviewCount != null ? String(company.googleReviewCount) : "",
         currency: company.currency,
         defaultLocale: company.defaultLocale,
         supportedLocales: company.supportedLocales,
@@ -143,7 +151,29 @@ export default function SettingsPage() {
   }
 
   async function handleSave() {
-    await updateCompany.mutateAsync(form);
+    const googleReviewUrl = form.googleReviewUrl.trim();
+    const ratingText = form.googleRating.trim().replace(",", ".");
+    const countText = form.googleReviewCount.replace(/[\s.,]/g, "");
+    const googleRating = ratingText ? Number(ratingText) : null;
+    const googleReviewCount = countText ? Number(countText) : null;
+    if (googleReviewUrl && !isGoogleUrl(googleReviewUrl)) {
+      toast.error(t("googleUrlInvalid"));
+      return;
+    }
+    if (googleRating !== null && !(googleRating >= 1 && googleRating <= 5)) {
+      toast.error(t("googleRatingInvalid"));
+      return;
+    }
+    if (googleReviewCount !== null && !(Number.isInteger(googleReviewCount) && googleReviewCount >= 0)) {
+      toast.error(t("googleCountInvalid"));
+      return;
+    }
+    await updateCompany.mutateAsync({
+      ...form,
+      googleReviewUrl: googleReviewUrl || null,
+      googleRating: googleRating === null ? null : Math.round(googleRating * 10) / 10,
+      googleReviewCount,
+    });
     toast.success(t("saved"));
   }
 
@@ -231,6 +261,53 @@ export default function SettingsPage() {
               <p className="text-xs text-muted-foreground">{t("industryHint")}</p>
               <IndustryPicker value={form.industry} onChange={(industry) => setForm({ ...form, industry })} />
             </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <GoogleMark className="size-5" />
+              {t("googleTitle")}
+            </CardTitle>
+            <CardDescription>{t("googleHint")}</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-1.5">
+              <Label htmlFor="googleReviewUrl">{t("googleUrlLabel")}</Label>
+              <Input
+                id="googleReviewUrl"
+                inputMode="url"
+                autoComplete="off"
+                placeholder="https://g.page/r/…/review"
+                value={form.googleReviewUrl}
+                onChange={(e) => setForm({ ...form, googleReviewUrl: e.target.value })}
+              />
+              <p className="text-xs text-muted-foreground">{t("googleUrlHelp")}</p>
+            </div>
+            <div className="grid max-w-sm grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <Label htmlFor="googleRating">{t("googleRatingLabel")}</Label>
+                <Input
+                  id="googleRating"
+                  inputMode="decimal"
+                  placeholder="4.8"
+                  value={form.googleRating}
+                  onChange={(e) => setForm({ ...form, googleRating: e.target.value })}
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="googleReviewCount">{t("googleCountLabel")}</Label>
+                <Input
+                  id="googleReviewCount"
+                  inputMode="numeric"
+                  placeholder="120"
+                  value={form.googleReviewCount}
+                  onChange={(e) => setForm({ ...form, googleReviewCount: e.target.value })}
+                />
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground">{t("googleRatingHelp")}</p>
           </CardContent>
         </Card>
 

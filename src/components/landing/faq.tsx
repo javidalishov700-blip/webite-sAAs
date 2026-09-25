@@ -45,7 +45,7 @@ export function Faq() {
         })}
       </div>
       <Reveal className="mt-8 text-center text-sm">
-        <Link href="/faq" className="font-medium text-accent underline-offset-4 hover:underline">
+        <Link href="/faq" className="font-medium text-primary underline-offset-4 hover:underline dark:text-accent">
           {t("seeAll")} →
         </Link>
       </Reveal>

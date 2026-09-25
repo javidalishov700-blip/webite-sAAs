@@ -1,10 +1,10 @@
 import { useTranslations } from "next-intl";
-import { Check, MessageCircle, Printer, Sparkles } from "lucide-react";
+import { Check, MessageCircle, Printer } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Reveal, RevealGroup, RevealItem } from "@/components/landing/reveal";
 import { whatsappHref } from "@/lib/site";
-import { MANAGED_PLANS, SERVICE_CURRENCY, SETUP_PACKAGES } from "@/lib/services";
+import { MANAGED_PLANS, SETUP_PACKAGES, servicePrice } from "@/lib/services";
 import { cn } from "@/lib/utils";
 
 type Step = { title: string; body: string };
@@ -20,7 +20,7 @@ export function ServicePackages() {
       </Reveal>
 
       <Reveal className="mt-14 text-center">
-        <h2 className="font-display text-2xl font-semibold tracking-tight">{t("setupTitle")}</h2>
+        <h2 className="font-serif text-2xl font-semibold tracking-[-0.01em] sm:text-3xl">{t("setupTitle")}</h2>
         <p className="mt-2 text-sm text-muted-foreground">{t("setupSubtitle")}</p>
       </Reveal>
 
@@ -39,7 +39,7 @@ export function ServicePackages() {
                 )}
               >
                 {"featured" in plan && plan.featured ? (
-                  <span className="absolute -top-3 left-6 rounded-full bg-gradient-to-r from-primary to-accent px-3 py-1 text-[11px] font-semibold text-white">
+                  <span className="absolute -top-3 left-6 rounded-full bg-primary dark:bg-gradient-to-r dark:from-primary dark:to-accent px-3 py-1 text-[11px] font-semibold text-white">
                     {t("popular")}
                   </span>
                 ) : null}
@@ -52,10 +52,7 @@ export function ServicePackages() {
                     <span className="font-display text-3xl font-bold">{t("free")}</span>
                   ) : (
                     <>
-                      <span className="font-display text-4xl font-bold">{plan.price}</span>
-                      <span className="font-display text-lg font-semibold text-muted-foreground">
-                        {SERVICE_CURRENCY}
-                      </span>
+                      <span className="font-display text-4xl font-bold">{servicePrice(plan.price)}</span>
                       <span className="text-xs text-muted-foreground">{t("oneOff")}</span>
                     </>
                   )}
@@ -98,8 +95,12 @@ export function ServicePackages() {
         })}
       </RevealGroup>
 
+      <Reveal className="mx-auto mt-6 max-w-3xl text-center text-sm leading-relaxed text-muted-foreground">
+        {t("note")}
+      </Reveal>
+
       <Reveal className="mt-16 text-center">
-        <h2 className="font-display text-2xl font-semibold tracking-tight">{t("monthlyTitle")}</h2>
+        <h2 className="font-serif text-2xl font-semibold tracking-[-0.01em] sm:text-3xl">{t("monthlyTitle")}</h2>
         <p className="mt-2 text-sm text-muted-foreground">{t("monthlySubtitle")}</p>
       </Reveal>
 
@@ -110,16 +111,13 @@ export function ServicePackages() {
               className={cn(
                 "flex h-full flex-col rounded-3xl border p-6",
                 "featured" in plan && plan.featured
-                  ? "border-accent/40 bg-accent/5"
+                  ? "border-primary/40 bg-primary/5"
                   : "border-border/70 bg-card/60",
               )}
             >
               <p className="font-display text-lg font-semibold">{t(`plans.${plan.key}.name`)}</p>
               <div className="mt-3 flex items-baseline gap-1.5">
-                <span className="font-display text-3xl font-bold">{plan.price}</span>
-                <span className="font-display text-base font-semibold text-muted-foreground">
-                  {SERVICE_CURRENCY}
-                </span>
+                <span className="font-display text-3xl font-bold">{servicePrice(plan.price)}</span>
                 <span className="text-sm text-muted-foreground">{t("perMonth")}</span>
               </div>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{t(`plans.${plan.key}.body`)}</p>
@@ -138,7 +136,7 @@ export function ServicePackages() {
 
       <Reveal className="mx-auto mt-16 max-w-3xl rounded-3xl border border-border/70 bg-card/60 p-6 sm:p-8">
         <div className="flex gap-4">
-          <span className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-accent text-white">
+          <span className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-primary dark:bg-gradient-to-br dark:from-primary dark:to-accent text-white">
             <Printer className="size-5" />
           </span>
           <div>
@@ -149,14 +147,14 @@ export function ServicePackages() {
       </Reveal>
 
       <Reveal className="mt-16 text-center">
-        <h2 className="font-display text-2xl font-semibold tracking-tight">{t("stepsTitle")}</h2>
+        <h2 className="font-serif text-2xl font-semibold tracking-[-0.01em] sm:text-3xl">{t("stepsTitle")}</h2>
       </Reveal>
 
       <RevealGroup className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" stagger={0.06}>
         {(t.raw("steps") as Step[]).map((step, i) => (
           <RevealItem key={step.title}>
             <div className="h-full rounded-2xl border border-border/70 bg-card/60 p-5">
-              <span className="flex size-8 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent font-display text-sm font-bold text-white">
+              <span className="flex size-8 items-center justify-center rounded-xl bg-primary dark:bg-gradient-to-br dark:from-primary dark:to-accent font-display text-sm font-bold text-white">
                 {i + 1}
               </span>
               <p className="mt-3 font-display text-base font-semibold">{step.title}</p>
@@ -167,8 +165,7 @@ export function ServicePackages() {
       </RevealGroup>
 
       <Reveal className="mt-14 rounded-3xl border border-primary/20 bg-primary/5 p-7 text-center">
-        <Sparkles className="mx-auto size-5 text-accent" />
-        <p className="mt-3 font-display text-xl font-semibold">{t("ctaTitle")}</p>
+        <p className="font-display text-xl font-semibold">{t("ctaTitle")}</p>
         <p className="mt-2 text-sm text-muted-foreground">{t("ctaBody")}</p>
         <Button variant="glow" className="mt-6" asChild>
           <a href={whatsappHref(t("whatsapp.general"))} target="_blank" rel="noreferrer">
@@ -177,8 +174,6 @@ export function ServicePackages() {
           </a>
         </Button>
       </Reveal>
-
-      <Reveal className="mt-8 text-center text-xs text-muted-foreground">{t("note")}</Reveal>
     </section>
   );
 }

@@ -24,7 +24,7 @@ export function AdminShell({ user, children }: { user: SessionUser; children: Re
       <div className="mx-auto flex min-h-screen max-w-[1600px]">
         <aside className="glass sticky top-0 hidden h-screen w-64 shrink-0 flex-col border-r border-border/70 p-4 lg:flex">
           <Link href="/" className="mb-6 flex items-center gap-2 px-2 font-display text-base font-semibold">
-            <span className="glow-ring flex size-8 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent text-white">
+            <span className="glow-ring flex size-8 items-center justify-center rounded-xl bg-primary dark:bg-gradient-to-br dark:from-primary dark:to-accent text-white">
               <QrCode className="size-4.5" />
             </span>
             QR-Universe
@@ -70,7 +70,7 @@ export function AdminShell({ user, children }: { user: SessionUser; children: Re
       <Drawer open={mobileOpen} onOpenChange={setMobileOpen} direction="left">
         <DrawerContent showHandle={false} className="flex flex-col p-4">
           <Link href="/" className="mb-6 flex items-center gap-2 px-2 font-display text-base font-semibold">
-            <span className="glow-ring flex size-8 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent text-white">
+            <span className="glow-ring flex size-8 items-center justify-center rounded-xl bg-primary dark:bg-gradient-to-br dark:from-primary dark:to-accent text-white">
               <QrCode className="size-4.5" />
             </span>
             QR-Universe

@@ -54,7 +54,7 @@ export function ItemSheet({ item, onOpenChange, locale, accentColor, fractionDig
 
             <div className="space-y-5 px-5 pt-5 sm:px-6">
               <div>
-                <DrawerTitle className="text-xl">{item.title}</DrawerTitle>
+                <DrawerTitle className="font-serif text-2xl font-semibold">{item.title}</DrawerTitle>
                 <div className="mt-2 flex items-center gap-2">
                   <span className="font-display text-2xl font-bold" style={{ color: accentColor }}>
                     {formatCurrency(item.price, item.currency, locale, fractionDigits)}

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Inter_Tight, Playfair_Display, JetBrains_Mono } from "next/font/google";
+import { Inter, Inter_Tight, Source_Serif_4, JetBrains_Mono } from "next/font/google";
 import { getLocale } from "next-intl/server";
 import { appBaseUrl } from "@/lib/site";
 import "@/app/globals.css";
@@ -19,12 +19,12 @@ const interTight = Inter_Tight({
   display: "swap",
 });
 
-/** Marketing headlines only — the product UI stays on the sans faces. */
-const playfair = Playfair_Display({
+/** Headlines only — a book face, calmer than a display serif; the UI stays sans. */
+const sourceSerif = Source_Serif_4({
   subsets: ["latin", "latin-ext", "cyrillic"],
-  weight: ["500", "600", "700"],
+  weight: ["600"],
   style: ["normal", "italic"],
-  variable: "--font-playfair",
+  variable: "--font-source-serif",
   display: "swap",
 });
 
@@ -39,7 +39,7 @@ export const viewport: Viewport = {
   // heuristic actually reads reliably; values match --background in
   // globals.css for each color-scheme.
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f6f6fb" },
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
     { media: "(prefers-color-scheme: dark)", color: "#06060b" },
   ],
   width: "device-width",
@@ -90,7 +90,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const locale = await getLocale();
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={`${inter.variable} ${interTight.variable} ${playfair.variable} ${jetbrainsMono.variable} font-sans`} suppressHydrationWarning>
+      <body className={`${inter.variable} ${interTight.variable} ${sourceSerif.variable} ${jetbrainsMono.variable} font-sans`} suppressHydrationWarning>
         {children}
       </body>
     </html>

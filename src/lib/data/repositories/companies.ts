@@ -1,7 +1,7 @@
 import "server-only";
 import { prisma } from "@/lib/prisma";
 import { mapCompany } from "@/lib/data/map";
-import type { Company, Industry } from "@/lib/data/types";
+import type { AppLocale, Company, Industry } from "@/lib/data/types";
 
 export async function getCompanyById(id: string): Promise<Company | undefined> {
   const row = await prisma.company.findUnique({ where: { id } });
@@ -57,6 +57,8 @@ export async function createCompany(input: {
   name: string;
   industry: Industry;
   currency?: string;
+  defaultLocale?: AppLocale;
+  supportedLocales?: AppLocale[];
   logoUrl?: string | null;
   accentColor?: string;
   isPublished?: boolean;
@@ -71,8 +73,8 @@ export async function createCompany(input: {
       industry: input.industry,
       plan: "FREE",
       currency: input.currency ?? "USD",
-      defaultLocale: "en",
-      supportedLocales: ["en"],
+      defaultLocale: input.defaultLocale ?? "en",
+      supportedLocales: input.supportedLocales ?? ["en"],
       accentColor: input.accentColor ?? "#7C5CFF",
       address: null,
       phone: null,

@@ -28,7 +28,7 @@ export function UsageGuide() {
         {steps.map((step, i) => (
           <RevealItem key={step.title}>
             <div className="flex gap-4 rounded-2xl border border-border/70 bg-card/60 p-5">
-              <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent font-display text-sm font-bold text-white">
+              <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary dark:bg-gradient-to-br dark:from-primary dark:to-accent font-display text-sm font-bold text-white">
                 {i + 1}
               </span>
               <div className="min-w-0">

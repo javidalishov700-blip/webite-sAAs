@@ -17,18 +17,12 @@ function LanguageFabInner({ accentColor, locales: available }: { accentColor: st
     <>
       <button
         onClick={() => setOpen(true)}
-        style={{ boxShadow: `0 10px 30px -8px ${accentColor}99` }}
-        className="fixed right-4 bottom-[calc(1.25rem+env(safe-area-inset-bottom))] z-30 flex items-center gap-2 rounded-full px-4 py-3 text-sm font-medium text-white active:scale-95"
+        aria-label={t("chooseLanguage")}
+        className="fixed right-4 bottom-[calc(1.25rem+env(safe-area-inset-bottom))] z-30 flex items-center gap-2 rounded-full border border-border/70 bg-background/90 py-2.5 pr-4 pl-3 text-sm font-semibold shadow-[0_12px_32px_-12px_rgb(15_15_30/0.45)] backdrop-blur-md active:scale-95"
       >
-        <span
-          className="absolute inset-0 rounded-full"
-          style={{ backgroundColor: accentColor }}
-          aria-hidden
-        />
-        <span className="relative flex items-center gap-2">
-          <Languages className="size-4" />
-          {localeMeta[locale].flag}
-        </span>
+        <Languages className="size-4" style={{ color: accentColor }} />
+        <span className="text-base leading-none">{localeMeta[locale].flag}</span>
+        {locale.toUpperCase()}
       </button>
 
       <Drawer open={open} onOpenChange={setOpen}>

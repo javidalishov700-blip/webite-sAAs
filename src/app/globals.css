@@ -6,7 +6,7 @@
 @theme inline {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-inter-tight), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
+  --font-serif: var(--font-source-serif), ui-serif, Georgia, serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
 
   --color-background: var(--background);
@@ -465,5 +465,52 @@ html.lenis body {
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+  }
+}
+
+/* By day the page is paper, not neon: the glows, gradient text and gradient
+   borders the night theme is built on flatten into hairlines and ink. */
+@layer components {
+  :root:not(.dark) .glow-ring {
+    box-shadow:
+      0 0 0 1px var(--border),
+      0 24px 48px -28px rgb(15 15 30 / 0.22);
+  }
+  :root:not(.dark) .glow-border::before {
+    display: none;
+  }
+  :root:not(.dark) .glow-border {
+    box-shadow: 0 0 0 1px var(--border);
+  }
+  :root:not(.dark) .text-gradient,
+  :root:not(.dark) .text-gradient-neon {
+    background: none;
+    color: var(--foreground);
+  }
+  :root:not(.dark) .glass {
+    background: color-mix(in oklab, white 88%, transparent);
+    border-color: var(--border);
+    box-shadow: 0 1px 2px 0 rgb(15 15 30 / 0.04);
+  }
+}
+
+/* The one splash of colour by day: the hero's second line and a soft wash of
+   the same two hues behind it. Night keeps its own neon. */
+@layer components {
+  .hero-accent {
+    background-image: linear-gradient(100deg, #8a6cff 0%, #7f86ff 45%, #45b3f5 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* italic glyphs lean past their box; without this the last letter is clipped */
+    padding-right: 0.08em;
+  }
+  .dark .hero-accent {
+    background-image: linear-gradient(100deg, #b49cff 0%, #9aa6ff 45%, #6fd6ff 100%);
+  }
+  .hero-wash {
+    background:
+      radial-gradient(38rem 30rem at 82% 30%, rgb(124 92 255 / 0.16), transparent 70%),
+      radial-gradient(30rem 26rem at 8% 88%, rgb(56 189 248 / 0.14), transparent 70%);
   }
 }

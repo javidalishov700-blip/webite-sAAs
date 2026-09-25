@@ -76,10 +76,10 @@
       "contact": "Əlaqə"
     },
     "hero": {
-      "eyebrow": "QR əsaslı rəqəmsal kataloqlar",
+      "eyebrow": "Restoran, kafe və mağazalar üçün QR menyu",
       "titleLine1": "Biznesiniz,",
       "titleHighlight": "bir skanda.",
-      "subtitle": "QR-Universe restoranlar, pərakəndə satış, elektronika və xidmət sahələri üçün istənilən menyunu, kataloqu və ya qiymət siyahısını canlı mobil təcrübəyə çevirir. Tətbiq quraşdırmağa, menyu çap etməyə ehtiyac yoxdur.",
+      "subtitle": "Menyunu bir dəfə yazırsınız, masaya QR kod qoyursunuz. Qonaq kameranı tutur — menyu telefonunda açılır. Qiymət dəyişəndə yenidən çap etmirsiniz, sadəcə düzəldirsiniz.",
       "ctaPrimary": "Pulsuz başla",
       "ctaSecondary": "Necə işlədiyinə baxın",
       "badgeScans": "bu ay skan",
@@ -295,12 +295,12 @@
       }
     },
     "cta": {
-      "title": "Kataloqunuzu təcrübəyə çevirin.",
-      "subtitle": "QR çap edin, kataloqu doldurun, qonaq skan etsin.",
+      "title": "Menyunu bu gün qur, sabah masalarda olsun.",
+      "subtitle": "Pulsuz başlayın. Kart tələb olunmur.",
       "button": "Pulsuz kataloqunuzu yaradın"
     },
     "footer": {
-      "description": "Restoranlar, pərakəndə satış, elektronika və xidmətlər üçün interaktiv, QR əsaslı rəqəmsal kataloqlar platforması.",
+      "description": "Restoran, kafe və mağazalar üçün QR menyu və kataloq.",
       "product": "Məhsul",
       "company": "Şirkət",
       "legal": "Hüquqi",
@@ -874,7 +874,17 @@
       "dangerTitle": "İş sahəsini sil",
       "dangerHint": "Şirkət, kataloq, QR və hesab silinir. Geri qayıtmaz.",
       "dangerConfirm": "İş sahəsi və hesab həmişəlik silinsin?",
-      "dangerAction": "Hamısını sil"
+      "dangerAction": "Hamısını sil",
+      "googleTitle": "Google rəyləri",
+      "googleHint": "Menyunun yuxarısında Google reytinqiniz görünür, qonaq bir toxunuşla rəy yazır.",
+      "googleUrlLabel": "Google rəy linki",
+      "googleUrlHelp": "Google Biznes Profilində «Rəy istə» düyməsinə basıb linki kopyalayın. Google Xəritədəki səhifənizin linki də olar.",
+      "googleRatingLabel": "Reytinq",
+      "googleCountLabel": "Rəy sayı",
+      "googleRatingHelp": "Google-da necə görünürsə, elə yazın. Boş qoysanız, menyuda yalnız «Bizi qiymətləndirin» görünər.",
+      "googleUrlInvalid": "Bu Google linki deyil. g.page, goo.gl və ya google.com linki yapışdırın.",
+      "googleRatingInvalid": "Reytinq 1 ilə 5 arasında olmalıdır.",
+      "googleCountInvalid": "Rəy sayı tam ədəd olmalıdır."
     }
   },
   "catalog": {
@@ -928,7 +938,11 @@
       "error": "Göndərilmədi. Yenidən cəhd edin.",
       "rateLimited": "Bu şəbəkədən çox şikayət var. Sonra yenidən cəhd edin.",
       "whatsapp": "Təcili? WhatsApp-dan yazın"
-    }
+    },
+    "googleRateUs": "Bizi Google-da qiymətləndirin",
+    "googleRating": "Google reytinqi",
+    "googleRatingWithCount": "Google · {shown} rəy",
+    "googleWrite": "Rəy yaz"
   },
   "pages": {
     "notFound": {
@@ -1201,7 +1215,7 @@
         },
         {
           "title": "Kateqoriya yarat",
-          "body": "«Kateqoriyalar» bölməsinə keç: «Əsas yeməklər», «İçkilər», «Desertlər»... Bunlar müştərinin gördüyü başlıqlardır."
+          "body": "«Məhsul əlavə et» formasında bölmənin adını yaz: «Əsas yeməklər», «İçkilər», «Desertlər»... Saxlayanda özü yaranır. Bunlar müştərinin gördüyü başlıqlardır."
         },
         {
           "title": "Məhsul əlavə et",
@@ -1231,7 +1245,7 @@
       "setupSubtitle": "Birdəfəlik ödəniş. Sonrası aylıq abunədir.",
       "oneOff": "birdəfəlik",
       "free": "Pulsuz",
-      "popular": "Ən çox seçilən",
+      "popular": "Tövsiyə edirik",
       "perMonth": "/ay",
       "packages": {
         "self": {
@@ -1247,13 +1261,13 @@
         },
         "done": {
           "name": "Hazır menyu",
-          "tagline": "Ən çox seçilən paket.",
+          "tagline": "Şəkilləriniz varsa, qalanını biz edirik.",
           "features": [
             "50 məhsula qədər kataloqu biz quraq",
             "Loqo, rəng, kateqoriyalar",
             "QR kodun dizaynı",
             "20 ədəd çap olunmuş masa kartı",
-            "Yerində quraşdırma və öyrətmə",
+            "Quraşdırma və öyrətmə",
             "İlk ay abunə pulsuz"
           ],
           "cta": "WhatsApp-dan sifariş et"
@@ -1263,7 +1277,7 @@
           "tagline": "Şəkilləriniz yoxdursa.",
           "features": [
             "«Hazır menyu»dakı hər şey",
-            "20 yeməyin şəkli (telefonla, təbii işıqda)",
+            "20 yeməyin şəkli*",
             "Qalın kartondan masa stendləri",
             "3 ay ərzində dəyişikliklər pulsuz"
           ],
@@ -1306,7 +1320,7 @@
       "ctaTitle": "Sualınız var?",
       "ctaBody": "WhatsApp-dan yazın — qiyməti məkanınıza görə dəqiqləşdirək.",
       "ctaButton": "WhatsApp-dan yaz",
-      "note": "Qiymətlər Bakı daxilində keçərlidir. Böyük menyular üçün qiymət ayrıca razılaşdırılır.",
+      "note": "* Şəkil çəkilişi və yerində quraşdırmanı hər şəhərdə edə bilmirik — şəhərinizi WhatsApp-da yazın. Gələ bilmədiyimiz yerdə şəkilləri siz göndərirsiniz, biz kəsib işığını düzəldirik; masa kartlarını çapa hazır fayl kimi veririk, öyrətmə onlayn olur. Böyük menyuların qiyməti ayrıca razılaşdırılır.",
       "whatsapp": {
         "done": "Salam, «Hazır menyu» paketi ilə maraqlanıram.",
         "full": "Salam, «Tam paket» ilə maraqlanıram.",

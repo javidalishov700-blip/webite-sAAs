@@ -13,10 +13,10 @@ export function CtaBand() {
     <section className="relative mx-auto max-w-6xl px-5 py-10 sm:px-6">
       <Reveal
         y={24}
-        className="glow-border relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary/20 via-card to-accent/10 px-6 py-16 text-center sm:px-16"
+        className="glow-border relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#7C5CFF]/[0.09] via-background to-[#38BDF8]/[0.10] px-6 py-16 text-center sm:px-16 dark:bg-gradient-to-br dark:from-primary/20 dark:via-card dark:to-accent/10"
       >
-        <div className="pointer-events-none absolute inset-0 grid-mask opacity-60" />
-        <div className="animate-aurora pointer-events-none absolute top-1/2 left-1/2 -z-0 size-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent-2/20 blur-[100px]" />
+        <div className="pointer-events-none absolute inset-0 hidden grid-mask opacity-60 dark:block" />
+        <div className="animate-aurora pointer-events-none absolute top-1/2 left-1/2 -z-0 hidden size-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent-2/20 blur-[100px] dark:block" />
         <h2 className="relative font-serif text-3xl font-semibold tracking-[-0.01em] sm:text-4xl">{t("title")}</h2>
         <p className="relative mx-auto mt-4 max-w-xl text-muted-foreground">{t("subtitle")}</p>
         <Button variant="glow" size="lg" className="relative mt-8" asChild>

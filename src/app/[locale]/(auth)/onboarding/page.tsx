@@ -121,7 +121,7 @@ export default function OnboardingPage() {
                           style={{ backgroundColor: color }}
                           className={cn(
                             "size-8 rounded-full ring-offset-2 ring-offset-background transition-transform hover:scale-110",
-                            accent === color && "ring-2 ring-white/80",
+                            accent === color && "ring-2 ring-foreground/70",
                           )}
                         />
                       ))}

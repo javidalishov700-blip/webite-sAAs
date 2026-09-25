@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { Hero3D } from "@/components/landing/hero-3d";
+import { CategoryHeading } from "@/components/catalog/category-heading";
 import { formatCurrency } from "@/lib/utils";
 
 const DISHES = [
@@ -43,7 +44,7 @@ function MenuPreview() {
 
   return (
     <div className="relative mx-auto flex h-full w-full max-w-[26rem] items-center justify-center sm:justify-end">
-      <div className="relative w-[17.5rem] rounded-[2.4rem] border border-black/10 bg-white p-2.5 shadow-[0_40px_80px_-30px_rgb(20_20_40/0.35)] sm:w-[19rem]">
+      <div className="relative w-[17.5rem] rounded-[2.4rem] border border-black/10 bg-white p-2.5 shadow-[0_40px_80px_-30px_rgb(76_52_190/0.38)] sm:w-[19rem]">
         <div className="overflow-hidden rounded-[1.9rem] border border-black/5 bg-white">
           <div className="flex items-center gap-2.5 px-4 pt-5 pb-3">
             <span className="flex size-9 items-center justify-center rounded-xl bg-primary text-xs font-bold text-white">
@@ -71,7 +72,7 @@ function MenuPreview() {
           </div>
 
           <div className="border-t border-black/5 px-4 pt-3 pb-5">
-            <p className="font-serif text-lg font-semibold text-neutral-900">{chips[0]}</p>
+            <CategoryHeading as="p" compact name={chips[0]} accentColor="var(--primary)" className="text-neutral-900" />
             <ul className="mt-2 divide-y divide-black/5">
               {DISHES.map((dish) => (
                 <li key={dish.name} className="flex items-baseline justify-between gap-3 py-2.5">
@@ -83,7 +84,7 @@ function MenuPreview() {
                 </li>
               ))}
             </ul>
-            <p className="mt-3 font-serif text-lg font-semibold text-neutral-900">{t("drinks")}</p>
+            <CategoryHeading as="p" compact name={t("drinks")} accentColor="var(--primary)" className="mt-4 text-neutral-900" />
             <ul className="mt-1 divide-y divide-black/5">
               {DRINKS.map((drink) => (
                 <li key={drink.name} className="flex items-baseline justify-between gap-3 py-2">

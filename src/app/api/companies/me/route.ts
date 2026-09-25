@@ -45,6 +45,9 @@ export async function PATCH(request: NextRequest) {
     ...(patch.address !== undefined ? { address: patch.address } : {}),
     ...(patch.phone !== undefined ? { phone: patch.phone } : {}),
     ...(patch.website !== undefined ? { website: patch.website } : {}),
+    ...(patch.googleReviewUrl !== undefined ? { googleReviewUrl: patch.googleReviewUrl || null } : {}),
+    ...(patch.googleRating !== undefined ? { googleRating: patch.googleRating } : {}),
+    ...(patch.googleReviewCount !== undefined ? { googleReviewCount: patch.googleReviewCount } : {}),
     ...(patch.isPublished !== undefined ? { isPublished: patch.isPublished } : {}),
   };
 

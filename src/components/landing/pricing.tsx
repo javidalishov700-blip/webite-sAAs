@@ -2,12 +2,11 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Check, MessageCircle, Sparkles } from "lucide-react";
+import { Check, MessageCircle } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { TiltCard } from "@/components/landing/tilt-card";
 import { Reveal, RevealGroup, RevealItem } from "@/components/landing/reveal";
 import { whatsappHref } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -70,16 +69,15 @@ export function Pricing() {
                 : t("proWhatsappYearly");
           return (
             <RevealItem key={plan} className="h-full">
-              <TiltCard maxTilt={isPopular ? 9 : 12} className={cn("h-full", isPopular && "lg:-translate-y-3")}>
+              <div className={cn("h-full", isPopular && "lg:-translate-y-3")}>
                 <Card
                   className={cn(
                     "relative flex h-full flex-col p-7",
-                    isPopular && "glow-border border-primary/40 shadow-[0_0_60px_-15px_var(--primary)]",
+                    isPopular && "glow-border border-primary/40 dark:shadow-[0_0_60px_-15px_var(--primary)]",
                   )}
                 >
                   {isPopular && (
-                    <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 gap-1 px-3 py-1">
-                      <Sparkles className="size-3" />
+                    <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1">
                       {t("mostPopular")}
                     </Badge>
                   )}
@@ -122,7 +120,7 @@ export function Pricing() {
                     ))}
                   </ul>
                 </Card>
-              </TiltCard>
+              </div>
             </RevealItem>
           );
         })}
@@ -131,7 +129,7 @@ export function Pricing() {
       {/* The people who bounce off this section are the ones with no time. */}
       <Reveal className="mt-10 text-center text-sm">
         <span className="text-muted-foreground">{t("serviceHint")} </span>
-        <Link href="/services" className="font-medium text-accent underline-offset-4 hover:underline">
+        <Link href="/services" className="font-medium text-primary underline-offset-4 hover:underline dark:text-accent">
           {t("serviceLink")} →
         </Link>
       </Reveal>

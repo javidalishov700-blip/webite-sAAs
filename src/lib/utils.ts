@@ -24,12 +24,16 @@ const DECIMAL_MARK: Record<string, { decimal: string; group: string }> = {
  */
 export function formatCurrency(amount: number, currency: string, locale = "en-US", fractionDigits?: number) {
   const digits = fractionDigits ?? (Number.isInteger(amount) ? 0 : 2);
-  const marks = DECIMAL_MARK[locale.slice(0, 2).toLowerCase()] ?? DECIMAL_MARK.en;
-  const [whole, fraction] = Math.abs(amount).toFixed(digits).split(".");
-  const grouped = whole.replace(/\B(?=(\d{3})+(?!\d))/g, marks.group);
-  const number = fraction ? `${grouped}${marks.decimal}${fraction}` : grouped;
   const symbol = CURRENCY_SYMBOL[currency] ?? currency;
-  return `${amount < 0 ? "-" : ""}${number}\u00a0${symbol}`;
+  return `${amount < 0 ? "-" : ""}${formatNumber(Math.abs(amount), locale, digits)}\u00a0${symbol}`;
+}
+
+/** The same tables for the other figures a guest reads — a rating, a review count. */
+export function formatNumber(value: number, locale = "en-US", fractionDigits = 0) {
+  const marks = DECIMAL_MARK[locale.slice(0, 2).toLowerCase()] ?? DECIMAL_MARK.en;
+  const [whole, fraction] = Math.abs(value).toFixed(fractionDigits).split(".");
+  const grouped = whole.replace(/\B(?=(\d{3})+(?!\d))/g, marks.group);
+  return `${value < 0 ? "-" : ""}${fraction ? `${grouped}${marks.decimal}${fraction}` : grouped}`;
 }
 
 export function formatCompactNumber(value: number, locale = "en-US") {

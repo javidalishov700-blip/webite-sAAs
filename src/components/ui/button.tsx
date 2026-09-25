@@ -11,7 +11,7 @@ export const buttonVariants = cva(
       variant: {
         default:
           "bg-primary text-primary-foreground shadow-[0_0_0_1px_rgba(255,255,255,0.06)_inset,0_8px_24px_-8px_var(--primary)] hover:brightness-110",
-        glow: "text-white bg-gradient-to-r from-[#7C5CFF] via-[#9C6BFF] to-[#00E5FF] bg-[length:200%_auto] shadow-[0_8px_30px_-8px_rgba(124,92,255,0.65)] hover:bg-right hover:shadow-[0_8px_36px_-6px_rgba(0,229,255,0.55)]",
+        glow: "text-white bg-gradient-to-r from-[#7C5CFF] to-[#8F6BFF] shadow-[0_10px_24px_-12px_rgba(124,92,255,0.8)] hover:shadow-[0_14px_30px_-12px_rgba(124,92,255,0.9)] hover:brightness-[1.04] dark:bg-gradient-to-r dark:from-[#7C5CFF] dark:via-[#9C6BFF] dark:to-[#00E5FF] dark:bg-[length:200%_auto] dark:shadow-[0_8px_30px_-8px_rgba(124,92,255,0.65)] dark:hover:bg-right dark:hover:shadow-[0_8px_36px_-6px_rgba(0,229,255,0.55)]",
         destructive: "bg-destructive text-destructive-foreground hover:brightness-110",
         outline: "border border-border bg-transparent text-foreground hover:bg-muted",
         secondary: "bg-secondary text-secondary-foreground hover:brightness-110",

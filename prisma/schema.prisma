@@ -152,6 +152,12 @@ model Company {
   address          String?
   phone            String?
   website          String?
+  /// Where a guest leaves a review: the "ask for reviews" link from Google
+  /// Business Profile, or the place's Google Maps page.
+  googleReviewUrl   String?
+  /// What Google currently shows for the place, typed in by the owner.
+  googleRating      Float?
+  googleReviewCount Int?
   isPublished      Boolean  @default(true)
   bannedAt         DateTime?
   bannedReason     String?  @db.VarChar(300)

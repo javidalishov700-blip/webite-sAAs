@@ -68,7 +68,7 @@ export function SiteHeader() {
         )}
       >
         <Link href="/" className="flex items-center gap-2 font-display text-lg font-semibold tracking-tight">
-          <span className="glow-ring flex size-8 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent text-white">
+          <span className="glow-ring flex size-8 items-center justify-center rounded-xl bg-primary dark:bg-gradient-to-br dark:from-primary dark:to-accent text-white">
             <QrCode className="size-4.5" />
           </span>
           QR-Universe
@@ -82,7 +82,7 @@ export function SiteHeader() {
               className="group relative rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               {t(item.key)}
-              <span className="absolute inset-x-3 -bottom-0.5 h-px origin-center scale-x-0 bg-gradient-to-r from-primary to-accent transition-transform duration-300 group-hover:scale-x-100" />
+              <span className="absolute inset-x-3 -bottom-0.5 h-px origin-center scale-x-0 bg-primary dark:bg-gradient-to-r dark:from-primary dark:to-accent transition-transform duration-300 group-hover:scale-x-100" />
             </HashLink>
           ))}
           <Link
@@ -90,7 +90,7 @@ export function SiteHeader() {
             className="group relative rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
             {t("contact")}
-            <span className="absolute inset-x-3 -bottom-0.5 h-px origin-center scale-x-0 bg-gradient-to-r from-primary to-accent transition-transform duration-300 group-hover:scale-x-100" />
+            <span className="absolute inset-x-3 -bottom-0.5 h-px origin-center scale-x-0 bg-primary dark:bg-gradient-to-r dark:from-primary dark:to-accent transition-transform duration-300 group-hover:scale-x-100" />
           </Link>
         </nav>
 
