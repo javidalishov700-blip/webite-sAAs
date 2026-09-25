@@ -31,9 +31,12 @@ import { api, ApiError } from "@/lib/api-client";
 
 function PasswordCard() {
   const t = useTranslations("admin.settings");
+  const tc = useTranslations("common");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const mismatch = confirmPassword.length > 0 && confirmPassword !== newPassword;
 
   async function handleChange() {
     setLoading(true);
@@ -41,6 +44,7 @@ function PasswordCard() {
       await api.post("/api/auth/password", { currentPassword, newPassword });
       setCurrentPassword("");
       setNewPassword("");
+      setConfirmPassword("");
       toast.success(t("passwordOk"));
     } catch (err) {
       toast.error(err instanceof ApiError && err.status === 401 ? t("passwordWrong") : t("passwordFail"));
@@ -76,12 +80,27 @@ function PasswordCard() {
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
+            {newPassword.length > 0 && newPassword.length < 6 ? (
+              <p className="text-xs text-destructive">{tc("passwordShort")}</p>
+            ) : null}
+          </div>
+          <div className="space-y-1.5 sm:col-start-2">
+            <Label htmlFor="confirm-password">{tc("passwordRepeat")}</Label>
+            <Input
+              id="confirm-password"
+              type="password"
+              autoComplete="new-password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              aria-invalid={mismatch}
+            />
+            {mismatch ? <p className="text-xs text-destructive">{tc("passwordMismatch")}</p> : null}
           </div>
         </div>
         <Button
           variant="outline"
           loading={loading}
-          disabled={currentPassword.length < 1 || newPassword.length < 6}
+          disabled={currentPassword.length < 1 || newPassword.length < 6 || confirmPassword !== newPassword}
           onClick={() => void handleChange()}
         >
           {t("passwordSave")}

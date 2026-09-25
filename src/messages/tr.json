@@ -48,7 +48,12 @@
     "copied": "Kopyalandı!",
     "empty": "Henüz bir şey yok",
     "error": "Bir şeyler ters gitti",
-    "retry": "Tekrar dene"
+    "retry": "Tekrar dene",
+    "passwordRepeat": "Yeni şifreyi tekrar yaz",
+    "passwordMismatch": "Şifreler aynı değil. İkisini de aynı yaz.",
+    "passwordShort": "Şifre en az 6 karakter olmalı.",
+    "codeFormat": "6 haneli kodu yaz.",
+    "emailInvalid": "Geçerli bir e-posta adresi yaz."
   },
   "industries": {
     "RESTAURANT": "Restoran & kafe",

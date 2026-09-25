@@ -48,7 +48,12 @@
     "copied": "Kopyalandı!",
     "empty": "Hələ heç nə yoxdur",
     "error": "Nəsə səhv getdi",
-    "retry": "Yenidən cəhd et"
+    "retry": "Yenidən cəhd et",
+    "passwordRepeat": "Yeni şifrəni təkrar yaz",
+    "passwordMismatch": "Şifrələr eyni deyil. İkisini də eyni yazın.",
+    "passwordShort": "Şifrə ən azı 6 simvol olmalıdır.",
+    "codeFormat": "6 rəqəmli kodu yazın.",
+    "emailInvalid": "E-poçt ünvanını düzgün yazın."
   },
   "industries": {
     "RESTAURANT": "Restoran və kafe",

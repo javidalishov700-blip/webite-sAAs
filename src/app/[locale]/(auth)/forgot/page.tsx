@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { useLocale, useTranslations } from "next-intl";
 import { motion } from "motion/react";
 import { AlertCircle, KeyRound, MailCheck } from "lucide-react";
@@ -11,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
-import { emailLocaleSchema, resetCodeSchema, type EmailLocaleInput, type ResetCodeInput } from "@/lib/validators/auth";
 import { api, ApiError } from "@/lib/api-client";
 
 const RESEND_WAIT_SECONDS = 30;
@@ -22,6 +22,7 @@ const RESEND_WAIT_SECONDS = 30;
  */
 export default function ForgotPage() {
   const t = useTranslations("auth.forgot");
+  const tc = useTranslations("common");
   const locale = useLocale();
   const router = useRouter();
   const [email, setEmail] = useState<string | null>(null);
@@ -35,8 +36,22 @@ export default function ForgotPage() {
     return () => window.clearTimeout(timer);
   }, [wait]);
 
-  const emailForm = useForm<EmailLocaleInput>({ resolver: zodResolver(emailLocaleSchema) });
-  const codeForm = useForm<ResetCodeInput>({ resolver: zodResolver(resetCodeSchema) });
+  // The server checks the same rules; these copies exist to speak the page's language.
+  const emailSchema = useMemo(() => z.object({ email: z.string().trim().email(tc("emailInvalid")) }), [tc]);
+  const codeSchema = useMemo(
+    () =>
+      z
+        .object({
+          email: z.string().email(),
+          code: z.string().trim().regex(/^\d{6}$/, tc("codeFormat")),
+          password: z.string().min(6, tc("passwordShort")),
+          confirmPassword: z.string(),
+        })
+        .refine((v) => v.password === v.confirmPassword, { path: ["confirmPassword"], message: tc("passwordMismatch") }),
+    [tc],
+  );
+  const emailForm = useForm<z.infer<typeof emailSchema>>({ resolver: zodResolver(emailSchema) });
+  const codeForm = useForm<z.infer<typeof codeSchema>>({ resolver: zodResolver(codeSchema) });
 
   function explain(err: unknown) {
     if (err instanceof ApiError && err.status === 429) return t("rateLimited");
@@ -54,7 +69,7 @@ export default function ForgotPage() {
     setWait(RESEND_WAIT_SECONDS);
   }
 
-  async function onEmail(values: EmailLocaleInput) {
+  async function onEmail(values: z.infer<typeof emailSchema>) {
     try {
       await sendCode(values.email.trim());
     } catch (err) {
@@ -72,10 +87,10 @@ export default function ForgotPage() {
     }
   }
 
-  async function onReset(values: ResetCodeInput) {
+  async function onReset({ email: address, code, password }: z.infer<typeof codeSchema>) {
     setError(null);
     try {
-      await api.post("/api/auth/reset", values);
+      await api.post("/api/auth/reset", { email: address, code, password });
       router.push("/admin");
       router.refresh();
     } catch (err) {
@@ -142,6 +157,19 @@ export default function ForgotPage() {
                 <Input id="password" type="password" autoComplete="new-password" placeholder="••••••••" {...codeForm.register("password")} />
                 {codeForm.formState.errors.password && (
                   <p className="text-xs text-destructive">{codeForm.formState.errors.password.message}</p>
+                )}
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="confirmPassword">{tc("passwordRepeat")}</Label>
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  autoComplete="new-password"
+                  placeholder="••••••••"
+                  {...codeForm.register("confirmPassword")}
+                />
+                {codeForm.formState.errors.confirmPassword && (
+                  <p className="text-xs text-destructive">{codeForm.formState.errors.confirmPassword.message}</p>
                 )}
               </div>
               {errorBox}

@@ -48,7 +48,12 @@
     "copied": "Copied!",
     "empty": "Nothing here yet",
     "error": "Something went wrong",
-    "retry": "Try again"
+    "retry": "Try again",
+    "passwordRepeat": "Repeat the new password",
+    "passwordMismatch": "The passwords don't match. Type the same one twice.",
+    "passwordShort": "Use at least 6 characters.",
+    "codeFormat": "Enter the 6-digit code.",
+    "emailInvalid": "Enter a valid email address."
   },
   "industries": {
     "RESTAURANT": "Restaurant & cafe",

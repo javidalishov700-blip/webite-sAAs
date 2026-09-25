@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
@@ -15,24 +15,29 @@ import { Card } from "@/components/ui/card";
 import { z } from "zod";
 import { api, ApiError } from "@/lib/api-client";
 
-const schema = z.object({
-  password: z.string().min(6),
-});
-
 function ResetForm() {
   const t = useTranslations("auth.reset");
+  const tc = useTranslations("common");
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token") ?? "";
   const [serverError, setServerError] = useState<string | null>(token ? null : t("invalid"));
 
+  const schema = useMemo(
+    () =>
+      z
+        .object({ password: z.string().min(6, tc("passwordShort")), confirmPassword: z.string() })
+        .refine((v) => v.password === v.confirmPassword, { path: ["confirmPassword"], message: tc("passwordMismatch") }),
+    [tc],
+  );
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<{ password: string }>({ resolver: zodResolver(schema) });
+  } = useForm<z.infer<typeof schema>>({ resolver: zodResolver(schema) });
 
-  async function onSubmit(values: { password: string }) {
+  async function onSubmit(values: z.infer<typeof schema>) {
     setServerError(null);
     try {
       await api.post("/api/auth/reset", { token, password: values.password });
@@ -60,6 +65,11 @@ function ResetForm() {
             <Label htmlFor="password">{t("password")}</Label>
             <Input id="password" type="password" autoComplete="new-password" {...register("password")} />
             {errors.password && <p className="text-xs text-destructive">{errors.password.message}</p>}
+          </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="confirmPassword">{tc("passwordRepeat")}</Label>
+            <Input id="confirmPassword" type="password" autoComplete="new-password" {...register("confirmPassword")} />
+            {errors.confirmPassword && <p className="text-xs text-destructive">{errors.confirmPassword.message}</p>}
           </div>
           {serverError && (
             <div className="flex items-center gap-2 rounded-xl border border-destructive/30 bg-destructive/10 px-3 py-2.5 text-sm text-destructive">
