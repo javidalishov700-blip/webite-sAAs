@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Copy, Eye, EyeOff, ImageOff, MoreHorizontal, Package, Pencil, Plus, Search, Smartphone, Star, Trash2 } from "lucide-react";
 import { PageHeader } from "@/components/admin/page-header";
@@ -47,6 +47,7 @@ import type { ItemInput } from "@/lib/validators/item";
 
 export default function ProductsPage() {
   const t = useTranslations("admin.products");
+  const locale = useLocale();
   const tCat = useTranslations("admin.categories");
   const tp = useTranslations("admin.preview");
   const tc = useTranslations("common");
@@ -277,7 +278,7 @@ export default function ProductsPage() {
                     </div>
                   </TableCell>
                   <TableCell className="text-muted-foreground">{categoryById.get(item.categoryId)?.name ?? "—"}</TableCell>
-                  <TableCell className="font-medium">{formatCurrency(item.price, item.currency)}</TableCell>
+                  <TableCell className="font-medium">{formatCurrency(item.price, item.currency, locale)}</TableCell>
                   <TableCell>
                     <button
                       onClick={() => updateItem.mutate({ id: item.id, isVisible: !item.isVisible })}

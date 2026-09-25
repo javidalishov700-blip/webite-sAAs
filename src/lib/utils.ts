@@ -24,8 +24,13 @@ const DECIMAL_MARK: Record<string, { decimal: string; group: string }> = {
  */
 export function formatCurrency(amount: number, currency: string, locale = "en-US", fractionDigits?: number) {
   const digits = fractionDigits ?? (Number.isInteger(amount) ? 0 : 2);
-  const symbol = CURRENCY_SYMBOL[currency] ?? currency;
-  return `${amount < 0 ? "-" : ""}${formatNumber(Math.abs(amount), locale, digits)}\u00a0${symbol}`;
+  const sign = amount < 0 ? "-" : "";
+  const number = formatNumber(Math.abs(amount), locale, digits);
+  const symbol = CURRENCY_SYMBOL[currency];
+  // English writes the sign first ($12.90); Azerbaijani, Russian and Turkish
+  // menus put it after the amount. A bare ISO code always gets a space.
+  if (locale.slice(0, 2).toLowerCase() === "en") return symbol ? `${sign}${symbol}${number}` : `${sign}${currency}\u00a0${number}`;
+  return `${sign}${number}\u00a0${symbol ?? currency}`;
 }
 
 /** The same tables for the other figures a guest reads — a rating, a review count. */
